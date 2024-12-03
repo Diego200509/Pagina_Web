@@ -33,7 +33,46 @@
         <span class="pink">INNOVA.</span>
     </div>
 </div>
+<!-- Botón para agregar candidato -->
+<button id="addCandidateBtn" class="add-candidate-btn">Agregar Candidatos</button>
 
+<!-- Modal para seleccionar acción CRUD -->
+<div id="crudActionModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" id="closeCrudModal">&times;</span>
+        <h2>¿Qué deseas hacer?</h2>
+        <button id="createActionBtn">Crear Candidato</button>
+        <button id="readActionBtn">Ver Candidatos</button>
+        <button id="updateActionBtn">Actualizar Candidato</button>
+        <button id="deleteActionBtn">Eliminar Candidato</button>
+    </div>
+</div>
+
+<!-- Modal para agregar candidato (Formulario) -->
+<div id="addCandidateModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" id="closeAddModal">&times;</span>
+        <h2>Agregar Nuevo Candidato</h2>
+        <form id="addCandidateForm">
+            <label for="name">Nombre:</label>
+            <input type="text" id="name" name="name" required><br>
+
+            <label for="bio">Biografía:</label>
+            <textarea id="bio" name="bio" required></textarea><br>
+
+            <label for="experience">Experiencia:</label>
+            <textarea id="experience" name="experience" required></textarea><br>
+
+            <label for="vision">Visión:</label>
+            <textarea id="vision" name="vision" required></textarea><br>
+
+            <label for="achievements">Logros:</label>
+            <textarea id="achievements" name="achievements" required></textarea><br>
+
+            <button type="submit">Agregar Candidato</button>
+        </form>
+    </div>
+</div>
 <section id="candidates-section-1" class="candidates-section">
     <div class="card">
         <img src="./Img/Mary_Cruz.png" alt="Rectora">

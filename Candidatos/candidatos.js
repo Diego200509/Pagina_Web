@@ -50,4 +50,112 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
+
+    // Crear un nuevo candidato
+    const addCandidateForm = document.getElementById("addCandidateForm");
+    addCandidateForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(addCandidateForm);
+
+        fetch('../src/candidatos_queries.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.error) {
+                alert("Error al agregar candidato: " + result.error);
+            } else {
+                alert("Candidato agregado exitosamente.");
+                loadCandidates();  // Actualizar la lista de candidatos
+                document.getElementById("addCandidateModal").style.display = "none";  // Cerrar el modal
+            }
+        })
+        .catch(error => console.error("Error al agregar candidato:", error));
+    });
+
+    // Actualizar un candidato
+    function openUpdateCandidateModal(candidateId) {
+        fetch(`../src/candidatos_queries.php?id=${candidateId}`)
+        .then(response => response.json())
+        .then(candidate => {
+            if (candidate.error) {
+                alert("Error al cargar candidato para actualizar.");
+                return;
+            }
+
+            // Llenar los campos del formulario de actualización
+            document.getElementById("updateCandidateName").value = candidate.name;
+            document.getElementById("updateCandidateBio").value = candidate.bio;
+            document.getElementById("updateCandidateExperience").value = candidate.experience;
+            document.getElementById("updateCandidateVision").value = candidate.vision;
+            document.getElementById("updateCandidateAchievements").value = candidate.achievements;
+
+            // Mostrar el modal de actualización
+            document.getElementById("updateCandidateModal").style.display = "flex";
+
+            // Agregar la lógica para el botón de actualizar
+            document.getElementById("updateCandidateForm").onsubmit = function (e) {
+                e.preventDefault();
+
+                const updatedData = new FormData(this);
+                updatedData.append("id", candidateId);
+
+                fetch('../src/candidatos_queries.php', {
+                    method: 'POST',
+                    body: updatedData
+                })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.error) {
+                        alert("Error al actualizar candidato: " + result.error);
+                    } else {
+                        alert("Candidato actualizado exitosamente.");
+                        loadCandidates();  // Actualizar la lista de candidatos
+                        document.getElementById("updateCandidateModal").style.display = "none";  // Cerrar el modal
+                    }
+                })
+                .catch(error => console.error("Error al actualizar candidato:", error));
+            };
+        })
+        .catch(error => console.error("Error al cargar los datos del candidato:", error));
+    }
+
+    // Eliminar un candidato
+    function deleteCandidate(candidateId) {
+        if (confirm("¿Estás seguro de que deseas eliminar este candidato?")) {
+            fetch(`../src/candidatos_queries.php?id=${candidateId}`, {
+                method: 'DELETE'
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.error) {
+                    alert("Error al eliminar candidato: " + result.error);
+                } else {
+                    alert("Candidato eliminado exitosamente.");
+                    loadCandidates();  // Actualizar la lista de candidatos
+                }
+            })
+            .catch(error => console.error("Error al eliminar candidato:", error));
+        }
+    }
+
+    // Cargar los candidatos
+    function loadCandidates() {
+        fetch('../src/candidatos_queries.php') // Aquí puedes usar tu endpoint para obtener todos los candidatos
+        .then(response => response.json())
+        .then(candidates => {
+            const candidateList = document.getElementById('candidateList');
+            candidateList.innerHTML = ''; // Limpiar la lista actual
+            candidates.forEach(candidate => {
+                const li = document.createElement('li');
+                li.textContent = candidate.name;
+                candidateList.appendChild(li);
+            });
+        })
+        .catch(error => {
+            console.error("Error al cargar la lista de candidatos:", error);
+        });
+    }
 });
