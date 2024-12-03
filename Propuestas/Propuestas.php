@@ -26,7 +26,7 @@
     </header>
 
     <div class="container">
-        <h2>Propuestas de los Partidos Políticos</h2>
+        <h2>Propuestas de los Partidos Políticos UTA 2024</h2>
 
         <div class="filter-box">
             <label for="faculty">Filtrar por Facultad o Interés:</label>
