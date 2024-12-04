@@ -18,273 +18,282 @@ $nombrePartido = obtenerNombrePartido(1);
 
     <title>Sobre nuestros estudiantes</title>
     <style>
-        /* Fondo animado */
-        @keyframes animatedBackground {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+@keyframes animatedBackground {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
 
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(270deg, #ff007f, #00cfff); /* Rosa y celeste más fuertes */
-            background-size: 400% 400%;
-            animation: animatedBackground 10s ease infinite; /* Animación del fondo */
-            overflow-x: hidden; /* Evita el desbordamiento horizontal */
-        }
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 50%, #f5a5e0 100%); /* Degradado pastel suave entre azul, lila y rosa */
+    background-size: 400% 400%;
+    animation: animatedBackground 12s ease infinite; /* Animación suave */
+    overflow-x: hidden;
+}
 
-        /* Mantener los demás estilos intactos */
-        input[type="email"] {
-            width: 100%;
-            padding: 10px;
-            font-size: 1em;
-            border: 1px solid #CCC;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
+/* Mantener los demás estilos intactos */
+input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
 
-        textarea {
-            width: 100%;
-        }
+textarea {
+    width: 100%;
+}
 
-        .container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            color: #FFF;
-            width: 100%;
-            padding: 20px;
-            box-sizing: border-box;
-            max-width: 100vw;
-            overflow: hidden;
-        }
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    color: #FFF;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    max-width: 100vw;
+    overflow: hidden;
+}
 
-        .card {
-            display: flex;
-            background-color: #F7F7F7;
-            width: 60%;
-            max-width: 4000px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
+.card {
+    display: flex;
+    background-color: #F7F7F7;
+    width: 60%;
+    max-width: 4000px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
 
-        .card img {
-            width: 50%;
-            height: auto;
-            object-fit: cover;
-        }
+.card img {
+    width: 50%;
+    height: auto;
+    object-fit: cover;
+}
 
-        .content {
-            padding: 40px;
-            flex: 1;
-        }
+.content {
+    padding: 40px;
+    flex: 1;
+}
 
-        .content h1 {
-            color: #2B4657;
-            font-size: 2em;
-            margin-bottom: 20px;
-        }
+.content h1 {
+    color: #2B4657;
+    font-size: 2em;
+    margin-bottom: 20px;
+}
 
-        .content p {
-            color: #7A7A7A;
-            line-height: 1.6;
-        }
+.content p {
+    color: #7A7A7A;
+    line-height: 1.6;
+}
 
-        .content a {
-            display: inline-block;
-            padding: 10px 20px;
-            margin-top: 20px;
-            background-color: #2B4657;
-            color: #FFF;
-            text-decoration: none;
-            border-radius: 5px;
-        }
+.content a {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #2B4657;
+    color: #FFF;
+    text-decoration: none;
+    border-radius: 5px;
+}
 
-        .content a:hover {
-            background-color: #435A6A;
-        }
+.content a:hover {
+    background-color: #435A6A;
+}
 
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 50px;
-            background-color: #b22222;
-            width: 100%;
-            box-sizing: border-box;
-            margin: 0;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-        }
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    background-color: #b22222;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
 
-        header.hidden {
-            transform: translateY(-100%);
-        }
+header.hidden {
+    transform: translateY(-100%);
+}
 
-        header:not(.hidden) {
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-        }
+header:not(.hidden) {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
 
-        header .logo {
-            display: flex;
-            align-items: center;
-        }
+header .logo {
+    display: flex;
+    align-items: center;
+}
 
-        header .logo img {
-            width: 50px;
-            margin-right: 10px;
-        }
+header .logo img {
+    width: 50px;
+    margin-right: 10px;
+}
 
-        header .logo h1 {
-            color: #ffffff;
-            font-size: 1.5em;
-        }
+header .logo h1 {
+    color: #ffffff;
+    font-size: 1.5em;
+}
 
-        header nav {
-            display: flex;
-            align-items: center;
-        }
+header nav {
+    display: flex;
+    align-items: center;
+}
 
-        header nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 15px;
-            font-size: 1em;
-            transition: color 0.3s;
-            display: flex;
-            align-items: center;
-        }
+header nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 1em;
+    transition: color 0.3s;
+    display: flex;
+    align-items: center;
+}
 
-        header nav a i {
-            margin-right: 8px;
-        }
+header nav a i {
+    margin-right: 8px;
+}
 
-        header nav a:hover {
-            color: #2f2929;
-        }
+header nav a:hover {
+    color: #2f2929;
+}
 
-        footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #b22222;
-            color: white;
-            margin-top: 50px;
-        }
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #b22222;
+    color: white;
+    margin-top: 50px;
+}
 
-        .footer-rights {
-            background-color: #b22222;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            position: relative;
-            bottom: 0;
-            width: 100%;
-            margin-top: 0px;
-        }
+.footer-rights {
+    background-color: #b22222;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    margin-top: 0px;
+}
 
-        .form-section {
-            margin-top: 20px;
-        }
+.form-section {
+    margin-top: 20px;
+}
 
-        .form-section label {
-            display: block;
-            margin-bottom: 10px;
-            font-size: 1.2em;
-            color: #2B4657;
-        }
+.form-section label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    color: #2B4657;
+}
 
-        .form-section textarea {
-            width: 100%;
-            height: 80px;
-            padding: 10px;
-            font-size: 1em;
-            border: 1px solid #CCC;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            resize: none;
-        }
+.form-section textarea {
+    width: 100%;
+    height: 80px;
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    resize: none;
+}
 
-        .buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
+.buttons {
+    display: flex;
+    justify-content: space-between; /* Distribuye los botones con espacio entre ellos */
+    margin-top: 20px;
+    gap: 20px; /* Espaciado entre los botones */
+    width: 100%; /* Asegura que los botones ocupen el 100% del ancho disponible */
+    box-sizing: border-box; /* Para asegurarse de que el padding no afecte el tamaño total */
+}
 
-        .buttons a {
-            padding: 10px 20px;
-            font-size: 1em;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            text-align: center;
-            color: white;
-            text-decoration: none;
-            display: inline-block;
-        }
+/* Estilo común para ambos botones */
+.buttons button, .buttons a {
+    padding: 12px 20px;
+    font-size: 1.1em;
+    text-align: center;
+    border-radius: 8px;  /* Bordes redondeados */
+    cursor: pointer;
+    transition: all 0.3s ease;  /* Transición suave para el hover */
+    width: 48%;  /* Hace que ambos botones tengan el mismo tamaño */
+    box-sizing: border-box; /* Para evitar que el padding afecte el ancho total */
+}
 
-        .buttons a:hover {
-            background-color: #435A6A;
-        }
+/* Estilo específico para el botón de "Enviar Sugerencias" */
+.btn1-enviar {
+    background-color: #6cace4; /* Azul suave */
+    color: white;
+    border: none;
+}
 
-        .btn-enviar {
-            background-color: #2B4657;
-        }
+.btn1-enviar:hover {
+    background-color: #56a5d7; /* Azul más oscuro al pasar el mouse */
+}
 
-        .btn-regresar {
-            background-color: #CCC;
-            color: #2B4657;
-        }
+/* Estilo específico para el botón de "Regresar" */
+.btn-regresar {
+    background-color: #dcdcdc; /* Gris suave */
+    color: #2B4657; /* Texto oscuro para mayor contraste */
+    border: none;
+}
 
-        .content h1 {
-            text-align: center;
-        }
+.btn-regresar:hover {
+    background-color: #b0b0b0; /* Gris más oscuro al pasar el mouse */
+}
 
-        .btn1-enviar {
-            background-color: #2c3e50;
-            color: white;
-            border: 2px solid #2c3e50;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: background-color 0.3s, border-color 0.3s;
-        }
+/* Asegura que los botones se agranden ligeramente al pasar el mouse */
+.buttons a:hover, .buttons button:hover {
+    transform: scale(1.05);  /* Efecto de agrandamiento sutil */
+}
 
-        .btn1-enviar:hover {
-            background-color: #34495e;
-            border-color: #34495e;
-        }
+/* Asegura que los botones se vean bien en dispositivos pequeños */
+@media (max-width: 768px) {
+    .buttons {
+        flex-direction: column; /* Cambia los botones a una columna en pantallas pequeñas */
+        align-items: center;
+    }
 
-        .input-group {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
+    .buttons button, .buttons a {
+        width: 100%;  /* Los botones ocuparán el 100% del ancho disponible */
+        margin-bottom: 10px; /* Espaciado entre botones */
+    }
+}
 
-        .input-group label {
-            margin-right: 10px;
-            flex-basis: 30%;
-        }
+.content h1 {
+    text-align: center;
+}
 
-        .input-group input {
-            flex-basis: 65%;
-            padding: 10px;
-            font-size: 1em;
-            border: 1px solid #CCC;
-            border-radius: 5px;
-        }
-        
+.input-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    margin-right: 10px;
+    flex-basis: 30%;
+}
+
+.input-group input {
+    flex-basis: 65%;
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+}
+
     </style>
 </head>
 <body>
@@ -328,11 +337,12 @@ $nombrePartido = obtenerNombrePartido(1);
         <label for="comentarios">Comentarios:</label>
         <textarea id="comentarios" name="comentarios" placeholder="Escribe tus comentarios aquí..." required></textarea>
         
-        <input type="hidden" name="id_partido" value="1"> <!-- Aquí se define el ID del partido -->
+        <input type="hidden" name="id_partido" value="1"> 
         
         <div class="buttons">
+        <a href="index.php" class="btn-regresar">Regresar</a>
+
             <button type="submit" class="btn1-enviar">Enviar Sugerencias</button>
-            <a href="index.php" class="btn-regresar">Regresar</a>
         </div>
     </form>
 </div>
