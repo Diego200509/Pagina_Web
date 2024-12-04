@@ -48,6 +48,8 @@
                 <option value="cultura">Cultura</option>
                 <option value="investigación">Investigación</option>
                 <option value="vinculación">Vinculación con la Sociedad</option>
+                <option value="innovacion">Innovación y Tecnología</option>
+
             </select>
         </div>
 
