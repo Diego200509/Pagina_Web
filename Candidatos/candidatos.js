@@ -75,70 +75,61 @@ document.addEventListener("DOMContentLoaded", function () {
         .catch(error => console.error("Error al agregar candidato:", error));
     });
 
+    // Manejo del modal CRUD
+    const addCandidateBtn = document.getElementById("addCandidateBtn");
+    const crudActionModal = document.getElementById("crudActionModal");
+    const closeCrudModal = document.getElementById("closeCrudModal");
+
+    addCandidateBtn.addEventListener("click", () => {
+        crudActionModal.style.display = "flex";
+    });
+
+    closeCrudModal.addEventListener("click", () => {
+        crudActionModal.style.display = "none";
+    });
+
+    // Acción para "Crear Candidato"
+    const createActionBtn = document.getElementById("createActionBtn");
+    const addCandidateModal = document.getElementById("addCandidateModal");
+    const closeAddModal = document.getElementById("closeAddModal");
+
+    createActionBtn.addEventListener("click", () => {
+        crudActionModal.style.display = "none";
+        addCandidateModal.style.display = "flex";
+    });
+
+    closeAddModal.addEventListener("click", () => {
+        addCandidateModal.style.display = "none";
+    });
+
+    // Otras acciones CRUD (lectura, actualización, eliminación)
+    const readActionBtn = document.getElementById("readActionBtn");
+    const updateActionBtn = document.getElementById("updateActionBtn");
+    const deleteActionBtn = document.getElementById("deleteActionBtn");
+
+    readActionBtn.addEventListener("click", () => {
+        crudActionModal.style.display = "none";
+        alert("Mostrar lógica para leer candidatos.");
+    });
+
+    updateActionBtn.addEventListener("click", () => {
+        crudActionModal.style.display = "none";
+        alert("Mostrar lógica para actualizar candidatos.");
+    });
+
+    deleteActionBtn.addEventListener("click", () => {
+        crudActionModal.style.display = "none";
+        alert("Mostrar lógica para eliminar candidatos.");
+    });
+
     // Actualizar un candidato
     function openUpdateCandidateModal(candidateId) {
-        fetch(`../src/candidatos_queries.php?id=${candidateId}`)
-        .then(response => response.json())
-        .then(candidate => {
-            if (candidate.error) {
-                alert("Error al cargar candidato para actualizar.");
-                return;
-            }
-
-            // Llenar los campos del formulario de actualización
-            document.getElementById("updateCandidateName").value = candidate.name;
-            document.getElementById("updateCandidateBio").value = candidate.bio;
-            document.getElementById("updateCandidateExperience").value = candidate.experience;
-            document.getElementById("updateCandidateVision").value = candidate.vision;
-            document.getElementById("updateCandidateAchievements").value = candidate.achievements;
-
-            // Mostrar el modal de actualización
-            document.getElementById("updateCandidateModal").style.display = "flex";
-
-            // Agregar la lógica para el botón de actualizar
-            document.getElementById("updateCandidateForm").onsubmit = function (e) {
-                e.preventDefault();
-
-                const updatedData = new FormData(this);
-                updatedData.append("id", candidateId);
-
-                fetch('../src/candidatos_queries.php', {
-                    method: 'POST',
-                    body: updatedData
-                })
-                .then(response => response.json())
-                .then(result => {
-                    if (result.error) {
-                        alert("Error al actualizar candidato: " + result.error);
-                    } else {
-                        alert("Candidato actualizado exitosamente.");
-                        loadCandidates();  // Actualizar la lista de candidatos
-                        document.getElementById("updateCandidateModal").style.display = "none";  // Cerrar el modal
-                    }
-                })
-                .catch(error => console.error("Error al actualizar candidato:", error));
-            };
-        })
-        .catch(error => console.error("Error al cargar los datos del candidato:", error));
+        // Aquí colocas tu lógica de actualización
     }
 
     // Eliminar un candidato
     function deleteCandidate(candidateId) {
-        if (confirm("¿Estás seguro de que deseas eliminar este candidato?")) {
-            fetch(`../src/candidatos_queries.php?id=${candidateId}`, {
-                method: 'DELETE'
-            })
-            .then(response => response.json())
-            .then(result => {
-                if (result.error) {
-                    alert("Error al eliminar candidato: " + result.error);
-                } else {
-                    alert("Candidato eliminado exitosamente.");
-                    loadCandidates();  // Actualizar la lista de candidatos
-                }
-            })
-            .catch(error => console.error("Error al eliminar candidato:", error));
-        }
+        // Aquí colocas tu lógica de eliminación
     }
 
     // Cargar los candidatos

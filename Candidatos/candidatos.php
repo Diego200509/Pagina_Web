@@ -33,7 +33,7 @@
         <span class="pink">INNOVA.</span>
     </div>
 </div>
-<!-- Botón para agregar candidato -->
+<!-- Botón para agregar candidatos -->
 <button id="addCandidateBtn" class="add-candidate-btn">Agregar Candidatos</button>
 
 <!-- Modal para seleccionar acción CRUD -->
@@ -48,7 +48,7 @@
     </div>
 </div>
 
-<!-- Modal para agregar candidato (Formulario) -->
+<!-- Modal para agregar candidato -->
 <div id="addCandidateModal" class="modal">
     <div class="modal-content">
         <span class="close-modal" id="closeAddModal">&times;</span>
@@ -56,19 +56,14 @@
         <form id="addCandidateForm">
             <label for="name">Nombre:</label>
             <input type="text" id="name" name="name" required><br>
-
             <label for="bio">Biografía:</label>
             <textarea id="bio" name="bio" required></textarea><br>
-
             <label for="experience">Experiencia:</label>
             <textarea id="experience" name="experience" required></textarea><br>
-
             <label for="vision">Visión:</label>
             <textarea id="vision" name="vision" required></textarea><br>
-
             <label for="achievements">Logros:</label>
             <textarea id="achievements" name="achievements" required></textarea><br>
-
             <button type="submit">Agregar Candidato</button>
         </form>
     </div>
