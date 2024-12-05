@@ -2,6 +2,40 @@
 // Incluir archivo de configuración para la conexión a la base de datos
 include('../config/config.php');
 
+function obtenerTodasSugerencias()
+{
+    global $connection;
+
+    // Consulta SQL corregida para obtener sugerencias junto con la información del usuario y del partido
+    $sql = "SELECT 
+                s.ID_SUG AS id_sugerencia,
+                u.NOM_USU AS nombre_usuario,
+                u.EMAIL_USU AS correo_usuario,
+                c.NOM_CAN AS nombre_candidato,
+                s.SUGERENCIAS_SUG AS sugerencia,
+                s.PROPUESTA_SUG AS propuesta,
+                s.COMENTARIOS_SUG AS comentarios,
+                s.ID_PAR_SUG AS id_partido,
+                p.NOM_PAR AS nombre_partido,
+                s.ID_PAR_SUG AS partido_sugerencia
+            FROM SUGERENCIAS s
+            JOIN USUARIOS u ON s.ID_USU_PER = u.ID_USU
+            JOIN PARTIDOS_POLITICOS p ON s.ID_PAR_SUG = p.ID_PAR
+            JOIN CANDIDATOS c ON c.ID_PAR_CAN = p.ID_PAR
+            ORDER BY s.ID_SUG DESC";
+
+    $result = $connection->query($sql);
+
+    $sugerencias = [];
+    if ($result && $result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $sugerencias[] = $row;
+        }
+    }
+
+    return $sugerencias;
+}
+
 // Función para obtener el nombre del partido político según su ID_PAR
 function obtenerNombrePartido($idPartido)
 {
