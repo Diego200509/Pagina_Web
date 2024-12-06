@@ -101,7 +101,6 @@ $sugerencias = obtenerTodasSugerencias();
                 if (response.ok) {
                     const result = await response.json();
                     if (result.success) {
-                        // Actualizar el estado en pantalla
                         const estadoElemento = document.getElementById(`estado-${id}`);
                         estadoElemento.textContent = estado === 'Revisado' ? 'Revisado' : 'Pendiente';
                     } else {
@@ -153,13 +152,20 @@ $sugerencias = obtenerTodasSugerencias();
                         ?>
                     </td>
                     <td>
-                        <button 
-                            class="btn btn-revisar" 
-                            onclick="actualizarEstado(<?php echo $sugerencia['id_sugerencia']; ?>, 'Revisado')">
-                            Revisar
-                        </button>
-
-                    </td>
+    <button 
+        class="btn btn-revisar" 
+        onclick="actualizarEstado(<?php echo $sugerencia['id_sugerencia']; ?>, 'Revisado')">
+        Revisar
+    </button>
+    <button 
+        class="btn btn-cancelar" 
+        onclick="actualizarEstado(<?php echo $sugerencia['id_sugerencia']; ?>, 'Pendiente')">
+        Cancelar
+    </button>
+    <a href="ver_sugerencia_admin.php?id=<?php echo $sugerencia['id_sugerencia']; ?>" class="btn btn-revisar">
+        Ver Detalles
+    </a>
+</td>
                 </tr>
             <?php endforeach; ?>
         <?php else: ?>
