@@ -93,7 +93,7 @@ $sugerencias = obtenerTodasSugerencias();
             <th>Sugerencia</th>
             <th>Estado</th>
             <th>Fecha</th>
-        </tr>
+            </tr>
         </thead>
         <tbody>
         <?php if (!empty($sugerencias)): ?>
@@ -103,8 +103,20 @@ $sugerencias = obtenerTodasSugerencias();
                     <td><?php echo htmlspecialchars($sugerencia['correo_usuario']); ?></td>
                     <td><?php echo htmlspecialchars($sugerencia['nombre_candidato']); ?></td>
                     <td><?php echo htmlspecialchars($sugerencia['sugerencia']); ?></td>
-                    <td><?php echo $sugerencia['estado'] == 'revisado' ? 'Revisado' : 'Pendiente'; ?></td>
-                    <td><?php echo htmlspecialchars($sugerencia['created_at']); ?></td>
+                    <td>
+                        <?php 
+                        echo isset($sugerencia['estado']) ? 
+                            ($sugerencia['estado'] == 'Revisado' ? 'Revisado' : 'Pendiente') : 
+                            'Estado no disponible'; 
+                        ?>
+                    </td>
+                    <td>
+                        <?php 
+                        echo isset($sugerencia['created_at']) ? 
+                            htmlspecialchars($sugerencia['created_at']) : 
+                            'Fecha no disponible'; 
+                        ?>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         <?php else: ?>
