@@ -34,38 +34,51 @@
     </div>
 </div>
 <!-- Botón para agregar candidatos -->
-<button id="addCandidateBtn" class="add-candidate-btn">Agregar Candidatos</button>
+<button id="addCandidateBtn" class="add-candidate-btn">Agregar Candidato</button>
 
-<!-- Modal para seleccionar acción CRUD -->
+<!-- Modal para acciones CRUD -->
 <div id="crudActionModal" class="modal">
     <div class="modal-content">
-        <span class="close-modal" id="closeCrudModal">&times;</span>
         <h2>¿Qué deseas hacer?</h2>
-        <button id="createActionBtn">Crear Candidato</button>
-        <button id="readActionBtn">Ver Candidatos</button>
-        <button id="updateActionBtn">Actualizar Candidato</button>
-        <button id="deleteActionBtn">Eliminar Candidato</button>
+        <div class="button-group">
+            <button id="createActionBtn" class="action-btn create">Crear Candidato</button>
+            <button id="readActionBtn" class="action-btn read">Ver Candidatos</button>
+            <button id="updateActionBtn" class="action-btn update">Actualizar Candidato</button>
+            <button id="deleteActionBtn" class="action-btn delete">Eliminar Candidato</button>
+        </div>
+        <button id="closeCrudModal" class="close-btn">Cerrar</button>
     </div>
 </div>
 
 <!-- Modal para agregar candidato -->
 <div id="addCandidateModal" class="modal">
     <div class="modal-content">
-        <span class="close-modal" id="closeAddModal">&times;</span>
-        <h2>Agregar Nuevo Candidato</h2>
-        <form id="addCandidateForm">
+        <h2>Agregar Candidato</h2>
+        <form id="addCandidateForm" enctype="multipart/form-data">
             <label for="name">Nombre:</label>
-            <input type="text" id="name" name="name" required><br>
+            <input type="text" name="name" id="name" required>
+
             <label for="bio">Biografía:</label>
-            <textarea id="bio" name="bio" required></textarea><br>
+            <textarea name="bio" id="bio" required></textarea>
+
             <label for="experience">Experiencia:</label>
-            <textarea id="experience" name="experience" required></textarea><br>
+            <textarea name="experience" id="experience"></textarea>
+
             <label for="vision">Visión:</label>
-            <textarea id="vision" name="vision" required></textarea><br>
+            <textarea name="vision" id="vision"></textarea>
+
             <label for="achievements">Logros:</label>
-            <textarea id="achievements" name="achievements" required></textarea><br>
-            <button type="submit">Agregar Candidato</button>
+            <textarea name="achievements" id="achievements"></textarea>
+
+            <label for="party_id">Partido:</label>
+            <input type="number" name="party_id" id="party_id" required>
+
+            <label for="image">Imagen del Candidato:</label>
+            <input type="file" name="image" id="image" accept="image/*" required>
+
+            <button type="submit">Crear Candidato</button>
         </form>
+        <button id="closeAddCandidateModal" class="close-btn">Cerrar</button>
     </div>
 </div>
 <section id="candidates-section-1" class="candidates-section">

@@ -1,4 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
+    // Función para manejar errores de respuesta del servidor
+    const handleServerError = (response) => {
+        if (!response.ok) {
+            throw new Error(`Error en la respuesta del servidor: ${response.status}`);
+        }
+        return response.json(); // Intentar convertir la respuesta en JSON
+    };
+
+    // Función para manejar y mostrar errores
+    const handleError = (error) => {
+        console.error("Error detectado:", error);
+        alert("Ocurrió un error. Por favor, verifica la consola para más detalles.");
+    };
+
     // Escucha el clic en todos los botones de 'Ver más' para abrir los modales
     document.querySelectorAll(".open-modal").forEach(button => {
         button.addEventListener("click", function (event) {
@@ -10,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Fetch para obtener los datos del candidato usando el ID
             fetch(`../src/candidatos_queries.php?id=${candidateId}`)
-                .then(response => response.json())
+                .then(handleServerError)
                 .then(candidate => {
                     if (candidate.error) {
                         console.error(candidate.error);
@@ -19,7 +33,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     // Actualizar la imagen del modal
                     const imgElement = document.getElementById(`candidate-img-${candidateId}`);
-                    imgElement.src = `./Img/${imgSrc}`;
+                    if (imgElement) {
+                        imgElement.src = `./Img/${imgSrc}`;
+                    }
 
                     // Actualizar la información en el modal
                     document.getElementById(`candidate-name-${candidateId}`).textContent = candidate.name;
@@ -31,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     // Mostrar el modal
                     document.getElementById(modalId).style.display = "flex";
                 })
-                .catch(error => console.error("Error al cargar los datos del candidato:", error));
+                .catch(handleError);
         });
     });
 
@@ -62,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
             method: 'POST',
             body: formData
         })
-        .then(response => response.json())
+        .then(handleServerError)
         .then(result => {
             if (result.error) {
                 alert("Error al agregar candidato: " + result.error);
@@ -72,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.getElementById("addCandidateModal").style.display = "none";  // Cerrar el modal
             }
         })
-        .catch(error => console.error("Error al agregar candidato:", error));
+        .catch(handleError);
     });
 
     // Manejo del modal CRUD
@@ -122,31 +138,19 @@ document.addEventListener("DOMContentLoaded", function () {
         alert("Mostrar lógica para eliminar candidatos.");
     });
 
-    // Actualizar un candidato
-    function openUpdateCandidateModal(candidateId) {
-        // Aquí colocas tu lógica de actualización
-    }
-
-    // Eliminar un candidato
-    function deleteCandidate(candidateId) {
-        // Aquí colocas tu lógica de eliminación
-    }
-
-    // Cargar los candidatos
+    // Función para cargar candidatos
     function loadCandidates() {
-        fetch('../src/candidatos_queries.php') // Aquí puedes usar tu endpoint para obtener todos los candidatos
-        .then(response => response.json())
-        .then(candidates => {
-            const candidateList = document.getElementById('candidateList');
-            candidateList.innerHTML = ''; // Limpiar la lista actual
-            candidates.forEach(candidate => {
-                const li = document.createElement('li');
-                li.textContent = candidate.name;
-                candidateList.appendChild(li);
-            });
-        })
-        .catch(error => {
-            console.error("Error al cargar la lista de candidatos:", error);
-        });
+        fetch('../src/candidatos_queries.php')
+            .then(handleServerError)
+            .then(candidates => {
+                const candidateList = document.getElementById('candidateList');
+                candidateList.innerHTML = ''; // Limpiar la lista actual
+                candidates.forEach(candidate => {
+                    const li = document.createElement('li');
+                    li.textContent = candidate.name;
+                    candidateList.appendChild(li);
+                });
+            })
+            .catch(handleError);
     }
 });
