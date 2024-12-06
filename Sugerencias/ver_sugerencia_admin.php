@@ -24,6 +24,7 @@ if (!$sugerencia || !is_array($sugerencia)) {
 }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -32,60 +33,77 @@ if (!$sugerencia || !is_array($sugerencia)) {
     <title>Ver Sugerencia</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f4f4f9;
-        }
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #f4f4f9;
+    }
 
-        header {
-            background-color: #b22222;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
+    header {
+        background-color: #b22222;
+        color: white;
+        padding: 20px;
+        text-align: center;
+    }
 
-        .formulario {
-            width: 80%;
-            margin: 20px auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+    .formulario {
+        width: 80%;
+        margin: 20px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-        .formulario label {
-            font-weight: bold;
-            margin-top: 10px;
-        }
+    .formulario label {
+        font-weight: bold;
+        margin-top: 10px;
+    }
 
-        .formulario p {
-            margin: 10px 0;
-        }
+    .formulario p {
+        margin: 10px 0;
+    }
 
-        .btn {
-            padding: 8px 12px;
-            border-radius: 5px;
-            text-decoration: none;
-            color: white;
-            font-size: 0.9em;
-            background-color: #2b7a78;
-            border: none;
-        }
+    .acciones {
+        display: flex;
+        justify-content: center; /* Centrado de botones */
+        gap: 20px;
+        margin-top: 20px;
+    }
 
-        .btn:hover {
-            background-color: #19595a;
-        }
+    .btn {
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        color: white;
+        font-size: 1em;
+        background-color: #2b7a78;
+        border: none;
+        text-align: center;
+        min-width: 120px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+        transition: background-color 0.3s, transform 0.1s ease; /* Transición suave */
+    }
 
-        .btn-regresar {
-            background-color: #b22222;
-        }
+    .btn:hover {
+        background-color: #19595a;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Efecto hover con sombra */
+    }
 
-        .btn-regresar:hover {
-            background-color: #8b1a1a;
-        }
-    </style>
+    .btn:active {
+        transform: scale(0.98);
+    }
+
+    .btn-regresar {
+        background-color: #b22222;
+    }
+
+    .btn-regresar:hover {
+        background-color: #8b1a1a;
+    }
+</style>
+
 </head>
 <body>
 <header>
@@ -94,32 +112,34 @@ if (!$sugerencia || !is_array($sugerencia)) {
 <main>
     <div class="formulario">
         <form>
-        <label for="usuario">Usuario:</label>
-<p id="usuario"><?php echo htmlspecialchars($sugerencia['nombre_usuario'] ?? 'No disponible'); ?></p>
+            <label for="usuario">Usuario:</label>
+            <p id="usuario"><?php echo htmlspecialchars($sugerencia['nombre_usuario'] ?? 'No disponible'); ?></p>
 
-<label for="correo">Correo:</label>
-<p id="correo"><?php echo htmlspecialchars($sugerencia['correo_usuario'] ?? 'No disponible'); ?></p>
+            <label for="correo">Correo:</label>
+            <p id="correo"><?php echo htmlspecialchars($sugerencia['correo_usuario'] ?? 'No disponible'); ?></p>
 
-<label for="candidato">Candidato:</label>
-<p id="candidato"><?php echo htmlspecialchars($sugerencia['nombre_candidato'] ?? 'No disponible'); ?></p>
+            <label for="candidato">Candidato:</label>
+            <p id="candidato"><?php echo htmlspecialchars($sugerencia['nombre_candidato'] ?? 'No disponible'); ?></p>
 
-<label for="sugerencia">Sugerencia:</label>
-<p id="sugerencia"><?php echo htmlspecialchars($sugerencia['sugerencia'] ?? 'No disponible'); ?></p>
+            <label for="sugerencia">Sugerencia:</label>
+            <p id="sugerencia"><?php echo htmlspecialchars($sugerencia['sugerencia'] ?? 'No disponible'); ?></p>
 
-<label for="propuesta">Propuesta:</label>
-<p id="propuesta"><?php echo htmlspecialchars($sugerencia['propuesta'] ?? 'No disponible'); ?></p>
+            <label for="propuesta">Propuesta:</label>
+            <p id="propuesta"><?php echo htmlspecialchars($sugerencia['propuesta'] ?? 'No disponible'); ?></p>
 
-<label for="comentarios">Comentarios:</label>
-<p id="comentarios"><?php echo htmlspecialchars($sugerencia['comentarios'] ?? 'No disponible'); ?></p>
+            <label for="comentarios">Comentarios:</label>
+            <p id="comentarios"><?php echo htmlspecialchars($sugerencia['comentarios'] ?? 'No disponible'); ?></p>
 
-<label for="estado">Estado:</label>
-<p id="estado"><?php echo htmlspecialchars($sugerencia['estado_sug'] ?? 'No disponible'); ?></p>
+            <label for="estado">Estado:</label>
+            <p id="estado"><?php echo htmlspecialchars($sugerencia['estado_sug'] ?? 'No disponible'); ?></p>
 
-<label for="fecha">Fecha:</label>
-<p id="fecha"><?php echo htmlspecialchars($sugerencia['created_at'] ?? 'No disponible'); ?></p>
+            <label for="fecha">Fecha:</label>
+            <p id="fecha"><?php echo htmlspecialchars($sugerencia['created_at'] ?? 'No disponible'); ?></p>
 
-
-            <a href="sugerencias_admin.php" class="btn btn-regresar">Regresar</a>
+            <!-- Contenedor de botones -->
+            <div class="acciones">
+                <a href="sugerencias_admin.php" class="btn btn-regresar">Regresar</a>
+            </div>
         </form>
     </div>
 </main>

@@ -15,77 +15,144 @@ $sugerencias = obtenerTodasSugerencias();
     <title>Administrar Sugerencias</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f4f4f9;
-        }
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #f4f4f9;
+    }
 
-        header {
-            background-color: #b22222;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
+    header {
+        background-color: #b22222;
+        color: white;
+        padding: 20px;
+        text-align: center;
+    }
 
+    table {
+        width: 90%;
+        margin: 20px auto;
+        border-collapse: collapse;
+        border-radius: 8px; /* Bordes redondeados */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra de la tabla */
+    }
+
+    table, th, td {
+        border: 1px solid #ddd;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #b22222;
+        color: white;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    /* Botones con diseño atractivo y profesional */
+    .btn {
+        padding: 10px 18px;
+        border-radius: 6px;
+        text-decoration: none;
+        color: white;
+        font-size: 1em;
+        cursor: pointer;
+        border: none;
+        min-width: 120px; /* Asegurar que los botones tengan el mismo tamaño */
+        margin-right: 12px;
+        transition: all 0.3s ease; /* Transición suave */
+        display: inline-block;
+        text-align: center;
+    }
+
+    /* Botón "Revisar" */
+    .btn-revisar {
+        background-color: #2b7a78;
+    }
+
+    .btn-revisar:hover {
+        background-color: #19595a;
+        transform: translateY(-2px); /* Efecto hover */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Sombra en hover */
+    }
+
+    .btn-revisar:active {
+        transform: translateY(1px); /* Efecto clic */
+    }
+
+    /* Botón "Cancelar" */
+    .btn-cancelar {
+        background-color: #e63946;
+    }
+
+    .btn-cancelar:hover {
+        background-color: #d62828;
+        transform: translateY(-2px); /* Efecto hover */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Sombra en hover */
+    }
+
+    .btn-cancelar:active {
+        transform: translateY(1px); /* Efecto clic */
+    }
+
+    /* Botón "Ver Detalles" */
+    .btn-detalles {
+        background-color: #4c9c4f;
+    }
+
+    .btn-detalles:hover {
+        background-color: #388e3c;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-detalles:active {
+        transform: translateY(1px);
+    }
+
+    /* Separar los botones en altura */
+    .btn-revisar {
+        margin-bottom: 12px; /* Agregar espacio abajo del botón "Revisar" */
+    }
+
+    /* Mensaje cuando no hay sugerencias */
+    .mensaje {
+        text-align: center;
+        font-size: 1.2em;
+        color: #555;
+        margin-top: 20px;
+    }
+
+    /* Estilos para dispositivos móviles */
+    @media (max-width: 768px) {
         table {
-            width: 90%;
-            margin: 20px auto;
-            border-collapse: collapse;
-        }
-
-        table, th, td {
-            border: 1px solid #ddd;
+            width: 100%;
         }
 
         th, td {
-            padding: 10px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #b22222;
-            color: white;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
+            font-size: 0.9em;
         }
 
         .btn {
-            padding: 8px 12px;
-            border-radius: 5px;
-            text-decoration: none;
-            color: white;
-            font-size: 0.9em;
-            cursor: pointer;
-            border: none;
+            width: 100%;
+            margin-top: 10px;
+            padding: 12px;
         }
 
-        .btn-revisar {
-            background-color: #2b7a78;
+        .acciones {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
+    }
+</style>
 
-        .btn-revisar:hover {
-            background-color: #19595a;
-        }
-
-        .btn-cancelar {
-            background-color: #e63946;
-        }
-
-        .btn-cancelar:hover {
-            background-color: #d62828;
-        }
-
-        .mensaje {
-            text-align: center;
-            font-size: 1.2em;
-            color: #555;
-            margin-top: 20px;
-        }
-    </style>
     <script>
         async function actualizarEstado(id, estado) {
             const data = { id_sugerencia: id, estado: estado };
