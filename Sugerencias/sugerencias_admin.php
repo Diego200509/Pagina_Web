@@ -1,9 +1,7 @@
 <?php
 // Incluir archivo de consultas y configuración
 include('../src/sugerencias_queries.php');
-
 include('../Config/config.php');
-
 
 // Obtener todas las sugerencias desde la base de datos
 $sugerencias = obtenerTodasSugerencias();
@@ -61,6 +59,8 @@ $sugerencias = obtenerTodasSugerencias();
             text-decoration: none;
             color: white;
             font-size: 0.9em;
+            cursor: pointer;
+            border: none;
         }
 
         .btn-revisar {
@@ -71,6 +71,14 @@ $sugerencias = obtenerTodasSugerencias();
             background-color: #19595a;
         }
 
+        .btn-cancelar {
+            background-color: #e63946;
+        }
+
+        .btn-cancelar:hover {
+            background-color: #d62828;
+        }
+
         .mensaje {
             text-align: center;
             font-size: 1.2em;
@@ -78,6 +86,36 @@ $sugerencias = obtenerTodasSugerencias();
             margin-top: 20px;
         }
     </style>
+    <script>
+        async function actualizarEstado(id, estado) {
+            const data = { id_sugerencia: id, estado: estado };
+            try {
+                const response = await fetch('actualizar_estado.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result.success) {
+                        // Actualizar el estado en pantalla
+                        const estadoElemento = document.getElementById(`estado-${id}`);
+                        estadoElemento.textContent = estado === 'Revisado' ? 'Revisado' : 'Pendiente';
+                    } else {
+                        alert('Error al actualizar el estado.');
+                    }
+                } else {
+                    alert('Error en la solicitud.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al comunicarse con el servidor.');
+            }
+        }
+    </script>
 </head>
 <body>
 <header>
@@ -93,7 +131,8 @@ $sugerencias = obtenerTodasSugerencias();
             <th>Sugerencia</th>
             <th>Estado</th>
             <th>Fecha</th>
-            </tr>
+            <th>Acciones</th>
+        </tr>
         </thead>
         <tbody>
         <?php if (!empty($sugerencias)): ?>
@@ -103,12 +142,8 @@ $sugerencias = obtenerTodasSugerencias();
                     <td><?php echo htmlspecialchars($sugerencia['correo_usuario']); ?></td>
                     <td><?php echo htmlspecialchars($sugerencia['nombre_candidato']); ?></td>
                     <td><?php echo htmlspecialchars($sugerencia['sugerencia']); ?></td>
-                    <td>
-                        <?php 
-                        echo isset($sugerencia['estado']) ? 
-                            ($sugerencia['estado'] == 'Revisado' ? 'Revisado' : 'Pendiente') : 
-                            'Estado no disponible'; 
-                        ?>
+                    <td id="estado-<?php echo $sugerencia['id_sugerencia']; ?>">
+                        <?php echo isset($sugerencia['estado']) && $sugerencia['estado'] == 'Revisado' ? 'Revisado' : 'Pendiente'; ?>
                     </td>
                     <td>
                         <?php 
@@ -117,11 +152,19 @@ $sugerencias = obtenerTodasSugerencias();
                             'Fecha no disponible'; 
                         ?>
                     </td>
+                    <td>
+                        <button 
+                            class="btn btn-revisar" 
+                            onclick="actualizarEstado(<?php echo $sugerencia['id_sugerencia']; ?>, 'Revisado')">
+                            Revisar
+                        </button>
+
+                    </td>
                 </tr>
             <?php endforeach; ?>
         <?php else: ?>
             <tr>
-                <td colspan="6" class="mensaje">No hay sugerencias registradas.</td>
+                <td colspan="7" class="mensaje">No hay sugerencias registradas.</td>
             </tr>
         <?php endif; ?>
         </tbody>
