@@ -147,18 +147,17 @@
     </div>
 
     <!-- Inputs -->
-    <form>
-      <div class="input-group">
-        <i class="fas fa-user"></i>
-        <input type="text" placeholder="Usuario" required>
-      </div>
-      <div class="input-group">
-        <i class="fas fa-lock"></i>
-        <input type="password" placeholder="Contraseña" required>
-      </div>
-
-      <!-- Botón -->
-      <button type="submit" class="login-button">Iniciar sesión</button>
+    <form action="/src/login_queries.php" method="POST">
+  <div class="input-group">
+    <i class="fas fa-user"></i>
+    <input type="text" name="email" placeholder="Usuario" required>
+  </div>
+  <div class="input-group">
+    <i class="fas fa-lock"></i>
+    <input type="password" name="password" placeholder="Contraseña" required>
+  </div>
+  <button type="submit" class="login-button">Iniciar sesión</button>
+</form>
     </form>
   </div>
 </body>
