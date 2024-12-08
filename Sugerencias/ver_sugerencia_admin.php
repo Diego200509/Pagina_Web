@@ -33,77 +33,104 @@ if (!$sugerencia || !is_array($sugerencia)) {
     <title>Ver Sugerencia</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background: #f4f4f9;
-    }
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #eef2f3;
+        }
 
-    header {
-        background-color: #b22222;
-        color: white;
-        padding: 20px;
-        text-align: center;
-    }
+        header {
+            background-color: #00796b;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
 
-    .formulario {
-        width: 80%;
-        margin: 20px auto;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
 
-    .formulario label {
-        font-weight: bold;
-        margin-top: 10px;
-    }
+        .formulario {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px;
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
 
-    .formulario p {
-        margin: 10px 0;
-    }
+        .formulario label {
+            font-weight: bold;
+            display: block;
+            margin: 15px 0 5px;
+            font-size: 0.9em;
+            color: #333;
+        }
 
-    .acciones {
-        display: flex;
-        justify-content: center; /* Centrado de botones */
-        gap: 20px;
-        margin-top: 20px;
-    }
+        .formulario p {
+            margin: 0;
+            padding: 10px 15px;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            color: #555;
+        }
 
-    .btn {
-        padding: 10px 20px;
-        border-radius: 5px;
-        text-decoration: none;
-        color: white;
-        font-size: 1em;
-        background-color: #2b7a78;
-        border: none;
-        text-align: center;
-        min-width: 120px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
-        transition: background-color 0.3s, transform 0.1s ease; /* Transición suave */
-    }
+        .acciones {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
 
-    .btn:hover {
-        background-color: #19595a;
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Efecto hover con sombra */
-    }
+        .btn {
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            font-size: 1em;
+            font-weight: bold;
+            background-color: #00796b;
+            border: none;
+            text-align: center;
+            min-width: 150px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
 
-    .btn:active {
-        transform: scale(0.98);
-    }
+        .btn:hover {
+            background-color: #005f56;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
 
-    .btn-regresar {
-        background-color: #b22222;
-    }
+        .btn:active {
+            transform: scale(0.97);
+        }
 
-    .btn-regresar:hover {
-        background-color: #8b1a1a;
-    }
-</style>
+        .btn-regresar {
+            background-color: #d32f2f;
+        }
 
+        .btn-regresar:hover {
+            background-color: #9a2222;
+        }
+
+        @media (max-width: 768px) {
+            .formulario {
+                padding: 15px;
+            }
+
+            .btn {
+                font-size: 0.9em;
+            }
+        }
+    </style>
 </head>
 <body>
 <header>
