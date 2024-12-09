@@ -15,143 +15,119 @@ $sugerencias = obtenerTodasSugerencias();
     <title>Administrar Sugerencias</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background: #f4f4f9;
+        /* General */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #ffffff, #f0f0f0);
+        }
+
+        header {
+            background-color: #8a2b2b;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.5em;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        table {
+    width: 90%;
+    margin: 20px auto;
+    border-collapse: separate;
+    border-spacing: 0;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    padding: 10px;
+}
+td, th {
+    padding: 20px; /* Más espacio interno */
+    min-width: 100px; /* Evitar compresión */
+    border: 1px solid #ddd; /* Separación clara */
+}
+
+        th {
+            background-color: #8a2b2b;
+            color: white;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        td {
+            background-color: #ffffff;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Sombra interna sutil */
+        }
+
+        tr:nth-child(even) td {
+            background-color: #f9f9f9;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
+        }
+
+        tr:hover td {
+    background-color: #f5f5f5; /* Destaca fila activa */
+}
+.acciones {
+        display: flex;
+        flex-direction: column; /* Alineación vertical */
+        align-items: center; /* Centrado horizontal */
+        gap: 10px; /* Espaciado uniforme entre los botones */
     }
 
-    header {
-        background-color: #b22222;
-        color: white;
-        padding: 20px;
-        text-align: center;
-    }
-
-    table {
-        width: 90%;
-        margin: 20px auto;
-        border-collapse: collapse;
-        border-radius: 8px; /* Bordes redondeados */
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra de la tabla */
-    }
-
-    table, th, td {
-        border: 1px solid #ddd;
-    }
-
-    th, td {
-        padding: 12px;
-        text-align: left;
-    }
-
-    th {
-        background-color: #b22222;
-        color: white;
-    }
-
-    tr:nth-child(even) {
-        background-color: #f9f9f9;
-    }
-
-    /* Botones con diseño atractivo y profesional */
     .btn {
-        padding: 10px 18px;
-        border-radius: 6px;
-        text-decoration: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 0.9em;
+        font-weight: bold;
         color: white;
-        font-size: 1em;
         cursor: pointer;
         border: none;
-        min-width: 120px; /* Asegurar que los botones tengan el mismo tamaño */
-        margin-right: 12px;
-        transition: all 0.3s ease; /* Transición suave */
-        display: inline-block;
         text-align: center;
+        transition: all 0.3s ease;
+        width: 150px; /* Ancho fijo uniforme */
+        box-sizing: border-box; /* Incluye el padding en el tamaño del botón */
     }
 
-    /* Botón "Revisar" */
-    .btn-revisar {
-        background-color: #2b7a78;
-    }
-
-    .btn-revisar:hover {
-        background-color: #19595a;
-        transform: translateY(-2px); /* Efecto hover */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Sombra en hover */
-    }
-
-    .btn-revisar:active {
-        transform: translateY(1px); /* Efecto clic */
-    }
-
-    /* Botón "Cancelar" */
-    .btn-cancelar {
-        background-color: #e63946;
-    }
-
-    .btn-cancelar:hover {
-        background-color: #d62828;
-        transform: translateY(-2px); /* Efecto hover */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Sombra en hover */
-    }
-
-    .btn-cancelar:active {
-        transform: translateY(1px); /* Efecto clic */
-    }
-
-    /* Botón "Ver Detalles" */
-    .btn-detalles {
-        background-color: #4c9c4f;
-    }
-
-    .btn-detalles:hover {
-        background-color: #388e3c;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    }
-
-    .btn-detalles:active {
-        transform: translateY(1px);
-    }
-
-    /* Separar los botones en altura */
-    .btn-revisar {
-        margin-bottom: 12px; /* Agregar espacio abajo del botón "Revisar" */
-    }
-
-    /* Mensaje cuando no hay sugerencias */
-    .mensaje {
-        text-align: center;
-        font-size: 1.2em;
-        color: #555;
-        margin-top: 20px;
-    }
-
-    /* Estilos para dispositivos móviles */
-    @media (max-width: 768px) {
-        table {
-            width: 100%;
+        .btn-revisar {
+            background: #357a38;
         }
 
-        th, td {
-            font-size: 0.9em;
+        .btn-revisar:hover {
+            background: #2c6330;
         }
 
+        .btn-cancelar {
+            background: #b33a3a;
+        }
+
+        .btn-cancelar:hover {
+            background: #992f2f;
+        }
+
+        .btn-detalles {
+        background: #3b5998;
+        margin-top: 5px; /* Espacio adicional debajo de los otros botones */
+    }
+        .btn-detalles:hover {
+            background: #334b7f;
+        }
+
+        .mensaje {
+            text-align: center;
+            font-size: 1.2em;
+            color: #555;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
         .btn {
-            width: 100%;
-            margin-top: 10px;
-            padding: 12px;
-        }
-
-        .acciones {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+            width: 100%; /* Botones ocupan todo el ancho disponible */
         }
     }
-</style>
+        
+    </style>
 
     <script>
         async function actualizarEstado(id, estado) {
@@ -218,21 +194,12 @@ $sugerencias = obtenerTodasSugerencias();
                             'Fecha no disponible'; 
                         ?>
                     </td>
-                    <td>
-    <button 
-        class="btn btn-revisar" 
-        onclick="actualizarEstado(<?php echo $sugerencia['id_sugerencia']; ?>, 'Revisado')">
-        Revisar
-    </button>
-    <button 
-        class="btn btn-cancelar" 
-        onclick="actualizarEstado(<?php echo $sugerencia['id_sugerencia']; ?>, 'Pendiente')">
-        Cancelar
-    </button>
-    <a href="ver_sugerencia_admin.php?id=<?php echo $sugerencia['id_sugerencia']; ?>" class="btn btn-revisar">
-        Ver Detalles
-    </a>
+                    <td class="acciones">
+    <button class="btn btn-revisar" onclick="actualizarEstado(<?php echo $sugerencia['id_sugerencia']; ?>, 'Revisado')">Revisar</button>
+    <button class="btn btn-cancelar" onclick="actualizarEstado(<?php echo $sugerencia['id_sugerencia']; ?>, 'Pendiente')">Cancelar</button>
+    <a href="ver_sugerencia_admin.php?id=<?php echo $sugerencia['id_sugerencia']; ?>" class="btn btn-detalles">Ver Detalles</a>
 </td>
+
                 </tr>
             <?php endforeach; ?>
         <?php else: ?>
