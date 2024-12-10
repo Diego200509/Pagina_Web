@@ -7,7 +7,7 @@ include('../src/gestionarPropuestas_queries.php'); // Asegúrate de incluir el a
 
 // Configuración de paginación
 $propuestasPorPagina = 10;  // Número de propuestas por página
-$paginaActual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+$paginaActual = isset($_GET['pagina']) ? (int) $_GET['pagina'] : 1;
 $offset = ($paginaActual - 1) * $propuestasPorPagina;
 
 $rol = 'admin'; // Cambiar a 'superadmin' según el rol actual
@@ -57,6 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } catch (Exception $e) {
             die("Error al eliminar propuesta: " . $e->getMessage());
         }
+
     }
 
     if ($accion === 'editar') {
@@ -147,19 +148,22 @@ $result = $stmt->get_result();
 $partidos = obtenerPartidos($connection);
 
 // Función para mostrar la descripción con formato
-function mostrarDescripcionConFormato($descripcion) {
+function mostrarDescripcionConFormato($descripcion)
+{
     return nl2br(htmlspecialchars($descripcion));
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Propuestas</title>
     <link rel="stylesheet" href="estilosGestionarPropuestas.css">
 </head>
+
 <body>
     <header>
         <h1>Gestión de Propuestas - Proceso de Elecciones UTA 2024</h1>
@@ -190,7 +194,8 @@ function mostrarDescripcionConFormato($descripcion) {
                 <option value="Ciencias Humanas y de la Educación">Ciencias Humanas y de la Educación</option>
                 <option value="Ciencias de la Salud">Ciencias de la Salud</option>
                 <option value="Ingeniería Civil y Mecánica">Ingeniería Civil y Mecánica</option>
-                <option value="Ingeniería en Sistemas, Electrónica e Industrial">Ingeniería en Sistemas, Electrónica e Industrial</option>
+                <option value="Ingeniería en Sistemas, Electrónica e Industrial">Ingeniería en Sistemas, Electrónica e
+                    Industrial</option>
                 <option value="Infraestructura">Infraestructura</option>
                 <option value="Deportes">Deportes</option>
                 <option value="Cultura">Cultura</option>
@@ -276,13 +281,15 @@ function mostrarDescripcionConFormato($descripcion) {
 
     </div>
 </body>
+
 </html>
 
 
 <?php
 
 // Función para ocultar propuesta
-function ocultarPropuesta($connection, $id) {
+function ocultarPropuesta($connection, $id)
+{
     $query = "UPDATE PROPUESTAS SET ESTADO = 'Oculta' WHERE ID_PRO = ?";
     $stmt = $connection->prepare($query);
     if (!$stmt) {
@@ -300,7 +307,8 @@ function ocultarPropuesta($connection, $id) {
 }
 
 // Función para mostrar propuesta
-function mostrarPropuesta($connection, $id) {
+function mostrarPropuesta($connection, $id)
+{
     $query = "UPDATE PROPUESTAS SET ESTADO = 'Visible' WHERE ID_PRO = ?";
     $stmt = $connection->prepare($query);
     if (!$stmt) {
@@ -316,4 +324,4 @@ function mostrarPropuesta($connection, $id) {
     }
     $stmt->close();
 }
-?>   
+?>

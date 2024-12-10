@@ -85,21 +85,44 @@ function agregarPropuestaYColaboracion($connection, $titulo, $descripcion, $cate
 }
 
 // Función para eliminar propuesta
+// Función para eliminar propuesta
+// Función para eliminar propuesta
 function eliminarPropuesta($connection, $id) {
-    $query = "DELETE FROM PROPUESTAS WHERE ID_PRO = ?";
-    $stmt = $connection->prepare($query);
-    if (!$stmt) {
-        die("Error al preparar consulta eliminación: " . $connection->error);
+    // Primero, eliminar las colaboraciones asociadas a la propuesta
+    $queryColaboraciones = "DELETE FROM COLABORACIONES WHERE ID_PRO_COL = ?";
+    $stmtColaboraciones = $connection->prepare($queryColaboraciones);
+    if (!$stmtColaboraciones) {
+        die("Error al preparar consulta de eliminación de colaboraciones: " . $connection->error);
     }
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
+    $stmtColaboraciones->bind_param("i", $id);
+    $stmtColaboraciones->execute();
 
-    if ($stmt->affected_rows > 0) {
+    // Verificar si se eliminaron las colaboraciones correctamente
+    if ($stmtColaboraciones->affected_rows > 0) {
+        echo "Colaboraciones eliminadas con éxito.<br>";
+    } else {
+        echo "No se encontraron colaboraciones para eliminar.<br>";
+    }
+    $stmtColaboraciones->close();
+
+    // Ahora eliminar la propuesta
+    $queryPropuesta = "DELETE FROM PROPUESTAS WHERE ID_PRO = ?";
+    $stmtPropuesta = $connection->prepare($queryPropuesta);
+    if (!$stmtPropuesta) {
+        die("Error al preparar consulta de eliminación de propuesta: " . $connection->error);
+    }
+    $stmtPropuesta->bind_param("i", $id);
+    $stmtPropuesta->execute();
+
+    // Verificar si se eliminó la propuesta correctamente
+    if ($stmtPropuesta->affected_rows > 0) {
         echo "Propuesta eliminada con éxito.";
     } else {
         die("No se eliminó ninguna fila en PROPUESTAS.");
     }
 
-    $stmt->close();
+    $stmtPropuesta->close();
 }
+
+
 ?>
