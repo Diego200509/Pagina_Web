@@ -69,4 +69,13 @@ if (isset($_GET['action'])) {
         exit;
     }
 }
+
+function obtenerEventoNoticiaPorID($id)
+{
+    global $connection;
+    $query = "SELECT * FROM EVENTOS_NOTICIAS WHERE ID_EVT_NOT = $id";
+    $result = mysqli_query($connection, $query);
+    return mysqli_fetch_assoc($result);
+}
+
 ?>
