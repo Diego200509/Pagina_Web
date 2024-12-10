@@ -156,3 +156,13 @@ footer {
     bottom: 0;
     width: 100%;
 }
+
+/* Botón para ocultar */
+table button.ocultar {
+    background-color: #e67e22; /* Naranja */
+    color: white;
+}
+
+table button.ocultar:hover {
+    background-color: #d35400; /* Naranja más oscuro */
+}
