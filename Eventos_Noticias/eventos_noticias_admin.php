@@ -17,8 +17,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $ubicacion = $_POST['ubicacion'];
     $partido = $_POST['partido'];
     $estado = $_POST['estado'];
-    $imagen = $_FILES['imagen']['name'];
-    $imagenConRuta = $rutaBaseImagenes . $imagen;
+
+    // Verificar si se subió una imagen
+    if (!empty($_FILES['imagen']['name'])) {
+        $nombreImagen = $_FILES['imagen']['name'];
+        $rutaTemporal = $_FILES['imagen']['tmp_name'];
+        $directorioDestino = $_SERVER['DOCUMENT_ROOT'] . "/Pagina_Web/Pagina_Web/Eventos_Noticias/img/";
+
+        // Mover la imagen al directorio de destino
+        if (move_uploaded_file($rutaTemporal, $directorioDestino . $nombreImagen)) {
+            $imagenConRuta = "/Pagina_Web/Pagina_Web/Eventos_Noticias/img/" . $nombreImagen;
+        } else {
+            echo "<script>
+                Swal.fire({
+                    title: 'Error',
+                    text: 'No se pudo subir la imagen.',
+                    icon: 'error'
+                });
+            </script>";
+            exit;
+        }
+    } else {
+        // Si no se sube una nueva imagen, usar la imagen existente (en caso de edición)
+        $imagenConRuta = $_POST['imagen_actual'] ?? null;
+    }
 
     if ($id) {
         $resultado = actualizarEventoNoticia($id, $titulo, $descripcion, $fecha, $tipo, $ubicacion, $partido, $estado, $imagenConRuta);
@@ -47,7 +69,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             });
         </script>";
     }
-
 }
 
 // Manejar eliminación
@@ -109,7 +130,8 @@ if (isset($_GET['delete'])) {
         </select>
 
         <label for="imagen">Imagen:</label>
-        <input type="file" name="imagen" id="imagen" required>
+        <input type="file" name="imagen" id="imagen">
+        <input type="hidden" name="imagen_actual" value="<?php echo $evento['IMAGEN_EVT_NOT'] ?? ''; ?>">
 
         <button type="submit" class="btn btn-danger">Guardar</button>
     </form>
