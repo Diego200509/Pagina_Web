@@ -14,7 +14,7 @@ if ($rol !== 'admin' && $rol !== 'superadmin') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Propuestas</title>
-    <link rel="stylesheet" href="estilosPropuestas.css">
+    <link rel="stylesheet" href="estilosgestionarPropuestas.css">
 </head>
 <body>
     <header>
