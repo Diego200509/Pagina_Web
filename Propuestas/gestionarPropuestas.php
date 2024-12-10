@@ -5,6 +5,11 @@ ini_set('display_errors', 1);
 include('../config/config.php');
 include('../src/gestionarPropuestas_queries.php');
 
+// Configuración de paginación
+$propuestasPorPagina = 10; // Número de propuestas por página
+$paginaActual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+$offset = ($paginaActual - 1) * $propuestasPorPagina;
+
 $rol = 'admin'; // Cambiar a 'superadmin' según el rol actual
 
 if ($rol !== 'admin' && $rol !== 'superadmin') {
@@ -53,8 +58,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Obtener propuestas y partidos
-$result = obtenerPropuestasConPartidos($connection);
+// Obtener el total de propuestas
+$totalPropuestasResult = $connection->query("SELECT COUNT(*) AS total FROM PROPUESTAS");
+$totalPropuestas = $totalPropuestasResult->fetch_assoc()['total'];
+$totalPaginas = ceil($totalPropuestas / $propuestasPorPagina);
+
+// Obtener las propuestas con paginación
+$result = $connection->query("
+    SELECT 
+        PROPUESTAS.ID_PRO, PROPUESTAS.TIT_PRO, PROPUESTAS.DESC_PRO, PROPUESTAS.CAT_PRO,
+        PARTIDOS_POLITICOS.NOM_PAR
+    FROM PROPUESTAS
+    INNER JOIN COLABORACIONES ON PROPUESTAS.ID_PRO = COLABORACIONES.ID_PRO_COL
+    INNER JOIN PARTIDOS_POLITICOS ON COLABORACIONES.ID_PAR_COL = PARTIDOS_POLITICOS.ID_PAR
+    LIMIT $propuestasPorPagina OFFSET $offset
+");
+
 $partidos = obtenerPartidos($connection);
 ?>
 <!DOCTYPE html>
@@ -147,6 +166,22 @@ $partidos = obtenerPartidos($connection);
                 <?php endif; ?>
             </tbody>
         </table>
+
+        <!-- Barra de navegación para la paginación -->
+        <div class="pagination">
+            <?php if ($paginaActual > 1): ?>
+                <a href="?pagina=<?= $paginaActual - 1 ?>">Anterior</a>
+            <?php endif; ?>
+
+            <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
+                <a href="?pagina=<?= $i ?>" <?= $i === $paginaActual ? 'class="active"' : '' ?>><?= $i ?></a>
+            <?php endfor; ?>
+
+            <?php if ($paginaActual < $totalPaginas): ?>
+                <a href="?pagina=<?= $paginaActual + 1 ?>">Siguiente</a>
+            <?php endif; ?>
+        </div>
+
     </div>
 </body>
 </html>
