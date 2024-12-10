@@ -101,7 +101,6 @@ form button:hover {
 }
 
 /* Tabla de propuestas */
-/* Estilo para la tabla */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -119,14 +118,13 @@ table td {
     white-space: normal;    /* Asegura que el texto se ajuste al espacio disponible */
 }
 
-/* Asegura que el texto largo no se salga de la celda */
 table td {
-    max-width: 300px;  /* Define un ancho máximo para las celdas */
+    max-width: 200px;  /* Define un ancho máximo para las celdas */
     word-wrap: break-word;
-    overflow: hidden;  /* Evita el desbordamiento de texto */
+    overflow: hidden;       /* Evita el desbordamiento de texto */
 }
 
-/* Resto de estilos para la tabla */
+/* Estilo para la tabla de propuestas */
 table th {
     background-color: #004680;
     color: white;
@@ -140,52 +138,114 @@ table tr:hover {
     background-color: #f1f1f1;
 }
 
+/* Botones de acción en las celdas de la tabla */
 table td form {
-    display: inline-block;  /* Los formularios se alinean en línea */
-    margin-right: 10px;  /* Separación entre botones */
+    display: flex;            /* Usamos flexbox para alinear los botones horizontalmente */
+    flex-wrap: wrap;          /* Permite que los botones se ajusten en varias filas si es necesario */
+    gap: 10px;                /* Espacio entre los botones */
+    justify-content: flex-start;  /* Alinea los botones al inicio de la celda */
 }
 
-/* Botones de acción */
 table button {
-    display: inline-block; /* Asegura que los botones estén en una fila */
-    margin-right: 10px; /* Espacio entre los botones */
-    padding: 8px 16px; /* Relleno para los botones */
-    font-size: 12px; /* Tamaño de texto */
-    border-radius: 5px; /* Bordes redondeados */
+    display: inline-block;        /* Asegura que los botones estén en una fila */
+    padding: 8px 16px;            /* Relleno para los botones */
+    font-size: 12px;              /* Tamaño de texto */
+    border-radius: 5px;           /* Bordes redondeados */
     cursor: pointer;
+    margin-right: 5px;            /* Espacio entre botones */
+    width: 100px;                 /* Establece un ancho fijo para los botones */
+    min-width: 100px;             /* Establece un ancho mínimo para los botones */
+    text-align: center;           /* Centra el texto dentro del botón */
 }
 
-table button:hover {
-    background-color: #003366;
-}
-
-/* Botones "Ocultar" y "Mostrar" */
+/* Estilo para el botón "Ocultar" */
 table button.ocultar {
-    background-color: #e67e22; /* Naranja */
+    background-color: #e67e22;    /* Naranja */
     color: white;
 }
 
 table button.ocultar:hover {
-    background-color: #d35400; /* Naranja más oscuro */
+    background-color: #d35400;    /* Naranja más oscuro */
 }
 
+/* Estilo para el botón "Mostrar" */
 table button.mostrar {
-    background-color: #27ae60; /* Verde */
+    background-color: #27ae60;    /* Verde */
     color: white;
 }
 
 table button.mostrar:hover {
-    background-color: #2ecc71; /* Verde más brillante */
+    background-color: #2ecc71;    /* Verde más brillante */
 }
 
-table button.eliminar, table button.editar {
-    background-color: #004680; /* Azul */
+/* Estilo para el botón "Eliminar" */
+table button.eliminar {
+    background-color: #c0392b;    /* Rojo */
     color: white;
 }
 
-table button.eliminar:hover, table button.editar:hover {
-    background-color: #003366; /* Azul más oscuro */
+table button.eliminar:hover {
+    background-color: #e74c3c;    /* Rojo más brillante */
 }
+
+/* Estilo para el botón "Editar" */
+table button.editar {
+    background-color: #004680;    /* Azul */
+    color: white;
+}
+
+table button.editar:hover {
+    background-color: #003366;    /* Azul más oscuro */
+}
+
+/* Para los botones dentro de la celda, de forma responsiva */
+table td {
+    padding: 12px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+table td form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; /* Espaciado horizontal y vertical entre botones */
+    justify-content: flex-start; /* Alineación hacia la izquierda */
+    align-items: center; /* Alineación vertical */
+}
+
+
+/* Asegura que las celdas no se desborden */
+table td {
+    word-wrap: break-word; /* Permite que el texto se ajuste dentro de la celda */
+    white-space: normal;    /* Ajusta el texto automáticamente */
+    max-width: 300px;       /* Define un ancho máximo para la celda */
+    overflow: hidden;  
+         /* Evita el desbordamiento de texto */
+}
+
+/* Estilo de los botones cuando son presionados */
+table button {
+    display: inline-block; /* Los botones estarán uno al lado del otro */
+    width: 150px; /* Ancho fijo */
+    padding: 10px 15px; /* Espaciado interno */
+    font-size: 12px; /* Tamaño de texto */
+    margin-bottom: 25px;
+     /* Espaciado vertical entre filas de botones */
+    border-radius: 5px; /* Bordes redondeados */
+    text-align: center; /* Centrado del texto */
+    cursor: pointer; /* Indicador de clic */
+}
+
+
+/* Estilo para las acciones en la fila */
+table td form {
+    display: flex;            /* Usamos flexbox para alinear los botones en una fila */
+    gap: 90px;                /* Agrega espacio de 10px entre los botones tanto horizontal como verticalmente */
+    justify-content: flex-start; 
+    margin-right: 10px; /* Alinea los botones al inicio de la celda */
+}
+
+
 /* Pie de página */
 footer {
     text-align: center;
@@ -261,4 +321,33 @@ footer {
     background-color: #4b0082;
     color: #fff;
     font-weight: bold;
+}
+/* Botones alineados horizontalmente en pantallas grandes */
+@media (min-width: 768px) {
+    table td form {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 10px; /* Espacio horizontal entre botones */
+        justify-content: flex-start; /* Alineados a la izquierda */
+        align-items: center; /* Alineación vertical */
+    }
+}
+
+/* Botones en columna para pantallas pequeñas */
+@media (max-width: 767px) {
+    table td form {
+        display: flex;
+        flex-direction: column; /* Alineación vertical */
+        gap: 10px; /* Espacio vertical entre botones */
+        justify-content: center; /* Centrado vertical */
+        align-items: center; /* Centrado horizontal */
+    }
+}
+
+table button {
+    width: auto; /* Ajusta automáticamente el ancho */
+    padding: 8px 12px; /* Relleno interno */
+    text-align: center; /* Centra el texto */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer;
 }
