@@ -53,34 +53,35 @@
         <button id="closeCrudModal" class="close-btn">Cerrar</button>
     </div>
 </div>
-
-<!-- Modal para agregar candidato -->
 <div id="addCandidateModal" class="modal">
     <div class="modal-content">
         <h2>Agregar Candidato</h2>
         <form id="addCandidateForm" enctype="multipart/form-data">
             <label for="name">Nombre:</label>
-            <input type="text" name="name" id="name" required>
+            <input type="text" name="name" id="name" placeholder="Ingrese el nombre del candidato" required>
 
             <label for="bio">Biografía:</label>
-            <textarea name="bio" id="bio" required></textarea>
+            <textarea name="bio" id="bio" placeholder="Escriba una breve biografía" required></textarea>
 
             <label for="experience">Experiencia:</label>
-            <textarea name="experience" id="experience"></textarea>
+            <textarea name="experience" id="experience" placeholder="Describa la experiencia del candidato"></textarea>
 
             <label for="vision">Visión:</label>
-            <textarea name="vision" id="vision"></textarea>
+            <textarea name="vision" id="vision" placeholder="Visión del candidato"></textarea>
 
             <label for="achievements">Logros:</label>
-            <textarea name="achievements" id="achievements"></textarea>
+            <textarea name="achievements" id="achievements" placeholder="Logros principales"></textarea>
 
             <label for="party_id">Partido:</label>
-            <input type="number" name="party_id" id="party_id" required>
+            <select name="party_id" id="party_id" required>
+                <option value="" disabled selected>Seleccione un partido</option>
+                <!-- Aquí se llenarán dinámicamente las opciones de los partidos -->
+            </select>
 
             <label for="image">Imagen del Candidato:</label>
             <input type="file" name="image" id="image" accept="image/*" required>
 
-            <button type="submit">Crear Candidato</button>
+            <button type="submit" id="submitCandidateBtn">Crear Candidato</button>
         </form>
         <button id="closeAddCandidateModal" class="close-btn">Cerrar</button>
     </div>
