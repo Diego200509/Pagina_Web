@@ -3,15 +3,12 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 include('../config/config.php');
-include('../src/gestionarPropuestas_queries.php'); // Asegúrate de incluir el archivo de funciones
+include('../src/gestionarPropuestas_queries.php');
 
 // Configuración de paginación
 $propuestasPorPagina = 10;  // Número de propuestas por página
 $paginaActual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
 $offset = ($paginaActual - 1) * $propuestasPorPagina;
-
-echo "Página actual: " . $paginaActual . "<br>";
-echo "Offset: " . $offset . "<br>";
 
 $rol = 'admin'; // Cambiar a 'superadmin' según el rol actual
 
@@ -63,22 +60,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Obtener el total de propuestas sin duplicados
-$totalPropuestasResult = $connection->query("SELECT COUNT(PROPUESTAS.ID_PRO) AS total FROM PROPUESTAS");
-if (!$totalPropuestasResult) {
-    die("Error al obtener el total de propuestas: " . $connection->error);
-}
-
+// Obtener el total de propuestas en la base de datos (sin duplicados)
+$totalPropuestasResult = $connection->query("SELECT COUNT(*) AS total FROM PROPUESTAS");
 $totalPropuestas = $totalPropuestasResult->fetch_assoc()['total'];
-echo "Total de propuestas en BD: " . $totalPropuestas . "<br>";
-
 $totalPaginas = ceil($totalPropuestas / $propuestasPorPagina);
-echo "Total de páginas: " . $totalPaginas . "<br>";
 
-// Obtener las propuestas con paginación y sin duplicados
-$result = obtenerPropuestasConPartidos($connection, $propuestasPorPagina, $offset);  // Llamamos a la función de consultas
-echo "Resultado de la consulta: <br>";
-var_dump($result);
+// Depuración de variables
+echo "<pre>";
+echo "Página actual: " . $paginaActual . "\n";
+echo "Offset: " . $offset . "\n";
+echo "Total de propuestas en BD: " . $totalPropuestas . "\n";
+echo "Total de páginas: " . $totalPaginas . "\n";
+echo "</pre>";
+
+// Consulta simplificada para ver si la paginación funciona sin GROUP_CONCAT
+$query = "
+    SELECT 
+        PROPUESTAS.ID_PRO, PROPUESTAS.TIT_PRO, PROPUESTAS.DESC_PRO, PROPUESTAS.CAT_PRO
+    FROM PROPUESTAS
+    ORDER BY PROPUESTAS.ID_PRO ASC
+    LIMIT ? OFFSET ?
+";
+
+$stmt = $connection->prepare($query);
+$stmt->bind_param("ii", $propuestasPorPagina, $offset);
+$stmt->execute();
+$result = $stmt->get_result();
 
 $partidos = obtenerPartidos($connection);
 ?>
@@ -145,7 +152,6 @@ $partidos = obtenerPartidos($connection);
                     <th>Título</th>
                     <th>Descripción</th>
                     <th>Categoría</th>
-                    <th>Partido Político</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -157,7 +163,6 @@ $partidos = obtenerPartidos($connection);
                             <td><?= $row['TIT_PRO'] ?></td>
                             <td><?= $row['DESC_PRO'] ?></td>
                             <td><?= $row['CAT_PRO'] ?></td>
-                            <td><?= $row['PARTIDOS'] ?></td>
                             <td>
                                 <form method="POST" action="gestionarPropuestas.php" style="display:inline;">
                                     <input type="hidden" name="id" value="<?= $row['ID_PRO'] ?>">
@@ -168,7 +173,7 @@ $partidos = obtenerPartidos($connection);
                     <?php endwhile; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="6">No hay propuestas registradas.</td>
+                        <td colspan="5">No hay propuestas registradas.</td>
                     </tr>
                 <?php endif; ?>
             </tbody>

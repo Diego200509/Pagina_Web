@@ -4,32 +4,32 @@
 function obtenerPropuestasConPartidos($connection, $propuestasPorPagina, $offset) {
     // Consulta mejorada para obtener las propuestas sin duplicados
     $query = "
-        SELECT
-            PROPUESTAS.ID_PRO, PROPUESTAS.TIT_PRO, PROPUESTAS.DESC_PRO, PROPUESTAS.CAT_PRO,
-            GROUP_CONCAT(PARTIDOS_POLITICOS.NOM_PAR SEPARATOR ', ') AS PARTIDOS
-        FROM PROPUESTAS
-        INNER JOIN COLABORACIONES ON PROPUESTAS.ID_PRO = COLABORACIONES.ID_PRO_COL
-        INNER JOIN PARTIDOS_POLITICOS ON COLABORACIONES.ID_PAR_COL = PARTIDOS_POLITICOS.ID_PAR
-        GROUP BY PROPUESTAS.ID_PRO
-        ORDER BY PROPUESTAS.ID_PRO ASC
-        LIMIT ? OFFSET ?";
+    SELECT 
+        PROPUESTAS.ID_PRO, PROPUESTAS.TIT_PRO, PROPUESTAS.DESC_PRO, PROPUESTAS.CAT_PRO,
+        GROUP_CONCAT(PARTIDOS_POLITICOS.NOM_PAR SEPARATOR ', ') AS PARTIDOS
+    FROM PROPUESTAS
+    INNER JOIN COLABORACIONES ON PROPUESTAS.ID_PRO = COLABORACIONES.ID_PRO_COL
+    INNER JOIN PARTIDOS_POLITICOS ON COLABORACIONES.ID_PAR_COL = PARTIDOS_POLITICOS.ID_PAR
+    GROUP BY PROPUESTAS.ID_PRO
+    ORDER BY PROPUESTAS.ID_PRO ASC
+    LIMIT ? OFFSET ?";
 
-    echo "Consulta: " . $query . "<br>";  // Ver la consulta
+echo "Consulta: " . $query . "<br>";  // Ver la consulta para asegurarte de que es correcta
 
-    $stmt = $connection->prepare($query);
-    if (!$stmt) {
-        echo "<script>console.error('Error al preparar consulta: " . $connection->error . "');</script>";
-        die("Error al preparar consulta.");
-    }
+$stmt = $connection->prepare($query);
+if (!$stmt) {
+    echo "<script>console.error('Error al preparar consulta: " . $connection->error . "');</script>";
+    die("Error al preparar consulta.");
+}
 
-    // Enlazamos los parámetros correctamente para la paginación
-    $stmt->bind_param("ii", $propuestasPorPagina, $offset);
-    $stmt->execute();
-    $result = $stmt->get_result();
+$stmt->bind_param("ii", $propuestasPorPagina, $offset);
+$stmt->execute();
+$result = $stmt->get_result();
 
-    echo "Número de filas en el resultado: " . $result->num_rows . "<br>";  // Verifica cuántos resultados trae
+echo "Número de filas en el resultado: " . $result->num_rows . "<br>";  // Verifica cuántos resultados trae
 
-    return $result;
+return $result;
+
 }
 
 // Función para obtener todos los partidos
