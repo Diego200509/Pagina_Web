@@ -1,37 +1,46 @@
 <?php
+include('../config/config.php'); // Incluye la conexión a la base de datos
+include('../src/gestionarPropuestas_queries.php'); // Incluye las funciones de consulta
+
 // Simular roles para pruebas
 $rol = 'admin'; // Cambiar a 'superadmin' o null según lo que quieras probar
 
+// Verificar el acceso
 if ($rol !== 'admin' && $rol !== 'superadmin') {
     echo "Acceso denegado. Redirigiendo...";
     header('Location: ../Home/inicio.php'); // Redirige a la página principal
     exit();
 }
 
-// Simular conexión a la base de datos
-$propuestas = [
-    ['id' => 1, 'nombre_partido' => 'Partido A', 'descripcion' => 'Propuesta A', 'facultad' => 'Ingeniería', 'estado' => 'visible'],
-    ['id' => 2, 'nombre_partido' => 'Partido B', 'descripcion' => 'Propuesta B', 'facultad' => 'Ciencias Sociales', 'estado' => 'visible']
-];
-
+// Procesar acciones del formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $accion = $_POST['accion'];
-    $id = $_POST['id'] ?? null;
 
-    if ($accion === 'ocultar') {
-        // Simular actualización en la base de datos
-        foreach ($propuestas as &$propuesta) {
-            if ($propuesta['id'] == $id) {
-                $propuesta['estado'] = 'oculto';
-                break;
-            }
-        }
+    if ($accion === 'agregar') {
+        $titulo = $_POST['titulo'];
+        $descripcion = $_POST['descripcion'];
+        $categoria = $_POST['categoria'];
+
+        // Insertar propuesta en la base de datos
+        agregarPropuesta($connection, $titulo, $descripcion, $categoria);
+
+        header('Location: gestionarPropuestas.php?status=success');
+        exit();
     }
+
     if ($accion === 'eliminar') {
-        // Simular eliminación
-        $propuestas = array_filter($propuestas, fn($propuesta) => $propuesta['id'] != $id);
+        $id = $_POST['id'];
+
+        // Eliminar propuesta de la base de datos
+        eliminarPropuesta($connection, $id);
+
+        header('Location: gestionarPropuestas.php?status=success');
+        exit();
     }
 }
+
+// Obtener todas las propuestas para mostrar en la tabla
+$result = obtenerPropuestas($connection);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -54,53 +63,68 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="container">
         <h2>Administrar Propuestas</h2>
 
-        <?php if ($rol === 'admin' || $rol === 'superadmin'): ?>
+        <!-- Mostrar mensaje de éxito si existe -->
+        <?php if (isset($_GET['status']) && $_GET['status'] == 'success'): ?>
+            <p class="success">Operación realizada con éxito.</p>
+        <?php endif; ?>
+
         <!-- Formulario para agregar propuesta -->
         <form method="POST" action="gestionarPropuestas.php">
             <h3>Agregar Nueva Propuesta</h3>
-            <input type="text" name="nombrePartido" placeholder="Nombre del Partido" required>
-            <textarea name="descripcionPropuesta" placeholder="Descripción de la propuesta" required></textarea>
-            <select name="facultad" required>
+            <input type="text" name="titulo" placeholder="Título de la Propuesta" required>
+            <textarea name="descripcion" placeholder="Descripción de la Propuesta" required></textarea>
+            <select name="categoria" required>
                 <option value="">Seleccionar Facultad o Interés</option>
                 <option value="Ciencias Administrativas">Ciencias Administrativas</option>
                 <option value="Ciencia e Ingeniería en Alimentos">Ciencia e Ingeniería en Alimentos</option>
-                <!-- Más opciones -->
+                <option value="Jurisprudencia y Ciencias Sociales">Jurisprudencia y Ciencias Sociales</option>
+                <option value="Contabilidad y Auditoría">Contabilidad y Auditoría</option>
+                <option value="Ciencias Humanas y de la Educación">Ciencias Humanas y de la Educación</option>
+                <option value="Ciencias de la Salud">Ciencias de la Salud</option>
+                <option value="Ingeniería Civil y Mecánica">Ingeniería Civil y Mecánica</option>
+                <option value="Ingeniería en Sistemas, Electrónica e Industrial">Ingeniería en Sistemas, Electrónica e Industrial</option>
+                <option value="Infraestructura">Infraestructura</option>
+                <option value="Deportes">Deportes</option>
+                <option value="Cultura">Cultura</option>
+                <option value="Investigación">Investigación</option>
+                <option value="Vinculación con la Sociedad">Vinculación con la Sociedad</option>
             </select>
             <button type="submit" name="accion" value="agregar">Agregar Propuesta</button>
         </form>
-        <?php endif; ?>
 
-        <!-- Listado de propuestas -->
+        <!-- Tabla de propuestas existentes -->
         <h3>Propuestas Existentes</h3>
         <table>
             <thead>
                 <tr>
-                    <th>Nombre del Partido</th>
+                    <th>ID</th>
+                    <th>Título</th>
                     <th>Descripción</th>
-                    <th>Facultad</th>
-                    <th>Estado</th>
+                    <th>Categoría</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($propuestas as $propuesta): ?>
-                    <?php if ($rol === 'admin' || $rol === 'superadmin'): ?>
+                <?php if ($result->num_rows > 0): ?>
+                    <?php while ($row = $result->fetch_assoc()): ?>
                         <tr>
-                            <td><?= $propuesta['nombre_partido'] ?></td>
-                            <td><?= $propuesta['descripcion'] ?></td>
-                            <td><?= $propuesta['facultad'] ?></td>
-                            <td><?= $propuesta['estado'] ?></td>
+                            <td><?= $row['ID_PRO'] ?></td>
+                            <td><?= $row['TIT_PRO'] ?></td>
+                            <td><?= $row['DESC_PRO'] ?></td>
+                            <td><?= $row['CAT_PRO'] ?></td>
                             <td>
-                                <form method="POST" action="gestionarPropuestas.php">
-                                    <input type="hidden" name="id" value="<?= $propuesta['id'] ?>">
-                                    <button type="submit" name="accion" value="editar">Editar</button>
+                                <form method="POST" action="gestionarPropuestas.php" style="display:inline;">
+                                    <input type="hidden" name="id" value="<?= $row['ID_PRO'] ?>">
                                     <button type="submit" name="accion" value="eliminar">Eliminar</button>
-                                    <button type="submit" name="accion" value="ocultar" class="ocultar">Ocultar</button>
                                 </form>
                             </td>
                         </tr>
-                    <?php endif; ?>
-                <?php endforeach; ?>
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="5">No hay propuestas registradas.</td>
+                    </tr>
+                <?php endif; ?>
             </tbody>
         </table>
     </div>
