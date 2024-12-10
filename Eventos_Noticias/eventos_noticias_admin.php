@@ -18,13 +18,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $partido = $_POST['partido'];
     $estado = $_POST['estado'];
     $imagen = $_FILES['imagen']['name'];
-    $imagenConRuta = $rutaBaseImagenes . $imagen; // Concatenar la ruta base con el nombre de la imagen
+    $imagenConRuta = $rutaBaseImagenes . $imagen;
 
     if ($id) {
-        // Actualizar un registro existente
         $resultado = actualizarEventoNoticia($id, $titulo, $descripcion, $fecha, $tipo, $ubicacion, $partido, $estado, $imagenConRuta);
     } else {
-        // Crear un nuevo registro
         $resultado = crearEventoNoticia($titulo, $descripcion, $fecha, $tipo, $ubicacion, $partido, $estado, $imagenConRuta);
     }
 
@@ -39,7 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 if (isset($_GET['delete'])) {
     $id = $_GET['delete'];
     eliminarEventoNoticia($id);
-    header('Location: eventos_noticias_admin.php');
+    $mensajeEliminacion = "El registro se ha eliminado correctamente."; // Mensaje para la ventana emergente
+    echo "<script>window.onload = function() { mostrarNotificacion('$mensajeEliminacion'); }</script>";
 }
 ?>
 
@@ -51,6 +50,8 @@ if (isset($_GET['delete'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administrar Eventos y Noticias</title>
     <link rel="stylesheet" href="styleEventsAdmin.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body>
@@ -68,7 +69,7 @@ if (isset($_GET['delete'])) {
         <input type="date" name="fecha" id="fecha" required>
 
         <label for="tipo">Tipo:</label>
-        <select name="tipo" id="tipo" required>
+        <select name="tipo" id="tipo" required onchange="habilitarUbicacion()">
             <option value="EVENTO">Evento</option>
             <option value="NOTICIA">Noticia</option>
         </select>
@@ -91,12 +92,12 @@ if (isset($_GET['delete'])) {
         <label for="imagen">Imagen:</label>
         <input type="file" name="imagen" id="imagen" required>
 
-        <button type="submit">Guardar</button>
+        <button type="submit" class="btn btn-danger">Guardar</button>
     </form>
 
     <h2>Lista de Eventos y Noticias</h2>
-    <table>
-        <thead>
+    <table class="table table-bordered">
+        <thead class="table-danger">
             <tr>
                 <th>ID</th>
                 <th>Título</th>
@@ -115,13 +116,51 @@ if (isset($_GET['delete'])) {
                     <td><?php echo $evento['TIPO_REG_EVT_NOT']; ?></td>
                     <td><?php echo $evento['ESTADO_EVT_NOT']; ?></td>
                     <td>
-                        <a href="eventos_noticias_admin.php?edit=<?php echo $evento['ID_EVT_NOT']; ?>">Editar</a>
-                        <a href="eventos_noticias_admin.php?delete=<?php echo $evento['ID_EVT_NOT']; ?>">Eliminar</a>
+                        <a href="eventos_noticias_admin.php?edit=<?php echo $evento['ID_EVT_NOT']; ?>"
+                            class="btn btn-warning btn-sm">Editar</a>
+                        <a href="eventos_noticias_admin.php?delete=<?php echo $evento['ID_EVT_NOT']; ?>"
+                            class="btn btn-danger btn-sm">Eliminar</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
+
+    <!-- Ventana emergente -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="toastNotificacion" class="toast align-items-center text-bg-success border-0" role="alert"
+            aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    <!-- Mensaje dinámico -->
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Función para habilitar/deshabilitar el campo "ubicación"
+        function habilitarUbicacion() {
+            const tipo = document.getElementById("tipo").value;
+            const ubicacion = document.getElementById("ubicacion");
+            ubicacion.disabled = (tipo === "NOTICIA");
+        }
+
+        // Mostrar la notificación de eliminación
+        function mostrarNotificacion(mensaje) {
+            const toastEl = document.getElementById("toastNotificacion");
+            const toastBody = toastEl.querySelector(".toast-body");
+            toastBody.innerText = mensaje;
+
+            const toast = new bootstrap.Toast(toastEl);
+            toast.show();
+        }
+
+        // Ejecutar la función para habilitar/deshabilitar ubicación al cargar la página
+        document.addEventListener("DOMContentLoaded", habilitarUbicacion);
+    </script>
 </body>
 
 </html>
