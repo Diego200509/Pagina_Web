@@ -1,6 +1,9 @@
 <?php
 include '../src/eventos_noticias_admin_queries.php';
 
+// Ruta base para las imágenes
+$rutaBaseImagenes = "/Pagina_Web/Pagina_Web/Eventos_Noticias/img/";
+
 // Obtener todos los eventos y noticias
 $eventosNoticias = obtenerEventosNoticias();
 
@@ -15,17 +18,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $partido = $_POST['partido'];
     $estado = $_POST['estado'];
     $imagen = $_FILES['imagen']['name'];
+    $imagenConRuta = $rutaBaseImagenes . $imagen; // Concatenar la ruta base con el nombre de la imagen
 
     if ($id) {
         // Actualizar un registro existente
-        $resultado = actualizarEventoNoticia($id, $titulo, $descripcion, $fecha, $tipo, $ubicacion, $partido, $estado, $imagen);
+        $resultado = actualizarEventoNoticia($id, $titulo, $descripcion, $fecha, $tipo, $ubicacion, $partido, $estado, $imagenConRuta);
     } else {
         // Crear un nuevo registro
-        $resultado = crearEventoNoticia($titulo, $descripcion, $fecha, $tipo, $ubicacion, $partido, $estado, $imagen);
+        $resultado = crearEventoNoticia($titulo, $descripcion, $fecha, $tipo, $ubicacion, $partido, $estado, $imagenConRuta);
     }
 
     if ($resultado) {
-        move_uploaded_file($_FILES['imagen']['tmp_name'], "img/$imagen");
         header('Location: eventos_noticias_admin.php');
     } else {
         echo "Error en la operación.";
@@ -39,14 +42,17 @@ if (isset($_GET['delete'])) {
     header('Location: eventos_noticias_admin.php');
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administrar Eventos y Noticias</title>
     <link rel="stylesheet" href="styleEventsAdmin.css">
 </head>
+
 <body>
     <h1>Administrar Eventos y Noticias</h1>
 
@@ -117,4 +123,5 @@ if (isset($_GET['delete'])) {
         </tbody>
     </table>
 </body>
+
 </html>
