@@ -1,10 +1,10 @@
-// Mensaje para verificar que el archivo de JavaScript está cargado
 console.log("Script cargado correctamente");
 
 function filterProposals() {
     console.log("Evento onchange activado"); // Verificar si el evento se activa
 
     var selectedFaculty = document.getElementById("faculty").value;
+    console.log("Facultad seleccionada:", selectedFaculty); // Imprimir la facultad seleccionada
 
     // Realizar una solicitud AJAX para obtener las propuestas desde el servidor
     fetch('http://localhost/Pagina_Web/Pagina_Web/src/propuestas_queries.php', {
@@ -20,7 +20,6 @@ function filterProposals() {
         displayProposals(data);
     })
     .catch(error => console.error('Error:', error));
-    
 }
 
 function displayProposals(proposals) {
@@ -58,28 +57,21 @@ function displayProposals(proposals) {
             candidato1Description.innerHTML = `<div class="proposal-item visible"><strong>No hay propuestas disponibles para este partido.</strong></div>`;
         }
 
-        // Mostrar el nombre del segundo partido dinámicamente, aunque no tenga propuestas
-        const segundoPartido = proposals.find(proposal => proposal.partido !== partido1);
-        if (segundoPartido) {
-            const partido2 = segundoPartido.partido;
-            partido2Nombre.innerText = partido2;
+        // Ahora para el segundo partido
+        const partido2 = partidos[1];
+        partido2Nombre.innerText = partido2;
 
-            // Filtra propuestas para el segundo partido
-            const partido2Proposals = proposals.filter(proposal => proposal.partido === partido2);
-            if (partido2Proposals.length > 0) {
-                candidato2Description.innerHTML = partido2Proposals.map((proposal, index) => `
-                    <div class="proposal-item visible">
-                        <strong>Propuesta ${index + 1}: ${proposal.titulo}</strong>
-                        <p>${proposal.descripcion}</p>
-                        <p><strong>Categoría:</strong> ${proposal.categoria}</p>
-                    </div>
-                `).join('');
-            } else {
-                candidato2Description.innerHTML = `<div class="proposal-item visible"><strong>No hay propuestas disponibles para este partido.</strong></div>`;
-            }
+        // Filtra propuestas para el segundo partido
+        const partido2Proposals = proposals.filter(proposal => proposal.partido === partido2);
+        if (partido2Proposals.length > 0) {
+            candidato2Description.innerHTML = partido2Proposals.map((proposal, index) => `
+                <div class="proposal-item visible">
+                    <strong>Propuesta ${index + 1}: ${proposal.titulo}</strong>
+                    <p>${proposal.descripcion}</p>
+                    <p><strong>Categoría:</strong> ${proposal.categoria}</p>
+                </div>
+            `).join('');
         } else {
-            // Si no hay un segundo partido, mostrar un mensaje para el segundo cuadro
-            partido2Nombre.innerText = "Partido no disponible";
             candidato2Description.innerHTML = `<div class="proposal-item visible"><strong>No hay propuestas disponibles para este partido.</strong></div>`;
         }
     } else {
@@ -90,10 +82,6 @@ function displayProposals(proposals) {
         candidato2Description.innerHTML = `<div class="proposal-item visible"><strong>No hay propuestas disponibles para este partido.</strong></div>`;
     }
 }
-
-
-
-
 
 // Inicializar con la primera opción
 filterProposals();
