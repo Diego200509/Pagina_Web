@@ -1,18 +1,17 @@
 <?php
-include('../config/config.php'); // Incluye la conexión a la base de datos
-include('../src/gestionarPropuestas_queries.php'); // Incluye las funciones de consulta
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-// Simular roles para pruebas
-$rol = 'admin'; // Cambiar a 'superadmin' o null según lo que quieras probar
+include('../config/config.php');
+include('../src/gestionarPropuestas_queries.php');
 
-// Verificar el acceso
+$rol = 'admin'; // Cambiar a 'superadmin' según el rol actual
+
 if ($rol !== 'admin' && $rol !== 'superadmin') {
-    echo "Acceso denegado. Redirigiendo...";
-    header('Location: ../Home/inicio.php'); // Redirige a la página principal
+    header('Location: ../Home/inicio.php');
     exit();
 }
 
-// Procesar acciones del formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $accion = $_POST['accion'];
 
@@ -20,27 +19,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $titulo = $_POST['titulo'];
         $descripcion = $_POST['descripcion'];
         $categoria = $_POST['categoria'];
+        $partido = $_POST['partido'];
 
-        // Insertar propuesta en la base de datos
-        agregarPropuesta($connection, $titulo, $descripcion, $categoria);
+        // Verificar que los datos del formulario se recibieron correctamente
+        if (empty($titulo) || empty($descripcion) || empty($categoria) || empty($partido)) {
+            die("Error: Faltan datos en el formulario. Verifique los campos.");
+        }
 
-        header('Location: gestionarPropuestas.php?status=success');
-        exit();
+        try {
+            agregarPropuestaYColaboracion($connection, $titulo, $descripcion, $categoria, $partido);
+            header('Location: gestionarPropuestas.php?status=success');
+            exit();
+        } catch (Exception $e) {
+            die("Error al agregar propuesta: " . $e->getMessage());
+        }
     }
 
     if ($accion === 'eliminar') {
         $id = $_POST['id'];
 
-        // Eliminar propuesta de la base de datos
-        eliminarPropuesta($connection, $id);
+        // Verificar que se recibió el ID
+        if (empty($id)) {
+            die("Error: No se recibió el ID de la propuesta para eliminar.");
+        }
 
-        header('Location: gestionarPropuestas.php?status=success');
-        exit();
+        try {
+            eliminarPropuesta($connection, $id);
+            header('Location: gestionarPropuestas.php?status=success');
+            exit();
+        } catch (Exception $e) {
+            die("Error al eliminar propuesta: " . $e->getMessage());
+        }
     }
 }
 
-// Obtener todas las propuestas para mostrar en la tabla
-$result = obtenerPropuestas($connection);
+// Obtener propuestas y partidos
+$result = obtenerPropuestasConPartidos($connection);
+$partidos = obtenerPartidos($connection);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -63,12 +78,10 @@ $result = obtenerPropuestas($connection);
     <div class="container">
         <h2>Administrar Propuestas</h2>
 
-        <!-- Mostrar mensaje de éxito si existe -->
         <?php if (isset($_GET['status']) && $_GET['status'] == 'success'): ?>
             <p class="success">Operación realizada con éxito.</p>
         <?php endif; ?>
 
-        <!-- Formulario para agregar propuesta -->
         <form method="POST" action="gestionarPropuestas.php">
             <h3>Agregar Nueva Propuesta</h3>
             <input type="text" name="titulo" placeholder="Título de la Propuesta" required>
@@ -89,10 +102,15 @@ $result = obtenerPropuestas($connection);
                 <option value="Investigación">Investigación</option>
                 <option value="Vinculación con la Sociedad">Vinculación con la Sociedad</option>
             </select>
+            <select name="partido" required>
+                <option value="">Seleccionar Partido Político</option>
+                <?php while ($partido = $partidos->fetch_assoc()): ?>
+                    <option value="<?= $partido['ID_PAR'] ?>"><?= $partido['NOM_PAR'] ?></option>
+                <?php endwhile; ?>
+            </select>
             <button type="submit" name="accion" value="agregar">Agregar Propuesta</button>
         </form>
 
-        <!-- Tabla de propuestas existentes -->
         <h3>Propuestas Existentes</h3>
         <table>
             <thead>
@@ -101,6 +119,7 @@ $result = obtenerPropuestas($connection);
                     <th>Título</th>
                     <th>Descripción</th>
                     <th>Categoría</th>
+                    <th>Partido Político</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -112,6 +131,7 @@ $result = obtenerPropuestas($connection);
                             <td><?= $row['TIT_PRO'] ?></td>
                             <td><?= $row['DESC_PRO'] ?></td>
                             <td><?= $row['CAT_PRO'] ?></td>
+                            <td><?= $row['NOM_PAR'] ?></td>
                             <td>
                                 <form method="POST" action="gestionarPropuestas.php" style="display:inline;">
                                     <input type="hidden" name="id" value="<?= $row['ID_PRO'] ?>">
@@ -122,7 +142,7 @@ $result = obtenerPropuestas($connection);
                     <?php endwhile; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="5">No hay propuestas registradas.</td>
+                        <td colspan="6">No hay propuestas registradas.</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
