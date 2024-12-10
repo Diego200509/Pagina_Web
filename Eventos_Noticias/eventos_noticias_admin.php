@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $descripcion = $_POST['descripcion'];
     $fecha = $_POST['fecha'];
     $tipo = $_POST['tipo'];
-    $ubicacion = $_POST['ubicacion'];
+    $ubicacion = !empty($_POST['ubicacion']) ? $_POST['ubicacion'] : null;
     $partido = $_POST['partido'];
     $estado = $_POST['estado'];
 
