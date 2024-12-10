@@ -391,3 +391,44 @@ h2 {
 .close-btn:hover {
     background: #bbb;
 }
+
+label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+    color: #555;
+}
+
+input, textarea, select, button {
+    width: 100%;
+    margin-top: 5px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+textarea {
+    resize: none;
+}
+
+button {
+    background-color: #00ADEF;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+button:hover {
+    background-color:#FF0080;
+}
+
+.close-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.close-btn:hover {
+    background-color: #d11a2a;
+}

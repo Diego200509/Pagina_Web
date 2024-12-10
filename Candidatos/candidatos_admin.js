@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!response.ok) {
             throw new Error(`Error en la respuesta del servidor: ${response.status}`);
         }
-        return response.json(); // Intentar convertir la respuesta en JSON
+        return response.json();
     };
 
     // Función para manejar y mostrar errores
@@ -13,19 +13,25 @@ document.addEventListener("DOMContentLoaded", function () {
         alert("Ocurrió un error. Por favor, verifica la consola para más detalles.");
     };
 
-    // Función para abrir el modal CRUD
-    const crudActionModal = document.getElementById("crudActionModal");
+    // Selección de elementos principales
     const addCandidateBtn = document.getElementById("addCandidateBtn");
+    const crudActionModal = document.getElementById("crudActionModal");
     const closeCrudModal = document.getElementById("closeCrudModal");
+    const addCandidateModal = document.getElementById("addCandidateModal");
+    const createActionBtn = document.getElementById("createActionBtn");
+    const closeAddModal = document.getElementById("closeAddCandidateModal");
 
+    // Abrir modal al hacer clic en el botón "¿Qué deseas hacer?"
     if (addCandidateBtn && crudActionModal) {
         addCandidateBtn.addEventListener("click", () => {
             crudActionModal.style.display = "flex";
         });
 
-        closeCrudModal?.addEventListener("click", () => {
-            crudActionModal.style.display = "none";
-        });
+        if (closeCrudModal) {
+            closeCrudModal.addEventListener("click", () => {
+                crudActionModal.style.display = "none";
+            });
+        }
 
         crudActionModal.addEventListener("click", (event) => {
             if (event.target === crudActionModal) {
@@ -33,22 +39,70 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     } else {
-        console.error("No se encontraron los elementos para manejar el modal CRUD.");
+        console.error("El botón 'addCandidateBtn' o el modal 'crudActionModal' no se encontraron.");
     }
 
-    // Función para abrir el modal de creación
-    const createActionBtn = document.getElementById("createActionBtn");
-    const addCandidateModal = document.getElementById("addCandidateModal");
-    const closeAddModal = document.getElementById("closeAddCandidateModal");
-
+    // Abrir modal de creación al hacer clic en "Crear Candidato"
     if (createActionBtn && addCandidateModal) {
         createActionBtn.addEventListener("click", () => {
             crudActionModal.style.display = "none";
             addCandidateModal.style.display = "flex";
         });
 
-        closeAddModal?.addEventListener("click", () => {
-            addCandidateModal.style.display = "none";
+        if (closeAddModal) {
+            closeAddModal.addEventListener("click", () => {
+                addCandidateModal.style.display = "none";
+            });
+        }
+    } else {
+        console.error("El botón 'createActionBtn' o el modal 'addCandidateModal' no se encontraron.");
+    }
+
+    // Función para cargar los partidos desde la base de datos
+    function loadParties() {
+        fetch('../src/candidatos_queries.php?fetch=parties') // Endpoint para obtener los partidos
+            .then(handleServerError)
+            .then(parties => {
+                const partySelect = document.getElementById("party_id");
+                if (!partySelect) {
+                    console.error("No se encontró el elemento <select> con id 'party_id'.");
+                    return;
+                }
+                partySelect.innerHTML = '<option value="" disabled selected>Seleccione un partido</option>'; // Limpiar opciones previas
+                parties.forEach(party => {
+                    const option = document.createElement("option");
+                    option.value = party.ID_PAR; // Campo de ID del partido
+                    option.textContent = party.NOM_PAR; // Campo de nombre del partido
+                    partySelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error("Error al cargar los partidos:", error));
+    }
+
+    // Manejo del formulario de creación
+    const addCandidateForm = document.getElementById("addCandidateForm");
+    if (addCandidateForm) {
+        addCandidateForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const formData = new FormData(addCandidateForm);
+
+            fetch('../src/candidatos_queries.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(handleServerError)
+                .then(result => {
+                    if (result.error) {
+                        alert("Error al agregar candidato: " + result.error);
+                    } else {
+                        alert("Candidato agregado exitosamente.");
+                        loadCandidates(); // Recargar la lista de candidatos
+                        addCandidateModal.style.display = "none";
+                        addCandidateForm.reset();
+                    }
+                })
+                .catch(handleError);
         });
     }
 
@@ -57,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
         fetch('../src/candidatos_queries.php')
             .then(handleServerError)
             .then(candidates => {
-                const candidateList = document.getElementById('candidateList');
+                const candidateList = document.getElementById("candidateList");
                 if (!candidateList) return console.error("No se encontró el elemento 'candidateList' en el DOM.");
 
                 candidateList.innerHTML = ''; // Limpiar la lista actual
@@ -114,40 +168,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Cerrar los modales de información
-    document.querySelectorAll(".close-modal").forEach(closeButton => {
-        closeButton.addEventListener("click", function () {
-            this.closest(".modal").style.display = "none";
-        });
-    });
-
-    // Manejo del formulario de creación
-    const addCandidateForm = document.getElementById("addCandidateForm");
-    if (addCandidateForm) {
-        addCandidateForm.addEventListener("submit", function (event) {
-            event.preventDefault();
-
-            const formData = new FormData(addCandidateForm);
-
-            fetch('../src/candidatos_queries.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(handleServerError)
-            .then(result => {
-                if (result.error) {
-                    alert("Error al agregar candidato: " + result.error);
-                } else {
-                    alert("Candidato agregado exitosamente.");
-                    loadCandidates();
-                    addCandidateModal.style.display = "none";
-                    addCandidateForm.reset();
-                }
-            })
-            .catch(handleError);
-        });
-    }
-
-    // Cargar candidatos al inicio
-    loadCandidates();
+    // Llamar a las funciones al cargar la página
+    loadParties(); // Cargar los partidos políticos en el select
+    loadCandidates(); // Cargar candidatos
 });
