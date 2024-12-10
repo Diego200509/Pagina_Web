@@ -8,22 +8,55 @@ function habilitarUbicacion() {
 // Función para eliminar un evento usando AJAX
 function eliminarEvento(id) {
     if (confirm("¿Estás seguro de eliminar este evento?")) {
-        fetch(`eventos_noticias_admin_queries.php?action=delete&id=${id}`)
-            .then((response) => response.json())
-            .then((data) => {
+        fetch(`../src/eventos_noticias_admin_queries.php?action=delete&id=${id}`)
+            .then(response => response.json())
+            .then(data => {
                 if (data.success) {
-                    const fila = document.getElementById(`fila-${id}`);
-                    fila.remove();
-                    mostrarNotificacion("El registro se eliminó correctamente.");
+                    recargarTabla(); // Recargar la tabla después de eliminar
+                    mostrarNotificacion(data.message);
                 } else {
-                    mostrarNotificacion("Error al eliminar el registro.");
+                    mostrarNotificacion(data.message);
                 }
             })
-            .catch((error) => {
-                console.error("Error:", error);
-                mostrarNotificacion("Error de comunicación con el servidor.");
-            });
+            .catch(error => console.error("Error:", error));
     }
+}
+
+// Función para recargar la tabla
+function recargarTabla() {
+    fetch(`../src/eventos_noticias_admin_queries.php?action=fetch`)
+        .then(response => response.json())
+        .then(data => {
+            const tbody = document.querySelector("#tabla-eventos tbody");
+            tbody.innerHTML = ""; // Limpiar tabla
+
+            if (data.success && Array.isArray(data.data) && data.data.length > 0) {
+                data.data.forEach(evento => {
+                    const fila = document.createElement("tr");
+                    fila.id = `fila-${evento.ID_EVT_NOT}`;
+                    fila.innerHTML = `
+                        <td>${evento.ID_EVT_NOT}</td>
+                        <td>${evento.TIT_EVT_NOT}</td>
+                        <td>${evento.FECHA_EVT_NOT}</td>
+                        <td>${evento.TIPO_REG_EVT_NOT}</td>
+                        <td>${evento.ESTADO_EVT_NOT}</td>
+                        <td>
+                            <button class="btn btn-warning btn-sm">Editar</button>
+                            <button class="btn btn-danger btn-sm" onclick="eliminarEvento(${evento.ID_EVT_NOT})">Eliminar</button>
+                        </td>
+                    `;
+                    tbody.appendChild(fila);
+                });
+            } else {
+                // Mostrar mensaje si no hay datos
+                const fila = document.createElement("tr");
+                fila.innerHTML = `
+                    <td colspan="6" class="text-center">No hay registros disponibles</td>
+                `;
+                tbody.appendChild(fila);
+            }
+        })
+        .catch(error => console.error("Error al recargar la tabla:", error));
 }
 
 // Mostrar la notificación de eliminación
@@ -37,4 +70,7 @@ function mostrarNotificacion(mensaje) {
 }
 
 // Ejecutar la función para habilitar/deshabilitar ubicación al cargar la página
-document.addEventListener("DOMContentLoaded", habilitarUbicacion);
+document.addEventListener("DOMContentLoaded", () => {
+    habilitarUbicacion();
+    recargarTabla(); // Cargar los datos al iniciar la página
+});
