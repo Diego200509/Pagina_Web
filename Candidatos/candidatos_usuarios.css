@@ -1,0 +1,90 @@
+/* Títulos de los partidos */
+.candidates-section h2 {
+    font-size: 1.5em;  /* Ajustamos el tamaño del título */
+    margin: 0;  /* Eliminamos el margen por defecto */
+    padding-left: 20px;  /* Alineamos el título al margen */
+    text-align: left;  /* Asegura que el texto esté alineado a la izquierda */
+    color: #333;  /* Color oscuro para el texto */
+    margin-bottom: 10px;  /* Separación entre el título y las tarjetas */
+    font-family: 'Arial', sans-serif;  /* Fuente más moderna */
+}
+
+/* Contenedor para las tarjetas de los candidatos */
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;  /* Esto permite que las tarjetas se acomoden en varias filas si es necesario */
+    gap: 20px;  /* Espaciado entre las tarjetas */
+    padding: 20px;
+    justify-content: flex-start;  /* Alineamos las tarjetas a la izquierda */
+}
+
+/* Estilos de las tarjetas de los candidatos */
+.card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    flex: 1 1 240px;  /* Esto asegura que las tarjetas sean flexibles y ocupen el espacio disponible */
+    max-width: 240px;  /* Limita el ancho máximo de las tarjetas */
+    margin: 10px;
+}
+
+.card:hover {
+    transform: scale(1.05);  /* Agranda la tarjeta cuando se pasa el cursor sobre ella */
+}
+
+.card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.card .card-content {
+    padding: 15px;
+}
+
+.card h3 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.card p {
+    font-size: 0.9em;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.card a {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-decoration: none;
+}
+
+.card a:hover {
+    background-color: #0056b3;
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+    .card {
+        flex: 1 1 45%;
+        max-width: 45%;
+    }
+}
+
+@media (max-width: 480px) {
+    .card {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+}
