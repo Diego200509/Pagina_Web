@@ -43,6 +43,16 @@
 
 .card .card-content {
     padding: 15px;
+    overflow: hidden; /* Oculta el contenido desbordado */
+}
+
+.card p {
+    font-size: 0.9em;
+    color: #555;
+    margin-bottom: 10px;
+    text-overflow: ellipsis; /* Limita el texto que no cabe */
+    white-space: nowrap; /* Evita el salto de línea */
+    overflow: hidden; /* Oculta el contenido que exceda */
 }
 
 .card h3 {
@@ -51,11 +61,7 @@
     color: #333;
 }
 
-.card p {
-    font-size: 0.9em;
-    color: #555;
-    margin-bottom: 10px;
-}
+
 
 .card a {
     display: inline-block;

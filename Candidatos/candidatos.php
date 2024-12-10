@@ -53,18 +53,17 @@
 </section>
 </main>
 
-    <!-- Modales para mostrar detalles de los candidatos -->
-    <div id="candidateModal" class="modal">
-        <div class="modal-content">
-            <span id="closeCandidateModal" class="close-btn">&times;</span>
-            <h2 id="candidate-name"></h2>
-            <img id="candidate-img" src="" alt="Imagen del candidato">
-            <p><strong>Biografía:</strong> <span id="candidate-bio"></span></p>
-            <p><strong>Experiencia:</strong> <span id="candidate-experience"></span></p>
-            <p><strong>Visión:</strong> <span id="candidate-vision"></span></p>
-            <p><strong>Logros:</strong> <span id="candidate-achievements"></span></p>
-        </div>
+<div id="candidateModal" class="modal">
+    <div class="modal-content">
+        <span id="closeCandidateModal" class="close-btn">&times;</span>
+        <h2 id="candidate-name"></h2>
+        <img id="candidate-img" src="" alt="Imagen del candidato">
+        <p><strong>Biografía:</strong> <span id="candidate-bio"></span></p>
+        <p><strong>Experiencia:</strong> <span id="candidate-experience"></span></p>
+        <p><strong>Visión:</strong> <span id="candidate-vision"></span></p>
+        <p><strong>Logros:</strong> <span id="candidate-achievements"></span></p>
     </div>
+</div>
 
     <script src="candidatos.js"></script>
 </body>
