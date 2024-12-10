@@ -5,6 +5,27 @@ function habilitarUbicacion() {
     ubicacion.disabled = (tipo === "NOTICIA");
 }
 
+// Función para eliminar un evento usando AJAX
+function eliminarEvento(id) {
+    if (confirm("¿Estás seguro de eliminar este evento?")) {
+        fetch(`eventos_noticias_admin_queries.php?action=delete&id=${id}`)
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    const fila = document.getElementById(`fila-${id}`);
+                    fila.remove();
+                    mostrarNotificacion("El registro se eliminó correctamente.");
+                } else {
+                    mostrarNotificacion("Error al eliminar el registro.");
+                }
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+                mostrarNotificacion("Error de comunicación con el servidor.");
+            });
+    }
+}
+
 // Mostrar la notificación de eliminación
 function mostrarNotificacion(mensaje) {
     const toastEl = document.getElementById("toastNotificacion");
