@@ -27,10 +27,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($resultado) {
-        header('Location: eventos_noticias_admin.php');
+        echo "<script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: '¡Guardado!',
+                    text: 'El evento/noticia se guardó correctamente.',
+                    icon: 'success'
+                }).then(() => {
+                    window.location.href = 'eventos_noticias_admin.php'; // Redirige después de cerrar el mensaje
+                });
+            });
+        </script>";
     } else {
-        echo "Error en la operación.";
+        echo "<script>
+            Swal.fire({
+                title: 'Error',
+                text: 'Hubo un problema al guardar el evento/noticia.',
+                icon: 'error'
+            });
+        </script>";
     }
+
 }
 
 // Manejar eliminación
@@ -53,6 +70,7 @@ if (isset($_GET['delete'])) {
     <!-- Solo incluir Bootstrap para la ventana emergente -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
