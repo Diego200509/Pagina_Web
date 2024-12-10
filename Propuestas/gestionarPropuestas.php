@@ -79,6 +79,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             die("Error al editar propuesta: " . $e->getMessage());
         }
     }
+
+    if ($accion === 'ocultar') {
+        $id = $_POST['id'];
+
+        // Verificar que se recibió el ID
+        if (empty($id)) {
+            die("Error: No se recibió el ID de la propuesta para ocultar.");
+        }
+
+        try {
+            // Llamar a la función de ocultar propuesta
+            ocultarPropuesta($connection, $id);
+            header('Location: gestionarPropuestas.php?status=success');
+            exit();
+        } catch (Exception $e) {
+            die("Error al ocultar propuesta: " . $e->getMessage());
+        }
+    }
 }
 
 // Obtener el total de propuestas en la base de datos (sin duplicados)
@@ -189,9 +207,13 @@ $partidos = obtenerPartidos($connection);
                                     <input type="hidden" name="id" value="<?= $row['ID_PRO'] ?>">
                                     <button type="submit" name="accion" value="eliminar">Eliminar</button>
                                 </form>
-                                <form method="POST" action="editarPropuesta.php" style="display:inline;">
+                                <form method="POST" action="gestionarPropuestas.php" style="display:inline;">
                                     <input type="hidden" name="id" value="<?= $row['ID_PRO'] ?>">
                                     <button type="submit" name="accion" value="editar">Editar</button>
+                                </form>
+                                <form method="POST" action="gestionarPropuestas.php" style="display:inline;">
+                                    <input type="hidden" name="id" value="<?= $row['ID_PRO'] ?>">
+                                    <button type="submit" name="accion" value="ocultar">Ocultar</button>
                                 </form>
                             </td>
                         </tr>
@@ -225,20 +247,23 @@ $partidos = obtenerPartidos($connection);
 </body>
 </html>  
 
+
 <?php
-// Función para editar propuesta
-function editarPropuesta($connection, $id, $titulo, $descripcion, $categoria) {
-    $query = "UPDATE PROPUESTAS SET TIT_PRO = ?, DESC_PRO = ?, CAT_PRO = ? WHERE ID_PRO = ?";
+
+// Función para ocultar propuesta
+function ocultarPropuesta($connection, $id) {
+    $query = "UPDATE PROPUESTAS SET ESTADO = 'Oculta' WHERE ID_PRO = ?";
     $stmt = $connection->prepare($query);
     if (!$stmt) {
-        die("Error al preparar consulta edición: " . $connection->error);
+        die("Error al preparar consulta ocultar: " . $connection->error);
     }
-    $stmt->bind_param("sssi", $titulo, $descripcion, $categoria, $id);
+    $stmt->bind_param("i", $id);
     $stmt->execute();
+
     if ($stmt->affected_rows > 0) {
-        echo "Propuesta editada con éxito.";
+        echo "Propuesta oculta con éxito.";
     } else {
-        die("No se editó ninguna fila en PROPUESTAS.");
+        die("No se ocultó ninguna fila en PROPUESTAS.");
     }
     $stmt->close();
 }
