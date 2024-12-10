@@ -3,7 +3,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 include('../config/config.php');
-include('../src/gestionarPropuestas_queries.php');
+include('../src/gestionarPropuestas_queries.php'); // Asegúrate de incluir el archivo de funciones
 
 // Configuración de paginación
 $propuestasPorPagina = 10;  // Número de propuestas por página
@@ -56,6 +56,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         } catch (Exception $e) {
             die("Error al eliminar propuesta: " . $e->getMessage());
+        }
+    }
+
+    if ($accion === 'editar') {
+        $id = $_POST['id'];
+        $titulo = $_POST['titulo'];
+        $descripcion = $_POST['descripcion'];
+        $categoria = $_POST['categoria'];
+
+        // Verificar que los datos del formulario se recibieron correctamente
+        if (empty($titulo) || empty($descripcion) || empty($categoria)) {
+            die("Error: Faltan datos en el formulario. Verifique los campos.");
+        }
+
+        try {
+            // Llamar a la función de editar propuesta
+            editarPropuesta($connection, $id, $titulo, $descripcion, $categoria);
+            header('Location: gestionarPropuestas.php?status=success');
+            exit();
+        } catch (Exception $e) {
+            die("Error al editar propuesta: " . $e->getMessage());
         }
     }
 }
@@ -168,6 +189,10 @@ $partidos = obtenerPartidos($connection);
                                     <input type="hidden" name="id" value="<?= $row['ID_PRO'] ?>">
                                     <button type="submit" name="accion" value="eliminar">Eliminar</button>
                                 </form>
+                                <form method="POST" action="editarPropuesta.php" style="display:inline;">
+                                    <input type="hidden" name="id" value="<?= $row['ID_PRO'] ?>">
+                                    <button type="submit" name="accion" value="editar">Editar</button>
+                                </form>
                             </td>
                         </tr>
                     <?php endwhile; ?>
@@ -198,4 +223,23 @@ $partidos = obtenerPartidos($connection);
 
     </div>
 </body>
-</html>
+</html>  
+
+<?php
+// Función para editar propuesta
+function editarPropuesta($connection, $id, $titulo, $descripcion, $categoria) {
+    $query = "UPDATE PROPUESTAS SET TIT_PRO = ?, DESC_PRO = ?, CAT_PRO = ? WHERE ID_PRO = ?";
+    $stmt = $connection->prepare($query);
+    if (!$stmt) {
+        die("Error al preparar consulta edición: " . $connection->error);
+    }
+    $stmt->bind_param("sssi", $titulo, $descripcion, $categoria, $id);
+    $stmt->execute();
+    if ($stmt->affected_rows > 0) {
+        echo "Propuesta editada con éxito.";
+    } else {
+        die("No se editó ninguna fila en PROPUESTAS.");
+    }
+    $stmt->close();
+}
+?>
