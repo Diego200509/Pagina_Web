@@ -161,6 +161,10 @@ if (isset($_GET['delete'])) {
                             class="btn btn-warning btn-sm">Editar</a>
                         <button class="btn btn-danger btn-sm"
                             onclick="eliminarEvento(<?php echo $evento['ID_EVT_NOT']; ?>)">Eliminar</button>
+                        <button class="btn btn-info btn-sm"
+                            onclick="cambiarEstado(<?php echo $evento['ID_EVT_NOT']; ?>, '<?php echo $evento['ESTADO_EVT_NOT']; ?>')">
+                            <?php echo $evento['ESTADO_EVT_NOT'] === 'Activo' ? 'Ocultar' : 'Activar'; ?>
+                        </button>
                     </td>
                 </tr>
             <?php endforeach; ?>

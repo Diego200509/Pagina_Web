@@ -78,4 +78,20 @@ function obtenerEventoNoticiaPorID($id)
     return mysqli_fetch_assoc($result);
 }
 
+if (isset($_GET['action']) && $_GET['action'] === 'changeState' && isset($_GET['id']) && isset($_GET['newState'])) {
+    $id = intval($_GET['id']);
+    $nuevoEstado = $_GET['newState'];
+
+    $query = "UPDATE EVENTOS_NOTICIAS SET ESTADO_EVT_NOT = '$nuevoEstado' WHERE ID_EVT_NOT = $id";
+    $result = mysqli_query($connection, $query);
+
+    if ($result) {
+        echo json_encode(['success' => true, 'message' => "El estado se actualizó a '$nuevoEstado'."]);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'No se pudo actualizar el estado.']);
+    }
+    exit;
+}
+
+
 ?>

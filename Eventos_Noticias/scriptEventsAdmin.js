@@ -69,6 +69,39 @@ function mostrarNotificacion(mensaje) {
     toast.show();
 }
 
+function cambiarEstado(id, estadoActual) {
+    const nuevoEstado = estadoActual === "Activo" ? "Oculto" : "Activo";
+
+    fetch(`../src/eventos_noticias_admin_queries.php?action=changeState&id=${id}&newState=${nuevoEstado}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                Swal.fire({
+                    title: '¡Estado cambiado!',
+                    text: `El registro se ha actualizado a estado "${nuevoEstado}".`,
+                    icon: 'success'
+                }).then(() => {
+                    location.reload(); // Recargar la página para reflejar los cambios
+                });
+            } else {
+                Swal.fire({
+                    title: 'Error',
+                    text: data.message,
+                    icon: 'error'
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error al cambiar el estado:', error);
+            Swal.fire({
+                title: 'Error',
+                text: 'Ocurrió un error al cambiar el estado.',
+                icon: 'error'
+            });
+        });
+}
+
+
 // Ejecutar la función para habilitar/deshabilitar ubicación al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
     habilitarUbicacion();
