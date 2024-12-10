@@ -97,6 +97,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             die("Error al ocultar propuesta: " . $e->getMessage());
         }
     }
+
+    if ($accion === 'mostrar') {
+        $id = $_POST['id'];
+
+        // Verificar que se recibió el ID
+        if (empty($id)) {
+            die("Error: No se recibió el ID de la propuesta para mostrar.");
+        }
+
+        try {
+            // Llamar a la función de mostrar propuesta
+            mostrarPropuesta($connection, $id);
+            header('Location: gestionarPropuestas.php?status=success');
+            exit();
+        } catch (Exception $e) {
+            die("Error al mostrar propuesta: " . $e->getMessage());
+        }
+    }
 }
 
 // Obtener el total de propuestas en la base de datos (sin duplicados)
@@ -115,7 +133,7 @@ echo "</pre>";
 // Consulta simplificada para ver si la paginación funciona sin GROUP_CONCAT
 $query = "
     SELECT 
-        PROPUESTAS.ID_PRO, PROPUESTAS.TIT_PRO, PROPUESTAS.DESC_PRO, PROPUESTAS.CAT_PRO
+        PROPUESTAS.ID_PRO, PROPUESTAS.TIT_PRO, PROPUESTAS.DESC_PRO, PROPUESTAS.CAT_PRO, PROPUESTAS.ESTADO
     FROM PROPUESTAS
     ORDER BY PROPUESTAS.ID_PRO ASC
     LIMIT ? OFFSET ?
@@ -215,6 +233,14 @@ $partidos = obtenerPartidos($connection);
                                     <input type="hidden" name="id" value="<?= $row['ID_PRO'] ?>">
                                     <button type="submit" name="accion" value="ocultar">Ocultar</button>
                                 </form>
+
+                                <!-- Agregar el botón "Mostrar" solo si la propuesta está oculta -->
+                                <?php if ($row['ESTADO'] === 'Oculta'): ?>
+                                    <form method="POST" action="gestionarPropuestas.php" style="display:inline;">
+                                        <input type="hidden" name="id" value="<?= $row['ID_PRO'] ?>">
+                                        <button type="submit" name="accion" value="mostrar">Mostrar</button>
+                                    </form>
+                                <?php endif; ?>
                             </td>
                         </tr>
                     <?php endwhile; ?>
@@ -267,4 +293,22 @@ function ocultarPropuesta($connection, $id) {
     }
     $stmt->close();
 }
-?>
+
+// Función para mostrar propuesta
+function mostrarPropuesta($connection, $id) {
+    $query = "UPDATE PROPUESTAS SET ESTADO = 'Visible' WHERE ID_PRO = ?";
+    $stmt = $connection->prepare($query);
+    if (!$stmt) {
+        die("Error al preparar consulta mostrar: " . $connection->error);
+    }
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+
+    if ($stmt->affected_rows > 0) {
+        echo "Propuesta visible con éxito.";
+    } else {
+        die("No se pudo cambiar el estado de la propuesta a visible.");
+    }
+    $stmt->close();
+}
+?> 
