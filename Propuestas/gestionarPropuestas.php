@@ -3,12 +3,15 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 include('../config/config.php');
-include('../src/gestionarPropuestas_queries.php');
+include('../src/gestionarPropuestas_queries.php'); // Asegúrate de incluir el archivo de funciones
 
 // Configuración de paginación
-$propuestasPorPagina = 10; // Número de propuestas por página
+$propuestasPorPagina = 10;  // Número de propuestas por página
 $paginaActual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
 $offset = ($paginaActual - 1) * $propuestasPorPagina;
+
+echo "Página actual: " . $paginaActual . "<br>";
+echo "Offset: " . $offset . "<br>";
 
 $rol = 'admin'; // Cambiar a 'superadmin' según el rol actual
 
@@ -32,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         try {
+            // Llamar a la función de agregar propuesta
             agregarPropuestaYColaboracion($connection, $titulo, $descripcion, $categoria, $partido);
             header('Location: gestionarPropuestas.php?status=success');
             exit();
@@ -49,6 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         try {
+            // Llamar a la función de eliminar propuesta
             eliminarPropuesta($connection, $id);
             header('Location: gestionarPropuestas.php?status=success');
             exit();
@@ -58,24 +63,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Obtener el total de propuestas
-$totalPropuestasResult = $connection->query("SELECT COUNT(*) AS total FROM PROPUESTAS");
-$totalPropuestas = $totalPropuestasResult->fetch_assoc()['total'];
-$totalPaginas = ceil($totalPropuestas / $propuestasPorPagina);
+// Obtener el total de propuestas sin duplicados
+$totalPropuestasResult = $connection->query("SELECT COUNT(PROPUESTAS.ID_PRO) AS total FROM PROPUESTAS");
+if (!$totalPropuestasResult) {
+    die("Error al obtener el total de propuestas: " . $connection->error);
+}
 
-// Obtener las propuestas con paginación
-$result = $connection->query("
-    SELECT 
-        PROPUESTAS.ID_PRO, PROPUESTAS.TIT_PRO, PROPUESTAS.DESC_PRO, PROPUESTAS.CAT_PRO,
-        PARTIDOS_POLITICOS.NOM_PAR
-    FROM PROPUESTAS
-    INNER JOIN COLABORACIONES ON PROPUESTAS.ID_PRO = COLABORACIONES.ID_PRO_COL
-    INNER JOIN PARTIDOS_POLITICOS ON COLABORACIONES.ID_PAR_COL = PARTIDOS_POLITICOS.ID_PAR
-    LIMIT $propuestasPorPagina OFFSET $offset
-");
+$totalPropuestas = $totalPropuestasResult->fetch_assoc()['total'];
+echo "Total de propuestas en BD: " . $totalPropuestas . "<br>";
+
+$totalPaginas = ceil($totalPropuestas / $propuestasPorPagina);
+echo "Total de páginas: " . $totalPaginas . "<br>";
+
+// Obtener las propuestas con paginación y sin duplicados
+$result = obtenerPropuestasConPartidos($connection, $propuestasPorPagina, $offset);  // Llamamos a la función de consultas
+echo "Resultado de la consulta: <br>";
+var_dump($result);
 
 $partidos = obtenerPartidos($connection);
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -150,7 +157,7 @@ $partidos = obtenerPartidos($connection);
                             <td><?= $row['TIT_PRO'] ?></td>
                             <td><?= $row['DESC_PRO'] ?></td>
                             <td><?= $row['CAT_PRO'] ?></td>
-                            <td><?= $row['NOM_PAR'] ?></td>
+                            <td><?= $row['PARTIDOS'] ?></td>
                             <td>
                                 <form method="POST" action="gestionarPropuestas.php" style="display:inline;">
                                     <input type="hidden" name="id" value="<?= $row['ID_PRO'] ?>">
@@ -170,6 +177,7 @@ $partidos = obtenerPartidos($connection);
         <!-- Barra de navegación para la paginación -->
         <div class="pagination">
             <?php if ($paginaActual > 1): ?>
+                <a href="?pagina=1">Primera</a>
                 <a href="?pagina=<?= $paginaActual - 1 ?>">Anterior</a>
             <?php endif; ?>
 
@@ -179,6 +187,7 @@ $partidos = obtenerPartidos($connection);
 
             <?php if ($paginaActual < $totalPaginas): ?>
                 <a href="?pagina=<?= $paginaActual + 1 ?>">Siguiente</a>
+                <a href="?pagina=<?= $totalPaginas ?>">Última</a>
             <?php endif; ?>
         </div>
 
