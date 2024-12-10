@@ -135,7 +135,8 @@ if (isset($_GET['delete'])) {
                     <td><?php echo $evento['TIPO_REG_EVT_NOT']; ?></td>
                     <td><?php echo $evento['ESTADO_EVT_NOT']; ?></td>
                     <td>
-                        <button class="btn btn-warning btn-sm">Editar</button>
+                        <a href="eventos_noticias_admin_editar.php?id=<?php echo $evento['ID_EVT_NOT']; ?>"
+                            class="btn btn-warning btn-sm">Editar</a>
                         <button class="btn btn-danger btn-sm"
                             onclick="eliminarEvento(<?php echo $evento['ID_EVT_NOT']; ?>)">Eliminar</button>
                     </td>
