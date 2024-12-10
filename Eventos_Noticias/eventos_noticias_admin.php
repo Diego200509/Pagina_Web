@@ -50,6 +50,7 @@ if (isset($_GET['delete'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administrar Eventos y Noticias</title>
     <link rel="stylesheet" href="styleEventsAdmin.css">
+    <!-- Solo incluir Bootstrap para la ventana emergente -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
@@ -57,7 +58,7 @@ if (isset($_GET['delete'])) {
 <body>
     <h1>Administrar Eventos y Noticias</h1>
 
-    <form method="POST" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data" id="form-eventos">
         <input type="hidden" name="id" id="id">
         <label for="titulo">Título:</label>
         <input type="text" name="titulo" id="titulo" required>
@@ -96,7 +97,7 @@ if (isset($_GET['delete'])) {
     </form>
 
     <h2>Lista de Eventos y Noticias</h2>
-    <table class="table table-bordered">
+    <table class="table table-bordered" id="tabla-eventos">
         <thead class="table-danger">
             <tr>
                 <th>ID</th>
@@ -109,17 +110,16 @@ if (isset($_GET['delete'])) {
         </thead>
         <tbody>
             <?php foreach ($eventosNoticias as $evento): ?>
-                <tr>
+                <tr id="fila-<?php echo $evento['ID_EVT_NOT']; ?>">
                     <td><?php echo $evento['ID_EVT_NOT']; ?></td>
                     <td><?php echo $evento['TIT_EVT_NOT']; ?></td>
                     <td><?php echo $evento['FECHA_EVT_NOT']; ?></td>
                     <td><?php echo $evento['TIPO_REG_EVT_NOT']; ?></td>
                     <td><?php echo $evento['ESTADO_EVT_NOT']; ?></td>
                     <td>
-                        <a href="eventos_noticias_admin.php?edit=<?php echo $evento['ID_EVT_NOT']; ?>"
-                            class="btn btn-warning btn-sm">Editar</a>
-                        <a href="eventos_noticias_admin.php?delete=<?php echo $evento['ID_EVT_NOT']; ?>"
-                            class="btn btn-danger btn-sm">Eliminar</a>
+                        <button class="btn btn-warning btn-sm">Editar</button>
+                        <button class="btn btn-danger btn-sm"
+                            onclick="eliminarEvento(<?php echo $evento['ID_EVT_NOT']; ?>)">Eliminar</button>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -140,7 +140,7 @@ if (isset($_GET['delete'])) {
         </div>
     </div>
 
-    <script src="scriptEventsAdmin.js">    </script>
+    <script src="scriptEventsAdmin.js"></script>
 </body>
 
 </html>
