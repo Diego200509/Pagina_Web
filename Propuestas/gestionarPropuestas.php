@@ -145,6 +145,11 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 $partidos = obtenerPartidos($connection);
+
+// Función para mostrar la descripción con formato
+function mostrarDescripcionConFormato($descripcion) {
+    return nl2br(htmlspecialchars($descripcion));
+}
 ?>
 
 <!DOCTYPE html>
@@ -218,7 +223,7 @@ $partidos = obtenerPartidos($connection);
                         <tr>
                             <td><?= $row['ID_PRO'] ?></td>
                             <td><?= $row['TIT_PRO'] ?></td>
-                            <td><?= $row['DESC_PRO'] ?></td>
+                            <td><?= mostrarDescripcionConFormato($row['DESC_PRO']) ?></td>
                             <td><?= $row['CAT_PRO'] ?></td>
                             <td>
                                 <form method="POST" action="gestionarPropuestas.php" style="display:inline;">
@@ -271,7 +276,7 @@ $partidos = obtenerPartidos($connection);
 
     </div>
 </body>
-</html>  
+</html>
 
 
 <?php
@@ -311,4 +316,4 @@ function mostrarPropuesta($connection, $id) {
     }
     $stmt->close();
 }
-?> 
+?>   

@@ -101,6 +101,7 @@ form button:hover {
 }
 
 /* Tabla de propuestas */
+/* Estilo para la tabla */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -108,13 +109,24 @@ table {
     text-align: left;
 }
 
+/* Estilo para las celdas de la tabla */
 table th,
 table td {
     padding: 12px;
     border: 1px solid #ddd;
     font-size: 14px;
+    word-wrap: break-word;  /* Permite que el texto se ajuste dentro de la celda */
+    white-space: normal;    /* Asegura que el texto se ajuste al espacio disponible */
 }
 
+/* Asegura que el texto largo no se salga de la celda */
+table td {
+    max-width: 300px;  /* Define un ancho máximo para las celdas */
+    word-wrap: break-word;
+    overflow: hidden;  /* Evita el desbordamiento de texto */
+}
+
+/* Resto de estilos para la tabla */
 table th {
     background-color: #004680;
     color: white;
@@ -128,22 +140,52 @@ table tr:hover {
     background-color: #f1f1f1;
 }
 
+table td form {
+    display: inline-block;  /* Los formularios se alinean en línea */
+    margin-right: 10px;  /* Separación entre botones */
+}
+
 /* Botones de acción */
 table button {
-    background-color: #004680;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
-    font-size: 12px;
+    display: inline-block; /* Asegura que los botones estén en una fila */
+    margin-right: 10px; /* Espacio entre los botones */
+    padding: 8px 16px; /* Relleno para los botones */
+    font-size: 12px; /* Tamaño de texto */
+    border-radius: 5px; /* Bordes redondeados */
     cursor: pointer;
-    margin-right: 5px;
 }
 
 table button:hover {
     background-color: #003366;
 }
 
+/* Botones "Ocultar" y "Mostrar" */
+table button.ocultar {
+    background-color: #e67e22; /* Naranja */
+    color: white;
+}
+
+table button.ocultar:hover {
+    background-color: #d35400; /* Naranja más oscuro */
+}
+
+table button.mostrar {
+    background-color: #27ae60; /* Verde */
+    color: white;
+}
+
+table button.mostrar:hover {
+    background-color: #2ecc71; /* Verde más brillante */
+}
+
+table button.eliminar, table button.editar {
+    background-color: #004680; /* Azul */
+    color: white;
+}
+
+table button.eliminar:hover, table button.editar:hover {
+    background-color: #003366; /* Azul más oscuro */
+}
 /* Pie de página */
 footer {
     text-align: center;
@@ -155,16 +197,6 @@ footer {
     position: relative;
     bottom: 0;
     width: 100%;
-}
-
-/* Botón para ocultar */
-table button.ocultar {
-    background-color: #e67e22; /* Naranja */
-    color: white;
-}
-
-table button.ocultar:hover {
-    background-color: #d35400; /* Naranja más oscuro */
 }
 
 /* Estilo para la barra de paginación */
