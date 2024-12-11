@@ -185,7 +185,7 @@ if (isset($_GET['delete'])) {
         </div>
     </div>
 
-    <script src="scriptEventsAdmin.js"></script>
+    <script src="scriptEventsAdmin.js?v=<?php echo time(); ?>"></script>
 </body>
 
 </html>

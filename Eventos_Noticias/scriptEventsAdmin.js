@@ -12,13 +12,16 @@ function eliminarEvento(id) {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    recargarTabla(); // Recargar la tabla después de eliminar
-                    mostrarNotificacion(data.message);
+                    mostrarNotificacion(data.message); // Notificación primero
+                    recargarTabla(); // Recargar tabla después de eliminar
                 } else {
                     mostrarNotificacion(data.message);
                 }
             })
-            .catch(error => console.error("Error:", error));
+            .catch(error => {
+                console.error("Error:", error);
+                mostrarNotificacion("Ocurrió un error al eliminar el evento.");
+            });
     }
 }
 
@@ -41,8 +44,11 @@ function recargarTabla() {
                         <td>${evento.TIPO_REG_EVT_NOT}</td>
                         <td>${evento.ESTADO_EVT_NOT}</td>
                         <td>
-                            <button class="btn btn-warning btn-sm">Editar</button>
+                            <a href="eventos_noticias_admin_editar.php?id=${evento.ID_EVT_NOT}" class="btn btn-warning btn-sm">Editar</a>
                             <button class="btn btn-danger btn-sm" onclick="eliminarEvento(${evento.ID_EVT_NOT})">Eliminar</button>
+                            <button class="btn btn-info btn-sm" onclick="cambiarEstado(${evento.ID_EVT_NOT}, '${evento.ESTADO_EVT_NOT}')">
+                                ${evento.ESTADO_EVT_NOT === "Activo" ? "Ocultar" : "Activar"}
+                            </button>
                         </td>
                     `;
                     tbody.appendChild(fila);
@@ -56,7 +62,10 @@ function recargarTabla() {
                 tbody.appendChild(fila);
             }
         })
-        .catch(error => console.error("Error al recargar la tabla:", error));
+        .catch(error => {
+            console.error("Error al recargar la tabla:", error);
+            mostrarNotificacion("Error al recargar la tabla.");
+        });
 }
 
 // Mostrar la notificación de eliminación
@@ -69,6 +78,7 @@ function mostrarNotificacion(mensaje) {
     toast.show();
 }
 
+// Cambiar estado de un evento
 function cambiarEstado(id, estadoActual) {
     const nuevoEstado = estadoActual === "Activo" ? "Oculto" : "Activo";
 
@@ -81,7 +91,7 @@ function cambiarEstado(id, estadoActual) {
                     text: `El registro se ha actualizado a estado "${nuevoEstado}".`,
                     icon: 'success'
                 }).then(() => {
-                    location.reload(); // Recargar la página para reflejar los cambios
+                    recargarTabla(); // Actualizar tabla sin recargar la página
                 });
             } else {
                 Swal.fire({
@@ -100,7 +110,6 @@ function cambiarEstado(id, estadoActual) {
             });
         });
 }
-
 
 // Ejecutar la función para habilitar/deshabilitar ubicación al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
