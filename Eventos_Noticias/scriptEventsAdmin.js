@@ -111,6 +111,17 @@ function cambiarEstado(id, estadoActual) {
         });
 }
 
+document.getElementById('imagen').addEventListener('change', function (event) {
+    const file = event.target.files[0]; 
+    if (file) {
+        const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+        if (!allowedTypes.includes(file.type)) {
+            alert('Solo se permiten imágenes de tipo JPG, JPEG o PNG.');
+            event.target.value = ''; 
+        }
+    }
+});
+
 // Ejecutar la función para habilitar/deshabilitar ubicación al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
     habilitarUbicacion();

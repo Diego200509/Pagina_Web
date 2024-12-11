@@ -119,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </select>
 
             <label for="imagen">Imagen:</label>
-            <input type="file" name="imagen" id="imagen">
+            <input type="file" name="imagen" id="imagen" accept="image/png, image/jpeg, image/jpg">
             <?php if ($evento['IMAGEN_EVT_NOT']): ?>
                 <p>Imagen actual:</p>
                 <img src="/Pagina_Web/Pagina_Web/Eventos_Noticias/img/<?php echo basename($evento['IMAGEN_EVT_NOT']); ?>" alt="Imagen actual" style="max-width: 200px; max-height: 150px;">
