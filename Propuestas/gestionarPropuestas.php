@@ -60,24 +60,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($accion === 'editar') {
-        $id = $_POST['id'];
-        $titulo = $_POST['titulo'];
-        $descripcion = $_POST['descripcion'];
-        $categoria = $_POST['categoria'];
-
-        // Verificar que los datos del formulario se recibieron correctamente
-        if (empty($titulo) || empty($descripcion) || empty($categoria)) {
-            die("Error: Faltan datos en el formulario. Verifique los campos.");
-        }
-
-        try {
-            // Llamar a la función de editar propuesta
-            editarPropuesta($connection, $id, $titulo, $descripcion, $categoria);
-            header('Location: gestionarPropuestas.php?status=success');
-            exit();
-        } catch (Exception $e) {
-            die("Error al editar propuesta: " . $e->getMessage());
-        }
+        // Redirigir a la página de edición
+        header("Location: editarPropuesta.php?id=" . $_POST['id']);
+        exit();
     }
 
     if ($accion === 'ocultar') {
@@ -140,10 +125,7 @@ $query = "
     INNER JOIN PARTIDOS_POLITICOS ON COLABORACIONES.ID_PAR_COL = PARTIDOS_POLITICOS.ID_PAR
     GROUP BY PROPUESTAS.ID_PRO
     ORDER BY PROPUESTAS.ID_PRO ASC
-    LIMIT ? OFFSET ?
-";
-
-
+    LIMIT ? OFFSET ?";
 $stmt = $connection->prepare($query);
 $stmt->bind_param("ii", $propuestasPorPagina, $offset);
 $stmt->execute();
@@ -198,8 +180,7 @@ function mostrarDescripcionConFormato($descripcion)
                 <option value="Ciencias Humanas y de la Educación">Ciencias Humanas y de la Educación</option>
                 <option value="Ciencias de la Salud">Ciencias de la Salud</option>
                 <option value="Ingeniería Civil y Mecánica">Ingeniería Civil y Mecánica</option>
-                <option value="Ingeniería en Sistemas, Electrónica e Industrial">Ingeniería en Sistemas, Electrónica e
-                    Industrial</option>
+                <option value="Ingeniería en Sistemas, Electrónica e Industrial">Ingeniería en Sistemas, Electrónica e Industrial</option>
                 <option value="Infraestructura">Infraestructura</option>
                 <option value="Deportes">Deportes</option>
                 <option value="Cultura">Cultura</option>
@@ -241,6 +222,7 @@ function mostrarDescripcionConFormato($descripcion)
                                     <input type="hidden" name="id" value="<?= $row['ID_PRO'] ?>">
                                     <button type="submit" name="accion" value="eliminar">Eliminar</button>
                                 </form>
+                                <!-- Redirigir a la página de edición -->
                                 <form method="POST" action="gestionarPropuestas.php" style="display:inline;">
                                     <input type="hidden" name="id" value="<?= $row['ID_PRO'] ?>">
                                     <button type="submit" name="accion" value="editar">Editar</button>
@@ -268,8 +250,6 @@ function mostrarDescripcionConFormato($descripcion)
             </tbody>
         </table>
 
-
-
         <!-- Barra de navegación para la paginación -->
         <div class="pagination">
             <?php if ($paginaActual > 1): ?>
@@ -291,7 +271,6 @@ function mostrarDescripcionConFormato($descripcion)
 </body>
 
 </html>
-
 
 <?php
 
