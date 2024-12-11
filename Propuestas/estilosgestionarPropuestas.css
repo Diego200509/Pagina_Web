@@ -226,17 +226,60 @@ table td {
 /* Estilo de los botones cuando son presionados */
 table button {
     display: inline-block; /* Los botones estarán uno al lado del otro */
-    width: 150px; /* Ancho fijo */
-    padding: 10px 15px; /* Espaciado interno */
-    font-size: 12px; /* Tamaño de texto */
-    margin-bottom: 25px;
-     /* Espaciado vertical entre filas de botones */
-    border-radius: 5px; /* Bordes redondeados */
-    text-align: center; /* Centrado del texto */
-    cursor: pointer; /* Indicador de clic */
+    padding: 10px 20px; /* Tamaño adecuado para los botones */
+    font-size: 14px; /* Tamaño de texto más grande */
+    margin: 5px 0; /* Espaciado entre los botones */
+    border-radius: 8px; /* Bordes redondeados */
+    cursor: pointer; /* Establecer como puntero */
+    width: 120px; /* Ajuste de tamaño de botón */
+    text-align: center; /* Centrar el texto */
 }
 
+table button:hover {
+    opacity: 0.8; /* Añadir opacidad para el hover */
+}
+table button.btn-danger {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+}
 
+table button.btn-danger:hover {
+    background-color: #c0392b;
+}
+
+/* Botón Editar */
+table button.btn-primary {
+    background-color: #3498db;
+    color: white;
+    border: none;
+}
+
+table button.btn-primary:hover {
+    background-color: #2980b9;
+}
+
+/* Botón Ocultar */
+table button.btn-warning {
+    background-color: #f39c12;
+    color: white;
+    border: none;
+}
+
+table button.btn-warning:hover {
+    background-color: #e67e22;
+}
+
+/* Botón Mostrar */
+table button.btn-success {
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+}
+
+table button.btn-success:hover {
+    background-color: #27ae60;
+}
 /* Estilo para las acciones en la fila */
 table td form {
     display: flex;            /* Usamos flexbox para alinear los botones en una fila */
@@ -333,14 +376,15 @@ footer {
     }
 }
 
+
 /* Botones en columna para pantallas pequeñas */
 @media (max-width: 767px) {
     table td form {
         display: flex;
-        flex-direction: column; /* Alineación vertical */
-        gap: 10px; /* Espacio vertical entre botones */
-        justify-content: center; /* Centrado vertical */
-        align-items: center; /* Centrado horizontal */
+        flex-direction: column; /* Organizar los botones en columna */
+        gap: 10px; /* Espacio entre los botones */
+        justify-content: center;
+        align-items: center;
     }
 }
 

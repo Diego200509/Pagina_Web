@@ -236,29 +236,28 @@ function mostrarDescripcionConFormato($descripcion)
                             <td><?= mostrarDescripcionConFormato($row['DESC_PRO']) ?></td>
                             <td><?= $row['CAT_PRO'] ?></td>
                             <td>
-                                <form method="POST" action="gestionarPropuestas.php" style="display:inline;">
+                                <form method="POST" action="gestionarPropuestas.php" style="display: inline;">
                                     <input type="hidden" name="id" value="<?= $row['ID_PRO'] ?>">
-                                    <button type="submit" name="accion" value="eliminar">Eliminar</button>
+                                    <button type="submit" name="accion" value="eliminar" class="btn btn-danger">Eliminar</button>
                                 </form>
-                                <!-- Redirigir a la página de edición -->
-                                <form method="GET" action="editarPropuesta.php">
+                                <form method="GET" action="editarPropuesta.php" style="display: inline;">
                                     <input type="hidden" name="id" value="<?= $row['ID_PRO'] ?>">
-                                    <button type="submit">Editar</button>
+                                    <button type="submit" class="btn btn-primary">Editar</button>
                                 </form>
-
-                                <form method="POST" action="gestionarPropuestas.php" style="display:inline;">
+                                <form method="POST" action="gestionarPropuestas.php" style="display: inline;">
                                     <input type="hidden" name="id" value="<?= $row['ID_PRO'] ?>">
-                                    <button type="submit" name="accion" value="ocultar">Ocultar</button>
+                                    <button type="submit" name="accion" value="ocultar" class="btn btn-warning">Ocultar</button>
                                 </form>
 
                                 <!-- Agregar el botón "Mostrar" solo si la propuesta está oculta -->
                                 <?php if ($row['ESTADO'] === 'Oculta'): ?>
-                                    <form method="POST" action="gestionarPropuestas.php" style="display:inline;">
+                                    <form method="POST" action="gestionarPropuestas.php" style="display: inline;">
                                         <input type="hidden" name="id" value="<?= $row['ID_PRO'] ?>">
-                                        <button type="submit" name="accion" value="mostrar">Mostrar</button>
+                                        <button type="submit" name="accion" value="mostrar" class="btn btn-success">Mostrar</button>
                                     </form>
                                 <?php endif; ?>
                             </td>
+
                         </tr>
                     <?php endwhile; ?>
                 <?php else: ?>
