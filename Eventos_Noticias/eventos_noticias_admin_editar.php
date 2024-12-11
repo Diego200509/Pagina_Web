@@ -71,11 +71,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Evento/Noticia</title>
     <link rel="stylesheet" href="styleEventsAdmin.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
     <div class="container">
+        <div class="d-flex justify-content-end mb-3">
+            <a href="eventos_noticias_admin.php" class="btn btn-danger btn-lg">
+                <i class="bi bi-arrow-left-circle me-2"></i> Regresar
+            </a>
+        </div>
+
+
         <h1>Editar Evento/Noticia</h1>
         <form method="POST" enctype="multipart/form-data">
             <label for="titulo">Título:</label>
@@ -117,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endif; ?>
 
 
-            <button type="submit" class="btn btn-primary">Actualizar</button>
+            <button type="submit" class="btn btn-danger w-100">Actualizar</button>
         </form>
     </div>
     <script src="scriptEventsEditar.js"></script>
