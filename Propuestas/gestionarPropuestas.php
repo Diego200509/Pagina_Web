@@ -60,10 +60,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($accion === 'editar') {
-        // Redirigir a la página de edición
-        header("Location: editarPropuesta.php?id=" . $_POST['id']);
-        exit();
+        $id = $_POST['id'];
+        $titulo = $_POST['titulo'];
+        $descripcion = $_POST['descripcion'];
+        $categoria = $_POST['categoria'];
+        $partido = $_POST['partido'];
+
+        // Verifica que los datos no estén vacíos
+        if (empty($titulo) || empty($descripcion) || empty($categoria) || empty($partido)) {
+            die("Error: Faltan datos en el formulario. Verifique los campos.");
+        }
+
+        try {
+            // Llamar a la función de actualizar propuesta
+            actualizarPropuesta($connection, $id, $titulo, $descripcion, $categoria, $partido);
+            header('Location: gestionarPropuestas.php?status=success');
+            exit();
+        } catch (Exception $e) {
+            die("Error al editar propuesta: " . $e->getMessage());
+        }
     }
+
+
 
     if ($accion === 'ocultar') {
         $id = $_POST['id'];
@@ -223,10 +241,11 @@ function mostrarDescripcionConFormato($descripcion)
                                     <button type="submit" name="accion" value="eliminar">Eliminar</button>
                                 </form>
                                 <!-- Redirigir a la página de edición -->
-                                <form method="POST" action="gestionarPropuestas.php" style="display:inline;">
+                                <form method="GET" action="editarPropuesta.php">
                                     <input type="hidden" name="id" value="<?= $row['ID_PRO'] ?>">
-                                    <button type="submit" name="accion" value="editar">Editar</button>
+                                    <button type="submit">Editar</button>
                                 </form>
+
                                 <form method="POST" action="gestionarPropuestas.php" style="display:inline;">
                                     <input type="hidden" name="id" value="<?= $row['ID_PRO'] ?>">
                                     <button type="submit" name="accion" value="ocultar">Ocultar</button>

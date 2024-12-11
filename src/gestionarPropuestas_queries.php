@@ -37,12 +37,46 @@ function obtenerPartidos($connection) {
     $query = "SELECT ID_PAR, NOM_PAR FROM PARTIDOS_POLITICOS";
     $result = $connection->query($query);
     if (!$result) {
-        echo "<script>console.error('Error al obtener partidos: " . $connection->error . "');</script>";
         die("Error al obtener partidos: " . $connection->error);
     }
     return $result;
 }
 
+// Función para actualizar una propuesta
+function actualizarPropuesta($connection, $id, $titulo, $descripcion, $categoria, $partido) {
+    // Actualizar los datos de la propuesta en la tabla PROPUESTAS
+    $query = "UPDATE PROPUESTAS SET TIT_PRO = ?, DESC_PRO = ?, CAT_PRO = ? WHERE ID_PRO = ?";
+    $stmt = $connection->prepare($query);
+    if (!$stmt) {
+        die("Error al preparar la consulta de actualización: " . $connection->error);
+    }
+    $stmt->bind_param("sssi", $titulo, $descripcion, $categoria, $id);
+    $stmt->execute();
+
+    if ($stmt->affected_rows > 0) {
+        echo "Propuesta actualizada con éxito.";
+    } else {
+        die("No se actualizó ninguna fila en PROPUESTAS.");
+    }
+
+    // Actualizar la colaboración entre la propuesta y el partido político
+    $queryColaboracion = "UPDATE COLABORACIONES SET ID_PAR_COL = ? WHERE ID_PRO_COL = ?";
+    $stmtColaboracion = $connection->prepare($queryColaboracion);
+    if (!$stmtColaboracion) {
+        die("Error al preparar la consulta de actualización de colaboración: " . $connection->error);
+    }
+    $stmtColaboracion->bind_param("ii", $partido, $id);
+    $stmtColaboracion->execute();
+
+    if ($stmtColaboracion->affected_rows > 0) {
+        echo "Colaboración actualizada con éxito.";
+    } else {
+        die("No se actualizó ninguna fila en COLABORACIONES.");
+    }
+
+    $stmt->close();
+    $stmtColaboracion->close();
+}
 
 
 // Función para agregar propuesta y colaboración
