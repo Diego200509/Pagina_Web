@@ -22,9 +22,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $ubicacion = $_POST['ubicacion'];
     $partido = $_POST['partido'];
     $estado = $_POST['estado'];
-    $imagen = $_FILES['imagen']['name'] ? $_FILES['imagen']['name'] : $evento['IMAGEN_EVT_NOT'];
-    $imagenConRuta = "/Pagina_Web/Pagina_Web/Eventos_Noticias/img/" . $imagen;
 
+    // Verificar si se seleccionó una nueva imagen
+    if (!empty($_FILES['imagen']['name'])) {
+        $imagen = $_FILES['imagen']['name'];
+        $imagenConRuta = "/Pagina_Web/Pagina_Web/Eventos_Noticias/img/" . $imagen;
+
+        // Mover la nueva imagen al directorio correspondiente
+        $directorioDestino = $_SERVER['DOCUMENT_ROOT'] . "/Pagina_Web/Pagina_Web/Eventos_Noticias/img/";
+        move_uploaded_file($_FILES['imagen']['tmp_name'], $directorioDestino . $imagen);
+    } else {
+        // Si no se selecciona una nueva imagen, mantener la imagen actual
+        $imagenConRuta = $evento['IMAGEN_EVT_NOT'];
+    }
+
+    // Actualizar el evento/noticia
     $resultado = actualizarEventoNoticia($id, $titulo, $descripcion, $fecha, $tipo, $ubicacion, $partido, $estado, $imagenConRuta);
 
     if ($resultado) {
