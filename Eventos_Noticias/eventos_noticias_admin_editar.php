@@ -29,12 +29,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($resultado) {
         echo "<script>
-            Swal.fire({
-                title: '¡Actualizado!',
-                text: 'El evento/noticia se actualizó correctamente.',
-                icon: 'success'
-            }).then(() => {
-                window.location.href = 'eventos_noticias_admin.php'; // Redirige después de actualizar
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: '¡Actualizado!',
+                    text: 'El evento/noticia se actualizó correctamente.',
+                    icon: 'success'
+                }).then(() => {
+                    window.location.href = 'eventos_noticias_admin.php'; // Redirige después de cerrar el mensaje
+                });
             });
         </script>";
     } else {
