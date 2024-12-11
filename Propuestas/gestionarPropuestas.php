@@ -57,7 +57,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } catch (Exception $e) {
             die("Error al eliminar propuesta: " . $e->getMessage());
         }
-
     }
 
     if ($accion === 'editar') {
@@ -134,11 +133,16 @@ echo "</pre>";
 // Consulta simplificada para ver si la paginación funciona sin GROUP_CONCAT
 $query = "
     SELECT 
-        PROPUESTAS.ID_PRO, PROPUESTAS.TIT_PRO, PROPUESTAS.DESC_PRO, PROPUESTAS.CAT_PRO, PROPUESTAS.ESTADO
+        PROPUESTAS.ID_PRO, PROPUESTAS.TIT_PRO, PROPUESTAS.DESC_PRO, PROPUESTAS.CAT_PRO, PROPUESTAS.ESTADO,
+        GROUP_CONCAT(PARTIDOS_POLITICOS.NOM_PAR SEPARATOR ', ') AS PARTIDOS
     FROM PROPUESTAS
+    INNER JOIN COLABORACIONES ON PROPUESTAS.ID_PRO = COLABORACIONES.ID_PRO_COL
+    INNER JOIN PARTIDOS_POLITICOS ON COLABORACIONES.ID_PAR_COL = PARTIDOS_POLITICOS.ID_PAR
+    GROUP BY PROPUESTAS.ID_PRO
     ORDER BY PROPUESTAS.ID_PRO ASC
     LIMIT ? OFFSET ?
 ";
+
 
 $stmt = $connection->prepare($query);
 $stmt->bind_param("ii", $propuestasPorPagina, $offset);
@@ -216,6 +220,7 @@ function mostrarDescripcionConFormato($descripcion)
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Partido Político</th> <!-- Partido Político después del ID -->
                     <th>Título</th>
                     <th>Descripción</th>
                     <th>Categoría</th>
@@ -227,6 +232,7 @@ function mostrarDescripcionConFormato($descripcion)
                     <?php while ($row = $result->fetch_assoc()): ?>
                         <tr>
                             <td><?= $row['ID_PRO'] ?></td>
+                            <td><?= $row['PARTIDOS'] ?></td> <!-- Mostrar el partido político -->
                             <td><?= $row['TIT_PRO'] ?></td>
                             <td><?= mostrarDescripcionConFormato($row['DESC_PRO']) ?></td>
                             <td><?= $row['CAT_PRO'] ?></td>
@@ -256,11 +262,13 @@ function mostrarDescripcionConFormato($descripcion)
                     <?php endwhile; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="5">No hay propuestas registradas.</td>
+                        <td colspan="6">No hay propuestas registradas.</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
         </table>
+
+
 
         <!-- Barra de navegación para la paginación -->
         <div class="pagination">

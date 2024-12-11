@@ -22,6 +22,13 @@ function filterProposals() {
     .catch(error => console.error('Error:', error));
 }
 
+function truncateText(text, maxLength) {
+    if (text.length > maxLength) {
+        return text.substring(0, maxLength) + "...";
+    }
+    return text;
+}
+
 function displayProposals(proposals) {
     const partido1Nombre = document.getElementById("partido1Nombre");
     const partido2Nombre = document.getElementById("partido2Nombre");
@@ -49,7 +56,7 @@ function displayProposals(proposals) {
             candidato1Description.innerHTML = partido1Proposals.map((proposal, index) => `
                 <div class="proposal-item visible">
                     <strong>Propuesta ${index + 1}: ${proposal.titulo}</strong>
-                    <p>${proposal.descripcion}</p>
+                    <p>${truncateText(proposal.descripcion, 300)}</p>
                     <p><strong>Categoría:</strong> ${proposal.categoria}</p>
                 </div>
             `).join('');
@@ -67,7 +74,7 @@ function displayProposals(proposals) {
             candidato2Description.innerHTML = partido2Proposals.map((proposal, index) => `
                 <div class="proposal-item visible">
                     <strong>Propuesta ${index + 1}: ${proposal.titulo}</strong>
-                    <p>${proposal.descripcion}</p>
+                    <p>${truncateText(proposal.descripcion, 300)}</p>
                     <p><strong>Categoría:</strong> ${proposal.categoria}</p>
                 </div>
             `).join('');
