@@ -1,174 +1,185 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Función para manejar errores de respuesta del servidor
-    const handleServerError = (response) => {
-        if (!response.ok) {
-            throw new Error(`Error en la respuesta del servidor: ${response.status}`);
-        }
-        return response.json();
-    };
+    const apiEndpoint = '../src/candidatos_queries.php';
 
-    // Función para manejar y mostrar errores
-    const handleError = (error) => {
-        console.error("Error detectado:", error);
-        alert("Ocurrió un error. Por favor, verifica la consola para más detalles.");
-    };
+    const tableBody = document.getElementById('candidateList');
+    const modal = document.getElementById('addCandidateModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const candidateForm = document.getElementById('candidateForm');
+    const closeModal = document.getElementById('closeModal');
+    const openAddModal = document.getElementById('addCandidateBtn');
 
-    // Selección de elementos principales
-    const addCandidateBtn = document.getElementById("addCandidateBtn");
-    const crudActionModal = document.getElementById("crudActionModal");
-    const closeCrudModal = document.getElementById("closeCrudModal");
-    const addCandidateModal = document.getElementById("addCandidateModal");
-    const createActionBtn = document.getElementById("createActionBtn");
-    const closeAddModal = document.getElementById("closeAddCandidateModal");
-
-    // Abrir modal al hacer clic en el botón "¿Qué deseas hacer?"
-    if (addCandidateBtn && crudActionModal) {
-        addCandidateBtn.addEventListener("click", () => {
-            crudActionModal.style.display = "flex";
-        });
-
-        if (closeCrudModal) {
-            closeCrudModal.addEventListener("click", () => {
-                crudActionModal.style.display = "none";
-            });
-        }
-
-        crudActionModal.addEventListener("click", (event) => {
-            if (event.target === crudActionModal) {
-                crudActionModal.style.display = "none";
-            }
-        });
-    } else {
-        console.error("El botón 'addCandidateBtn' o el modal 'crudActionModal' no se encontraron.");
-    }
-
-    // Abrir modal de creación al hacer clic en "Crear Candidato"
-    if (createActionBtn && addCandidateModal) {
-        createActionBtn.addEventListener("click", () => {
-            crudActionModal.style.display = "none";
-            addCandidateModal.style.display = "flex";
-        });
-
-        if (closeAddModal) {
-            closeAddModal.addEventListener("click", () => {
-                addCandidateModal.style.display = "none";
-            });
-        }
-    } else {
-        console.error("El botón 'createActionBtn' o el modal 'addCandidateModal' no se encontraron.");
-    }
-
-    // Función para cargar los partidos desde la base de datos
-    function loadParties() {
-        fetch('../src/candidatos_queries.php?fetch=parties') // Endpoint para obtener los partidos
-            .then(handleServerError)
-            .then(parties => {
-                const partySelect = document.getElementById("party_id");
-                if (!partySelect) {
-                    console.error("No se encontró el elemento <select> con id 'party_id'.");
-                    return;
-                }
-                partySelect.innerHTML = '<option value="" disabled selected>Seleccione un partido</option>'; // Limpiar opciones previas
-                parties.forEach(party => {
-                    const option = document.createElement("option");
-                    option.value = party.ID_PAR; // Campo de ID del partido
-                    option.textContent = party.NOM_PAR; // Campo de nombre del partido
-                    partySelect.appendChild(option);
-                });
-            })
-            .catch(error => console.error("Error al cargar los partidos:", error));
-    }
-
-    // Manejo del formulario de creación
-    const addCandidateForm = document.getElementById("addCandidateForm");
-    if (addCandidateForm) {
-        addCandidateForm.addEventListener("submit", function (event) {
-            event.preventDefault();
-
-            const formData = new FormData(addCandidateForm);
-
-            fetch('../src/candidatos_queries.php', {
-                method: 'POST',
-                body: formData
-            })
-                .then(handleServerError)
-                .then(result => {
-                    if (result.error) {
-                        alert("Error al agregar candidato: " + result.error);
-                    } else {
-                        alert("Candidato agregado exitosamente.");
-                        loadCandidates(); // Recargar la lista de candidatos
-                        addCandidateModal.style.display = "none";
-                        addCandidateForm.reset();
-                    }
-                })
-                .catch(handleError);
-        });
-    }
-
-    // Función para cargar candidatos
+    // Cargar la tabla de candidatos
     function loadCandidates() {
-        fetch('../src/candidatos_queries.php')
-            .then(handleServerError)
+        fetch(apiEndpoint)
+            .then(response => response.json())
             .then(candidates => {
-                const candidateList = document.getElementById("candidateList");
-                if (!candidateList) return console.error("No se encontró el elemento 'candidateList' en el DOM.");
-
-                candidateList.innerHTML = ''; // Limpiar la lista actual
+                tableBody.innerHTML = ''; // Limpiar la tabla antes de agregar datos
                 candidates.forEach(candidate => {
-                    const li = document.createElement('li');
-                    li.innerHTML = `
-                        <div class="candidate-card">
-                            <h3>${candidate.NOM_CAN}</h3>
-                            <p>${candidate.BIOGRAFIA_CAN.substring(0, 100)}...</p>
-                            <button class="open-modal" 
-                                data-id="${candidate.ID_CAN}" 
-                                data-modal="candidateModal"
-                                data-img="${candidate.IMG_CAN}">Ver más</button>
-                        </div>`;
-                    candidateList.appendChild(li);
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${candidate.ID_CAN}</td>
+                        <td>${candidate.NOM_CAN}</td>
+                        <td>${candidate.BIOGRAFIA_CAN.substring(0, 50)}...</td>
+                        <td>${candidate.EXPERIENCIA_CAN.substring(0, 50)}...</td>
+                        <td>${candidate.VISION_CAN.substring(0, 50)}...</td>
+                        <td>${candidate.LOGROS_CAN.substring(0, 50)}...</td>
+                        <td>${candidate.ID_PAR_CAN}</td>
+                        <td>
+                            <img src="../${candidate.IMG_CAN}" alt="${candidate.NOM_CAN}" width="50">
+                        </td>
+                        <td>
+                            <button class="edit-btn" data-id="${candidate.ID_CAN}">Editar</button>
+                            <button class="delete-btn" data-id="${candidate.ID_CAN}">Eliminar</button>
+                            <button class="toggle-status-btn" data-id="${candidate.ID_CAN}" data-status="${candidate.ESTADO_CAN}">
+                                ${candidate.ESTADO_CAN === 'Activo' ? 'Ocultar' : 'Activar'}
+                            </button>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
                 });
-                attachOpenModalEvent(); // Agregar eventos a los botones dinámicos
+
+                attachActions(); // Asignar eventos a los botones
             })
-            .catch(handleError);
+            .catch(error => console.error('Error al cargar candidatos:', error));
     }
 
-    // Función para agregar eventos a los botones de "Ver más"
-    function attachOpenModalEvent() {
-        document.querySelectorAll(".open-modal").forEach(button => {
-            button.addEventListener("click", function (event) {
-                event.preventDefault();
+    // Asignar eventos a los botones de editar, eliminar y cambiar estado
+    function attachActions() {
+        // Botones de editar
+        document.querySelectorAll('.edit-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const id = this.dataset.id;
 
-                const candidateId = this.getAttribute("data-id");
-                const modalId = this.getAttribute("data-modal");
-                const imgSrc = this.getAttribute("data-img");
-
-                fetch(`../src/candidatos_queries.php?id=${candidateId}`)
-                    .then(handleServerError)
+                // Obtener datos del candidato por ID
+                fetch(`${apiEndpoint}?id=${id}`)
+                    .then(response => response.json())
                     .then(candidate => {
                         if (candidate.error) {
-                            console.error(candidate.error);
+                            alert('Error: ' + candidate.error);
                             return;
                         }
 
-                        const imgElement = document.getElementById("candidate-img");
-                        if (imgElement) imgElement.src = `../uploads/${imgSrc}`;
-
-                        document.getElementById("candidate-name").textContent = candidate.NOM_CAN;
-                        document.getElementById("candidate-bio").textContent = candidate.BIOGRAFIA_CAN;
-                        document.getElementById("candidate-experience").textContent = candidate.EXPERIENCIA_CAN;
-                        document.getElementById("candidate-vision").textContent = candidate.VISION_CAN;
-                        document.getElementById("candidate-achievements").textContent = candidate.LOGROS_CAN;
-
-                        const modal = document.getElementById(modalId);
-                        if (modal) modal.style.display = "flex";
+                        // Llenar el formulario con los datos del candidato
+                        modalTitle.textContent = 'Editar Candidato';
+                        document.getElementById('candidateId').value = candidate.ID_CAN;
+                        document.getElementById('name').value = candidate.NOM_CAN;
+                        document.getElementById('party_id').value = candidate.ID_PAR_CAN;
+                        document.getElementById('bio').value = candidate.BIOGRAFIA_CAN;
+                        document.getElementById('experience').value = candidate.EXPERIENCIA_CAN;
+                        document.getElementById('vision').value = candidate.VISION_CAN;
+                        document.getElementById('achievements').value = candidate.LOGROS_CAN;
+                        modal.style.display = 'block';
                     })
-                    .catch(handleError);
+                    .catch(error => console.error('Error al cargar el candidato:', error));
+            });
+        });
+
+        // Botones de eliminar
+        document.querySelectorAll('.delete-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const id = this.dataset.id;
+
+                if (confirm('¿Estás seguro de eliminar este candidato?')) {
+                    fetch(`${apiEndpoint}`, {
+                        method: 'DELETE',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id: id }) // Enviar el ID en el cuerpo
+                    })
+                        .then(response => response.json())
+                        .then(result => {
+                            if (result.error) {
+                                alert('Error: ' + result.error);
+                            } else {
+                                alert('Candidato eliminado correctamente.');
+                                loadCandidates(); // Recargar la tabla
+                            }
+                        })
+                        .catch(error => console.error('Error al eliminar el candidato:', error));
+                }
+            });
+        });
+
+        // Botones de cambiar estado
+        document.querySelectorAll('.toggle-status-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const id = this.dataset.id;
+                const currentStatus = this.dataset.status;
+
+                const newStatus = currentStatus === 'Activo' ? 'Oculto' : 'Activo';
+
+                fetch(`${apiEndpoint}`, {
+                    method: 'PATCH', // Método para actualizar parcialmente
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id, estado: newStatus }) // Enviar el ID y el nuevo estado
+                })
+                    .then(response => response.json())
+                    .then(result => {
+                        if (result.error) {
+                            alert('Error: ' + result.error);
+                        } else {
+                            alert('Estado actualizado correctamente.');
+                            loadCandidates(); // Recargar la tabla
+                        }
+                    })
+                    .catch(error => console.error('Error al cambiar el estado:', error));
             });
         });
     }
 
-    // Llamar a las funciones al cargar la página
-    loadParties(); // Cargar los partidos políticos en el select
-    loadCandidates(); // Cargar candidatos
+    // Abrir el modal para agregar un nuevo candidato
+    openAddModal.addEventListener('click', () => {
+        modalTitle.textContent = 'Agregar Candidato';
+        candidateForm.reset(); // Limpiar el formulario
+        document.getElementById('candidateId').value = ''; // Asegurarse de que el ID esté vacío
+        modal.style.display = 'block';
+    });
+
+    // Cerrar el modal
+    closeModal.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    // Guardar candidato (crear o editar)
+    candidateForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(candidateForm); // Crear el formulario para enviar
+
+        fetch(apiEndpoint, {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.error) {
+                    alert('Error: ' + result.error);
+                } else {
+                    alert('Candidato guardado correctamente.');
+                    modal.style.display = 'none';
+                    loadCandidates(); // Recargar la tabla
+                }
+            })
+            .catch(error => console.error('Error al guardar el candidato:', error));
+    });
+
+    // Cargar los partidos para el select
+    function loadParties() {
+        fetch(`${apiEndpoint}?fetch=parties`)
+            .then(response => response.json())
+            .then(parties => {
+                const partySelect = document.getElementById('party_id');
+                partySelect.innerHTML = '<option value="" disabled selected>Seleccione un partido</option>';
+                parties.forEach(party => {
+                    const option = document.createElement('option');
+                    option.value = party.ID_PAR;
+                    option.textContent = party.NOM_PAR;
+                    partySelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error al cargar los partidos:', error));
+    }
+
+    // Inicialización
+    loadParties(); // Cargar los partidos
+    loadCandidates(); // Cargar la lista de candidatos
 });

@@ -1,24 +1,15 @@
-/* Títulos de los partidos */
-.candidates-section h2 {
-    font-size: 1.5em;  /* Ajustamos el tamaño del título */
-    margin: 0;  /* Eliminamos el margen por defecto */
-    padding-left: 20px;  /* Alineamos el título al margen */
-    text-align: left;  /* Asegura que el texto esté alineado a la izquierda */
-    color: #333;  /* Color oscuro para el texto */
-    margin-bottom: 10px;  /* Separación entre el título y las tarjetas */
-    font-family: 'Arial', sans-serif;  /* Fuente más moderna */
-}
-
-/* Contenedor para las tarjetas de los candidatos */
 .cards-container {
-    display: flex;
-    flex-wrap: wrap;  /* Esto permite que las tarjetas se acomoden en varias filas si es necesario */
-    gap: 20px;  /* Espaciado entre las tarjetas */
-    padding: 20px;
-    justify-content: flex-start;  /* Alineamos las tarjetas a la izquierda */
+    display: flex; /* Flexbox para la disposición en fila */
+    flex-wrap: nowrap; /* Evita que las tarjetas pasen a otra fila */
+    gap: 20px; /* Espaciado entre las tarjetas */
+    overflow-x: auto; /* Habilita el scroll horizontal si el contenido excede el ancho */
+    padding: 10px;
+    justify-content: flex-start; /* Alinea las tarjetas a la izquierda */
+    align-items: flex-start; /* Alinea las tarjetas desde la parte superior */
+    scroll-behavior: smooth; /* Scroll suave en dispositivos */
 }
 
-/* Estilos de las tarjetas de los candidatos */
+/* Estilos de las tarjetas */
 .card {
     background-color: #fff;
     border-radius: 10px;
@@ -26,13 +17,12 @@
     overflow: hidden;
     transition: transform 0.3s ease;
     cursor: pointer;
-    flex: 1 1 240px;  /* Esto asegura que las tarjetas sean flexibles y ocupen el espacio disponible */
-    max-width: 240px;  /* Limita el ancho máximo de las tarjetas */
-    margin: 10px;
+    width: 240px; /* Tamaño fijo para cada tarjeta */
+    flex: 0 0 auto; /* Asegura que las tarjetas no se redimensionen */
 }
 
 .card:hover {
-    transform: scale(1.05);  /* Agranda la tarjeta cuando se pasa el cursor sobre ella */
+    transform: scale(1.05); /* Efecto de aumento al pasar el cursor */
 }
 
 .card img {
@@ -43,16 +33,16 @@
 
 .card .card-content {
     padding: 15px;
-    overflow: hidden; /* Oculta el contenido desbordado */
+    overflow: hidden;
 }
 
 .card p {
     font-size: 0.9em;
     color: #555;
     margin-bottom: 10px;
-    text-overflow: ellipsis; /* Limita el texto que no cabe */
-    white-space: nowrap; /* Evita el salto de línea */
-    overflow: hidden; /* Oculta el contenido que exceda */
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .card h3 {
@@ -60,8 +50,6 @@
     margin-bottom: 10px;
     color: #333;
 }
-
-
 
 .card a {
     display: inline-block;
@@ -80,17 +68,15 @@
     background-color: #0056b3;
 }
 
-/* Ajustes para pantallas pequeñas */
+/* Responsive Design */
 @media (max-width: 768px) {
-    .card {
-        flex: 1 1 45%;
-        max-width: 45%;
+    .cards-container {
+        gap: 10px; /* Reduce el espaciado entre tarjetas en pantallas medianas */
     }
 }
 
 @media (max-width: 480px) {
     .card {
-        flex: 1 1 100%;
-        max-width: 100%;
+        width: 200px; /* Reduce el ancho de las tarjetas en pantallas pequeñas */
     }
 }

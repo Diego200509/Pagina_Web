@@ -29,43 +29,22 @@
     </header>
 
     <!-- Main Content -->
-    <div class="content">
-        <div class="heart">&#10084;</div>
-        <div class="text">
-            <span class="pink">SUEÑA,</span><br>
-            <span class="blue">CREA,</span><br>
-            <span class="pink">INNOVA.</span>
-        </div>
-    </div>
     <main>
-    <section id="party1" class="candidates-section">
-    <h2>Partido 1</h2>
-    <div id="party1Candidates" class="cards-container">
-        <!-- Los candidatos del Partido 1 se cargarán aquí dinámicamente -->
-    </div>
-</section>
+        <section id="party1" class="candidates-section">
+            
+            <div id="party1Candidates" class="cards-container">
+                <!-- Los candidatos del Partido 1 se cargarán aquí dinámicamente -->
+            </div>
+        </section>
 
-<section id="party2" class="candidates-section">
-    <h2>Partido 2</h2>
-    <div id="party2Candidates" class="cards-container">
-        <!-- Los candidatos del Partido 2 se cargarán aquí dinámicamente -->
-    </div>
-</section>
-</main>
-
-<div id="candidateModal" class="modal">
-    <div class="modal-content">
-        <span id="closeCandidateModal" class="close-btn">&times;</span>
-        <h2 id="candidate-name"></h2>
-        <img id="candidate-img" src="" alt="Imagen del candidato">
-        <p><strong>Biografía:</strong> <span id="candidate-bio"></span></p>
-        <p><strong>Experiencia:</strong> <span id="candidate-experience"></span></p>
-        <p><strong>Visión:</strong> <span id="candidate-vision"></span></p>
-        <p><strong>Logros:</strong> <span id="candidate-achievements"></span></p>
-    </div>
-</div>
+        <section id="party2" class="candidates-section">
+            
+            <div id="party2Candidates" class="cards-container">
+                <!-- Los candidatos del Partido 2 se cargarán aquí dinámicamente -->
+            </div>
+        </section>
+    </main>
 
     <script src="candidatos.js"></script>
 </body>
 </html>
-
