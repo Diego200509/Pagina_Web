@@ -86,20 +86,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($accion === 'ocultar') {
         $id = $_POST['id'];
 
-        // Verificar que se recibió el ID
         if (empty($id)) {
             die("Error: No se recibió el ID de la propuesta para ocultar.");
         }
 
         try {
-            // Llamar a la función de ocultar propuesta
             ocultarPropuesta($connection, $id);
-            header('Location: gestionarPropuestas.php?status=success');
+            header('Location: gestionarPropuestas.php?status=hidden');
             exit();
         } catch (Exception $e) {
             die("Error al ocultar propuesta: " . $e->getMessage());
         }
     }
+
+    if ($accion === 'mostrar') {
+        $id = $_POST['id'];
+
+        if (empty($id)) {
+            die("Error: No se recibió el ID de la propuesta para mostrar.");
+        }
+
+        try {
+            mostrarPropuesta($connection, $id);
+            header('Location: gestionarPropuestas.php?status=visible');
+            exit();
+        } catch (Exception $e) {
+            die("Error al mostrar propuesta: " . $e->getMessage());
+        }
+    }
+
 
     if ($accion === 'mostrar') {
         $id = $_POST['id'];
@@ -181,9 +196,20 @@ function mostrarDescripcionConFormato($descripcion)
     <div class="container">
         <h2>Administrar Propuestas</h2>
 
-        <?php if (isset($_GET['status']) && $_GET['status'] == 'success'): ?>
-            <p class="success">Operación realizada con éxito.</p>
+        <?php if (isset($_GET['status'])): ?>
+            <?php if ($_GET['status'] == 'success'): ?>
+                <p class="success">Operación realizada con éxito.</p>
+            <?php elseif ($_GET['status'] == 'hidden'): ?>
+                <p class="success">Propuesta ocultada con éxito.</p>
+            <?php elseif ($_GET['status'] == 'visible'): ?>
+                <p class="success">Propuesta visible con éxito.</p>
+            <?php elseif ($_GET['status'] == 'deleted'): ?>
+                <p class="success">Propuesta eliminada con éxito.</p>
+            <?php elseif ($_GET['status'] == 'no_changes'): ?>
+                <p class="info">No se realizaron cambios en la propuesta.</p>
+            <?php endif; ?>
         <?php endif; ?>
+
 
         <form method="POST" action="gestionarPropuestas.php">
             <h3>Agregar Nueva Propuesta</h3>

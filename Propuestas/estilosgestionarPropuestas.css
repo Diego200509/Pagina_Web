@@ -378,3 +378,30 @@ table button {
     border-radius: 5px; /* Bordes redondeados */
     cursor: pointer;
 }
+
+.success {
+    color: green;
+    background-color: #eafaea;
+    border: 1px solid green;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+.info {
+    color: blue;
+    background-color: #eaf3fa;
+    border: 1px solid blue;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+.error {
+    color: red;
+    background-color: #faeaea;
+    border: 1px solid red;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}

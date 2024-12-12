@@ -4,7 +4,6 @@ include('../config/config.php');
 include('../src/gestionarPropuestas_queries.php');
 
 // Verificar si el ID está presente en la URL
-// Verificar si el ID está presente en la URL
 if (isset($_GET['id'])) {
     $idPropuesta = $_GET['id'];
 
@@ -24,11 +23,35 @@ if (isset($_GET['id'])) {
     if (!$propuesta) {
         die("Propuesta no encontrada.");
     }
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Procesar la actualización de la propuesta
+    $id = $_POST['id'];
+    $titulo = $_POST['titulo'];
+    $descripcion = $_POST['descripcion'];
+    $categoria = $_POST['categoria'];
+    $partido = $_POST['partido'];
+
+    // Verificar que los datos no estén vacíos
+    if (empty($titulo) || empty($descripcion) || empty($categoria) || empty($partido)) {
+        die("Error: Faltan datos en el formulario. Verifique los campos.");
+    }
+
+    try {
+        // Llamar a la función de actualizar propuesta
+        $actualizado = actualizarPropuesta($connection, $id, $titulo, $descripcion, $categoria, $partido);
+
+        if ($actualizado) {
+            header('Location: gestionarPropuestas.php?status=success');
+        } else {
+            header('Location: gestionarPropuestas.php?status=no_changes');
+        }
+        exit();
+    } catch (Exception $e) {
+        die("Error al editar propuesta: " . $e->getMessage());
+    }
 } else {
     die("ID de propuesta no proporcionado.");
 }
-
-// Obtener todos los partidos para el selector
 
 // Obtener todos los partidos para el selector
 $partidos = obtenerPartidos($connection);
@@ -57,12 +80,11 @@ $partidos = obtenerPartidos($connection);
     <div class="container">
         <h2>Editar Propuesta</h2>
 
-        <form method="POST" action="gestionarPropuestas.php">
+        <form method="POST" action="editarPropuesta.php">
             <input type="hidden" name="id" value="<?= $propuesta['ID_PRO'] ?>">
 
             <label for="titulo">Título</label>
             <input type="text" id="titulo" name="titulo" value="<?= $propuesta['TIT_PRO'] ?>" required>
-
 
             <label for="descripcion">Descripción</label>
             <textarea id="descripcion" name="descripcion" required><?= $propuesta['DESC_PRO'] ?></textarea>
@@ -91,7 +113,7 @@ $partidos = obtenerPartidos($connection);
                 <?php endwhile; ?>
             </select>
 
-            <button type="submit" name="accion" value="editar">Actualizar Propuesta</button>
+            <button type="submit">Actualizar Propuesta</button>
         </form>
     </div>
 

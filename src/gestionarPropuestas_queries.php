@@ -42,6 +42,7 @@ function obtenerPartidos($connection) {
     return $result;
 }
 
+
 // Función para actualizar una propuesta
 function actualizarPropuesta($connection, $id, $titulo, $descripcion, $categoria, $partido) {
     // Actualizar los datos de la propuesta en la tabla PROPUESTAS
@@ -53,11 +54,8 @@ function actualizarPropuesta($connection, $id, $titulo, $descripcion, $categoria
     $stmt->bind_param("sssi", $titulo, $descripcion, $categoria, $id);
     $stmt->execute();
 
-    if ($stmt->affected_rows > 0) {
-        echo "Propuesta actualizada con éxito.";
-    } else {
-        die("No se actualizó ninguna fila en PROPUESTAS.");
-    }
+    // Verificar si se actualizó alguna fila
+    $propuestaActualizada = $stmt->affected_rows > 0;
 
     // Actualizar la colaboración entre la propuesta y el partido político
     $queryColaboracion = "UPDATE COLABORACIONES SET ID_PAR_COL = ? WHERE ID_PRO_COL = ?";
@@ -68,15 +66,16 @@ function actualizarPropuesta($connection, $id, $titulo, $descripcion, $categoria
     $stmtColaboracion->bind_param("ii", $partido, $id);
     $stmtColaboracion->execute();
 
-    if ($stmtColaboracion->affected_rows > 0) {
-        echo "Colaboración actualizada con éxito.";
-    } else {
-        die("No se actualizó ninguna fila en COLABORACIONES.");
-    }
+    // Verificar si se actualizó alguna fila en la tabla COLABORACIONES
+    $colaboracionActualizada = $stmtColaboracion->affected_rows > 0;
 
     $stmt->close();
     $stmtColaboracion->close();
+
+    // Retornar verdadero si alguna de las actualizaciones fue exitosa
+    return $propuestaActualizada || $colaboracionActualizada;
 }
+
 
 
 // Función para agregar propuesta y colaboración
