@@ -140,10 +140,12 @@ table tr:hover {
 
 /* Botones de acción en las celdas de la tabla */
 table td form {
-    display: flex;            /* Usamos flexbox para alinear los botones horizontalmente */
-    flex-wrap: wrap;          /* Permite que los botones se ajusten en varias filas si es necesario */
-    gap: 10px;                /* Espacio entre los botones */
-    justify-content: flex-start;  /* Alinea los botones al inicio de la celda */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; /* Establece la separación entre los botones */
+    justify-content: flex-start; /* Alineación de los botones a la izquierda */
+    margin-bottom: 5px; /* Separación entre las filas de botones */
+    margin-right: 5px; /* Separación entre las columnas de los formularios de botones */
 }
 
 table button {
@@ -213,14 +215,12 @@ table td form {
     align-items: center; /* Alineación vertical */
 }
 
-
 /* Asegura que las celdas no se desborden */
 table td {
     word-wrap: break-word; /* Permite que el texto se ajuste dentro de la celda */
     white-space: normal;    /* Ajusta el texto automáticamente */
     max-width: 300px;       /* Define un ancho máximo para la celda */
-    overflow: hidden;  
-         /* Evita el desbordamiento de texto */
+    overflow: hidden;       /* Evita el desbordamiento de texto */
 }
 
 /* Estilo de los botones cuando son presionados */
@@ -237,15 +237,6 @@ table button {
 
 table button:hover {
     opacity: 0.8; /* Añadir opacidad para el hover */
-}
-table button.btn-danger {
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-}
-
-table button.btn-danger:hover {
-    background-color: #c0392b;
 }
 
 /* Botón Editar */
@@ -280,14 +271,6 @@ table button.btn-success {
 table button.btn-success:hover {
     background-color: #27ae60;
 }
-/* Estilo para las acciones en la fila */
-table td form {
-    display: flex;            /* Usamos flexbox para alinear los botones en una fila */
-    gap: 90px;                /* Agrega espacio de 10px entre los botones tanto horizontal como verticalmente */
-    justify-content: flex-start; 
-    margin-right: 10px; /* Alinea los botones al inicio de la celda */
-}
-
 
 /* Pie de página */
 footer {
@@ -365,6 +348,7 @@ footer {
     color: #fff;
     font-weight: bold;
 }
+
 /* Botones alineados horizontalmente en pantallas grandes */
 @media (min-width: 768px) {
     table td form {
@@ -375,7 +359,6 @@ footer {
         align-items: center; /* Alineación vertical */
     }
 }
-
 
 /* Botones en columna para pantallas pequeñas */
 @media (max-width: 767px) {
