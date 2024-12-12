@@ -386,6 +386,7 @@ table button {
     padding: 10px;
     margin-bottom: 15px;
     border-radius: 5px;
+    text-align: center;
 }
 
 .info {
@@ -395,7 +396,9 @@ table button {
     padding: 10px;
     margin-bottom: 15px;
     border-radius: 5px;
+    text-align: center;
 }
+
 
 .error {
     color: red;
@@ -404,4 +407,11 @@ table button {
     padding: 10px;
     margin-bottom: 15px;
     border-radius: 5px;
+}
+
+button:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+    border: 1px solid #999;
 }

@@ -26,15 +26,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $categoria = $_POST['categoria'];
         $partido = $_POST['partido'];
 
-        // Verificar que los datos del formulario se recibieron correctamente
         if (empty($titulo) || empty($descripcion) || empty($categoria) || empty($partido)) {
             die("Error: Faltan datos en el formulario. Verifique los campos.");
         }
 
         try {
-            // Llamar a la función de agregar propuesta
             agregarPropuestaYColaboracion($connection, $titulo, $descripcion, $categoria, $partido);
-            header('Location: gestionarPropuestas.php?status=success');
+            header('Location: gestionarPropuestas.php?status=added');
             exit();
         } catch (Exception $e) {
             die("Error al agregar propuesta: " . $e->getMessage());
@@ -44,15 +42,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($accion === 'eliminar') {
         $id = $_POST['id'];
 
-        // Verificar que se recibió el ID
         if (empty($id)) {
             die("Error: No se recibió el ID de la propuesta para eliminar.");
         }
 
         try {
-            // Llamar a la función de eliminar propuesta
             eliminarPropuesta($connection, $id);
-            header('Location: gestionarPropuestas.php?status=success');
+            header('Location: gestionarPropuestas.php?status=deleted');
             exit();
         } catch (Exception $e) {
             die("Error al eliminar propuesta: " . $e->getMessage());
@@ -66,20 +62,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $categoria = $_POST['categoria'];
         $partido = $_POST['partido'];
 
-        // Verifica que los datos no estén vacíos
         if (empty($titulo) || empty($descripcion) || empty($categoria) || empty($partido)) {
             die("Error: Faltan datos en el formulario. Verifique los campos.");
         }
 
         try {
-            // Llamar a la función de actualizar propuesta
             actualizarPropuesta($connection, $id, $titulo, $descripcion, $categoria, $partido);
-            header('Location: gestionarPropuestas.php?status=success');
+            header('Location: gestionarPropuestas.php?status=edited');
             exit();
         } catch (Exception $e) {
             die("Error al editar propuesta: " . $e->getMessage());
         }
     }
+
 
 
 
@@ -141,12 +136,12 @@ $totalPropuestas = $totalPropuestasResult->fetch_assoc()['total'];
 $totalPaginas = ceil($totalPropuestas / $propuestasPorPagina);
 
 // Depuración de variables
-echo "<pre>";
-echo "Página actual: " . $paginaActual . "\n";
-echo "Offset: " . $offset . "\n";
-echo "Total de propuestas en BD: " . $totalPropuestas . "\n";
-echo "Total de páginas: " . $totalPaginas . "\n";
-echo "</pre>";
+//echo "<pre>";
+//echo "Página actual: " . $paginaActual . "\n";
+//echo "Offset: " . $offset . "\n";
+//echo "Total de propuestas en BD: " . $totalPropuestas . "\n";
+//echo "Total de páginas: " . $totalPaginas . "\n";
+//echo "</pre>";
 
 // Consulta simplificada para ver si la paginación funciona sin GROUP_CONCAT
 $query = "
@@ -205,10 +200,15 @@ function mostrarDescripcionConFormato($descripcion)
                 <p class="success">Propuesta visible con éxito.</p>
             <?php elseif ($_GET['status'] == 'deleted'): ?>
                 <p class="success">Propuesta eliminada con éxito.</p>
+            <?php elseif ($_GET['status'] == 'added'): ?>
+                <p class="success">Propuesta agregada con éxito.</p>
+            <?php elseif ($_GET['status'] == 'edited'): ?>
+                <p class="success">Propuesta editada con éxito.</p>
             <?php elseif ($_GET['status'] == 'no_changes'): ?>
                 <p class="info">No se realizaron cambios en la propuesta.</p>
             <?php endif; ?>
         <?php endif; ?>
+
 
 
         <form method="POST" action="gestionarPropuestas.php">
@@ -264,25 +264,28 @@ function mostrarDescripcionConFormato($descripcion)
                             <td>
                                 <form method="POST" action="gestionarPropuestas.php" style="display: inline;">
                                     <input type="hidden" name="id" value="<?= $row['ID_PRO'] ?>">
-                                    <button type="submit" name="accion" value="eliminar" class="btn btn-danger">Eliminar</button>
-                                </form>
-                                <form method="GET" action="editarPropuesta.php" style="display: inline;">
-                                    <input type="hidden" name="id" value="<?= $row['ID_PRO'] ?>">
-                                    <button type="submit" class="btn btn-primary">Editar</button>
-                                </form>
-                                <form method="POST" action="gestionarPropuestas.php" style="display: inline;">
-                                    <input type="hidden" name="id" value="<?= $row['ID_PRO'] ?>">
-                                    <button type="submit" name="accion" value="ocultar" class="btn btn-warning">Ocultar</button>
+                                    <button type="submit" name="accion" value="ocultar"
+                                        class="btn btn-warning"
+                                        <?= $row['ESTADO'] === 'Oculta' ? 'disabled' : '' ?>>Ocultar</button>
                                 </form>
 
-                                <!-- Agregar el botón "Mostrar" solo si la propuesta está oculta -->
                                 <?php if ($row['ESTADO'] === 'Oculta'): ?>
                                     <form method="POST" action="gestionarPropuestas.php" style="display: inline;">
                                         <input type="hidden" name="id" value="<?= $row['ID_PRO'] ?>">
                                         <button type="submit" name="accion" value="mostrar" class="btn btn-success">Mostrar</button>
                                     </form>
                                 <?php endif; ?>
+
+                                <form method="POST" action="gestionarPropuestas.php" style="display: inline;">
+                                    <input type="hidden" name="id" value="<?= $row['ID_PRO'] ?>">
+                                    <button type="submit" name="accion" value="eliminar" class="btn btn-danger">Eliminar</button>
+                                </form>
+                                <form method="GET" action="editarPropuesta.php" style="display: inline;">
+                                    <input type="hidden" name="id" value="<?= $row['ID_PRO'] ?>">
+                                    <button type="submit" class="btn btn-primary">Editar</button>
+                                </form>
                             </td>
+
 
                         </tr>
                     <?php endwhile; ?>
@@ -293,6 +296,17 @@ function mostrarDescripcionConFormato($descripcion)
                 <?php endif; ?>
             </tbody>
         </table>
+
+        <script>
+            // Ocultar los mensajes de estado después de 5 segundos
+            setTimeout(() => {
+                const messages = document.querySelectorAll('.success, .info');
+                messages.forEach(message => {
+                    message.style.display = 'none';
+                });
+            }, 5000); // 5000 ms = 5 segundos
+        </script>
+
 
         <!-- Barra de navegación para la paginación -->
         <div class="pagination">
@@ -355,4 +369,6 @@ function mostrarPropuesta($connection, $id)
     }
     $stmt->close();
 }
+
+
 ?>
