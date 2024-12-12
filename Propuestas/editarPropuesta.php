@@ -65,6 +65,31 @@ $partidos = obtenerPartidos($connection);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Propuesta</title>
     <link rel="stylesheet" href="estilosGestionarPropuestas.css">
+
+    <style>
+        /* Estilo para la flecha de regreso */
+        .back-arrow {
+            position: absolute;
+            top: 100px;
+            right: 60px;
+            text-decoration: none;
+            font-size: 20px;
+            color: #333;
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 50%;
+            border: 1px solid #ccc;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .back-arrow:hover {
+            background-color: #ddd;
+            color: #000;
+        }
+    </style>
+
+
 </head>
 
 <body>
@@ -76,6 +101,8 @@ $partidos = obtenerPartidos($connection);
             <a href="../Eventos_Noticias/eventos_noticias.php">Eventos y Noticias</a>
         </nav>
     </header>
+
+    <a href="gestionarPropuestas.php" class="back-arrow" title="Regresar a Gestión de Propuestas">&larr;</a>
 
     <div class="container">
         <h2>Editar Propuesta</h2>
