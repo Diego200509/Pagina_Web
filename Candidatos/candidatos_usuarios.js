@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             <p><strong>Experiencia:</strong> ${candidate.EXPERIENCIA_CAN.substring(0, 100)}...</p>
                             <p><strong>Visión:</strong> ${candidate.VISION_CAN.substring(0, 100)}...</p>
                             <p><strong>Logros:</strong> ${candidate.LOGROS_CAN.substring(0, 100)}...</p>
-                            <p><strong>Partido:</strong> ${candidate.ID_PAR_CAN}</p>
+                             <p><strong>Partido:</strong> ${candidate.NOM_PAR || 'Sin partido'}</p>
                         </div>
                     `;
                     cardContainer.appendChild(card); // Agregar la tarjeta al contenedor
