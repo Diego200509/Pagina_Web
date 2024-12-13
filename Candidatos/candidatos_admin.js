@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <td>${candidate.EXPERIENCIA_CAN.substring(0, 50)}...</td>
                         <td>${candidate.VISION_CAN.substring(0, 50)}...</td>
                         <td>${candidate.LOGROS_CAN.substring(0, 50)}...</td>
-                        <td>${candidate.ID_PAR_CAN}</td>
+                       <td>${candidate.ID_PAR_CAN || 'No definido'}</td>
                         <td>
                             <img src="../${candidate.IMG_CAN}" alt="${candidate.NOM_CAN}" width="50">
                         </td>
