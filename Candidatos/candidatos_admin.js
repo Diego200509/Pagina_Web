@@ -125,6 +125,32 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
     }
+    // Botones de cambiar estado
+document.querySelectorAll('.toggle-status-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+        const id = this.dataset.id;
+        const currentStatus = this.dataset.status;
+
+        // Determinar el nuevo estado
+        const newStatus = currentStatus === 'Activo' ? 'Oculto' : 'Activo';
+
+        fetch(apiEndpoint, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id, estado: newStatus }) // Enviar el ID y el nuevo estado
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.error) {
+                    alert('Error: ' + result.error);
+                } else {
+                    alert(`Estado del candidato actualizado a: ${newStatus}`);
+                    loadCandidates(); // Recargar la tabla o lista
+                }
+            })
+            .catch(error => console.error('Error al cambiar el estado:', error));
+    });
+});
 
     // Abrir el modal para agregar un nuevo candidato
     openAddModal.addEventListener('click', () => {
