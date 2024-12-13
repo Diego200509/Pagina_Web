@@ -223,3 +223,24 @@ textarea {
         width: 95%;
     }
 }
+.alert {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #4CAF50; /* Verde para éxito */
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.alert.hidden {
+    display: none;
+}
+
+.alert.error {
+    background-color: #f44336; /* Rojo para errores */
+}
