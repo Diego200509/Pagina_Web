@@ -28,23 +28,14 @@
         </nav>
     </header>
 
-    <!-- Main Content -->
     <main>
-        <section id="party1" class="candidates-section">
-            
-            <div id="party1Candidates" class="cards-container">
-                <!-- Los candidatos del Partido 1 se cargarán aquí dinámicamente -->
-            </div>
-        </section>
+    <h2>Lista de Candidatos</h2>
+    <div id="candidateCards" class="card-container">
+        <!-- Aquí se cargarán dinámicamente las tarjetas -->
+    </div>
+</main>
 
-        <section id="party2" class="candidates-section">
-            
-            <div id="party2Candidates" class="cards-container">
-                <!-- Los candidatos del Partido 2 se cargarán aquí dinámicamente -->
-            </div>
-        </section>
-    </main>
 
-    <script src="candidatos.js"></script>
+    <script src="candidatos_usuarios.js"></script>
 </body>
 </html>
