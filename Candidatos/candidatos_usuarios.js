@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const apiEndpoint = '../src/candidatos_queries.php';
-    const cardContainer = document.getElementById('candidateCards'); // Cambia el contenedor
+    const cardContainer = document.getElementById('candidateCards');
 
     // Función para cargar los candidatos
     function loadCandidates() {
@@ -31,6 +31,6 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(error => console.error('Error al cargar candidatos:', error));
     }
 
-    // Inicialización
+    // Inicializar
     loadCandidates();
 });

@@ -3,6 +3,7 @@
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
+    padding: 20px;
 }
 
 .candidate-card {
@@ -13,6 +14,8 @@
     width: 300px;
     overflow: hidden;
     transition: transform 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
 }
 
 .candidate-card:hover {
@@ -27,6 +30,7 @@
 
 .card-content {
     padding: 15px;
+    text-align: left;
 }
 
 .card-content h3 {
