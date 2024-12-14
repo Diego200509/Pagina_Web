@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -135,11 +138,25 @@
       color: #9013FE;
       text-decoration: underline;
     }
+    /* Agrega estilos para mensajes de error */
+    .error-message {
+      color: red;
+      text-align: center;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
   <div class="login-container">
     <h2>Bienvenido</h2>
+     <!-- Mensaje de error -->
+     <?php
+    if (isset($_SESSION['error'])) {
+        echo "<div class='error-message'>" . $_SESSION['error'] . "</div>";
+        unset($_SESSION['error']);
+    }
+    ?>
     <!-- Avatares -->
     <div class="avatars">
       <img src="https://cdn.icon-icons.com/icons2/2643/PNG/512/female_woman_avatar_people_person_white_tone_icon_159370.png" alt="Avatar Mujer">
@@ -147,18 +164,39 @@
     </div>
 
     <!-- Inputs -->
-    <form action="/src/login_queries.php" method="POST">
-  <div class="input-group">
-    <i class="fas fa-user"></i>
-    <input type="text" name="email" placeholder="Usuario" required>
-  </div>
-  <div class="input-group">
-    <i class="fas fa-lock"></i>
-    <input type="password" name="password" placeholder="Contraseña" required>
-  </div>
-  <button type="submit" class="login-button">Iniciar sesión</button>
-</form>
+    <form action="../src/login_queries.php" method="POST" onsubmit="return validateForm()">
+      <div class="input-group">
+        <i class="fas fa-user"></i>
+        <input type="text" id="email" name="email" placeholder="Correo" required>
+      </div>
+      <div class="input-group">
+        <i class="fas fa-lock"></i>
+        <input type="password" id="password" name="password" placeholder="Contraseña" required>
+      </div>
+      <button type="submit" class="login-button">Iniciar sesión</button>
     </form>
   </div>
+
+  <script>
+    function validateForm() {
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      // Validar formato del correo electrónico
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(email)) {
+        alert('Por favor, ingresa un correo electrónico válido.');
+        return false;
+      }
+
+      // Validar longitud mínima de la contraseña
+      if (password.length < 6) {
+        alert('La contraseña debe tener al menos 6 caracteres.');
+        return false;
+      }
+
+      return true;
+    }
+  </script>
 </body>
 </html>

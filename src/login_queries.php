@@ -1,38 +1,62 @@
-
 <?php
+session_start();
 include('../config/config.php');
 
-session_start();
+// Obtener datos del formulario
+$email = isset($_POST['email']) ? trim($_POST['email']) : '';
+$password = isset($_POST['password']) ? trim($_POST['password']) : '';
 
-$email = $_POST['email'];
-$password = $_POST['password'];
+// Validar campos vacíos
+if (empty($email) || empty($password)) {
+    $_SESSION['error'] = 'Por favor, completa todos los campos.';
+    header("Location: ../Login/Login.php");
+    exit;
+}
 
-// Protege contra la inyección de SQL
-$email = $conn->real_escape_string($email);
-$password = $conn->real_escape_string($password);
+// Consultar en la base de datos
+$sql = "SELECT ID_USU, NOM_USU, PASSWORD_USU, ROL_USU FROM USUARIOS WHERE EMAIL_USU = ?";
+$stmt = $connection->prepare($sql); // Cambiado a $connection
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
 
-// Consulta para verificar las credenciales del usuario
-$sql = "SELECT ID_USU, PASSWORD_USU, ROL_USU FROM USUARIOS WHERE EMAIL_USU = '$email'";
-$result = $conn->query($sql);
-
+// Verificar si el usuario existe
 if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    // Verifica la contraseña (considera usar password_hash() y password_verify() en un entorno real)
-    if ($password === $row['PASSWORD_USU']) {
-        // Asignar sesión basada en el rol del usuario
-        $_SESSION['rol'] = $row['ROL_USU'];
-        $_SESSION['usuario'] = $email;
+    $user = $result->fetch_assoc();
 
-        if ($row['ROL_USU'] === 'SUPERADMIN') {
-            header('Location: dashboard_superadmin.php'); // Redirige al dashboard del superadministrador
+    // Verificar contraseña
+    if (hash('sha256', $password) === $user['PASSWORD_USU']) {
+        $_SESSION['user_id'] = $user['ID_USU'];
+        $_SESSION['user_name'] = $user['NOM_USU'];
+        $_SESSION['user_role'] = $user['ROL_USU'];
+
+        // Elimina esta línea si ya confirmaste que el rol es correcto
+        // echo "Rol detectado: " . $user['ROL_USU'];
+        // exit;
+
+        // Redirigir según el rol
+        if ($user['ROL_USU'] === 'SUPERADMIN') {
+            header("Location: ../Login/superadmin_dasboard.php");
+        } elseif ($user['ROL_USU'] === 'ADMIN') {
+            header("Location:  ../Login/admin_dashboard.php");
         } else {
-            header('Location: dashboard_usuario.php'); // Redirige al dashboard del usuario normal
+            $_SESSION['error'] = 'Rol no reconocido.';
+            header("Location: ../Login/Login.php");
         }
+        exit;
     } else {
-        echo "Contraseña incorrecta.";
+        $_SESSION['error'] = 'Contraseña incorrecta.';
+        header("Location: ../Login/Login.php");
+        exit;
     }
 } else {
-    echo "Usuario no encontrado.";
+    $_SESSION['error'] = 'El correo electrónico no existe.';
+    header("Location: ../Login/Login.php");
+    exit;
 }
-$conn->close();
+
+
+// Cerrar conexión
+$stmt->close();
+$connection->close(); // Cambiado a $connection
 ?>
