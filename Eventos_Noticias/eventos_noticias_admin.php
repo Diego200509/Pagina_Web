@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_role'])) {
 $user_role = $_SESSION['user_role'];
 
 // Determinar la URL del dashboard según el rol del usuario
-$dashboard_url = $user_role === 'SUPERADMIN' ? '../Login/superadmin_dashboard.php' : '../Login/admin_dashboard.php';
+$dashboard_url = $user_role === 'SUPERADMIN' ? '../Login/superadmin_dasboard.php' : '../Login/admin_dashboard.php';
 
 include '../src/eventos_noticias_admin_queries.php';
 

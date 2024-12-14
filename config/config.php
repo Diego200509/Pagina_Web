@@ -1,6 +1,6 @@
 <?php
 
-$host = "localhost:3309";  
+$host = "localhost";  
 $user = "root";  
 $password = "";  
 $database = "elecciones2024";  
