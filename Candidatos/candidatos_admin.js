@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const closeModal = document.getElementById('closeModal');
     const openAddModal = document.getElementById('addCandidateBtn');
 
-    // Cargar la tabla de candidatos
     function loadCandidates() {
         fetch(apiEndpoint)
             .then(response => response.json())
@@ -19,11 +18,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     row.innerHTML = `
                         <td>${candidate.ID_CAN || 'No ID'}</td>
                         <td>${candidate.NOM_CAN || 'Sin nombre'}</td>
-                        <td>${candidate.BIOGRAFIA_CAN ? candidate.BIOGRAFIA_CAN.substring(0, 50) : 'No definido'}...</td>
-                        <td>${candidate.EXPERIENCIA_CAN ? candidate.EXPERIENCIA_CAN.substring(0, 50) : 'No definido'}...</td>
-                        <td>${candidate.VISION_CAN ? candidate.VISION_CAN.substring(0, 50) : 'No definido'}...</td>
-                        <td>${candidate.LOGROS_CAN ? candidate.LOGROS_CAN.substring(0, 50) : 'No definido'}...</td>
-                        <td>${candidate.ID_PAR_CAN || 'No definido'}</td>
+                        <td>${candidate.BIOGRAFIA_CAN || 'Sin biografía'}</td>
+                        <td>${candidate.EXPERIENCIA_CAN || 'Sin experiencia'}</td>
+                        <td>${candidate.VISION_CAN || 'Sin visión'}</td>
+                        <td>${candidate.LOGROS_CAN || 'Sin logros'}</td>
+                        <td>${candidate.NOM_PAR || 'Sin partido'}</td>
                         <td>
                             <img src="../${candidate.IMG_CAN || 'placeholder.png'}" alt="${candidate.NOM_CAN || 'Sin imagen'}" width="50">
                         </td>
@@ -37,8 +36,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     `;
                     tableBody.appendChild(row);
                 });
-
-                attachActions(); // Asignar eventos a los botones
             })
             .catch(error => console.error('Error al cargar candidatos:', error));
     }
@@ -129,7 +126,7 @@ document.addEventListener("DOMContentLoaded", function () {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id, estado: newStatus })
         })
-            .then(response => response.text())
+            .then(response => response.json())
             .then(result => {
                 if (result.error) {
                     Swal.fire({
@@ -172,23 +169,28 @@ document.addEventListener("DOMContentLoaded", function () {
             method: 'POST',
             body: formData
         })
-            .then(response => response.json())
+            .then(response => response.text()) // Cambiado a .text() para depurar errores de formato JSON
             .then(result => {
-                if (result.error) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: result.error,
-                    });
-                } else {
-                    Swal.fire({
-                        icon: 'success',
-                        title: '¡Éxito!',
-                        text: 'El candidato ha sido guardado correctamente.',
-                    });
-                    modal.style.display = 'none';
-                    candidateForm.reset();
-                    loadCandidates();
+                try {
+                    const jsonResult = JSON.parse(result);
+                    if (jsonResult.error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: jsonResult.error,
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'success',
+                            title: '¡Éxito!',
+                            text: 'El candidato ha sido guardado correctamente.',
+                        });
+                        modal.style.display = 'none';
+                        candidateForm.reset();
+                        loadCandidates();
+                    }
+                } catch (e) {
+                    console.error('Respuesta no es un JSON válido:', result);
                 }
             })
             .catch(error => console.error('Error al guardar el candidato:', error));
