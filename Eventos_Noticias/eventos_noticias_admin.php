@@ -1,4 +1,18 @@
 <?php
+session_start();
+
+// Verificar si el usuario tiene sesión iniciada y rol asignado
+if (!isset($_SESSION['user_role'])) {
+    header("Location: ../Login/Login.php");
+    exit;
+}
+
+// Obtener el rol del usuario
+$user_role = $_SESSION['user_role'];
+
+// Determinar la URL del dashboard según el rol del usuario
+$dashboard_url = $user_role === 'SUPERADMIN' ? '../Login/superadmin_dashboard.php' : '../Login/admin_dashboard.php';
+
 include '../src/eventos_noticias_admin_queries.php';
 
 // Ruta base para las imágenes
@@ -101,15 +115,16 @@ if (isset($_GET['delete'])) {
         <div class="navbar-logo">
             <i class="fa-solid fa-user-shield"></i>
             <img src="../Home/Img/logo.png" width="50px" margin-right="10px">
-            <h2>Gestion de eventos y noticia</h2>
+            <h2>Gestión de eventos y noticia</h2>
         </div>
     </nav>
     <div class="container">
         <div class="d-flex justify-content-end mb-3">
-            <a href="eventos_noticias_admin.php" class="btn btn-danger btn-lg">
+            <a href="<?php echo $dashboard_url; ?>" class="btn btn-danger btn-lg">
                 <i class="bi bi-arrow-left-circle me-2"></i> Regresar
             </a>
         </div>
+
     <h1>Crear Eventos y Noticias</h1>
 
     <form method="POST" enctype="multipart/form-data" id="form-eventos">
