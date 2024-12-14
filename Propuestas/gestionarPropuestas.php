@@ -201,10 +201,11 @@ function mostrarDescripcionConFormato($descripcion)
         <h2>Administrar Propuestas</h2>
 
         <div style="text-align: right; margin-bottom: 20px;">
-            <a href="<?= ($_SESSION['user_role'] === 'SUPERADMIN') ? '../Login/superadmin_dashboard.php' : '../Login/admin_dashboard.php' ?>"
+            <a href="<?= ($_SESSION['user_role'] === 'SUPERADMIN') ? '../Login/superadmin_dasboard.php' : '../Login/admin_dashboard.php' ?>"
                 class="btn btn-secondary">
                 Volver al Dashboard
             </a>
+
 
         </div>
 
