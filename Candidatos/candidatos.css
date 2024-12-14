@@ -220,3 +220,25 @@ textarea {
         width: 95%;
     }
 }
+#addCandidateBtn {
+    background-color: #b22222; 
+    color: white; 
+    border: none; 
+    padding: 10px 20px; 
+    border-radius: 5px; 
+    font-size: 16px; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
+    font-weight: bold; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+}
+
+#addCandidateBtn:hover {
+    background-color: #a11d1d; 
+    color: #f1f1f1; 
+}
+
+#addCandidateBtn:active {
+    background-color: #8f1a1a; 
+    transform: scale(0.98); 
+}
