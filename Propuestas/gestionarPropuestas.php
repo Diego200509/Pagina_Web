@@ -179,14 +179,20 @@ function mostrarDescripcionConFormato($descripcion)
 </head>
 
 <body>
-    <header>
-        <h1>Gestión de Propuestas - Proceso de Elecciones UTA 2024</h1>
-        <nav>
-            <a href="../Home/inicio.php">Inicio</a>
-            <a href="../Candidatos/candidatos.php">Candidatos</a>
-            <a href="../Eventos_Noticias/eventos_noticias.php">Eventos y Noticias</a>
-        </nav>
-    </header>
+<nav class="navbar">
+        <div class="navbar-logo">
+            <i class="fa-solid fa-user-shield"></i>
+            <img src="../Home/Img/logo.png" width="50px" margin-right="10px">
+        </div>
+        <ul class="navbar-menu">
+            <li><a href="candidatos.php"><i class="fa-solid fa-users"></i> <span>Candidatos</span></a></li>
+            <li><a href="eventos_noticias.php"><i class="fa-solid fa-calendar-alt"></i> <span>Eventos y Noticias</span></a></li>
+            <li><a href="../Propuestas/gestionarPropuestas.php"><i class="fa-solid fa-lightbulb"></i> <span>Propuestas</span></a></li>
+            <li><a href="sugerencias.php"><i class="fa-solid fa-comment-dots"></i> <span>Sugerencias</span></a></li>
+            <li><a href="#" id="btn-crear-usuario"><i class="fa-solid fa-user-plus"></i> <span>Crear Admin</span></a></li>
+            <li><a href="../Login/Login.php" class="logout"><i class="fa-solid fa-sign-out-alt"></i> <span>Cerrar Sesión</span></a></li>
+        </ul>
+    </nav>
 
     <div class="container">
         <h2>Administrar Propuestas</h2>
