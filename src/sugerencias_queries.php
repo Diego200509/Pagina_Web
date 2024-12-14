@@ -352,7 +352,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt_vot_check->close();
         } else {
             // Insertar nuevo usuario si no existe
-            $stmt = $connection->prepare("INSERT INTO USUARIOS (NOM_USU, EMAIL_USU) VALUES (?, ?)");
+            $stmt = $connection->prepare("INSERT INTO USUARIOS (NOM_USU, EMAIL_USU, PASSWORD_USU, ROL_USU)VALUES (?, ?, NULL, 'USUARIO')");
             $stmt->bind_param("ss", $nombre, $correo);
 
             if ($stmt->execute()) {
