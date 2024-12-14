@@ -125,7 +125,7 @@ if (isset($_GET['delete'])) {
             </a>
         </div>
 
-    <h1>Crear Eventos y Noticias</h1>
+    <h1>Crear Eventos/Noticias</h1>
 
     <form method="POST" enctype="multipart/form-data" id="form-eventos">
         <input type="hidden" name="id" id="id">
@@ -166,7 +166,7 @@ if (isset($_GET['delete'])) {
         <button type="submit" class="btn btn-danger">Guardar</button>
     </form>
 
-    <h2>Lista de Eventos y Noticias</h2>
+    <h2>Lista de Eventos/Noticias</h2>
     <table class="table table-bordered" id="tabla-eventos">
         <thead class="table-danger">
             <tr>
