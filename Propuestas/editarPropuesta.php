@@ -65,6 +65,8 @@ $partidos = obtenerPartidos($connection);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Propuesta</title>
     <link rel="stylesheet" href="estilosGestionarPropuestas.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
         /* Estilo para la flecha de regreso */
@@ -93,16 +95,20 @@ $partidos = obtenerPartidos($connection);
 </head>
 
 <body>
-    <header>
-        <h1>Editar Propuesta - Proceso de Elecciones UTA 2024</h1>
-        <nav>
-            <a href="../Home/inicio.php">Inicio</a>
-            <a href="../Candidatos/candidatos.php">Candidatos</a>
-            <a href="../Eventos_Noticias/eventos_noticias.php">Eventos y Noticias</a>
-        </nav>
-    </header>
+    <nav class="navbar">
+        <div class="navbar-logo">
+            <i class="fa-solid fa-user-shield"></i>
+            <img src="../Home/Img/logo.png" width="50px" margin-right="10px">
+            <h2>Gestión de Propuestas</h2>
+        </div>
+    </nav>
 
-    <a href="gestionarPropuestas.php" class="back-arrow" title="Regresar a Gestión de Propuestas">&larr;</a>
+    <div style="text-align: right; margin-bottom: 1px; margin-top: 30px; margin-left: -20px;">
+        <a href="gestionarPropuestas.php" class="btn btn-danger btn-lg">
+            <i class="bi bi-arrow-left-circle me-2"></i> Regresar
+        </a>
+    </div>
+
 
     <div class="container">
         <h2>Editar Propuesta</h2>

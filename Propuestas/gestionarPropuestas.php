@@ -186,6 +186,9 @@ function mostrarDescripcionConFormato($descripcion)
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Propuestas</title>
     <link rel="stylesheet" href="estilosGestionarPropuestas.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -197,17 +200,15 @@ function mostrarDescripcionConFormato($descripcion)
         </div>
     </nav>
 
+    <div style="text-align: right; margin-bottom: 1px; margin-top: 30px; margin-left: -20px;">
+        <a href="<?= ($_SESSION['user_role'] === 'SUPERADMIN') ? '../Login/superadmin_dasboard.php' : '../Login/admin_dashboard.php' ?>"
+            class="btn btn-danger btn-lg">
+            <i class="bi bi-arrow-left-circle me-2"></i> Regresar
+        </a>
+    </div>
+
     <div class="container">
         <h2>Administrar Propuestas</h2>
-
-        <div style="text-align: right; margin-bottom: 20px;">
-            <a href="<?= ($_SESSION['user_role'] === 'SUPERADMIN') ? '../Login/superadmin_dasboard.php' : '../Login/admin_dashboard.php' ?>"
-                class="btn btn-secondary">
-                Volver al Dashboard
-            </a>
-
-
-        </div>
 
         <?php if (isset($_GET['status'])): ?>
             <?php if ($_GET['status'] == 'success'): ?>
@@ -343,7 +344,9 @@ function mostrarDescripcionConFormato($descripcion)
             <?php endif; ?>
         </div>
 
+
     </div>
+
 </body>
 
 </html>
