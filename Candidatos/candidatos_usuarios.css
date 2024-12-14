@@ -12,9 +12,10 @@
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     width: 300px;
-    overflow: hidden; /* Evitar desbordamientos */
+    overflow: hidden;
     display: flex;
     flex-direction: column;
+    text-align: center;
 }
 
 .candidate-card:hover {
@@ -25,60 +26,45 @@
 /* Imagen adaptada */
 .card-image {
     width: 100%;
-    height: 200px; /* Tamaño fijo para todas las imágenes */
-    overflow: hidden; /* Oculta cualquier desbordamiento */
+    height: 200px;
+    overflow: hidden;
 }
 
 .card-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Adapta la imagen para cubrir el espacio */
+    object-fit: cover;
 }
 
 /* Contenido completo */
 .card-content {
     padding: 15px;
     text-align: left;
-    overflow: auto; /* Permite desplazamiento si el contenido es muy largo */
 }
 
 .card-content h3 {
     margin: 0 0 10px;
     font-size: 1.2em;
     color: #333;
+    text-align: center;
 }
 
 .card-content p {
     margin: 5px 0;
     font-size: 0.9em;
-    color: #666;
-    line-height: 1.4; /* Espaciado entre líneas */
-    white-space: normal; /* Permitir saltos de línea */
-    overflow: visible; /* Mostrar todo el contenido */
-    text-overflow: clip; /* Evitar los puntos suspensivos */
+    color: #444;
+    line-height: 1.6;
+    text-align: justify;
 }
 
 .card-content strong {
-    color: #444;
+    color: #222;
+    font-weight: bold;
 }
 
-/* Botón de acción opcional */
-.card-action {
-    margin-top: auto;
-    text-align: center;
-}
-
-.card-action button {
-    background-color: #00ADEF;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    font-size: 0.9em;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
-}
-
-.card-action button:hover {
-    background-color: #007B9E;
+/* Responsividad */
+@media (max-width: 768px) {
+    .candidate-card {
+        width: 90%;
+    }
 }
