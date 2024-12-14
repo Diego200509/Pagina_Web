@@ -8,6 +8,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const closeModal = document.getElementById('closeModal');
     const openAddModal = document.getElementById('addCandidateBtn');
 
+    // Aseguramos que el modal comience oculto al cargar la página
+    window.addEventListener('load', () => {
+        modal.style.display = 'none';
+    });
+
+    // Función para cargar la lista de candidatos
     function loadCandidates() {
         fetch(apiEndpoint)
             .then(response => response.json())
@@ -40,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(error => console.error('Error al cargar candidatos:', error));
     }
 
-    // Centralizar eventos con delegation
+    // Centralizar eventos en la tabla
     tableBody.addEventListener('click', function (e) {
         const target = e.target;
 
@@ -61,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Función para editar candidato
+    // Función para abrir el modal y cargar datos de un candidato para editar
     function editCandidate(id) {
         fetch(`${apiEndpoint}?id=${id}`)
             .then(response => response.json())
@@ -83,12 +89,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.getElementById('experience').value = candidate.EXPERIENCIA_CAN;
                 document.getElementById('vision').value = candidate.VISION_CAN;
                 document.getElementById('achievements').value = candidate.LOGROS_CAN;
-                modal.style.display = 'block';
+                modal.style.display = 'flex'; // Mostrar el modal centrado
             })
             .catch(error => console.error('Error al cargar el candidato:', error));
     }
 
-    // Función para eliminar candidato
+    // Función para eliminar un candidato
     function deleteCandidate(id) {
         if (confirm('¿Estás seguro de eliminar este candidato?')) {
             fetch(`${apiEndpoint}`, {
@@ -117,7 +123,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Función para cambiar estado del candidato
+    // Función para cambiar el estado del candidato
     function toggleCandidateStatus(id, currentStatus) {
         const newStatus = currentStatus === 'Activo' ? 'Oculto' : 'Activo';
 
@@ -151,12 +157,12 @@ document.addEventListener("DOMContentLoaded", function () {
         modalTitle.textContent = 'Agregar Candidato';
         candidateForm.reset();
         document.getElementById('candidateId').value = '';
-        modal.style.display = 'block';
+        modal.style.display = 'flex'; // Mostrar el modal centrado
     });
 
     // Cerrar el modal
     closeModal.addEventListener('click', () => {
-        modal.style.display = 'none';
+        modal.style.display = 'none'; // Ocultar el modal
     });
 
     // Guardar candidato (crear o editar)
@@ -169,7 +175,7 @@ document.addEventListener("DOMContentLoaded", function () {
             method: 'POST',
             body: formData
         })
-            .then(response => response.text()) // Cambiado a .text() para depurar errores de formato JSON
+            .then(response => response.text()) // Cambiado a .text() para depuración
             .then(result => {
                 try {
                     const jsonResult = JSON.parse(result);

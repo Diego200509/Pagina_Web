@@ -135,7 +135,6 @@ table tbody tr td button {
 .toggle-status-btn:active {
     transform: scale(0.95); /* Efecto de clic */
 }
-
 .modal {
     display: none; /* Ocultar por defecto */
     position: fixed; /* Fijar en la pantalla */
@@ -147,20 +146,18 @@ table tbody tr td button {
     width: 100%; /* Cubrir toda la pantalla */
     height: 100%; /* Cubrir toda la pantalla */
     background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro transparente */
-    display: flex; /* Usar flexbox para centrar */
-  
 }
 
 .modal-content {
-    background-color: white; /* Fondo blanco */
-    border-radius: 10px; /* Bordes redondeados */
-    padding: 30px; /* Espaciado interno */
-    width: 90%; /* Ancho del modal en pantallas pequeñas */
-    max-width: 600px; /* Ancho máximo para pantallas grandes */
-    max-height: 90vh; /* Asegurar que no exceda la altura de la pantalla */
-    overflow-y: auto; /* Scroll para contenido alto */
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Sombra */
-    text-align: left; /* Alinear texto a la izquierda */
+    background-color: white;
+    border-radius: 10px;
+    padding: 30px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    text-align: left;
 }
 
 /* Título del modal */
