@@ -78,6 +78,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
+    <nav class="navbar">
+        <div class="navbar-logo">
+            <i class="fa-solid fa-user-shield"></i>
+            <img src="../Home/Img/logo.png" width="50px" margin-right="10px">
+            <h2>Gestión de eventos y noticia</h2>
+        </div>
+    </nav>
     <div class="container">
         <div class="d-flex justify-content-end mb-3">
             <a href="eventos_noticias_admin.php" class="btn btn-danger btn-lg">
