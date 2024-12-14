@@ -1,21 +1,31 @@
 <?php
+session_start();
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 include('../config/config.php');
-include('../src/gestionarPropuestas_queries.php'); // Asegúrate de incluir el archivo de funciones
+include('../src/gestionarPropuestas_queries.php');
+
+// Configuración de sesión y redirección según el rol
+if (!isset($_SESSION['user_role']) || !in_array($_SESSION['user_role'], ['ADMIN', 'SUPERADMIN'])) {
+    $_SESSION['error'] = 'Acceso denegado. Por favor inicia sesión.';
+    header('Location: ../Login/Login.php');
+    exit();
+}
 
 // Configuración de paginación
-$propuestasPorPagina = 10;  // Número de propuestas por página
+$propuestasPorPagina = 10; // Número de propuestas por página
 $paginaActual = isset($_GET['pagina']) ? (int) $_GET['pagina'] : 1;
 $offset = ($paginaActual - 1) * $propuestasPorPagina;
 
-$rol = 'admin'; // Cambiar a 'superadmin' según el rol actual
-
-if ($rol !== 'admin' && $rol !== 'superadmin') {
-    header('Location: ../Home/inicio.php');
-    exit();
+// Validar que $propuestasPorPagina no sea cero
+if ($propuestasPorPagina <= 0) {
+    die("Error: El número de propuestas por página debe ser mayor que 0.");
 }
+
+
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $accion = $_POST['accion'];
@@ -179,23 +189,24 @@ function mostrarDescripcionConFormato($descripcion)
 </head>
 
 <body>
-<nav class="navbar">
+    <nav class="navbar">
         <div class="navbar-logo">
             <i class="fa-solid fa-user-shield"></i>
             <img src="../Home/Img/logo.png" width="50px" margin-right="10px">
+            <h2>Gestión de Propuestas</h2>
         </div>
-        <ul class="navbar-menu">
-            <li><a href="candidatos.php"><i class="fa-solid fa-users"></i> <span>Candidatos</span></a></li>
-            <li><a href="eventos_noticias.php"><i class="fa-solid fa-calendar-alt"></i> <span>Eventos y Noticias</span></a></li>
-            <li><a href="../Propuestas/gestionarPropuestas.php"><i class="fa-solid fa-lightbulb"></i> <span>Propuestas</span></a></li>
-            <li><a href="sugerencias.php"><i class="fa-solid fa-comment-dots"></i> <span>Sugerencias</span></a></li>
-            <li><a href="#" id="btn-crear-usuario"><i class="fa-solid fa-user-plus"></i> <span>Crear Admin</span></a></li>
-            <li><a href="../Login/Login.php" class="logout"><i class="fa-solid fa-sign-out-alt"></i> <span>Cerrar Sesión</span></a></li>
-        </ul>
     </nav>
 
     <div class="container">
         <h2>Administrar Propuestas</h2>
+
+        <div style="text-align: right; margin-bottom: 20px;">
+            <a href="<?= ($_SESSION['user_role'] === 'SUPERADMIN') ? '../Login/superadmin_dashboard.php' : '../Login/admin_dashboard.php' ?>"
+                class="btn btn-secondary">
+                Volver al Dashboard
+            </a>
+
+        </div>
 
         <?php if (isset($_GET['status'])): ?>
             <?php if ($_GET['status'] == 'success'): ?>
