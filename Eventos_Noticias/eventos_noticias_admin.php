@@ -90,12 +90,27 @@ if (isset($_GET['delete'])) {
     <link rel="stylesheet" href="styleEventsAdmin.css">
     <!-- Solo incluir Bootstrap para la ventana emergente -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
-    <h1>Administrar Eventos y Noticias</h1>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-logo">
+            <i class="fa-solid fa-user-shield"></i>
+            <img src="../Home/Img/logo.png" width="50px" margin-right="10px">
+            <h2>Gestion de eventos y noticia</h2>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="d-flex justify-content-end mb-3">
+            <a href="eventos_noticias_admin.php" class="btn btn-danger btn-lg">
+                <i class="bi bi-arrow-left-circle me-2"></i> Regresar
+            </a>
+        </div>
+    <h1>Crear Eventos y Noticias</h1>
 
     <form method="POST" enctype="multipart/form-data" id="form-eventos">
         <input type="hidden" name="id" id="id">
