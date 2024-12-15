@@ -17,36 +17,53 @@ header {
     background-color: #b22222; /* Fondo rojo */
 }
 
-header .logo {
+.navbar {
+    background-color: #b22222;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.navbar-logo {
     display: flex;
     align-items: center;
-}
-
-header .logo img {
-    width: 50px;
-    margin-right: 10px;
-}
-
-header .logo h1 {
+    gap: 10px;
     color: white;
-    font-size: 1.5em;
 }
 
-header nav {
+.navbar-logo i {
+    font-size: 24px;
+}
+
+.navbar-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+}
+
+.navbar-menu li {
+    list-style: none;
+}
+
+.navbar-menu li a {
     display: flex;
     align-items: center;
-}
-
-header nav a {
+    gap: 8px; /* Espacio entre icono y texto */
     color: white;
     text-decoration: none;
-    margin: 0 15px;
-    font-size: 1em;
-    transition: color 0.3s;
+    font-size: 16px;
+    font-weight: bold;
+}
+.navbar-menu li a i {
+    font-size: 18px; /* Tamaño del icono */
 }
 
-header nav a:hover {
-    color: #2f2929;
+.navbar-menu li a:hover {
+    color: black;
 }
 
 /* Estilo para la tabla */

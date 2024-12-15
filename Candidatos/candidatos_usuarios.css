@@ -1,3 +1,71 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilos del header */
+header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    background-color: #b22222;
+}
+
+header .logo {
+    display: flex;
+    align-items: center;
+}
+
+header .logo img {
+    width: 50px;
+    margin-right: 10px;
+}
+
+header .logo h1 {
+    color: #ffffff;
+    font-size: 1.5em;
+}
+
+header nav {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap; /* Asegura que los enlaces se ajusten en pantallas pequeñas */
+}
+
+header nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 1em;
+    transition: color 0.3s;
+    display: flex;
+    align-items: center;
+}
+
+header nav a i {
+    margin-right: 8px;
+}
+
+header nav a:hover {
+    color: #2f2929;
+}
+
+/* Estilos del footer */
+.footer-rights {
+    background-color: #b22222;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    margin-top: 50px;
+}
+
 .card-container {
     display: flex;
     flex-wrap: wrap;

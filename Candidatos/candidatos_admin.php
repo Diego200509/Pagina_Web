@@ -1,6 +1,16 @@
+
 <?php
-// Manejo de la lógica del backend aquí, si es necesario
-// Esto puede incluir validaciones o configuraciones específicas
+session_start();
+if (!isset($_SESSION['user_role'])) {
+    header("Location: ../Login/Login.php");
+    exit;
+}
+
+// Obtener el rol del usuario
+$user_role = $_SESSION['user_role'];
+
+// Determinar la URL del dashboard según el rol del usuario
+$dashboard_url = $user_role === 'SUPERADMIN' ? '../Login/superadmin_dasboard.php' : '../Login/admin_dashboard.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -10,24 +20,30 @@
     <title>Gestión de Candidatos</title>
     <link rel="stylesheet" href="candidatos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 <body>
     <header>
-        <div class="logo">
-            <img src="../Home/Img/logo.png" alt="UTA Logo">
+        <nav class="navbar">
+        <div class="navbar-logo">
+            
+            <img src="../Home/Img/logo.png" width="50px" margin-right="10px">
             <h1>Gestión de Candidatos</h1>
+           
         </div>
-        <nav>
-            <a href="../Home/inicio.php">Inicio</a>
-            <a href="../Candidatos/candidatos.php">Candidatos</a>
-            <a href="../Propuestas/Propuestas.php">Propuestas</a>
-            <a href="../Eventos_Noticias/eventos_noticias.php">Eventos y Noticias</a>
-            <a href="../Sugerencias/index.php">Sugerencias</a>
-        </nav>
+    </nav>
     </header>
+    <div class="container">
+        <div class="d-flex justify-content-end mb-3">
+            <a href="<?php echo $dashboard_url; ?>" class="btn btn-danger btn-lg">
+                <i class="bi bi-arrow-left-circle me-2"></i> Regresar
+            </a>
+        </div>
+    
     <main>
         <h2>Lista de Candidatos</h2>
         <button id="addCandidateBtn" class="btn">Agregar Candidato</button>
