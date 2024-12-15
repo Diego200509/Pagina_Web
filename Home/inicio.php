@@ -21,7 +21,7 @@ include('../config/config.php');
 <header>
     <div class="logo">
         <img src="Img\logo.png" alt="UTA Logo"> 
-        <h1>Proceso de Elecciones UTA 2024</h1>
+        <h1>Proceso de Elecciones UTA  2024</h1>
     </div>
     <nav>
         <a href="../Home/inicio.php"><i class="fas fa-home"></i> Inicio</a>
