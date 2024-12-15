@@ -16,11 +16,12 @@
             <h1>Proceso de Elecciones UTA 2024</h1>
         </div>
         <nav>
-        <a href="../Home/inicio.php"><i class="fas fa-home"></i> Inicio</a>
-                <a href="../Candidatos/candidatos.php"><i class="fas fa-user"></i> Candidatos</a>
-                <a href="../Propuestas/Propuestas.php"><i class="fas fa-bullhorn"></i> Propuestas</a>
-                <a href='../Eventos_Noticias/eventos_noticias.php'><i class="fas fa-calendar-alt"></i> Eventos y Noticias</a>
-                <a href="../Sugerencias/index.php"><i class="fas fa-comment-dots"></i> Sugerencias</a>
+            <a href="../Home/inicio.php"><i class="fas fa-home"></i> Inicio</a>
+            <a href="../Candidatos/candidatos.php"><i class="fas fa-user"></i> Candidatos</a>
+            <a href="../Propuestas/Propuestas.php"><i class="fas fa-bullhorn"></i> Propuestas</a>
+            <a href='../Eventos_Noticias/eventos_noticias.php'><i class="fas fa-calendar-alt"></i> Eventos y
+                Noticias</a>
+            <a href="../Sugerencias/index.php"><i class="fas fa-comment-dots"></i> Sugerencias</a>
         </nav>
     </header>
 
@@ -33,17 +34,15 @@
         </select>
     </div>
 
-    <!-- Sección de Eventos -->
     <div id="events" class="content-section">
         <h2>Eventos</h2>
-        <p id="noEventsMessage">No hay eventos disponibles.</p> <!-- Mensaje que será ocultado -->
+        <p id="noEventsMessage">No hay eventos disponibles.</p> 
         <div id="eventList">
             <?php if (!empty($events)): ?>
                 <?php foreach ($events as $event): ?>
                     <div class="event" data-party="<?php echo $event['NOM_PAR']; ?>">
                         <div class="event-title"><?php echo $event['TIT_EVT_NOT']; ?></div>
 
-                        <!-- Mostrar la imagen correspondiente -->
                         <img src="<?php echo !empty($event['IMAGEN_EVT_NOT']) ? $event['IMAGEN_EVT_NOT'] : '/Pagina_Web/Pagina_Web/Eventos_Noticias/img/evento_default.jpg'; ?>"
                             alt="Imagen del Evento" class="event-image">
 
@@ -57,7 +56,7 @@
                 <?php endforeach; ?>
             <?php endif; ?>
         </div>
-        <!-- Paginación de eventos -->
+
         <div class="pagination" id="eventPagination">
             <button id="prevPageEvents" onclick="changePage(-1, 'events')">Anterior</button>
             <button id="nextPageEvents" onclick="changePage(1, 'events')">Siguiente</button>
@@ -66,14 +65,12 @@
 
     <div id="news" class="content-section">
         <h2>Últimas Noticias</h2>
-        <p id="noNewsMessage">No hay noticias disponibles.</p> <!-- Mensaje que será ocultado -->
+        <p id="noNewsMessage">No hay noticias disponibles.</p>
         <div id="newsList">
             <?php if (!empty($news)): ?>
                 <?php foreach ($news as $newsItem): ?>
                     <div class="news" data-party="<?php echo $newsItem['NOM_PAR']; ?>">
                         <div class="news-title"><?php echo $newsItem['TIT_EVT_NOT']; ?></div>
-
-                        <!-- Mostrar la imagen correspondiente -->
                         <img src="<?php echo !empty($newsItem['IMAGEN_EVT_NOT']) ? $newsItem['IMAGEN_EVT_NOT'] : '/Eventos_Noticias/img/noticia_default.jpg'; ?>"
                             alt="Imagen de la Noticia" class="news-image">
 
@@ -85,7 +82,6 @@
                 <?php endforeach; ?>
             <?php endif; ?>
         </div>
-        <!-- Paginación de noticias -->
         <div class="pagination" id="newsPagination">
             <button id="prevPageNews" onclick="changePage(-1, 'news')">Anterior</button>
             <button id="nextPageNews" onclick="changePage(1, 'news')">Siguiente</button>
