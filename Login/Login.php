@@ -223,8 +223,8 @@ session_start();
       }
 
       // Validar longitud mínima de la contraseña
-      if (password.length < 120) {
-        alert('La contraseña debe tener al menos 120 caracteres.');
+      if (password.length < 6) {
+        alert('La contraseña debe tener al menos 6 caracteres.');
         return false;
       }
 

@@ -68,9 +68,13 @@ unset($_SESSION['message']); // Limpiar mensaje después de mostrarlo
                     <label for="email">Correo Electrónico:</label>
                     <input type="email" id="email" name="email" placeholder="ejemplo@correo.com" required>
                 </div>
-                <div class="form-group">
-                    <label for="password">Contraseña:</label>
-                    <input type="password" id="password" name="password" placeholder="Ingrese una contraseña" required>
+
+
+                    <div class="form-group">
+    <label for="password">Contraseña:</label>
+    <input type="password" id="password" name="password" placeholder="Ingrese una contraseña" minlength="6" required>
+    <small id="password-error" class="error-message"></small>
+
                 </div>
                 <div class="form-group">
                     <label for="rol">Rol:</label>
@@ -105,6 +109,20 @@ unset($_SESSION['message']); // Limpiar mensaje después de mostrarlo
                 modal.style.display = 'none';
             }
         });
+        // Validación adicional en el formulario
+    document.getElementById('user-form').addEventListener('submit', function (e) {
+        const password = document.getElementById('password').value;
+        const passwordError = document.getElementById('password-error');
+
+    if (password.length < 6) {
+        e.preventDefault(); // Evitar que se envíe el formulario
+        passwordError.textContent = 'La contraseña debe tener al menos 6 caracteres.';
+        passwordError.style.color = 'red';
+    } else {
+        passwordError.textContent = ''; // Limpiar mensaje de error
+    }
+});
+
     </script>
 </body>
 </html>
