@@ -33,8 +33,8 @@ unset($_SESSION['message']); // Limpiar mensaje después de mostrarlo
             <h2>SuperAdmin</h2>
         </div>
         <ul class="navbar-menu">
-            <li><a href="candidatos.php"><i class="fa-solid fa-users"></i> <span>Candidatos</span></a></li>
-            <li><a href="eventos_noticias.php"><i class="fa-solid fa-calendar-alt"></i> <span>Eventos y Noticias</span></a></li>
+            <li><a href="../Candidatos/candidatos_admin.php"><i class="fa-solid fa-users"></i> <span>Candidatos</span></a></li>
+            <li><a href="../Eventos_Noticias/eventos_noticias_admin.php"><i class="fa-solid fa-calendar-alt"></i> <span>Eventos y Noticias</span></a></li>
             <li><a href="../Propuestas/gestionarPropuestas.php"><i class="fa-solid fa-lightbulb"></i> <span>Propuestas</span></a></li>
             <li><a href="../Sugerencias/sugerencias_admin.php"><i class="fa-solid fa-comment-dots"></i> <span>Sugerencias</span></a></li>
             <li><a href="../Sugerencias/resultados_admin.php"><i class="fas fa-vote-yea"></i> Votos</a></li>
@@ -73,7 +73,8 @@ unset($_SESSION['message']); // Limpiar mensaje después de mostrarlo
                 </div>
                 <div class="form-group">
                     <label for="password">Contraseña:</label>
-                    <input type="password" id="password" name="password" placeholder="Ingrese una contraseña" required>
+                    <input type="password" id="password" name="password" placeholder="Ingrese una contraseña" minlength="6" required>
+                    <small id="password-error" class="error-message"></small>
                 </div>
                 <div class="form-group">
                     <label for="rol">Rol:</label>

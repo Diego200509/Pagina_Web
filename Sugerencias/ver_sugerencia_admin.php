@@ -157,9 +157,6 @@ if (!$sugerencia || !is_array($sugerencia)) {
             <label for="comentarios">Comentarios:</label>
             <p id="comentarios"><?php echo htmlspecialchars($sugerencia['comentarios'] ?? 'No disponible'); ?></p>
 
-            <label for="estado">Estado:</label>
-            <p id="estado"><?php echo htmlspecialchars($sugerencia['estado_sug'] ?? 'No disponible'); ?></p>
-
             <label for="fecha">Fecha:</label>
             <p id="fecha"><?php echo htmlspecialchars($sugerencia['created_at'] ?? 'No disponible'); ?></p>
 
