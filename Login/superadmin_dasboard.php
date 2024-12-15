@@ -34,7 +34,9 @@ unset($_SESSION['message']); // Limpiar mensaje después de mostrarlo
         <li><a href="candidatos.php"><i class="fa-solid fa-users"></i> <span>Candidatos</span></a></li>
         <li><a href="eventos_noticias.php"><i class="fa-solid fa-calendar-alt"></i> <span>Eventos y Noticias</span></a></li>
         <li><a href="propuestas.php"><i class="fa-solid fa-lightbulb"></i> <span>Propuestas</span></a></li>
-        <li><a href="sugerencias.php"><i class="fa-solid fa-comment-dots"></i> <span>Sugerencias</span></a></li>
+        <li><a href="../Sugerencias/sugerencias_admin.php"><i class="fa-solid fa-comment-dots"></i> <span>Sugerencias</span></a></li>
+        <li><a href="../Sugerencias/resultados_admin.php"><i class="fas fa-vote-yea"></i> Votos</a></li>
+            
         <li><a href="#" id="btn-crear-usuario"><i class="fa-solid fa-user-plus"></i> <span>Crear Admin</span></a></li>
         <li><a href="../Login/Login.php" class="logout"><i class="fa-solid fa-sign-out-alt"></i> <span>Cerrar Sesión</span></a></li>
     </ul>
@@ -68,13 +70,9 @@ unset($_SESSION['message']); // Limpiar mensaje después de mostrarlo
                     <label for="email">Correo Electrónico:</label>
                     <input type="email" id="email" name="email" placeholder="ejemplo@correo.com" required>
                 </div>
-
-
-                    <div class="form-group">
-    <label for="password">Contraseña:</label>
-    <input type="password" id="password" name="password" placeholder="Ingrese una contraseña" minlength="6" required>
-    <small id="password-error" class="error-message"></small>
-
+                <div class="form-group">
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" name="password" placeholder="Ingrese una contraseña" required>
                 </div>
                 <div class="form-group">
                     <label for="rol">Rol:</label>
@@ -109,20 +107,6 @@ unset($_SESSION['message']); // Limpiar mensaje después de mostrarlo
                 modal.style.display = 'none';
             }
         });
-        // Validación adicional en el formulario
-    document.getElementById('user-form').addEventListener('submit', function (e) {
-        const password = document.getElementById('password').value;
-        const passwordError = document.getElementById('password-error');
-
-    if (password.length < 6) {
-        e.preventDefault(); // Evitar que se envíe el formulario
-        passwordError.textContent = 'La contraseña debe tener al menos 6 caracteres.';
-        passwordError.style.color = 'red';
-    } else {
-        passwordError.textContent = ''; // Limpiar mensaje de error
-    }
-});
-
     </script>
 </body>
 </html>
