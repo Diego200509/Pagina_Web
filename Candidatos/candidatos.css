@@ -1,70 +1,11 @@
-
-
-/* Estilo para la sección de candidatos */
-.candidates-section {
-    display: flex;
-    justify-content: space-around;
-    padding: 20px;
-    flex-wrap: wrap;
-}
-
-.card {
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-    width: 250px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s;
-    margin-bottom: 10px;
-}
-
-.card:hover {
-    transform: scale(1.05);
-}
-
-.card img {
-    width: 100%;
-    height: auto;
-    border-radius: 50%;
-}
-
-.card h3 {
-    font-size: 1.5em;
-    margin: 15px 0;
-}
-
-.card p {
-    font-size: 1em;
-    color: #666;
-    text-align: justify; /* Para justificar el texto */
-    width: 100%; /* Asegúrate de que el ancho esté definido correctamente */
-    margin: 0 auto; /* Centra el bloque de texto si es necesario */
-}
-
-.card a {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 10px 20px;
-    background-color: #b71c1c;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-}
-
-/* Reseteo de estilos básicos */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 /* Estilo general del cuerpo */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #ffffff; 
+    background-color: #ffffff;
     color: #333;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 /* Estilo del header */
@@ -73,213 +14,248 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 20px 50px;
-    background-color: #b22222; /* Color de fondo rojo */
+    background-color: #b22222; /* Fondo rojo */
 }
 
-/* Logo y título del header */
-header .logo {
+.navbar {
+    background-color: #b22222;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.navbar-logo {
     display: flex;
     align-items: center;
-}
-
-header .logo img {
-    width: 50px; /* Tamaño de la imagen del logo */
-    margin-right: 10px;
-}
-
-header .logo h1 {
-    color: #ffffff; /* Texto del título en blanco */
-    font-size: 1.5em; /* Tamaño del texto */
-}
-
-/* Barra de navegación */
-header nav {
-    display: flex;
-    align-items: center;
-}
-
-header nav a {
-    color: white; /* Color de texto en blanco */
-    text-decoration: none;
-    margin: 0 15px; /* Espaciado entre los enlaces */
-    font-size: 1em; /* Tamaño del texto */
-    transition: color 0.3s; /* Transición suave al pasar el ratón */
-    display: flex;
-    align-items: center;
-}
-
-header nav a i {
-    margin-right: 8px; /* Espaciado entre el ícono y el texto */
-}
-
-header nav a:hover {
-    color: #2f2929; /* Color al pasar el ratón por los enlaces */
-}
-footer {
-    text-align: center;
-    padding: 20px;
-    background-color: #b22222; 
+    gap: 10px;
     color: white;
-    margin-top: 50px;
 }
 
-.fade {
-    background-color: b22222; 
-    position: absolute;
-    top: 0;
-    left: 0;
+.navbar-logo i {
+    font-size: 24px;
+}
+
+.navbar-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+}
+
+.navbar-menu li {
+    list-style: none;
+}
+
+.navbar-menu li a {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espacio entre icono y texto */
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+}
+.navbar-menu li a i {
+    font-size: 18px; /* Tamaño del icono */
+}
+
+.navbar-menu li a:hover {
+    color: black;
+}
+
+/* Estilo para la tabla */
+table {
     width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    z-index: 1; 
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
 }
 
-.fade.active {
-    opacity: 1; 
+table thead {
+    background-color: #b22222;
+    color: white;
+    text-align: left;
+    font-weight: bold;
 }
 
-.footer-rights {
-    background-color: #b22222; 
-    color: white; 
-    text-align: center;
+table th, table td {
     padding: 10px;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-    margin-top: 0px; 
-}
-.modal {
-    display: none; /* Ocultar por defecto */
-    position: fixed; /* Fijarlo en la pantalla */
-    z-index: 1; /* Asegura que esté por encima del contenido */
-    left: 0;
-    top: 0;
-    width: 100%; /* Toma todo el ancho de la pantalla */
-    height: 100%; /* Toma todo el alto de la pantalla */
-    background-color: rgba(0, 0, 0, 0.6); /* Fondo oscuro transparente */
-    justify-content: center; /* Centrar el contenido horizontalmente */
-    align-items: center; /* Centrar el contenido verticalmente */
-    overflow: auto; /* Para evitar problemas en pantallas pequeñas */
+    border-bottom: 1px solid #ddd;
+    text-align: left;
 }
 
-.modal-content {
-    background-color: white; /* Fondo blanco */
-    border-radius: 10px; /* Bordes redondeados */
-    padding: 30px; /* Más espacio interno */
-    width: 90%; /* Ancho del modal en pantallas pequeñas */
-    max-width: 600px; /* Ancho máximo del modal en pantallas grandes */
-    max-height: 90vh; /* Asegura que no sea más alto que la pantalla */
-    overflow-y: auto; /* Agrega scroll si el contenido es demasiado alto */
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Sombra */
-    position: relative; /* Para el botón de cierre */
-    text-align: left; /* Alinear el texto a la izquierda */
-}
-
-/* Estilo para el botón de cierre */
-.close-modal {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    color: #333;
-    font-size: 20px;
+table tbody tr:hover {
+    background-color: #f5f5f5;
     cursor: pointer;
 }
 
-/* Estilo para la imagen del candidato */
-.modal-content img {
-    width: 180px;  /* Ajustar el tamaño de la imagen */
-    height: 180px;
-    border-radius: 50%; /* Mantén la imagen redonda */
+table tbody tr td img {
     display: block;
-    margin: 0 auto 20px auto; /* Centrar la imagen con margen inferior */
-    object-fit: cover; /* Asegura que la imagen llene el contenedor sin distorsión */
+    margin: 0 auto;
+    border-radius: 8px;
 }
-
-/* Estilo para el nombre del candidato */
-.modal-content h3 {
-    text-align: center;
-    font-size: 24px;
-    color: #333;
-    margin-bottom: 15px;
-}
-
-/* Estilo para la biografía y demás información */
-.modal-content p {
-    font-size: 16px;
-    line-height: 1.6;
-    color: #555;
-    margin-bottom: 10px;
-}
-
-.modal-content p strong {
-    font-weight: bold;
-}
-
-/* Hacer que los títulos sean más grandes y negrita */
-.modal-content h4 {
-    font-size: 18px;
-    color: #444;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-/* Añadir espaciado a los párrafos */
-.modal-content p {
-    margin-bottom: 10px;
-}
-
-/* Estilo para hacer más atractivo el diseño del modal */
-.modal-content .highlight {
-    background-color: #f0f0f0;
-    padding: 10px;
+table tbody tr td button {
+    display: inline-block; /* Para que todos tengan el mismo comportamiento */
+    width: 100px; /* Tamaño uniforme */
+    text-align: center; /* Centrar el texto dentro del botón */
+    padding: 10px 0; /* Espaciado interno vertical uniforme */
+    margin: 5px; /* Separación entre los botones */
+    border: none;
     border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    color: white;
+    transition: background-color 0.3s ease;
 }
 
-.content {
-    margin-top: 20px;
-    display: flex;
-    align-items: center; /* Alinea el corazón al nivel del texto */
+/* Botón Editar */
+.edit-btn {
+    background-color: #4caf50; /* Verde */
 }
 
-
-.heart {
-    color: #00ADEF;
-    font-size: 30px;
-    margin-right: 10px; /* Espacio entre el corazón y el texto */
+.edit-btn:hover {
+    background-color: #45a049; /* Verde oscuro */
 }
 
+/* Botón Eliminar */
+.delete-btn {
+    background-color: #f44336; /* Rojo */
+}
 
-.text {
-    font-size: 20px; /* Tamaño de la fuente */
+.delete-btn:hover {
+    background-color: #d32f2f; /* Rojo oscuro */
+}
+
+/* Botón Cambiar Estado */
+.toggle-status-btn {
+    background-color: #007bff; /* Azul */
+}
+
+.toggle-status-btn[data-status="Activo"] {
+    background-color: #dc3545; /* Rojo si el estado es 'Activo' (para Ocultar) */
+}
+
+.toggle-status-btn[data-status="Oculto"] {
+    background-color: #28a745; /* Verde si el estado es 'Oculto' (para Activar) */
+}
+
+.toggle-status-btn:hover {
+    opacity: 0.9; /* Reducir un poco la opacidad para el efecto visual */
+}
+
+.toggle-status-btn:active {
+    transform: scale(0.95); /* Efecto de clic */
+}
+.modal {
+    display: none; /* Ocultar por defecto */
+    position: fixed; /* Fijar en la pantalla */
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
+    z-index: 1000; /* Por encima del contenido */
+    top: 0;
+    left: 0;
+    width: 100%; /* Cubrir toda la pantalla */
+    height: 100%; /* Cubrir toda la pantalla */
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro transparente */
+}
+
+.modal-content {
+    background-color: white;
+    border-radius: 10px;
+    padding: 30px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    text-align: left;
+}
+
+/* Título del modal */
+.modal-content h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.modal-content label {
     font-weight: bold;
-    line-height: 1.2;
+    display: block;
+    margin-bottom: 8px;
+    font-size: 16px;
 }
 
-.text .pink {
-    color: #FF0080;
+.modal-content input, 
+.modal-content textarea, 
+.modal-content select, 
+.modal-content button {
+    width: 100%;
+    margin-top: 5px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
 }
 
-.text .blue {
-    color: #00ADEF;
-}
-.dark-blue {
-    color: #1A2E63; /* Color azul oscuro */
-    font-size: 24px; /* Tamaño ajustado */
-    margin-left: 20px; /* Mover hacia la derecha */
-    margin-right: 5px; /* Reducir el espacio entre las palabras */
+textarea {
+    resize: vertical;
+    min-height: 100px;
 }
 
-.light-turquoise {
-    color: #35C3C1; /* Color turquesa */
-    font-size: 24px; /* Tamaño ajustado */
-    margin-left: 0px; /* Eliminar espacio adicional */
-    margin-right: 0px; /* Asegurar que no haya espacio innecesario */
+.modal-content button {
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+    background-color: #00ADEF;
+    color: white;
 }
 
-h2 {
-    font-weight: bold;
-    font-size: 24px; /* Ajustado para mantener consistencia */
-    margin-left: 20px; /* Mover todo el <h2> hacia la derecha */
-    display: inline; /* Asegura que el texto fluya correctamente */
+.modal-content button:hover {
+    background-color: #007B9E;
+}
+
+/* Respuesta para dispositivos pequeños */
+@media (max-width: 768px) {
+    table {
+        font-size: 14px;
+    }
+
+    table th, table td {
+        padding: 8px;
+    }
+
+    .modal-content {
+        width: 95%;
+    }
+}
+#addCandidateBtn {
+    background-color: #b22222; 
+    color: white; 
+    border: none; 
+    padding: 10px 20px; 
+    border-radius: 5px; 
+    font-size: 16px; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
+    font-weight: bold; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+}
+
+#addCandidateBtn:hover {
+    background-color: #a11d1d; 
+    color: #f1f1f1; 
+}
+
+#addCandidateBtn:active {
+    background-color: #8f1a1a; 
+    transform: scale(0.98); 
 }
