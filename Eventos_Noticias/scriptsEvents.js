@@ -157,7 +157,7 @@ function createEventHTML(event) {
         <img src="${event.IMAGEN_EVT_NOT || '/Eventos_Noticias/img/evento_default.jpg'}" alt="Imagen del Evento" class="event-image">
         <div class="event-description">${event.DESC_EVT_NOT}</div>
         <div class="event-date">Fecha: ${event.FECHA_EVT_NOT} | Ubicación: ${event.UBICACION_EVT_NOT || 'No disponible'}</div>
-        <div class="event-party">Partido: ${event.NOM_PAR}</div>
+        
     `;
 
     return eventDiv;
@@ -174,7 +174,7 @@ function createNewsHTML(newsItem) {
         <img src="${newsItem.IMAGEN_EVT_NOT || '/Eventos_Noticias/img/noticia_default.jpg'}" alt="Imagen de la Noticia" class="news-image">
         <div class="news-description">${newsItem.DESC_EVT_NOT}</div>
         <div class="news-date">Fecha: ${newsItem.FECHA_EVT_NOT}</div>
-        <div class="news-party">Partido: ${newsItem.NOM_PAR}</div>
+        
     `;
 
     return newsDiv;

@@ -12,7 +12,7 @@ body {
     margin: 20px auto;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 90%; /* Cambiado de 800px a 90% para más flexibilidad */
+    max-width: 1200px;
 }
 
 /* Centrando los títulos */
@@ -22,51 +22,84 @@ h2 {
     margin-bottom: 20px;
 }
 
+/* Contenedor para las tarjetas */
+#eventList,
+#newsList {
+    display: flex;
+    flex-wrap: wrap;
+    /* Permite que las tarjetas se ajusten automáticamente */
+    justify-content: center;
+    gap: 20px;
+    /* Espacio entre tarjetas */
+}
+
+/* Estilo de las tarjetas */
 .event,
 .news {
-    margin-bottom: 40px;
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 15px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    /* Ancho fijo para las tarjetas */
+    overflow: hidden;
     text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
-/* Flexibilidad en los títulos */
+.event:hover,
+.news:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Imágenes en las tarjetas */
+.event-image,
+.news-image {
+    width: 100%;
+    height: 150px;
+    /* Altura fija */
+    object-fit: cover;
+    /* Ajusta la imagen dentro del espacio sin deformarla */
+}
+
+/* Títulos dentro de las tarjetas */
 .event-title,
 .news-title {
-    font-size: 1.5em;
+    font-size: 1.2em;
     color: #333;
-    margin-bottom: 5px;
+    margin: 15px 0 10px;
+    font-weight: bold;
 }
 
+/* Descripciones dentro de las tarjetas */
 .event-description,
 .news-description {
     font-size: 1em;
     color: #666;
-    margin-bottom: 10px;
+    margin: 0 10px 15px;
 }
 
+/* Fechas y ubicaciones */
 .event-date,
 .news-date {
     font-size: 0.9em;
     color: #999;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
-/* Imágenes flexibles */
-.event-image,
-.news-image {
-    width: 100%;
-    height: auto;
-    max-width: 100%; /* Cambiado de 500px a 100% para mejor ajuste */
-    margin-bottom: 20px;
+/* Ubicación adicional */
+.event-location {
+    font-size: 0.9em;
+    color: #555;
+    margin-bottom: 15px;
+    font-style: italic;
 }
 
 /* Estilo del select-box */
 .select-box {
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
-    margin-top: 20px;
+    margin: 20px 0;
 }
 
 .select-box label {
@@ -112,13 +145,6 @@ h2 {
     background-color: #ff6347;
 }
 
-.event-party,
-.news-party {
-    font-style: italic;
-    color: #555;
-    margin-top: 10px;
-}
-
 /* Estilos del header */
 header {
     display: flex;
@@ -147,7 +173,7 @@ header .logo h1 {
 header nav {
     display: flex;
     align-items: center;
-    flex-wrap: wrap; /* Asegura que los enlaces se ajusten en pantallas pequeñas */
+    flex-wrap: wrap;
 }
 
 header nav a {
@@ -156,12 +182,6 @@ header nav a {
     margin: 0 15px;
     font-size: 1em;
     transition: color 0.3s;
-    display: flex;
-    align-items: center;
-}
-
-header nav a i {
-    margin-right: 8px;
 }
 
 header nav a:hover {
@@ -174,76 +194,30 @@ header nav a:hover {
     color: white;
     text-align: center;
     padding: 10px;
-    position: relative;
-    bottom: 0;
-    width: 100%;
     margin-top: 50px;
 }
 
 /* Media Queries para pantallas pequeñas */
 @media (max-width: 768px) {
-    header {
-        padding: 10px 20px;
-    }
 
-    header .logo img {
-        width: 40px;
-    }
-
-    header .logo h1 {
-        font-size: 1.2em;
-    }
-
-    .select-box label {
-        font-size: 1em;
-    }
-
-    .select-box select {
-        width: 180px;
-    }
-
-    h2 {
-        font-size: 1.4em;
-    }
-
-    .event-title,
-    .news-title {
-        font-size: 1.2em;
-    }
-
-    .event-description,
-    .news-description {
-        font-size: 0.9em;
-    }
-
-    .event-date,
-    .news-date {
-        font-size: 0.8em;
-    }
-}
-
-@media (max-width: 480px) {
-    header {
+    #eventList,
+    #newsList {
         flex-direction: column;
-        text-align: center;
+        align-items: center;
+    }
+
+    .event,
+    .news {
+        width: 90%;
+        /* Asegura que las tarjetas se ajusten en pantallas pequeñas */
     }
 
     header nav {
         justify-content: center;
-        margin-top: 10px;
     }
+}
 
-    .select-box label {
-        font-size: 0.9em;
-    }
-
-    .select-box select {
-        width: 150px;
-    }
-
-    h2 {
-        font-size: 1.2em;
-    }
+@media (max-width: 480px) {
 
     .event-title,
     .news-title {
@@ -252,11 +226,11 @@ header nav a:hover {
 
     .event-description,
     .news-description {
-        font-size: 0.8em;
+        font-size: 0.9em;
     }
 
     .event-date,
     .news-date {
-        font-size: 0.7em;
+        font-size: 0.8em;
     }
 }

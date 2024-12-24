@@ -50,7 +50,7 @@
                         <div class="event-date">Fecha: <?php echo $event['FECHA_EVT_NOT']; ?> | Ubicación:
                             <?php echo $event['UBICACION_EVT_NOT']; ?>
                         </div>
-                        <div class="event-party">Partido: <?php echo $event['NOM_PAR']; ?></div>
+                        
                     </div>
 
                 <?php endforeach; ?>
