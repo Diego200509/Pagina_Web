@@ -5,7 +5,7 @@ body {
     padding: 0;
 }
 
-/* Hacer las secciones de contenido flexibles */
+/* Secciones de contenido flexibles */
 .content-section {
     padding: 20px;
     background-color: white;
@@ -33,16 +33,17 @@ h2 {
     /* Espacio entre tarjetas */
 }
 
-/* Estilo de las tarjetas */
+/* Tarjetas de eventos y noticias */
 .event,
 .news {
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 300px;
-    /* Ancho fijo para las tarjetas */
     overflow: hidden;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
@@ -52,46 +53,68 @@ h2 {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Imágenes en las tarjetas */
+/* Imágenes completas dentro de las tarjetas */
 .event-image,
 .news-image {
     width: 100%;
-    height: 150px;
-    /* Altura fija */
+    height: 200px;
+    /* Altura fija del recuadro */
     object-fit: cover;
-    /* Ajusta la imagen dentro del espacio sin deformarla */
+    /* Ocupa todo el recuadro eliminando bordes blancos */
+    display: block;
+    border-top-left-radius: 8px;
+    /* Bordes superiores redondeados */
+    border-top-right-radius: 8px;
+    /* Bordes superiores redondeados */
 }
 
-/* Títulos dentro de las tarjetas */
+
+
+/* Contenedor de texto */
 .event-title,
 .news-title {
     font-size: 1.2em;
     color: #333;
-    margin: 15px 0 10px;
+    margin: 15px 10px 10px;
     font-weight: bold;
+    text-align: center;
 }
 
-/* Descripciones dentro de las tarjetas */
 .event-description,
 .news-description {
     font-size: 1em;
     color: #666;
-    margin: 0 10px 15px;
+    margin: 10px;
+    line-height: 1.5;
+    max-height: calc(1.5em * 3);
+    /* Altura máxima para 3 líneas (ajustado a line-height) */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    /* Compatibilidad para navegadores basados en WebKit */
+    -webkit-line-clamp: 3;
+    /* Límite de 3 líneas */
+    -webkit-box-orient: vertical;
+    line-clamp: 3;
+    /* Versión estándar */
+    box-orient: vertical;
+    /* Versión estándar */
 }
 
-/* Fechas y ubicaciones */
+
 .event-date,
 .news-date {
     font-size: 0.9em;
-    color: #999;
-    margin-bottom: 10px;
+    color: #007bff;
+    /* Celeste para destacar */
+    margin: 10px;
 }
 
-/* Ubicación adicional */
-.event-location {
+.event-location,
+.news-location {
     font-size: 0.9em;
     color: #555;
-    margin-bottom: 15px;
+    margin: 10px;
     font-style: italic;
 }
 
@@ -209,7 +232,7 @@ header nav a:hover {
     .event,
     .news {
         width: 90%;
-        /* Asegura que las tarjetas se ajusten en pantallas pequeñas */
+        /* Ajusta las tarjetas en pantallas pequeñas */
     }
 
     header nav {

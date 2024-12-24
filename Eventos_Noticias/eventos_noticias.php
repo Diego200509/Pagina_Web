@@ -36,23 +36,25 @@
 
     <div id="events" class="content-section">
         <h2>Eventos</h2>
-        <p id="noEventsMessage">No hay eventos disponibles.</p> 
+        <p id="noEventsMessage">No hay eventos disponibles.</p>
         <div id="eventList">
             <?php if (!empty($events)): ?>
                 <?php foreach ($events as $event): ?>
                     <div class="event" data-party="<?php echo $event['NOM_PAR']; ?>">
-                        <div class="event-title"><?php echo $event['TIT_EVT_NOT']; ?></div>
-
-                        <img src="<?php echo !empty($event['IMAGEN_EVT_NOT']) ? $event['IMAGEN_EVT_NOT'] : '/Pagina_Web/Pagina_Web/Eventos_Noticias/img/evento_default.jpg'; ?>"
-                            alt="Imagen del Evento" class="event-image">
-
-                        <div class="event-description"><?php echo $event['DESC_EVT_NOT']; ?></div>
-                        <div class="event-date">Fecha: <?php echo $event['FECHA_EVT_NOT']; ?> | Ubicación:
-                            <?php echo $event['UBICACION_EVT_NOT']; ?>
+                        <!-- Contenedor de imagen -->
+                        <div class="event-image-container">
+                            <img src="<?php echo !empty($event['IMAGEN_EVT_NOT']) ? $event['IMAGEN_EVT_NOT'] : '/Pagina_Web/Pagina_Web/Eventos_Noticias/img/evento_default.jpg'; ?>"
+                                alt="Imagen del Evento" class="event-image">
                         </div>
-                        
-                    </div>
 
+                        <!-- Contenedor de información -->
+                        <div class="event-info">
+                            <h3 class="event-title"><?php echo $event['TIT_EVT_NOT']; ?></h3>
+                            <p class="event-description"><?php echo $event['DESC_EVT_NOT']; ?></p>
+                            <p class="event-date">Fecha: <?php echo $event['FECHA_EVT_NOT']; ?></p>
+                            <p class="event-location">Ubicación: <?php echo $event['UBICACION_EVT_NOT']; ?></p>
+                        </div>
+                    </div>
                 <?php endforeach; ?>
             <?php endif; ?>
         </div>
@@ -70,18 +72,24 @@
             <?php if (!empty($news)): ?>
                 <?php foreach ($news as $newsItem): ?>
                     <div class="news" data-party="<?php echo $newsItem['NOM_PAR']; ?>">
-                        <div class="news-title"><?php echo $newsItem['TIT_EVT_NOT']; ?></div>
-                        <img src="<?php echo !empty($newsItem['IMAGEN_EVT_NOT']) ? $newsItem['IMAGEN_EVT_NOT'] : '/Eventos_Noticias/img/noticia_default.jpg'; ?>"
-                            alt="Imagen de la Noticia" class="news-image">
+                        <!-- Contenedor de imagen -->
+                        <div class="news-image-container">
+                            <img src="<?php echo !empty($newsItem['IMAGEN_EVT_NOT']) ? $newsItem['IMAGEN_EVT_NOT'] : '/Eventos_Noticias/img/noticia_default.jpg'; ?>"
+                                alt="Imagen de la Noticia" class="news-image">
+                        </div>
 
-                        <div class="news-description"><?php echo $newsItem['DESC_EVT_NOT']; ?></div>
-                        <div class="news-date">Fecha: <?php echo $newsItem['FECHA_EVT_NOT']; ?></div>
-                        <div class="news-party">Partido: <?php echo $newsItem['NOM_PAR']; ?></div>
+                        <!-- Contenedor de información -->
+                        <div class="news-info">
+                            <h3 class="news-title"><?php echo $newsItem['TIT_EVT_NOT']; ?></h3>
+                            <p class="news-description"><?php echo $newsItem['DESC_EVT_NOT']; ?></p>
+                            <p class="news-date">Fecha: <?php echo $newsItem['FECHA_EVT_NOT']; ?></p>
+                            <p class="news-location">Ubicación: <?php echo $newsItem['UBICACION_EVT_NOT']; ?></p>
+                        </div>
                     </div>
-
                 <?php endforeach; ?>
             <?php endif; ?>
         </div>
+
         <div class="pagination" id="newsPagination">
             <button id="prevPageNews" onclick="changePage(-1, 'news')">Anterior</button>
             <button id="nextPageNews" onclick="changePage(1, 'news')">Siguiente</button>
