@@ -16,21 +16,21 @@ header {
     padding: 20px 50px;
     background-color: #b22222; /* Fondo rojo */
 }
-
+/* Navbar */
 .navbar {
-    background-color: #b22222;
+    background-color: #00bfff; /* Azul vibrante inspirado en la imagen */
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
 }
 
 .navbar-logo {
     display: flex;
     align-items: center;
     gap: 10px;
-    color: white;
+    color: #ffffff; /* Blanco */
 }
 
 .navbar-logo i {
@@ -53,105 +53,191 @@ header {
     display: flex;
     align-items: center;
     gap: 8px; /* Espacio entre icono y texto */
-    color: white;
+    color: #ffffff; /* Blanco */
     text-decoration: none;
     font-size: 16px;
     font-weight: bold;
 }
-.navbar-menu li a i {
-    font-size: 18px; /* Tamaño del icono */
-}
 
 .navbar-menu li a:hover {
-    color: black;
+    color: #ff0050; /* Rosa brillante */
+}
+#addCandidateBtn {
+    background:  #ff1493; /* Degradado rosa a azul */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: inline-flex; /* Para alinear el ícono */
+    align-items: center; /* Centrar contenido verticalmente */
+    gap: 8px; /* Espacio entre ícono y texto */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra */
+    transition: all 0.3s ease;
+    
 }
 
-/* Estilo para la tabla */
-table {
+#addCandidateBtn:hover {
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3); /* Sombra más intensa */
+    transform: translateY(-2px); /* Movimiento hacia arriba */
+}
+
+#addCandidateBtn:active {
+    transform: translateY(0); /* Restablecer al hacer clic */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+#backBtn {
+    background:  #ff1493; /* Degradado rosa a azul */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: inline-flex; /* Para alinear el ícono */
+    align-items: center; /* Centrar contenido verticalmente */
+    gap: 8px; /* Espacio entre ícono y texto */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra */
+    transition: all 0.3s ease;
+    text-decoration: none; /* Eliminar subrayado del enlace */
+}
+
+#backBtn:hover {
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3); /* Sombra más intensa */
+    transform: translateY(-2px); /* Movimiento hacia arriba */
+}
+
+#backBtn:active {
+    transform: translateY(0); /* Restablecer al hacer clic */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Tabla */
+.styled-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    background-color: #ffffff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+    font-size: 16px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
 }
 
-table thead {
-    background-color: #b22222;
+.styled-table thead {
+    background:  #00bfff;
     color: white;
-    text-align: left;
     font-weight: bold;
-}
-
-table th, table td {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
     text-align: left;
 }
 
-table tbody tr:hover {
-    background-color: #f5f5f5;
-    cursor: pointer;
+.styled-table th, .styled-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-table tbody tr td img {
+.styled-table tbody tr:nth-child(odd) {
+    background: linear-gradient(135deg, rgba(255,20,147,0.1), white);
+}
+
+.styled-table tbody tr:nth-child(even) {
+    background: linear-gradient(135deg, rgba(0,191,255,0.1), white);
+}
+
+.styled-table tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.styled-table tbody tr td img {
     display: block;
     margin: 0 auto;
-    border-radius: 8px;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
 }
-table tbody tr td button {
-    display: inline-block; /* Para que todos tengan el mismo comportamiento */
-    width: 100px; /* Tamaño uniforme */
-    text-align: center; /* Centrar el texto dentro del botón */
-    padding: 10px 0; /* Espaciado interno vertical uniforme */
-    margin: 5px; /* Separación entre los botones */
+
+.styled-table tbody tr td:last-child {
+    text-align: center;
+}
+
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 2rem;
+    }
+
+    .filters {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .search-input, .filter-select {
+        width: 100%;
+    }
+
+    #addCandidateBtn {
+        width: 100%;
+    }
+}
+/* Contenedor de la acción con el ícono */
+.action-container {
+    position: relative;
+    display: inline-block;
+    z-index: 9999; /* Asegura que el ícono esté por encima de otros elementos */
+}
+
+/* Menú de acciones oculto por defecto */
+.actions-dropdown {
+    position: absolute;
+    top: -10px; /* Ajusta la distancia hacia arriba */
+    left: 100%; /* Coloca el menú justo a la derecha del ícono */
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    width: 150px;
+    display: none; /* Inicialmente oculto */
+    z-index: 10000; /* Asegura que el menú esté por encima de la tabla y otros elementos */
+}
+
+/* Estilo para los botones dentro del desplegable */
+.actions-dropdown button {
+    width: 100%;
+    padding: 12px;
+    background-color: transparent;
     border: none;
-    border-radius: 4px;
+    text-align: left;
     font-size: 14px;
     cursor: pointer;
+    border-radius: 8px; /* Redondear bordes */
+}
+
+/* Colores para los botones */
+.actions-dropdown .edit-btn {
+    background-color: #ff1493; /* Rosa */
     color: white;
-    transition: background-color 0.3s ease;
 }
 
-/* Botón Editar */
-.edit-btn {
-    background-color: #4caf50; /* Verde */
-}
-
-.edit-btn:hover {
-    background-color: #45a049; /* Verde oscuro */
-}
-
-/* Botón Eliminar */
-.delete-btn {
+.actions-dropdown .delete-btn {
     background-color: #f44336; /* Rojo */
+    color: white;
 }
 
-.delete-btn:hover {
-    background-color: #d32f2f; /* Rojo oscuro */
+.actions-dropdown .toggle-status-btn {
+    background-color: #00bfff; /* Azul */
+    color: white;
 }
 
-/* Botón Cambiar Estado */
-.toggle-status-btn {
-    background-color: #007bff; /* Azul */
+/* Efecto hover en los botones */
+.actions-dropdown button:hover {
+    background-color: #ddd;
 }
 
-.toggle-status-btn[data-status="Activo"] {
-    background-color: #dc3545; /* Rojo si el estado es 'Activo' (para Ocultar) */
-}
-
-.toggle-status-btn[data-status="Oculto"] {
-    background-color: #28a745; /* Verde si el estado es 'Oculto' (para Activar) */
-}
-
-.toggle-status-btn:hover {
-    opacity: 0.9; /* Reducir un poco la opacidad para el efecto visual */
-}
-
-.toggle-status-btn:active {
-    transform: scale(0.95); /* Efecto de clic */
-}
 .modal {
     display: none; /* Ocultar por defecto */
     position: fixed; /* Fijar en la pantalla */
@@ -206,56 +292,4 @@ table tbody tr td button {
 textarea {
     resize: vertical;
     min-height: 100px;
-}
-
-.modal-content button {
-    border: none;
-    padding: 12px 20px;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 15px;
-    background-color: #00ADEF;
-    color: white;
-}
-
-.modal-content button:hover {
-    background-color: #007B9E;
-}
-
-/* Respuesta para dispositivos pequeños */
-@media (max-width: 768px) {
-    table {
-        font-size: 14px;
-    }
-
-    table th, table td {
-        padding: 8px;
-    }
-
-    .modal-content {
-        width: 95%;
-    }
-}
-#addCandidateBtn {
-    background-color: #b22222; 
-    color: white; 
-    border: none; 
-    padding: 10px 20px; 
-    border-radius: 5px; 
-    font-size: 16px; 
-    cursor: pointer; 
-    transition: background-color 0.3s ease; 
-    font-weight: bold; 
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
-}
-
-#addCandidateBtn:hover {
-    background-color: #a11d1d; 
-    color: #f1f1f1; 
-}
-
-#addCandidateBtn:active {
-    background-color: #8f1a1a; 
-    transform: scale(0.98); 
 }

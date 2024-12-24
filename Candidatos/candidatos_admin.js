@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
     const apiEndpoint = '../src/candidatos_queries.php';
-
     const tableBody = document.getElementById('candidateList');
     const modal = document.getElementById('addCandidateModal');
     const modalTitle = document.getElementById('modalTitle');
@@ -13,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
         modal.style.display = 'none';
     });
 
-    // Función para cargar la lista de candidatos
+    // Cargar candidatos desde el servidor
     function loadCandidates() {
         fetch(apiEndpoint)
             .then(response => response.json())
@@ -24,20 +23,27 @@ document.addEventListener("DOMContentLoaded", function () {
                     row.innerHTML = `
                         <td>${candidate.ID_CAN || 'No ID'}</td>
                         <td>${candidate.NOM_CAN || 'Sin nombre'}</td>
-                        <td>${candidate.BIOGRAFIA_CAN || 'Sin biografía'}</td>
+                        <td>${candidate.APE_CAN || 'Sin apellido'}</td>
+                        <td>${candidate.FECHA_NAC_CAN || 'Sin fecha de nacimiento'}</td>
+                        <td>${candidate.CARGO_CAN || 'Sin cargo'}</td>
+                        <td>${candidate.EDUCACION_CAN || 'Sin educación'}</td>
                         <td>${candidate.EXPERIENCIA_CAN || 'Sin experiencia'}</td>
-                        <td>${candidate.VISION_CAN || 'Sin visión'}</td>
-                        <td>${candidate.LOGROS_CAN || 'Sin logros'}</td>
-                        <td>${candidate.NOM_PAR || 'Sin partido'}</td>
+                        <td>${candidate.ESTADO_CAN || 'Inactivo'}</td>
                         <td>
                             <img src="../${candidate.IMG_CAN || 'placeholder.png'}" alt="${candidate.NOM_CAN || 'Sin imagen'}" width="50">
                         </td>
                         <td>
-                            <button class="edit-btn" data-id="${candidate.ID_CAN}">Editar</button>
-                            <button class="delete-btn" data-id="${candidate.ID_CAN}">Eliminar</button>
-                            <button class="toggle-status-btn" data-id="${candidate.ID_CAN}" data-status="${candidate.ESTADO_CAN}">
-                                ${candidate.ESTADO_CAN === 'Activo' ? 'Ocultar' : 'Activar'}
-                            </button>
+                            <div class="action-container">
+                                <button class="action-btn toggle-actions-btn" data-id="${candidate.ID_CAN}">
+                                    <i class="bi bi-pencil-square"></i> <!-- Ícono de editar -->
+                                </button>
+                                <!-- Menú de acciones (oculto por defecto) -->
+                                <div class="actions-dropdown" data-id="${candidate.ID_CAN}" style="display: none;">
+                                    <button class="action-btn edit-btn">Editar</button>
+                                    <button class="action-btn delete-btn">Eliminar</button>
+                                    <button class="action-btn toggle-status-btn">Activar</button>
+                                </div>
+                            </div>
                         </td>
                     `;
                     tableBody.appendChild(row);
@@ -46,28 +52,39 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(error => console.error('Error al cargar candidatos:', error));
     }
 
-    // Centralizar eventos en la tabla
+    // Mostrar/ocultar el menú de acciones al hacer clic en el ícono de editar
     tableBody.addEventListener('click', function (e) {
         const target = e.target;
 
+        // Si el objetivo es el ícono de editar, alternamos la visibilidad del menú de acciones
+        if (target.classList.contains('toggle-actions-btn')) {
+            const actionsDropdown = target.closest('td').querySelector('.actions-dropdown');
+            // Alternamos la visibilidad del menú de acciones
+            const isVisible = actionsDropdown.style.display === 'block';
+            actionsDropdown.style.display = isVisible ? 'none' : 'block'; // Toggle visibility
+        }
+
+        // Si se hace clic en "Editar", abrir el modal de edición
         if (target.classList.contains('edit-btn')) {
-            const id = target.dataset.id;
+            const id = target.closest('tr').querySelector('.toggle-actions-btn').dataset.id;
             editCandidate(id);
         }
 
+        // Si se hace clic en "Eliminar", eliminar el candidato
         if (target.classList.contains('delete-btn')) {
-            const id = target.dataset.id;
+            const id = target.closest('tr').querySelector('.toggle-actions-btn').dataset.id;
             deleteCandidate(id);
         }
 
+        // Si se hace clic en "Activar", cambiar el estado del candidato
         if (target.classList.contains('toggle-status-btn')) {
-            const id = target.dataset.id;
+            const id = target.closest('tr').querySelector('.toggle-actions-btn').dataset.id;
             const currentStatus = target.dataset.status;
             toggleCandidateStatus(id, currentStatus);
         }
     });
 
-    // Función para abrir el modal y cargar datos de un candidato para editar
+    // Función para editar el candidato
     function editCandidate(id) {
         fetch(`${apiEndpoint}?id=${id}`)
             .then(response => response.json())
@@ -84,11 +101,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 modalTitle.textContent = 'Editar Candidato';
                 document.getElementById('candidateId').value = candidate.ID_CAN;
                 document.getElementById('name').value = candidate.NOM_CAN;
-                document.getElementById('party_id').value = candidate.ID_PAR_CAN;
-                document.getElementById('bio').value = candidate.BIOGRAFIA_CAN;
+                document.getElementById('surname').value = candidate.APE_CAN;
+                document.getElementById('birth_date').value = candidate.FECHA_NAC_CAN;
+                document.getElementById('position').value = candidate.CARGO_CAN;
+                document.getElementById('education').value = candidate.EDUCACION_CAN;
                 document.getElementById('experience').value = candidate.EXPERIENCIA_CAN;
-                document.getElementById('vision').value = candidate.VISION_CAN;
-                document.getElementById('achievements').value = candidate.LOGROS_CAN;
                 modal.style.display = 'flex'; // Mostrar el modal centrado
             })
             .catch(error => console.error('Error al cargar el candidato:', error));
@@ -146,7 +163,12 @@ document.addEventListener("DOMContentLoaded", function () {
                         title: '¡Éxito!',
                         text: `Estado del candidato actualizado a: ${newStatus}`,
                     });
-                    loadCandidates();
+
+                    // Actualizar el estado del botón para "Ocultar" o "Activar"
+                    const button = document.querySelector(`[data-id="${id}"]`);
+                    button.textContent = newStatus === 'Activo' ? 'Ocultar' : 'Activar';
+                    button.dataset.status = newStatus;
+                    button.querySelector('i').className = newStatus === 'Activo' ? 'bi bi-eye-slash' : 'bi bi-eye';
                 }
             })
             .catch(error => console.error('Error al cambiar el estado:', error));
@@ -175,51 +197,28 @@ document.addEventListener("DOMContentLoaded", function () {
             method: 'POST',
             body: formData
         })
-            .then(response => response.text()) // Cambiado a .text() para depuración
+            .then(response => response.json())
             .then(result => {
-                try {
-                    const jsonResult = JSON.parse(result);
-                    if (jsonResult.error) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: jsonResult.error,
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: 'success',
-                            title: '¡Éxito!',
-                            text: 'El candidato ha sido guardado correctamente.',
-                        });
-                        modal.style.display = 'none';
-                        candidateForm.reset();
-                        loadCandidates();
-                    }
-                } catch (e) {
-                    console.error('Respuesta no es un JSON válido:', result);
+                if (result.error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: result.error,
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Éxito!',
+                        text: 'El candidato ha sido guardado correctamente.',
+                    });
+                    modal.style.display = 'none';
+                    candidateForm.reset();
+                    loadCandidates();
                 }
             })
             .catch(error => console.error('Error al guardar el candidato:', error));
     });
 
-    // Cargar los partidos para el select
-    function loadParties() {
-        fetch(`${apiEndpoint}?fetch=parties`)
-            .then(response => response.json())
-            .then(parties => {
-                const partySelect = document.getElementById('party_id');
-                partySelect.innerHTML = '<option value="" disabled selected>Seleccione un partido</option>';
-                parties.forEach(party => {
-                    const option = document.createElement('option');
-                    option.value = party.ID_PAR;
-                    option.textContent = party.NOM_PAR;
-                    partySelect.appendChild(option);
-                });
-            })
-            .catch(error => console.error('Error al cargar los partidos:', error));
-    }
-
-    // Inicialización
-    loadParties();
+    // Inicializar la lista de candidatos
     loadCandidates();
 });
