@@ -1,27 +1,30 @@
-body {
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%; /* Ocupa toda la altura de la ventana */
     font-family: Arial, sans-serif;
-    background-image: url('Img/fondovotos.jpg'); /* Ruta de tu imagen de fondo */
+    background-image: url('Img/fondovotos.jpg'); /* Ruta de la imagen de fondo */
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover; /* Ajusta la imagen para cubrir toda la pantalla */
+    color: white;
     text-align: center;
-    width: 100%;
-    color: white; /* Cambiar color del texto para que sea legible sobre el fondo */
-    margin: 0; /* Eliminar márgenes del body */
-    height: 100vh; /* Asegura que el body ocupe toda la altura de la ventana */
+    box-sizing: border-box;
 }
-
-
-        .container {
-    background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semi-transparente */
-    margin: 150px auto; /* Ajustamos el margen superior a 150px */
+.container {
+    background-color: rgba(252, 252, 252, 0.705); /* Fondo negro semi-transparente */
+    margin: 20px auto;
     padding: 20px;
-    width: 100%;
     max-width: 1000px;
     border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    color: black; /* Color de texto dentro del contenedor */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    color: rgb(19, 17, 17);
+    position: relative;
+    min-height: calc(100vh - 70px); /* Ajusta según la altura del navbar y footer */
+    box-sizing: border-box;
 }
+
+
 
 
         h1 {
@@ -32,7 +35,12 @@ body {
         h2 {
             font-size: 1.5em;
             margin-top: 0;
-            color: red;
+            color: rgb(248, 248, 248);
+        }
+        h3 {
+            font-size: 1.5em;
+            margin-top: 0;
+            color: rgb(240, 10, 10);
         }
 
         .logo {
@@ -45,12 +53,14 @@ body {
         .logo img {
             width: 100px;
         }
-
-        .results {
-            display: flex;
-            justify-content: space-around;
-        }
-
+/* Results layout */
+.results {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px 0;
+}
         .candidate {
             width: 30%;
             text-align: center;
@@ -184,8 +194,12 @@ body {
             color: white;
             text-align: center;
             padding: 10px;
-            position: relative;
-            bottom: 0;
             width: 100%;
-            margin-top: 0px;
+            box-sizing: border-box;
+            position: fixed; /* Lo fija en la parte inferior */
+            bottom: 0;
+            left: 0;
+            z-index: 10; /* Asegura que quede sobre otros elementos */
         }
+        
+        

@@ -1,6 +1,84 @@
 <?php
 // Incluir archivo de configuración para la conexión a la base de datos
 include('../config/config.php');
+// En sugerencias_queries.php
+function obtenerSugerenciaPorId($id_sugerencia) {
+    global $connection;  // Asegúrate de que la conexión esté disponible
+
+    // Consulta SQL corregida
+    $sql = "SELECT 
+                s.ID_SUG AS id_sugerencia,
+                u.NOM_USU AS nombre_usuario,
+                u.EMAIL_USU AS correo_usuario,
+                c.NOM_CAN AS nombre_candidato,
+                s.SUGERENCIAS_SUG AS sugerencia,
+                s.PROPUESTA_SUG AS propuesta,
+                s.COMENTARIOS_SUG AS comentarios,
+                s.ESTADO_SUG AS estado,
+                s.CREATED_AT AS created_at
+            FROM SUGERENCIAS s
+            JOIN USUARIOS u ON s.ID_USU_PER = u.ID_USU
+            JOIN PARTIDOS_POLITICOS p ON s.ID_PAR_SUG = p.ID_PAR
+            JOIN CANDIDATOS c ON c.ID_PAR_CAN = p.ID_PAR
+            WHERE s.ID_SUG = ?
+            ORDER BY s.ID_SUG DESC";
+
+    // Preparar la consulta
+    if ($stmt = $connection->prepare($sql)) {
+        // Bind el parámetro
+        $stmt->bind_param("i", $id_sugerencia);  // El tipo es "i" para un entero
+
+        // Ejecutar la consulta
+        $stmt->execute();
+
+        // Obtener el resultado
+        $result = $stmt->get_result();
+
+        // Si hay resultados, devolver la fila asociada
+        if ($result->num_rows > 0) {
+            return $result->fetch_assoc();  // fetch_assoc() para obtener el resultado como un array asociativo
+        } else {
+            return null; // No se encuentra la sugerencia
+        }
+    } else {
+        return null; // Error en la preparación de la consulta
+    }
+}
+
+
+
+function obtenerTodasSugerencias()
+{
+    global $connection;
+
+    // Consulta SQL corregida para obtener sugerencias junto con la información del usuario y del partido
+    $sql = "SELECT 
+    s.ID_SUG AS id_sugerencia,
+    u.NOM_USU AS nombre_usuario,
+    u.EMAIL_USU AS correo_usuario,
+    c.NOM_CAN AS nombre_candidato,
+    s.SUGERENCIAS_SUG AS sugerencia,
+    s.PROPUESTA_SUG AS propuesta,
+    s.ESTADO_SUG AS estado,
+    s.CREATED_AT AS created_at
+FROM SUGERENCIAS s
+JOIN USUARIOS u ON s.ID_USU_PER = u.ID_USU
+JOIN PARTIDOS_POLITICOS p ON s.ID_PAR_SUG = p.ID_PAR
+JOIN CANDIDATOS c ON c.ID_PAR_CAN = p.ID_PAR
+ORDER BY s.ID_SUG DESC";
+
+
+    $result = $connection->query($sql);
+
+    $sugerencias = [];
+    if ($result && $result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $sugerencias[] = $row;
+        }
+    }
+
+    return $sugerencias;
+}
 
 // Función para obtener el nombre del partido político según su ID_PAR
 function obtenerNombrePartido($idPartido)
@@ -274,7 +352,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt_vot_check->close();
         } else {
             // Insertar nuevo usuario si no existe
-            $stmt = $connection->prepare("INSERT INTO USUARIOS (NOM_USU, EMAIL_USU) VALUES (?, ?)");
+            $stmt = $connection->prepare("INSERT INTO USUARIOS (NOM_USU, EMAIL_USU, PASSWORD_USU, ROL_USU)VALUES (?, ?, NULL, 'USUARIO')");
             $stmt->bind_param("ss", $nombre, $correo);
 
             if ($stmt->execute()) {

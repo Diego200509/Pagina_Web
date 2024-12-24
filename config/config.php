@@ -5,6 +5,8 @@ $user = "root";
 $password = "";  
 $database = "elecciones2024";  
 
+
+
 $connection = new mysqli($host, $user, $password, $database);
 
 // Verificar la conexión

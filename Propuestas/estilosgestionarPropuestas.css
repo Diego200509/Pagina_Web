@@ -1,0 +1,456 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+header .logo {
+    display: flex;
+    align-items: center;
+}
+
+header .logo img {
+    height: 50px;
+    margin-right: 10px;
+}
+
+header h1 {
+    font-size: 20px;
+    margin: 0;
+}
+
+header nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 14px;
+    display: inline-block;
+}
+
+header nav a:hover {
+    text-decoration: underline;
+}
+
+/* Contenedor principal */
+.container {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.container h2 {
+    text-align: center;
+    color: #b22222;
+    margin-bottom: 20px;
+}
+
+/* Formulario para agregar propuesta */
+form {
+    margin-bottom: 30px;
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+form h3 {
+    margin-top: 0;
+    color: #b22222;
+    font-size: 18px;
+}
+
+form input[type="text"],
+form textarea,
+form select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+form button {
+    background-color: #b22222;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #b22222;
+}
+
+/* Tabla de propuestas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    text-align: left;
+}
+
+/* Estilo para las celdas de la tabla */
+table th,
+table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    word-wrap: break-word;  /* Permite que el texto se ajuste dentro de la celda */
+    white-space: normal;    /* Asegura que el texto se ajuste al espacio disponible */
+}
+
+table td {
+    max-width: 200px;  /* Define un ancho máximo para las celdas */
+    word-wrap: break-word;
+    overflow: hidden;       /* Evita el desbordamiento de texto */
+}
+
+/* Estilo para la tabla de propuestas */
+table th {
+    background-color: #b22222;
+    color: white;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Botones de acción en las celdas de la tabla */
+table td form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; /* Establece la separación entre los botones */
+    justify-content: flex-start; /* Alineación de los botones a la izquierda */
+    margin-bottom: 5px; /* Separación entre las filas de botones */
+    margin-right: 5px; /* Separación entre las columnas de los formularios de botones */
+}
+
+table button {
+    display: inline-block;        /* Asegura que los botones estén en una fila */
+    padding: 8px 16px;            /* Relleno para los botones */
+    font-size: 12px;              /* Tamaño de texto */
+    border-radius: 5px;           /* Bordes redondeados */
+    cursor: pointer;
+    margin-right: 5px;            /* Espacio entre botones */
+    width: 100px;                 /* Establece un ancho fijo para los botones */
+    min-width: 100px;             /* Establece un ancho mínimo para los botones */
+    text-align: center;           /* Centra el texto dentro del botón */
+}
+
+/* Estilo para el botón "Ocultar" */
+table button.ocultar {
+    background-color: #e67e22;    /* Naranja */
+    color: white;
+}
+
+table button.ocultar:hover {
+    background-color: #d35400;    /* Naranja más oscuro */
+}
+
+/* Estilo para el botón "Mostrar" */
+table button.mostrar {
+    background-color: #27ae60;    /* Verde */
+    color: white;
+}
+
+table button.mostrar:hover {
+    background-color: #2ecc71;    /* Verde más brillante */
+}
+
+/* Estilo para el botón "Eliminar" */
+table button.eliminar {
+    background-color: #c0392b;    /* Rojo */
+    color: white;
+}
+
+table button.eliminar:hover {
+    background-color: #e74c3c;    /* Rojo más brillante */
+}
+
+/* Estilo para el botón "Editar" */
+table button.editar {
+    background-color: #004680;    /* Azul */
+    color: white;
+}
+
+table button.editar:hover {
+    background-color: #003366;    /* Azul más oscuro */
+}
+
+/* Para los botones dentro de la celda, de forma responsiva */
+table td {
+    padding: 12px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+table td form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; /* Espaciado horizontal y vertical entre botones */
+    justify-content: flex-start; /* Alineación hacia la izquierda */
+    align-items: center; /* Alineación vertical */
+}
+
+/* Asegura que las celdas no se desborden */
+table td {
+    word-wrap: break-word; /* Permite que el texto se ajuste dentro de la celda */
+    white-space: normal;    /* Ajusta el texto automáticamente */
+    max-width: 300px;       /* Define un ancho máximo para la celda */
+    overflow: hidden;       /* Evita el desbordamiento de texto */
+}
+
+/* Estilo de los botones cuando son presionados */
+table button {
+    display: inline-block; /* Los botones estarán uno al lado del otro */
+    padding: 10px 20px; /* Tamaño adecuado para los botones */
+    font-size: 14px; /* Tamaño de texto más grande */
+    margin: 5px 0; /* Espaciado entre los botones */
+    border-radius: 8px; /* Bordes redondeados */
+    cursor: pointer; /* Establecer como puntero */
+    width: 120px; /* Ajuste de tamaño de botón */
+    text-align: center; /* Centrar el texto */
+}
+
+table button:hover {
+    opacity: 0.8; /* Añadir opacidad para el hover */
+}
+
+/* Botón Editar */
+table button.btn-primary {
+    background-color: #3498db;
+    color: white;
+    border: none;
+}
+
+table button.btn-primary:hover {
+    background-color: #2980b9;
+}
+
+/* Botón Ocultar */
+table button.btn-warning {
+    background-color: #f39c12;
+    color: white;
+    border: none;
+}
+
+table button.btn-warning:hover {
+    background-color: #e67e22;
+}
+
+/* Botón Mostrar */
+table button.btn-success {
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+}
+
+table button.btn-success:hover {
+    background-color: #27ae60;
+}
+
+/* Pie de página */
+footer {
+    text-align: center;
+    background-color: #004680;
+    color: white;
+    padding: 10px 0;
+    margin-top: 30px;
+    font-size: 14px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Estilo para la barra de paginación */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+/* Estilo para los enlaces de paginación */
+.pagination a {
+    color: #4b0082; /* Color morado */
+    text-decoration: none;
+    padding: 10px 15px;
+    margin: 0 5px;
+    border-radius: 5px;
+    border: 1px solid #4b0082;
+    font-size: 14px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Efecto al pasar el mouse sobre los enlaces */
+.pagination a:hover {
+    background-color: #4b0082;
+    color: #fff;
+}
+
+/* Estilo para el enlace de la página activa */
+.pagination a.active {
+    background-color: #4b0082;
+    color: white;
+    border: 1px solid #4b0082;
+}
+
+/* Estilo para los botones de navegación (Anterior / Siguiente) */
+.pagination a:first-child, .pagination a:last-child {
+    font-weight: bold;
+    padding: 10px 20px;
+}
+
+/* Ocultar enlaces cuando no son necesarios */
+.pagination a[disabled] {
+    color: #ccc;
+    cursor: not-allowed;
+    border: 1px solid #ddd;
+}
+
+/* Separación entre el texto "Anterior", los números de página y "Siguiente" */
+.pagination a + a {
+    margin-left: 0;
+}
+
+/* Mejoras en la apariencia de los botones "Anterior" y "Siguiente" */
+.pagination a:first-child, .pagination a:last-child {
+    font-size: 16px;
+    padding: 12px 18px;
+}
+
+/* Mejorar el aspecto de los enlaces activos */
+.pagination a.active {
+    background-color: #4b0082;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* Botones alineados horizontalmente en pantallas grandes */
+@media (min-width: 768px) {
+    table td form {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 10px; /* Espacio horizontal entre botones */
+        justify-content: flex-start; /* Alineados a la izquierda */
+        align-items: center; /* Alineación vertical */
+    }
+}
+
+/* Botones en columna para pantallas pequeñas */
+@media (max-width: 767px) {
+    table td form {
+        display: flex;
+        flex-direction: column; /* Organizar los botones en columna */
+        gap: 10px; /* Espacio entre los botones */
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+table button {
+    width: auto; /* Ajusta automáticamente el ancho */
+    padding: 8px 12px; /* Relleno interno */
+    text-align: center; /* Centra el texto */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer;
+}
+
+.success {
+    color: green;
+    background-color: #eafaea;
+    border: 1px solid green;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.info {
+    color: blue;
+    background-color: #eaf3fa;
+    border: 1px solid blue;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+
+.error {
+    color: red;
+    background-color: #faeaea;
+    border: 1px solid red;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+button:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+    border: 1px solid #999;
+}
+
+.navbar {
+    background-color: #b22222;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+}
+
+.navbar-logo i {
+    font-size: 24px;
+}
+
+.navbar-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+}
+
+.navbar-menu li {
+    list-style: none;
+}
+
+.navbar-menu li a {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espacio entre icono y texto */
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+}
+.navbar-menu li a i {
+    font-size: 18px; /* Tamaño del icono */
+}
+
+.navbar-menu li a:hover {
+    color: black;
+}
