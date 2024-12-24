@@ -146,7 +146,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-// Función para crear el HTML de un evento
 function createEventHTML(event) {
     const eventDiv = document.createElement('div');
     eventDiv.classList.add('event');
@@ -156,14 +155,18 @@ function createEventHTML(event) {
         <div class="event-title">${event.TIT_EVT_NOT}</div>
         <img src="${event.IMAGEN_EVT_NOT || '/Eventos_Noticias/img/evento_default.jpg'}" alt="Imagen del Evento" class="event-image">
         <div class="event-description">${event.DESC_EVT_NOT}</div>
-        <div class="event-date">Fecha: ${event.FECHA_EVT_NOT} | Ubicación: ${event.UBICACION_EVT_NOT || 'No disponible'}</div>
-        
+        <div class="event-date-location">
+            <span class="event-date">${event.FECHA_EVT_NOT}</span>
+            |
+            <span class="event-location">
+                <i class="fas fa-map-marker-alt"></i>${event.UBICACION_EVT_NOT || 'No disponible'}
+            </span>
+        </div>
     `;
 
     return eventDiv;
 }
 
-// Función para crear el HTML de una noticia
 function createNewsHTML(newsItem) {
     const newsDiv = document.createElement('div');
     newsDiv.classList.add('news');
@@ -173,11 +176,14 @@ function createNewsHTML(newsItem) {
         <div class="news-title">${newsItem.TIT_EVT_NOT}</div>
         <img src="${newsItem.IMAGEN_EVT_NOT || '/Eventos_Noticias/img/noticia_default.jpg'}" alt="Imagen de la Noticia" class="news-image">
         <div class="news-description">${newsItem.DESC_EVT_NOT}</div>
-        <div class="news-date">Fecha: ${newsItem.FECHA_EVT_NOT}</div>
-        
+        <div class="news-date-location">
+            <span class="news-date">${newsItem.FECHA_EVT_NOT}</span>
+        </div>
     `;
 
     return newsDiv;
 }
-    
+
+
+
 

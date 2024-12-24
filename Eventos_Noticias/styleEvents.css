@@ -102,20 +102,37 @@ h2 {
 }
 
 
-.event-date,
-.news-date {
-    font-size: 0.9em;
-    color: #007bff;
-    /* Celeste para destacar */
-    margin: 10px;
+/* Contenedor para la fecha y la ubicación */
+.event-date-location,
+.news-date-location {
+    display: flex;
+    justify-content: center; /* Alineado a la izquierda */
+    align-items: center; /* Alineación vertical */
+    font-size: 1em;
+    margin-top: 10px;
+    color: #333;
+    font-weight: bold;
 }
 
+/* Fecha específica */
+.event-date,
+.news-date {
+    color: #007bff;
+    margin-right: 10px;
+}
+
+/* Ubicación específica */
 .event-location,
 .news-location {
-    font-size: 0.9em;
-    color: #555;
-    margin: 10px;
-    font-style: italic;
+    display: flex;
+    align-items: center;
+    color: #333;
+}
+
+.event-location i,
+.news-location i {
+    color: #b22222;
+    margin-right: 5px;
 }
 
 /* Estilo del select-box */

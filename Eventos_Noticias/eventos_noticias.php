@@ -51,8 +51,8 @@
                         <div class="event-info">
                             <h3 class="event-title"><?php echo $event['TIT_EVT_NOT']; ?></h3>
                             <p class="event-description"><?php echo $event['DESC_EVT_NOT']; ?></p>
-                            <p class="event-date">Fecha: <?php echo $event['FECHA_EVT_NOT']; ?></p>
-                            <p class="event-location">Ubicación: <?php echo $event['UBICACION_EVT_NOT']; ?></p>
+                            <p class="event-date"><?php echo $event['FECHA_EVT_NOT']; ?></p>
+                            <p class="event-location"><i class="fas fa-map-marker-alt"></i> <?php echo $event['UBICACION_EVT_NOT']; ?></p>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -82,8 +82,8 @@
                         <div class="news-info">
                             <h3 class="news-title"><?php echo $newsItem['TIT_EVT_NOT']; ?></h3>
                             <p class="news-description"><?php echo $newsItem['DESC_EVT_NOT']; ?></p>
-                            <p class="news-date">Fecha: <?php echo $newsItem['FECHA_EVT_NOT']; ?></p>
-                            <p class="news-location">Ubicación: <?php echo $newsItem['UBICACION_EVT_NOT']; ?></p>
+                            <p class="news-date"><?php echo $newsItem['FECHA_EVT_NOT']; ?></p>
+                            <p class="news-location"><i class="fas fa-map-marker-alt"></i> <?php echo $newsItem['UBICACION_EVT_NOT']; ?></p>
                         </div>
                     </div>
                 <?php endforeach; ?>
