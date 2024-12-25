@@ -9,9 +9,9 @@ body {
 }
 
 .navbar-role {
-    margin-bottom: 9px; /* Ajusta el espaciado inferior */
-    padding-left: 5px; /* Espaciado a la izquierda */
-    padding-right: 5px; /* Espaciado a la derecha */
+    margin-bottom: 9px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .navbar {
