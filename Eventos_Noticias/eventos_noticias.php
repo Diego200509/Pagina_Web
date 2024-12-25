@@ -27,6 +27,7 @@
 
     <div id="events" class="content-section">
         <h2>Eventos</h2>
+        <p class="section-description">Mantente informado con los eventos más relevantes de nuestra comunidad. </p>
         <p id="noEventsMessage">No hay eventos disponibles.</p>
         <div id="eventList">
             <?php if (!empty($events)): ?>
@@ -58,6 +59,7 @@
 
     <div id="news" class="content-section">
         <h2>Últimas Noticias</h2>
+        <p class="section-description"> Mantente informado con las noticias más relevantes.</p>
         <p id="noNewsMessage">No hay noticias disponibles.</p>
         <div id="newsList">
             <?php if (!empty($news)): ?>
