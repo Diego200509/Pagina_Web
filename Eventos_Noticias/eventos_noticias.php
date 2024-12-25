@@ -58,7 +58,7 @@
     </div>
 
     <div id="news" class="content-section">
-        <h2>Últimas Noticias</h2>
+        <h2>Noticias</h2>
         <p class="section-description"> Mantente informado con las noticias más relevantes.</p>
         <p id="noNewsMessage">No hay noticias disponibles.</p>
         <div id="newsList">
