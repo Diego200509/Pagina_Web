@@ -9,25 +9,32 @@ body {
 }
 
 .navbar {
-    background-color: #00bfff; /* Azul vibrante */
+    background-color: #00bfff;
+    /* Azul vibrante */
     display: flex;
-    justify-content: space-between; /* Espacio entre logo y menú */
+    justify-content: space-between;
+    /* Espacio entre logo y menú */
     align-items: center;
     padding: 10px 20px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
-    flex-wrap: wrap; /* Permitir que los elementos se ajusten en pantallas pequeñas */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    /* Sombra ligera */
+    flex-wrap: wrap;
+    /* Permitir que los elementos se ajusten en pantallas pequeñas */
 }
 
 .navbar-logo {
     display: flex;
     align-items: center;
     gap: 15px;
-    color: #ffffff; /* Blanco */
-    flex: 1; /* Toma el espacio necesario */
+    color: #ffffff;
+    /* Blanco */
+    flex: 1;
+    /* Toma el espacio necesario */
 }
 
 .navbar-logo img {
-    max-width: 150px; /* Ajusta el tamaño del logo */
+    max-width: 150px;
+    /* Ajusta el tamaño del logo */
     height: auto;
 }
 
@@ -37,7 +44,8 @@ body {
     padding: 0;
     display: flex;
     gap: 20px;
-    flex-wrap: wrap; /* Ajustar elementos en pantallas pequeñas */
+    flex-wrap: wrap;
+    /* Ajustar elementos en pantallas pequeñas */
 }
 
 .navbar-menu li {
@@ -47,8 +55,10 @@ body {
 .navbar-menu li a {
     display: flex;
     align-items: center;
-    gap: 8px; /* Espacio entre ícono y texto */
-    color: #ffffff; /* Blanco */
+    gap: 8px;
+    /* Espacio entre ícono y texto */
+    color: #ffffff;
+    /* Blanco */
     text-decoration: none;
     font-size: 16px;
     font-weight: bold;
@@ -56,7 +66,8 @@ body {
 }
 
 .navbar-menu li a:hover {
-    color: #ff0050; /* Rosa brillante */
+    color: #ff0050;
+    /* Rosa brillante */
 }
 
 /* Botón de regreso */
@@ -165,16 +176,24 @@ body {
 
 /* Modal */
 .modal {
-    display: none; /* Ocultar por defecto */
-    position: fixed; /* Fijar en la pantalla */
-    justify-content: center; /* Centrar horizontalmente */
-    align-items: center; /* Centrar verticalmente */
-    z-index: 1000; /* Por encima del contenido */
+    display: none;
+    /* Ocultar por defecto */
+    position: fixed;
+    /* Fijar en la pantalla */
+    justify-content: center;
+    /* Centrar horizontalmente */
+    align-items: center;
+    /* Centrar verticalmente */
+    z-index: 1000;
+    /* Por encima del contenido */
     top: 0;
     left: 0;
-    width: 100%; /* Cubrir toda la pantalla */
-    height: 100%; /* Cubrir toda la pantalla */
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro transparente */
+    width: 100%;
+    /* Cubrir toda la pantalla */
+    height: 100%;
+    /* Cubrir toda la pantalla */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Fondo oscuro transparente */
 }
 
 .modal-content {
@@ -199,7 +218,8 @@ body {
 }
 
 .close-button:hover {
-    color: #ff1493; /* Color rosa en hover */
+    color: #ff1493;
+    /* Color rosa en hover */
 }
 
 /* Estilo del título del modal */
@@ -230,7 +250,8 @@ body {
 }
 
 .modal-content button {
-    background-color: #ff1493; /* Rosa */
+    background-color: #ff1493;
+    /* Rosa */
     color: white;
     border: none;
     cursor: pointer;
@@ -238,11 +259,13 @@ body {
 }
 
 .modal-content button:hover {
-    background-color: #e01183; /* Más oscuro al pasar el mouse */
+    background-color: #e01183;
+    /* Más oscuro al pasar el mouse */
 }
 
 #addEventBtn {
-    background: #ff1493; /* Rosa brillante */
+    background: #ff1493;
+    /* Rosa brillante */
     color: white;
     border: none;
     padding: 12px 20px;
@@ -250,20 +273,102 @@ body {
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
-    display: inline-flex; /* Para alinear el ícono */
-    align-items: center; /* Centrar contenido verticalmente */
-    gap: 8px; /* Espacio entre ícono y texto */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra */
+    display: inline-flex;
+    /* Para alinear el ícono */
+    align-items: center;
+    /* Centrar contenido verticalmente */
+    gap: 8px;
+    /* Espacio entre ícono y texto */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    /* Sombra */
     transition: all 0.3s ease;
 }
 
 #addEventBtn:hover {
-    background-color: #e01183; /* Rosa más oscuro */
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3); /* Sombra más intensa */
-    transform: translateY(-2px); /* Movimiento hacia arriba */
+    background-color: #e01183;
+    /* Rosa más oscuro */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+    /* Sombra más intensa */
+    transform: translateY(-2px);
+    /* Movimiento hacia arriba */
 }
 
 #addEventBtn:active {
-    transform: translateY(0); /* Restablecer posición al hacer clic */
+    transform: translateY(0);
+    /* Restablecer posición al hacer clic */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.action-container {
+    position: relative;
+}
+
+.toggle-actions-btn {
+    background-color: #ff1493;
+    /* Rosa brillante */
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+.toggle-actions-btn:hover {
+    background-color: #e01183;
+    /* Rosa oscuro */
+}
+
+.actions-dropdown {
+    position: relative;
+    /* Cambiar a relative si está dentro de la celda */
+    margin-top: 10px;
+    /* Margen entre el botón y el menú */
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    width: 150px;
+    display: none;
+    /* Oculto por defecto */
+}
+
+.actions-dropdown button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    text-align: left;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.actions-dropdown .edit-btn {
+    background-color: #00bfff;
+    /* Azul */
+    color: white;
+}
+
+.actions-dropdown .delete-btn {
+    background-color: #ff0000;
+    /* Rojo */
+    color: white;
+}
+
+.actions-dropdown .toggle-status-btn {
+    background-color: #ff1493;
+    /* Rosa */
+    color: white;
+}
+
+.actions-dropdown button:hover {
+    background-color: #f0f0f0;
+}
+
+.table tr {
+    transition: height 0.3s ease;
+    /* Transición para expandir la fila */
 }

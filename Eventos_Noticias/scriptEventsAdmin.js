@@ -84,23 +84,30 @@ function recargarTabla() {
                     const fila = document.createElement("tr");
                     fila.id = `fila-${evento.ID_EVT_NOT}`;
                     fila.innerHTML = `
-                        <td>${evento.ID_EVT_NOT}</td>
-                        <td>${evento.TIT_EVT_NOT}</td>
-                        <td>${evento.DESC_EVT_NOT}</td>
-                        <td>${evento.FECHA_EVT_NOT}</td>
-                        <td>${evento.TIPO_REG_EVT_NOT}</td>
-                        <td>${evento.UBICACION_EVT_NOT || 'N/A'}</td>
-                        <td>${evento.NOMBRE_PARTIDO || 'N/A'}</td>
-                        <td>${evento.ESTADO_EVT_NOT}</td>
-                        <td><img src="${evento.IMAGEN_EVT_NOT}" alt="Imagen" style="width: 100px; height: auto;"></td>
-                        <td>
-                            <button class="btn btn-warning btn-sm" onclick="editarEvento(${evento.ID_EVT_NOT})">Editar</button>
-                            <button class="btn btn-danger btn-sm" onclick="eliminarEvento(${evento.ID_EVT_NOT})">Eliminar</button>
-                            <button class="btn btn-info btn-sm" onclick="cambiarEstado(${evento.ID_EVT_NOT}, '${evento.ESTADO_EVT_NOT}')">
-                                ${evento.ESTADO_EVT_NOT === "Activo" ? "Ocultar" : "Activar"}
-                            </button>
-                        </td>
-                    `;
+    <td>${evento.ID_EVT_NOT}</td>
+    <td>${evento.TIT_EVT_NOT}</td>
+    <td>${evento.DESC_EVT_NOT}</td>
+    <td>${evento.FECHA_EVT_NOT}</td>
+    <td>${evento.TIPO_REG_EVT_NOT}</td>
+    <td>${evento.UBICACION_EVT_NOT || 'N/A'}</td>
+    <td>${evento.NOMBRE_PARTIDO || 'N/A'}</td>
+    <td>${evento.ESTADO_EVT_NOT}</td>
+    <td><img src="${evento.IMAGEN_EVT_NOT}" alt="Imagen" style="width: 100px; height: auto;"></td>
+    <td>
+        <div class="action-container">
+            <button class="action-btn toggle-actions-btn" data-id="${evento.ID_EVT_NOT}">
+                <i class="bi bi-pencil-square"></i>
+            </button>
+            <div class="actions-dropdown" data-id="${evento.ID_EVT_NOT}" style="display: none;">
+                <button class="action-btn edit-btn">Editar</button>
+                <button class="action-btn delete-btn">Eliminar</button>
+                <button class="action-btn toggle-status-btn">
+                    ${evento.ESTADO_EVT_NOT === 'Activo' ? 'Ocultar' : 'Activar'}
+                </button>
+            </div>
+        </div>
+    </td>
+`;
                     tbody.appendChild(fila);
                 });
             } else {
@@ -120,6 +127,50 @@ function recargarTabla() {
             });
         });
 }
+
+document.querySelector('.table tbody').addEventListener('click', function (e) {
+    const target = e.target;
+
+    // Si el objetivo es el botón rosa, alternar el menú de acciones y el tamaño del registro
+    if (target.classList.contains('toggle-actions-btn') || target.closest('.toggle-actions-btn')) {
+        const row = target.closest('tr'); // La fila donde está el botón
+        const dropdown = row.querySelector('.actions-dropdown');
+        const isVisible = dropdown.style.display === 'block';
+
+        // Alternar la visibilidad del menú de acciones
+        dropdown.style.display = isVisible ? 'none' : 'block';
+
+        // Cambiar dinámicamente la altura de la fila
+        if (!isVisible) {
+            // Expandir la fila
+            const dropdownHeight = dropdown.scrollHeight; // Altura dinámica del contenido
+            row.style.height = `${dropdownHeight + 50}px`; // Ajusta el tamaño con un margen adicional
+        } else {
+            // Restaurar la altura normal
+            row.style.height = 'auto';
+        }
+    }
+
+    // Si se hace clic en "Editar", abrir el modal de edición
+    if (target.classList.contains('edit-btn')) {
+        const id = target.closest('tr').querySelector('.toggle-actions-btn').dataset.id;
+        editarEvento(id);
+    }
+
+    // Si se hace clic en "Eliminar", ejecutar la función de eliminación
+    if (target.classList.contains('delete-btn')) {
+        const id = target.closest('tr').querySelector('.toggle-actions-btn').dataset.id;
+        eliminarEvento(id);
+    }
+
+    // Si se hace clic en "Activar/Ocultar", cambiar el estado del evento
+    if (target.classList.contains('toggle-status-btn')) {
+        const id = target.closest('tr').querySelector('.toggle-actions-btn').dataset.id;
+        const currentStatus = target.textContent.trim();
+        cambiarEstado(id, currentStatus === 'Activo' ? 'Oculto' : 'Activo');
+    }
+});
+
 
 // Cambiar estado de un evento
 function cambiarEstado(id, estadoActual) {
