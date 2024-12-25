@@ -86,10 +86,18 @@ header nav a:hover {
     justify-content: space-between;
     gap: 20px;
     width: 80%;
-    background-color: rgba(255, 255, 255, 0.8); /* Fondo transparente */
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo translúcido */
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: 5px solid transparent; /* Borde inicial transparente */
+    transition: border 0.3s ease; /* Transición suave para el borde */
+}
+
+.candidate-content:hover {
+    border: 5px solid; /* Borde visible al pasar el mouse */
+    border-image-source: linear-gradient(90deg, #ff1493, #00bfff); /* Gradiente rosa y azul */
+    border-image-slice: 1; /* Usar todo el gradiente como borde */
 }
 
 /* Imagen del candidato */
@@ -165,7 +173,7 @@ header nav a:hover {
     font-size: 2.5rem; /* Tamaño más grande */
     font-weight: 800; /* Negrilla más intensa */
     color: #000; /* Color base, será sobrescrito */
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     display: flex;
     justify-content: left; /* Centrar texto */
     gap: 5px; /* Espaciado entre letras */
