@@ -133,80 +133,90 @@ if (isset($_GET['delete'])) {
     <div class="container">
 
         <h1>Crear Eventos/Noticias</h1>
+        <button id="addEventBtn" class="btn" onclick="openModal()">
+            <i class="fa fa-plus"></i> Agregar Evento/Noticia
+        </button>
 
-        <form method="POST" enctype="multipart/form-data" id="form-eventos">
-            <input type="hidden" name="id" id="id">
-            <label for="titulo">Título:</label>
-            <input type="text" name="titulo" id="titulo" required>
+        <!-- Modal para el formulario -->
+        <div id="eventModal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeModal()">&times;</span>
+                <h2>Agregar Evento/Noticia</h2>
+                <form method="POST" enctype="multipart/form-data" id="form-eventos">
+                    <input type="hidden" name="id" id="id">
+                    <label for="titulo">Título:</label>
+                    <input type="text" name="titulo" id="titulo" required>
 
-            <label for="descripcion">Descripción:</label>
-            <textarea name="descripcion" id="descripcion" required></textarea>
+                    <label for="descripcion">Descripción:</label>
+                    <textarea name="descripcion" id="descripcion" required></textarea>
 
-            <label for="fecha">Fecha:</label>
-            <input type="date" name="fecha" id="fecha" required>
+                    <label for="fecha">Fecha:</label>
+                    <input type="date" name="fecha" id="fecha" required>
 
-            <label for="tipo">Tipo:</label>
-            <select name="tipo" id="tipo" required onchange="habilitarUbicacion()">
-                <option value="EVENTO">Evento</option>
-                <option value="NOTICIA">Noticia</option>
-            </select>
+                    <label for="tipo">Tipo:</label>
+                    <select name="tipo" id="tipo" required onchange="habilitarUbicacion()">
+                        <option value="EVENTO">Evento</option>
+                        <option value="NOTICIA">Noticia</option>
+                    </select>
 
-            <label for="ubicacion">Ubicación:</label>
-            <input type="text" name="ubicacion" id="ubicacion">
+                    <label for="ubicacion">Ubicación:</label>
+                    <input type="text" name="ubicacion" id="ubicacion">
 
-            <label for="partido">Partido:</label>
-            <select name="partido" id="partido" required>
-                <option value="1">Sueña, crea, innova</option>
-                <option value="2">Juntos por el cambio</option>
-            </select>
+                    <label for="partido">Partido:</label>
+                    <select name="partido" id="partido" required>
+                        <option value="1">Sueña, crea, innova</option>
+                        <option value="2">Juntos por el cambio</option>
+                    </select>
 
-            <label for="estado">Estado:</label>
-            <select name="estado" id="estado" required>
-                <option value="Activo">Activo</option>
-                <option value="Oculto">Oculto</option>
-            </select>
+                    <label for="estado">Estado:</label>
+                    <select name="estado" id="estado" required>
+                        <option value="Activo">Activo</option>
+                        <option value="Oculto">Oculto</option>
+                    </select>
 
-            <label for="imagen">Imagen:</label>
-            <input type="file" name="imagen" id="imagen" accept="image/png, image/jpeg, image/jpg">
-            <input type="hidden" name="imagen_actual" value="<?php echo $evento['IMAGEN_EVT_NOT'] ?? ''; ?>">
+                    <label for="imagen">Imagen:</label>
+                    <input type="file" name="imagen" id="imagen" accept="image/png, image/jpeg, image/jpg">
+                    <input type="hidden" name="imagen_actual" value="<?php echo $evento['IMAGEN_EVT_NOT'] ?? ''; ?>">
 
-            <button type="submit" class="btn btn-danger">Guardar</button>
-        </form>
+                    <button type="submit" class="btn btn-danger">Guardar</button>
+                </form>
+            </div>
+        </div>
 
         <div class="container">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Título</th>
-                    <th>Fecha</th>
-                    <th>Tipo</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($eventosNoticias as $evento): ?>
-                    <tr id="fila-<?php echo $evento['ID_EVT_NOT']; ?>">
-                        <td><?php echo $evento['ID_EVT_NOT']; ?></td>
-                        <td><?php echo $evento['TIT_EVT_NOT']; ?></td>
-                        <td><?php echo $evento['FECHA_EVT_NOT']; ?></td>
-                        <td><?php echo $evento['TIPO_REG_EVT_NOT']; ?></td>
-                        <td><?php echo $evento['ESTADO_EVT_NOT']; ?></td>
-                        <td>
-                            <a href="eventos_noticias_admin_editar.php?id=<?php echo $evento['ID_EVT_NOT']; ?>"
-                                class="btn btn-warning btn-sm">Editar</a>
-                            <button class="btn btn-danger btn-sm"
-                                onclick="eliminarEvento(<?php echo $evento['ID_EVT_NOT']; ?>)">Eliminar</button>
-                            <button class="btn btn-info btn-sm"
-                                onclick="cambiarEstado(<?php echo $evento['ID_EVT_NOT']; ?>, '<?php echo $evento['ESTADO_EVT_NOT']; ?>')">
-                                <?php echo $evento['ESTADO_EVT_NOT'] === 'Activo' ? 'Ocultar' : 'Activar'; ?>
-                            </button>
-                        </td>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Título</th>
+                        <th>Fecha</th>
+                        <th>Tipo</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <?php foreach ($eventosNoticias as $evento): ?>
+                        <tr id="fila-<?php echo $evento['ID_EVT_NOT']; ?>">
+                            <td><?php echo $evento['ID_EVT_NOT']; ?></td>
+                            <td><?php echo $evento['TIT_EVT_NOT']; ?></td>
+                            <td><?php echo $evento['FECHA_EVT_NOT']; ?></td>
+                            <td><?php echo $evento['TIPO_REG_EVT_NOT']; ?></td>
+                            <td><?php echo $evento['ESTADO_EVT_NOT']; ?></td>
+                            <td>
+                                <a href="eventos_noticias_admin_editar.php?id=<?php echo $evento['ID_EVT_NOT']; ?>"
+                                    class="btn btn-warning btn-sm">Editar</a>
+                                <button class="btn btn-danger btn-sm"
+                                    onclick="eliminarEvento(<?php echo $evento['ID_EVT_NOT']; ?>)">Eliminar</button>
+                                <button class="btn btn-info btn-sm"
+                                    onclick="cambiarEstado(<?php echo $evento['ID_EVT_NOT']; ?>, '<?php echo $evento['ESTADO_EVT_NOT']; ?>')">
+                                    <?php echo $evento['ESTADO_EVT_NOT'] === 'Activo' ? 'Ocultar' : 'Activar'; ?>
+                                </button>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
         </div>
 
         <!-- Ventana emergente -->
@@ -223,6 +233,7 @@ if (isset($_GET['delete'])) {
             </div>
         </div>
 
+        <script src="scriptEventsAdminModal.js"></script>
         <script src="scriptEventsAdmin.js?v=<?php echo time(); ?>"></script>
 </body>
 
