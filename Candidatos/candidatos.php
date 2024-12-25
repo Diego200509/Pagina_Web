@@ -30,6 +30,7 @@
     </header>
     <main>
     <h2 class="title">Información del Candidato</h2>
+
     <div class="candidate-container">
         <button id="prevArrow" class="arrow left-arrow">
             <i class="fas fa-chevron-left"></i> <!-- Ícono de flecha izquierda -->
@@ -43,7 +44,9 @@
     </div>
 </main>
 
-
+<div class="footer-rights">
+        Derechos reservados UTA 2024
+    </div>
 
 
 

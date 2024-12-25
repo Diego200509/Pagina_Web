@@ -107,9 +107,21 @@ header nav a:hover {
 }
 
 .candidate-info h3 {
-    font-size: 1.8rem;
-    margin: 0;
-    font-weight: 800;
+    font-size: 2.5rem; /* Tamaño más grande */
+    font-weight: 800; /* Negrilla más intensa */
+    color: #000;
+    margin-bottom: 15px;
+    position: relative; /* Necesario para posicionar el pseudo-elemento */
+}
+
+.candidate-info h3::after {
+    content: ""; /* Pseudo-elemento vacío para la línea */
+    display: block;
+    width: 50px; /* Ancho de la línea */
+    height: 5px; /* Altura de la línea */
+    background-color: #ff1493; /* Color rosa */
+    margin-top: 5px; /* Espacio entre el texto y la línea */
+    border-radius: 3px; /* Bordes redondeados */
 }
 
 .candidate-info p {
@@ -148,4 +160,19 @@ header nav a:hover {
 
 .right-arrow {
     right: 20px;
+}
+.title {
+    font-size: 2.5rem; /* Tamaño más grande */
+    font-weight: 800; /* Negrilla más intensa */
+    color: #000; /* Color base, será sobrescrito */
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: left; /* Centrar texto */
+    gap: 5px; /* Espaciado entre letras */
+}
+
+.title span {
+    display: inline-block;
+    font-size: inherit;
+    font-weight: inherit;
 }

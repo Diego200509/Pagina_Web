@@ -31,7 +31,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 <img src="../${candidate.IMG_CAN}" alt="${candidate.NOM_CAN}">
             </div>
             <div class="candidate-info">
-                <h3>${candidate.NOM_CAN}</h3>
+               <div class="candidate-info">
+            <h3>${candidate.NOM_CAN} ${candidate.APE_CAN}</h3> <!-- Solo el nombre y apellido -->
+        </div>
                 <p><strong>Fecha de Nacimiento:</strong> ${candidate.FECHA_NAC_CAN || 'No disponible'}</p>
                 <p><strong>Cargo:</strong> ${candidate.CARGO_CAN || 'No disponible'}</p>
                 <p><strong>Información:</strong> ${candidate.EDUCACION_CAN || 'No disponible'}</p>
