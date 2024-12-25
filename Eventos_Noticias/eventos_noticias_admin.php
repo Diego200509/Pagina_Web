@@ -132,7 +132,7 @@ if (isset($_GET['delete'])) {
     </nav>
     <div class="container">
 
-        <h1>Crear Eventos/Noticias</h1>
+        <h1>Eventos y Noticias</h1>
         <button id="addEventBtn" class="btn" onclick="openModal()">
             <i class="fa fa-plus"></i> Agregar Evento/Noticia
         </button>

@@ -240,3 +240,30 @@ body {
 .modal-content button:hover {
     background-color: #e01183; /* Más oscuro al pasar el mouse */
 }
+
+#addEventBtn {
+    background: #ff1493; /* Rosa brillante */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: inline-flex; /* Para alinear el ícono */
+    align-items: center; /* Centrar contenido verticalmente */
+    gap: 8px; /* Espacio entre ícono y texto */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra */
+    transition: all 0.3s ease;
+}
+
+#addEventBtn:hover {
+    background-color: #e01183; /* Rosa más oscuro */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3); /* Sombra más intensa */
+    transform: translateY(-2px); /* Movimiento hacia arriba */
+}
+
+#addEventBtn:active {
+    transform: translateY(0); /* Restablecer posición al hacer clic */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
