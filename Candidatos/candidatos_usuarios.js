@@ -1,13 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
     const apiEndpoint = '../src/candidatos_queries.php';
     const candidateContainer = document.getElementById('candidateContainer');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-
-    if (!candidateContainer || !prevBtn || !nextBtn) {
-        console.error('Uno o más elementos necesarios no se encontraron en el DOM.');
-        return;
-    }
+    const prevArrow = document.getElementById('prevArrow');
+    const nextArrow = document.getElementById('nextArrow');
 
     let candidates = [];
     let currentIndex = 0;
@@ -25,43 +20,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Función para mostrar un candidato según el índice
     function showCandidate(index) {
-        if (index >= 0 && index < candidates.length) {
-            const candidate = candidates[index];
-            candidateContainer.innerHTML = `
-                <div class="candidate-image">
-                    <img src="../${candidate.IMG_CAN}" alt="${candidate.NOM_CAN}">
-                </div>
-                <div class="candidate-info">
-                    <h3>${candidate.NOM_CAN}</h3>
-                    <p><strong>Fecha de Nacimiento:</strong> ${candidate.FECHA_NAC_CAN || 'No disponible'}</p>
-                    <p><strong>Cargo:</strong> ${candidate.CARGO_CAN || 'No disponible'}</p>
-                    <p><strong>Información:</strong> ${candidate.EDUCACION_CAN || 'No disponible'}</p>
-                    <p><strong>Experiencia:</strong> ${candidate.EXPERIENCIA_CAN || 'No disponible'}</p>
-                </div>
-            `;
+        if (candidates.length === 0) {
+            candidateContainer.innerHTML = `<p>No hay candidatos disponibles.</p>`;
+            return;
         }
-        updatePaginationButtons();
+
+        const candidate = candidates[index];
+        candidateContainer.innerHTML = `
+            <div class="candidate-image">
+                <img src="../${candidate.IMG_CAN}" alt="${candidate.NOM_CAN}">
+            </div>
+            <div class="candidate-info">
+                <h3>${candidate.NOM_CAN}</h3>
+                <p><strong>Fecha de Nacimiento:</strong> ${candidate.FECHA_NAC_CAN || 'No disponible'}</p>
+                <p><strong>Cargo:</strong> ${candidate.CARGO_CAN || 'No disponible'}</p>
+                <p><strong>Información:</strong> ${candidate.EDUCACION_CAN || 'No disponible'}</p>
+                <p><strong>Experiencia:</strong> ${candidate.EXPERIENCIA_CAN || 'No disponible'}</p>
+            </div>
+        `;
     }
 
-    // Función para actualizar el estado de los botones de paginación
-    function updatePaginationButtons() {
-        prevBtn.disabled = currentIndex === 0;
-        nextBtn.disabled = currentIndex === candidates.length - 1;
-    }
-
-    // Eventos para los botones de navegación
-    prevBtn.addEventListener('click', () => {
-        if (currentIndex > 0) {
-            currentIndex--;
-            showCandidate(currentIndex);
-        }
+    // Eventos para las flechas de navegación
+    prevArrow.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + candidates.length) % candidates.length; // Circular hacia atrás
+        showCandidate(currentIndex);
     });
 
-    nextBtn.addEventListener('click', () => {
-        if (currentIndex < candidates.length - 1) {
-            currentIndex++;
-            showCandidate(currentIndex);
-        }
+    nextArrow.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % candidates.length; // Circular hacia adelante
+        showCandidate(currentIndex);
     });
 
     // Inicializar

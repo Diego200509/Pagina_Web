@@ -29,13 +29,14 @@
         </nav>
     </header>
     <main>
-    <h2>Lista de Candidatos</h2>
+    <h2 class="title">Información del Candidato</h2>
     <div id="candidateContainer" class="candidate-container">
-        <!-- Aquí se cargará dinámicamente un único candidato -->
+        <!-- Aquí se cargará dinámicamente el candidato -->
     </div>
-    <div class="pagination">
-        <button id="prevBtn">Anterior</button>
-        <button id="nextBtn">Siguiente</button>
+    <!-- Flechas de navegación -->
+    <div class="navigation-arrows">
+        <button id="prevArrow" class="arrow">&#8593;</button> <!-- Flecha hacia arriba -->
+        <button id="nextArrow" class="arrow">&#8595;</button> <!-- Flecha hacia abajo -->
     </div>
 </main>
 

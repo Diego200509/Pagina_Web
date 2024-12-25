@@ -65,66 +65,84 @@ header nav a:hover {
     width: 100%;
     margin-top: 50px;
 }
+
+/* Contenedor principal */
 .candidate-container {
     display: flex;
-    flex-direction: row;
     align-items: center;
-    gap: 20px;
+    justify-content: center;
+    width: 80%;
+    max-width: 1200px;
+    height: 500px;
     border: 1px solid #ddd;
     border-radius: 10px;
-    padding: 20px;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
     margin: 20px auto;
-    max-width: 800px;
+    overflow: hidden;
 }
 
-.candidate-image {
-    flex: 1;
-    max-width: 200px;
+.candidate-content {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
 }
 
 .candidate-image img {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
+    width: 250px;
+    height: 250px;
     object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid #ddd;
 }
-
 .candidate-info {
     flex: 2;
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semitransparente */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .candidate-info h3 {
-    margin: 0;
-    font-size: 1.5rem;
+    margin-top: 0;
+    font-size: 1.8rem;
     color: #333;
 }
 
 .candidate-info p {
-    margin: 5px 0;
+    margin: 10px 0;
     color: #555;
     line-height: 1.5;
 }
 
-.pagination {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.pagination button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
+/* Flechas de navegación */
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
     background-color: #007bff;
     color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
     cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
 }
 
-.pagination button:hover {
+#prevArrow {
+    left: 10px;
+}
+
+#nextArrow {
+    right: 10px;
+}
+
+.arrow:hover {
     background-color: #0056b3;
 }
