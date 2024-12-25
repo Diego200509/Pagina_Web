@@ -188,9 +188,13 @@ if (isset($_GET['delete'])) {
                     <tr>
                         <th>ID</th>
                         <th>Título</th>
+                        <th>Descripción</th>
                         <th>Fecha</th>
                         <th>Tipo</th>
+                        <th>Ubicación</th>
+                        <th>Partido</th>
                         <th>Estado</th>
+                        <th>Imagen</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -199,15 +203,19 @@ if (isset($_GET['delete'])) {
                         <tr id="fila-<?php echo $evento['ID_EVT_NOT']; ?>">
                             <td><?php echo $evento['ID_EVT_NOT']; ?></td>
                             <td><?php echo $evento['TIT_EVT_NOT']; ?></td>
+                            <td><?php echo $evento['DESC_EVT_NOT']; ?></td>
                             <td><?php echo $evento['FECHA_EVT_NOT']; ?></td>
                             <td><?php echo $evento['TIPO_REG_EVT_NOT']; ?></td>
+                            <td><?php echo $evento['UBICACION_EVT_NOT'] ?: 'N/A'; ?></td>
+                            <td><?php echo $evento['ID_PAR_EVT_NOT']; ?></td>
                             <td><?php echo $evento['ESTADO_EVT_NOT']; ?></td>
                             <td>
+                                <img src="<?php echo $evento['IMAGEN_EVT_NOT']; ?>" alt="Imagen" style="width: 100px; height: auto;">
+                            </td>
+                            <td>
                                 <button class="btn btn-warning btn-sm" onclick="editarEvento(<?php echo $evento['ID_EVT_NOT']; ?>)">Editar</button>
-                                <button class="btn btn-danger btn-sm"
-                                    onclick="eliminarEvento(<?php echo $evento['ID_EVT_NOT']; ?>)">Eliminar</button>
-                                <button class="btn btn-info btn-sm"
-                                    onclick="cambiarEstado(<?php echo $evento['ID_EVT_NOT']; ?>, '<?php echo $evento['ESTADO_EVT_NOT']; ?>')">
+                                <button class="btn btn-danger btn-sm" onclick="eliminarEvento(<?php echo $evento['ID_EVT_NOT']; ?>)">Eliminar</button>
+                                <button class="btn btn-info btn-sm" onclick="cambiarEstado(<?php echo $evento['ID_EVT_NOT']; ?>, '<?php echo $evento['ESTADO_EVT_NOT']; ?>')">
                                     <?php echo $evento['ESTADO_EVT_NOT'] === 'Activo' ? 'Ocultar' : 'Activar'; ?>
                                 </button>
                             </td>
