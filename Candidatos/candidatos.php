@@ -28,13 +28,13 @@
             <a href="../Sugerencias/index.php"><i class="fas fa-comment-dots"></i> Sugerencias</a>
         </nav>
     </header>
-
     <main>
     <h2>Lista de Candidatos</h2>
-    <div id="candidateCards" class="card-container">
-        <!-- Aquí se cargarán dinámicamente las tarjetas -->
+    <div id="candidateList" class="candidate-container">
+        <!-- Aquí se cargarán dinámicamente los candidatos -->
     </div>
 </main>
+
 
 
     <script src="candidatos_usuarios.js"></script>
