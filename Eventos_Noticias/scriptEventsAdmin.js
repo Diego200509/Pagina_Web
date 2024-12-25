@@ -90,7 +90,7 @@ function recargarTabla() {
                         <td>${evento.FECHA_EVT_NOT}</td>
                         <td>${evento.TIPO_REG_EVT_NOT}</td>
                         <td>${evento.UBICACION_EVT_NOT || 'N/A'}</td>
-                        <td>${evento.ID_PAR_EVT_NOT || 'N/A'}</td>
+                        <td>${evento.NOMBRE_PARTIDO || 'N/A'}</td>
                         <td>${evento.ESTADO_EVT_NOT}</td>
                         <td><img src="${evento.IMAGEN_EVT_NOT}" alt="Imagen" style="width: 100px; height: auto;"></td>
                         <td>

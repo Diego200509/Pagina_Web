@@ -5,7 +5,20 @@ include '../config/config.php';
 function obtenerEventosNoticias()
 {
     global $connection;
-    $query = "SELECT * FROM EVENTOS_NOTICIAS";
+    $query = "
+        SELECT 
+            en.ID_EVT_NOT,
+            en.TIT_EVT_NOT,
+            en.DESC_EVT_NOT,
+            en.FECHA_EVT_NOT,
+            en.TIPO_REG_EVT_NOT,
+            en.UBICACION_EVT_NOT,
+            en.ESTADO_EVT_NOT,
+            en.IMAGEN_EVT_NOT,
+            p.NOM_PAR AS NOMBRE_PARTIDO
+        FROM EVENTOS_NOTICIAS en
+        LEFT JOIN PARTIDOS_POLITICOS p ON en.ID_PAR_EVT_NOT = p.ID_PAR
+    ";
     $result = mysqli_query($connection, $query);
     $data = [];
     while ($row = mysqli_fetch_assoc($result)) {
