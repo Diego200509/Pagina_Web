@@ -141,7 +141,7 @@ if (isset($_GET['delete'])) {
         <div id="eventModal" class="modal">
             <div class="modal-content">
                 <span class="close-button" onclick="closeModal()">&times;</span>
-                <h2>Agregar Evento/Noticia</h2>
+                <h2 id="modal-title">Agregar Evento/Noticia</h2>
                 <form method="POST" enctype="multipart/form-data" id="form-eventos">
                     <input type="hidden" name="id" id="id">
                     <label for="titulo">Título:</label>
@@ -204,8 +204,7 @@ if (isset($_GET['delete'])) {
                             <td><?php echo $evento['TIPO_REG_EVT_NOT']; ?></td>
                             <td><?php echo $evento['ESTADO_EVT_NOT']; ?></td>
                             <td>
-                                <a href="eventos_noticias_admin_editar.php?id=<?php echo $evento['ID_EVT_NOT']; ?>"
-                                    class="btn btn-warning btn-sm">Editar</a>
+                                <button class="btn btn-warning btn-sm" onclick="editarEvento(<?php echo $evento['ID_EVT_NOT']; ?>)">Editar</button>
                                 <button class="btn btn-danger btn-sm"
                                     onclick="eliminarEvento(<?php echo $evento['ID_EVT_NOT']; ?>)">Eliminar</button>
                                 <button class="btn btn-info btn-sm"
@@ -232,8 +231,6 @@ if (isset($_GET['delete'])) {
                 </div>
             </div>
         </div>
-
-        <script src="scriptEventsAdminModal.js"></script>
         <script src="scriptEventsAdmin.js?v=<?php echo time(); ?>"></script>
 </body>
 
