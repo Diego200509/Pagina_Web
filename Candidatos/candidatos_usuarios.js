@@ -4,6 +4,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
 
+    if (!candidateContainer || !prevBtn || !nextBtn) {
+        console.error('Uno o más elementos necesarios no se encontraron en el DOM.');
+        return;
+    }
+
     let candidates = [];
     let currentIndex = 0;
 

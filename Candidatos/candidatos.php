@@ -30,10 +30,15 @@
     </header>
     <main>
     <h2>Lista de Candidatos</h2>
-    <div id="candidateList" class="candidate-container">
-        <!-- Aquí se cargarán dinámicamente los candidatos -->
+    <div id="candidateContainer" class="candidate-container">
+        <!-- Aquí se cargará dinámicamente un único candidato -->
+    </div>
+    <div class="pagination">
+        <button id="prevBtn">Anterior</button>
+        <button id="nextBtn">Siguiente</button>
     </div>
 </main>
+
 
 
 
