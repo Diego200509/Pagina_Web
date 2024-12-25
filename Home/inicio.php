@@ -4,7 +4,26 @@ include('../config/config.php');
 $eventos_noticias = include('../src/inicio_queries.php');
 include('../config/config.php');
 
+$navbarConfigPath = "../Login/navbar_config.json"; // Ruta al archivo de configuración del Navbar
+$configFilePath = "../Login/candidatos_config.json"; // Ruta al archivo de configuración de Candidatos
+
+// Verificar si el archivo existe y cargar el color del Navbar
+if (file_exists($navbarConfigPath)) {
+    $navbarConfig = json_decode(file_get_contents($navbarConfigPath), true);
+    $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff'; // Azul por defecto
+} else {
+    $navbarBgColor = '#00bfff'; // Azul por defecto si no existe el archivo
+}
+
+// Verificar si el archivo existe y cargar el color de la sección Candidatos
+if (file_exists($configFilePath)) {
+    $config = json_decode(file_get_contents($configFilePath), true);
+    $candidatosBgColor = $config['candidatosBgColor'] ?? '#00bfff'; // Azul por defecto
+} else {
+    $candidatosBgColor = '#00bfff'; // Azul por defecto si no existe el archivo
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -13,24 +32,47 @@ include('../config/config.php');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Candidatos a Rector</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha384-jLKHWM3FAa+UP7B7aXQFJ59Y3RF53p50eA88LvNCwD5zZoOMMDzBtF1UeJ0cEtCU" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="Estilos.css">
+    <link rel="stylesheet" href="Estilo.css">
+    <style>
+    :root {
+        --navbar-bg-color: <?php echo $navbarBgColor; ?>;
+    }
+</style>
+
 </head>
 
+
+
 <body>
-<header>
-    <div class="logo">
-        <img src="Img\logo.png" alt="UTA Logo"> 
-        <h1>Proceso de Elecciones UTA  2024</h1>
+<navbar>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+    <div class="navbar-logo">
+    <div class="text-center">
     </div>
-    <nav>
-        <a href="../Home/inicio.php"><i class="fas fa-home"></i> Inicio</a>
-        <a href="#candidatos"><i class="fas fa-user"></i> Candidatos</a>
-        <a href="#propuestas"><i class="fas fa-bullhorn"></i> Propuestas</a>
-        <a href="#eventos_noticias"><i class="fas fa-calendar-alt"></i> Eventos y Noticias</a>
-        <a href="#sugerencias"><i class="fas fa-comment-dots"></i> Sugerencias</a>
+    <!-- Logo existente -->
+    <img src="../Login/Img/logoMariCruz.png" width="200px" style="margin-right: 20px;">
+
+</div>
+
+
+
+        </div>
+        <ul class="navbar-menu"> 
+            <li><a href="../Candidatos/candidatos_admin.php"><i class="fa-solid fa-users"></i> <span>Candidatos</span></a></li>
+            <li><a href="../Eventos_Noticias/eventos_noticias_admin.php"><i class="fa-solid fa-calendar-alt"></i> <span>Eventos y Noticias</span></a></li>
+            <li><a href="../Propuestas/gestionarPropuestas.php"><i class="fa-solid fa-lightbulb"></i> <span>Propuestas</span></a></li>
+            <li><a href="../Sugerencias/sugerencias_admin.php"><i class="fa-solid fa-comment-dots"></i> <span>Sugerencias</span></a></li>
+            <li><a href="../Sugerencias/resultados_admin.php"><i class="fas fa-vote-yea"></i> Votos</a></li>
+        </ul>
     </nav>
-</header>
+
+
+</navbar>
 
 <section class="slider">
     <div class="fade"></div>
@@ -50,27 +92,17 @@ include('../config/config.php');
     <button class="next">&#10095;</button>
 </section>
 
-<section id="candidatos">
-    <div class="candidatos-container">
-        <div class="candidatos-text">
-            <h1>Conoce a nuestros candidatos</h1>
-            <a href="../Candidatos/candidatos.php" class="btn">Ver más información de los candidatos</a>
-        </div>
-    </div>
+<section id="candidatos" style="background-color: <?php echo htmlspecialchars($candidatosBgColor); ?>;">
+    <h1>Conoce a nuestros candidatos</h1>
 </section>
 
 <section id="propuestas">
     <h1> <span style="color: red; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;">
         PROPUESTAS
     </span>  </h1>
-    <div class="background">
-        <div class="text">
-            Tú <br> Nueva manera. <br> Nuevo comienzo.
-            <p><a href="../Propuestas/Propuestas.php" class="button-link">Conoce más sobre las propuestas</a></p>
-        </div>
-    </div>
 </section>
-<section id ="eventos_noticias" class="eventos-container">
+
+<section id ="eventos">
 <h2>
     <span style="color: red; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;">
         Eventos y
@@ -79,50 +111,29 @@ include('../config/config.php');
         Noticias
     </span>
 </h2>
-    <div class="eventos-grid">
-        <?php foreach ($eventos_noticias as $evento_noticia): ?>
-        <div class="evento-card">
-            <img src="Img\eventosynoticias.jpg" alt="Evento Imagen">
-            <div class="evento-info">
-                <h3><?php echo htmlspecialchars($evento_noticia['titulo']); ?></h3>
-                <p><?php echo htmlspecialchars($evento_noticia['descripcion']); ?></p>
-            </div>
-            <div class="overlay">
-                <a href="../Eventos_Noticias/eventos_noticias.php">Más información</a> <!-- Cambia la URL según sea necesario -->
-                </div>
-        </div>
-        
-        <?php endforeach; ?>
-
-
 </section>
-
-<section id="sugerencias">
-    <h1 class="sugerencias-title"> <span style="color: red; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;">
-        SUGERENCIAS
-    </span>  </h1>
-    <div class="sugerencias-container">
-        <div class="sugerencia-card">
-            <div class="sugerencia-content">
-                <h2 class="sugerencia-subtitle"><?php echo htmlspecialchars($sugerencia_titulo); ?></h2>
-                <p class="sugerencia-highlight">Partido: <?php echo htmlspecialchars($nombre_partido); ?></p>
-                <p class="sugerencia-description"><?php echo htmlspecialchars($sugerencia_descripcion); ?></p>
-                <a href="../Sugerencias/index.php" class="sugerencia-button">
-                    <button>ver más</button>
-                </a>
-            </div>
-            <div class="sugerencia-image-container">
-                <img src="Img\anuncio.jpg" alt="Concierto" class="sugerencia-image">
-            </div>
-        </div>
-    </div>
-</section>
-
-<script src="Scripts.js"></script> <!-- Enlace al archivo JavaScript -->
 
 <footer class="footer-rights">
     <p>Todos los derechos reservados Team Sangre © 2024</p>
 </footer>
+
+
+<script src="Scripts.js"></script> <!-- Enlace al archivo JavaScript -->
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    // Escuchar cambios en el almacenamiento local
+    window.addEventListener("storage", function (event) {
+        if (event.key === "navbarColorUpdated" && (event.newValue === "true" || event.newValue === "reset")) {
+            // Recargar la página cuando se detecte un cambio o restablecimiento
+            window.location.reload();
+        }
+    });
+});
+
+
+
+</script>
 
 </body>
 </html>

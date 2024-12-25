@@ -1,5 +1,9 @@
 <?php
 session_start();
+// Cargar los colores desde el archivo JSON
+$config = json_decode(file_get_contents("styles_config.json"), true);
+$gradientStartLogin = $config['gradientStartLogin'] ?? "#FF007B";
+$gradientEndLogin = $config['gradientEndLogin'] ?? "#1C9FFF";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +18,7 @@ session_start();
       margin: 0;
       padding: 0;
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(120deg, #FF007B, #1C9FFF);
+      background: linear-gradient(120deg, <?php echo $gradientStartLogin; ?>, <?php echo $gradientEndLogin; ?>);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -207,6 +211,17 @@ session_start();
   </div>
 
   <script>
+document.addEventListener("DOMContentLoaded", function () {
+    // Escuchar cambios en el almacenamiento local
+    window.addEventListener("storage", function (event) {
+        if (event.key === "loginColorUpdated" && (event.newValue === "true" || event.newValue === "reset")) {
+            // Recargar la página cuando se detecte un cambio o restablecimiento
+            window.location.reload();
+        }
+    });
+});
+
+
     function validateForm() {
       const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value.trim();
@@ -226,6 +241,7 @@ session_start();
 
       return true;
     }
+    
   </script>
 </body>
 </html>

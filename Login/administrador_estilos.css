@@ -11,13 +11,14 @@ body {
 
 /* Navbar */
 .navbar {
-    background-color: #00bfff; /* Azul vibrante inspirado en la imagen */
+    background-color: var(--navbar-bg-color, #00bfff); /* Azul vibrante como color por defecto */
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
 }
+
 
 .navbar-logo {
     display: flex;
@@ -191,4 +192,62 @@ body {
 /* Cambiar a rosado cuando el mouse pase sobre el ícono */
 .house-icon:hover {
     color: #ff0050; /* Color rosado */
+}
+
+.color-section h5 {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.form-control-color {
+    width: 50px;
+    height: 40px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.form-control-hex {
+    width: 100px;
+    height: 40px;
+    text-align: center;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.btn-dark {
+    background-color: #FF69B4; /* Rosa original */
+    border-color: #FF69B4;
+}
+
+.btn-dark:hover {
+    background-color: #FF85C1; /* Tono más claro para hover */
+    border-color: #FF85C1;
+}
+
+
+.color-section h5 {
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    color: #00BFFF; /* Color celeste */
+}
+
+.color-section p.subtitle {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #FF69B4; /* Color rosa */
+}
+
+.form-control-hex {
+    width: 80px;
+    height: 40px;
+    text-align: center;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 5px;
 }
