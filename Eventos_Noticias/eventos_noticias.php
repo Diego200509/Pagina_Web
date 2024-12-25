@@ -25,15 +25,6 @@
         </nav>
     </header>
 
-    <div class="select-box">
-        <label for="partySelect">Selecciona un partido político:</label>
-        <select id="partySelect" onchange="filterByParty()">
-            <option value="all">Todos</option>
-            <option value="Sueña, crea, innova">Sueña, crea, innova</option>
-            <option value="Juntos por el cambio">Juntos por el cambio</option>
-        </select>
-    </div>
-
     <div id="events" class="content-section">
         <h2>Eventos</h2>
         <p id="noEventsMessage">No hay eventos disponibles.</p>

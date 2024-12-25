@@ -70,13 +70,11 @@ function displayNews() {
 
 
 // Función para filtrar por partido político
-function filterByParty() {
-    const selectedParty = document.getElementById('partySelect').value;
-
-    // Filtrar eventos por partido
+// Función para filtrar eventos y noticias por partido automáticamente
+function filterByParty(selectedParty = 'all') {
+    // Filtrar eventos
     events.forEach(event => {
         const eventParty = event.getAttribute('data-party');
-        // Mostrar u ocultar según el partido seleccionado
         if (selectedParty === 'all' || eventParty === selectedParty) {
             event.style.display = 'block';
         } else {
@@ -84,10 +82,9 @@ function filterByParty() {
         }
     });
 
-    // Filtrar noticias por partido
+    // Filtrar noticias
     news.forEach(newsItem => {
         const newsParty = newsItem.getAttribute('data-party');
-        // Mostrar u ocultar según el partido seleccionado
         if (selectedParty === 'all' || newsParty === selectedParty) {
             newsItem.style.display = 'block';
         } else {
@@ -95,12 +92,13 @@ function filterByParty() {
         }
     });
 
-    // Reiniciar las páginas a 1 cuando cambie el filtro
+    // Reiniciar las páginas
     currentPageEvents = 1;
     currentPageNews = 1;
 
-    displayEvents();  // Mostrar eventos filtrados y paginados
-    displayNews();    // Mostrar noticias filtradas y paginadas
+    // Mostrar los datos paginados
+    displayEvents();
+    displayNews();
 }
 
 
@@ -139,8 +137,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.querySelector("#noNewsMessage").style.display = 'block';
             }
 
-            // Filtrar y mostrar los datos iniciales
-            filterByParty();
+            // Aplicar filtro predeterminado automáticamente
+            filterByParty('all'); // Mantiene todo visible por defecto
         })
         .catch(error => console.error('Error fetching events and news:', error));
 });
