@@ -140,10 +140,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Función para cambiar el estado del candidato
     function toggleCandidateStatus(id, currentStatus) {
+        // Determina el nuevo estado basado en el estado actual
         const newStatus = currentStatus === 'Activo' ? 'Oculto' : 'Activo';
-
+    
+        // Realiza la solicitud para actualizar el estado en el servidor
         fetch(apiEndpoint, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
@@ -163,16 +164,21 @@ document.addEventListener("DOMContentLoaded", function () {
                         title: '¡Éxito!',
                         text: `Estado del candidato actualizado a: ${newStatus}`,
                     });
-
-                    // Actualizar el estado del botón para "Ocultar" o "Activar"
-                    const button = document.querySelector(`[data-id="${id}"]`);
-                    button.textContent = newStatus === 'Activo' ? 'Ocultar' : 'Activar';
-                    button.dataset.status = newStatus;
-                    button.querySelector('i').className = newStatus === 'Activo' ? 'bi bi-eye-slash' : 'bi bi-eye';
+    
+                    // Actualiza el estado en la tabla sin recargar todos los datos
+                    const row = tableBody.querySelector(`.toggle-actions-btn[data-id='${id}']`).closest('tr');
+                    const statusCell = row.querySelector('td:nth-child(8)'); // Columna del estado
+                    statusCell.textContent = newStatus;
+    
+                    // Actualiza el atributo `data-status` del botón
+                    const toggleButton = row.querySelector('.toggle-status-btn');
+                    toggleButton.dataset.status = newStatus;
+                    toggleButton.textContent = newStatus === 'Activo' ? 'Ocultar' : 'Activar';
                 }
             })
             .catch(error => console.error('Error al cambiar el estado:', error));
     }
+
 
     // Abrir el modal para agregar un nuevo candidato
     openAddModal.addEventListener('click', () => {

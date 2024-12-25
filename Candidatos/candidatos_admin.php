@@ -44,14 +44,6 @@ $dashboard_url = $user_role === 'SUPERADMIN' ? '../Login/superadmin_dasboard.php
             <li><a href="../Login/Login.php" class="logout"><i class="fa-solid fa-sign-out-alt"></i> <span>Cerrar Sesión</span></a></li>
         </ul>
     </nav>
-
-   
-    <div class="container">
-        <div class="d-flex justify-content-end mb-3">
-        <a href="<?php echo $dashboard_url; ?>" class="btn" id="backBtn">
-    <i class="bi bi-arrow-left-circle me-2"></i> Regresar
-</a>
-        </div>
     
         <main>
             <h2>Lista de Candidatos</h2>
