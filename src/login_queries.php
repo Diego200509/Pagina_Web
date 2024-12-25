@@ -36,7 +36,7 @@ if ($result->num_rows > 0) {
 
         // Redirigir según el rol
         if ($user['ROL_USU'] === 'SUPERADMIN') {
-            header("Location: ../Login/superadmin_dasboard.php");
+            header("Location: ../Login/administracion.php");
         } elseif ($user['ROL_USU'] === 'ADMIN') {
             header("Location:  ../Login/admin_dashboard.php");
         } else {
