@@ -115,7 +115,7 @@ if (isset($_GET['delete'])) {
         <div class="navbar-logo">
             <div class="text-center">
                 <i class="fa-solid fa-user-shield fa-2x"></i>
-                <h6 class="mt-2">SuperAdmin</h6>
+                <h6 class="mt-2 navbar-role"><?php echo $user_role === 'SUPERADMIN' ? 'SuperAdmin' : 'Admin'; ?></h6>
             </div>
             <img src="../Login/Img/logoMariCruz.png" width="200px" margin-right="20px">
         </div>
