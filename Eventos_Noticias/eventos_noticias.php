@@ -101,6 +101,13 @@
         Derechos reservados UTA 2024
     </div>
 
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <p id="modal-text"></p>
+        </div>
+    </div>
+
     <script src="scriptsEvents.js"></script>
 
 </body>
