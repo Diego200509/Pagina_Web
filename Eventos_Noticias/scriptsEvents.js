@@ -171,15 +171,17 @@ function createEventHTML(event) {
     eventDiv.classList.add('event');
     eventDiv.setAttribute('data-party', event.NOM_PAR);
 
-    const isTruncated = event.DESC_EVT_NOT.length > 150; // Límite para mostrar "Ver más"
+    const isTruncated = event.DESC_EVT_NOT.length > 150; // Límite para truncar texto
 
     eventDiv.innerHTML = `
         <div class="event-title">${event.TIT_EVT_NOT}</div>
         <img src="${event.IMAGEN_EVT_NOT || '/Eventos_Noticias/img/evento_default.jpg'}" alt="Imagen del Evento" class="event-image">
         <div class="event-description">
-            ${isTruncated ? event.DESC_EVT_NOT.substring(0, 150) + '...' : event.DESC_EVT_NOT}
+            <span class="truncated-text">
+                ${isTruncated ? event.DESC_EVT_NOT.substring(0, 150) + '...' : event.DESC_EVT_NOT}
+            </span>
+            ${isTruncated ? '<button class="view-more" onclick="showModal(`' + event.DESC_EVT_NOT + '`)">Ver más</button>' : ''}
         </div>
-        ${isTruncated ? '<button class="view-more">Ver más</button>' : ''}
         <div class="event-date-location">
             <span class="event-date">${event.FECHA_EVT_NOT}</span>
             |
@@ -189,43 +191,29 @@ function createEventHTML(event) {
         </div>
     `;
 
-    // Agregar evento al botón "Ver más"
-    if (isTruncated) {
-        eventDiv.querySelector('.view-more').onclick = function () {
-            showModal(event.DESC_EVT_NOT);
-        };
-    }
-
     return eventDiv;
 }
 
-// Función para crear el HTML de una noticia
 function createNewsHTML(newsItem) {
     const newsDiv = document.createElement('div');
     newsDiv.classList.add('news');
     newsDiv.setAttribute('data-party', newsItem.NOM_PAR);
 
-    const isTruncated = newsItem.DESC_EVT_NOT.length > 150; // Límite para mostrar "Ver más"
+    const isTruncated = newsItem.DESC_EVT_NOT.length > 150; // Límite para truncar texto
 
     newsDiv.innerHTML = `
         <div class="news-title">${newsItem.TIT_EVT_NOT}</div>
         <img src="${newsItem.IMAGEN_EVT_NOT || '/Eventos_Noticias/img/noticia_default.jpg'}" alt="Imagen de la Noticia" class="news-image">
         <div class="news-description">
-            ${isTruncated ? newsItem.DESC_EVT_NOT.substring(0, 150) + '...' : newsItem.DESC_EVT_NOT}
+            <span class="truncated-text">
+                ${isTruncated ? newsItem.DESC_EVT_NOT.substring(0, 150) + '...' : newsItem.DESC_EVT_NOT}
+            </span>
+            ${isTruncated ? '<button class="view-more" onclick="showModal(`' + newsItem.DESC_EVT_NOT + '`)">Ver más</button>' : ''}
         </div>
-        ${isTruncated ? '<button class="view-more">Ver más</button>' : ''}
         <div class="news-date-location">
             <span class="news-date">${newsItem.FECHA_EVT_NOT}</span>
         </div>
     `;
 
-    if (isTruncated) {
-        newsDiv.querySelector('.view-more').onclick = function () {
-            showModal(newsItem.DESC_EVT_NOT);
-        };
-    }
-
     return newsDiv;
 }
-
-
