@@ -165,7 +165,6 @@ if (isset($_GET['delete'])) {
                     <label for="partido">Partido:</label>
                     <select name="partido" id="partido" required>
                         <option value="1">Sueña, crea, innova</option>
-                        <option value="2">Juntos por el cambio</option>
                     </select>
 
                     <label for="estado">Estado:</label>
