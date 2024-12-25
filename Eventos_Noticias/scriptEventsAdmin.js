@@ -46,33 +46,18 @@ function eliminarEvento(id) {
     });
 }
 
+// Función para abrir el modal en modo edición
 function editarEvento(id) {
     fetch(`../src/eventos_noticias_admin_queries.php?action=fetchById&id=${id}`)
         .then(response => response.json())
         .then(data => {
-            console.log("Respuesta del servidor:", data); // Muestra la respuesta en la consola
             if (data.success) {
-                const evento = data.data;
-
-                // Asignar valores al formulario
-                document.getElementById("id").value = evento.ID_EVT_NOT;
-                document.getElementById("titulo").value = evento.TIT_EVT_NOT;
-                document.getElementById("descripcion").value = evento.DESC_EVT_NOT;
-                document.getElementById("fecha").value = evento.FECHA_EVT_NOT;
-                document.getElementById("tipo").value = evento.TIPO_REG_EVT_NOT;
-                document.getElementById("ubicacion").value = evento.UBICACION_EVT_NOT;
-                document.getElementById("partido").value = evento.ID_PAR_EVT_NOT;
-                document.getElementById("estado").value = evento.ESTADO_EVT_NOT;
-                document.getElementById("imagen_actual").value = evento.IMAGEN_EVT_NOT;
-
-                habilitarUbicacion(); // Ajustar la habilitación del campo ubicación
-
-                openModal(); // Abrir modal para editar
+                openModal(true, data.data); // Llamar con datos para edición
             } else {
                 Swal.fire({
                     title: "Error",
                     text: data.message,
-                    icon: "error"
+                    icon: "error",
                 });
             }
         })
@@ -81,7 +66,7 @@ function editarEvento(id) {
             Swal.fire({
                 title: "Error",
                 text: "Ocurrió un error al cargar los datos del evento.",
-                icon: "error"
+                icon: "error",
             });
         });
 }
@@ -182,14 +167,41 @@ document.addEventListener("DOMContentLoaded", () => {
     recargarTabla(); // Cargar los datos al iniciar la página
 });
 
-// Abrir el modal
-function openModal() {
+// Abrir el modal para agregar o editar
+function openModal(isEdit = false, data = null) {
+    const form = document.getElementById("form-eventos");
+    const modalTitle = document.getElementById("modal-title");
+    const submitButton = document.querySelector("#form-eventos button[type='submit']");
+
+    if (!isEdit) {
+        // Modo agregar
+        form.reset(); // Limpiar todos los campos
+        document.getElementById("id").value = ""; // Limpiar el ID oculto
+        modalTitle.textContent = "Agregar Evento/Noticia";
+        submitButton.textContent = "Guardar";
+    } else if (data) {
+        // Modo edición
+        document.getElementById("id").value = data.ID_EVT_NOT;
+        document.getElementById("titulo").value = data.TIT_EVT_NOT;
+        document.getElementById("descripcion").value = data.DESC_EVT_NOT;
+        document.getElementById("fecha").value = data.FECHA_EVT_NOT;
+        document.getElementById("tipo").value = data.TIPO_REG_EVT_NOT;
+        document.getElementById("ubicacion").value = data.UBICACION_EVT_NOT;
+        document.getElementById("partido").value = data.ID_PAR_EVT_NOT;
+        document.getElementById("estado").value = data.ESTADO_EVT_NOT;
+        document.getElementById("imagen_actual").value = data.IMAGEN_EVT_NOT;
+
+        modalTitle.textContent = "Editar Evento/Noticia";
+        submitButton.textContent = "Actualizar";
+    }
+
     document.getElementById("eventModal").style.display = "flex";
 }
 
-// Cerrar el modal
 function closeModal() {
     document.getElementById("eventModal").style.display = "none";
+    document.getElementById("form-eventos").reset();
+    document.getElementById("id").value = ""; // Limpiar campo oculto
 }
 
 // Cerrar el modal al hacer clic fuera del contenido

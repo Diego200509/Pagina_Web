@@ -77,7 +77,7 @@ if (isset($_GET['action'])) {
         exit;
     }
 
-    if ($_GET['action'] === 'fetchById' && isset($_GET['id'])) {
+    if (isset($_GET['action']) && $_GET['action'] === 'fetchById' && isset($_GET['id'])) {
         $id = intval($_GET['id']);
         $evento = obtenerEventoNoticiaPorID($id);
 
