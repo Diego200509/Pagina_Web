@@ -46,13 +46,15 @@ function eliminarEvento(id) {
     });
 }
 
-// Función para editar un evento
 function editarEvento(id) {
     fetch(`../src/eventos_noticias_admin_queries.php?action=fetchById&id=${id}`)
         .then(response => response.json())
         .then(data => {
+            console.log("Respuesta del servidor:", data); // Muestra la respuesta en la consola
             if (data.success) {
                 const evento = data.data;
+
+                // Asignar valores al formulario
                 document.getElementById("id").value = evento.ID_EVT_NOT;
                 document.getElementById("titulo").value = evento.TIT_EVT_NOT;
                 document.getElementById("descripcion").value = evento.DESC_EVT_NOT;

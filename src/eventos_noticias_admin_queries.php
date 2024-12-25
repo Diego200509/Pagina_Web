@@ -50,8 +50,16 @@ function eliminarEventoNoticia($id)
     return mysqli_query($connection, $query);
 }
 
-// Manejar solicitudes AJAX
+// Función para obtener un evento por ID
+function obtenerEventoNoticiaPorID($id)
+{
+    global $connection;
+    $query = "SELECT * FROM EVENTOS_NOTICIAS WHERE ID_EVT_NOT = $id";
+    $result = mysqli_query($connection, $query);
+    return mysqli_fetch_assoc($result);
+}
 
+// Manejar solicitudes AJAX
 if (isset($_GET['action'])) {
     if ($_GET['action'] === 'delete' && isset($_GET['id'])) {
         $id = intval($_GET['id']);
@@ -68,30 +76,34 @@ if (isset($_GET['action'])) {
         echo json_encode(['success' => true, 'data' => $eventosNoticias]);
         exit;
     }
-}
 
-function obtenerEventoNoticiaPorID($id)
-{
-    global $connection;
-    $query = "SELECT * FROM EVENTOS_NOTICIAS WHERE ID_EVT_NOT = $id";
-    $result = mysqli_query($connection, $query);
-    return mysqli_fetch_assoc($result);
-}
+    if ($_GET['action'] === 'fetchById' && isset($_GET['id'])) {
+        $id = intval($_GET['id']);
+        $evento = obtenerEventoNoticiaPorID($id);
 
-if (isset($_GET['action']) && $_GET['action'] === 'changeState' && isset($_GET['id']) && isset($_GET['newState'])) {
-    $id = intval($_GET['id']);
-    $nuevoEstado = $_GET['newState'];
-
-    $query = "UPDATE EVENTOS_NOTICIAS SET ESTADO_EVT_NOT = '$nuevoEstado' WHERE ID_EVT_NOT = $id";
-    $result = mysqli_query($connection, $query);
-
-    if ($result) {
-        echo json_encode(['success' => true, 'message' => "El estado se actualizó a '$nuevoEstado'."]);
-    } else {
-        echo json_encode(['success' => false, 'message' => 'No se pudo actualizar el estado.']);
+        if ($evento) {
+            echo json_encode(['success' => true, 'data' => $evento]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Evento no encontrado.']);
+        }
+        exit;
     }
+
+    if ($_GET['action'] === 'changeState' && isset($_GET['id']) && isset($_GET['newState'])) {
+        $id = intval($_GET['id']);
+        $nuevoEstado = $_GET['newState'];
+
+        $query = "UPDATE EVENTOS_NOTICIAS SET ESTADO_EVT_NOT = '$nuevoEstado' WHERE ID_EVT_NOT = $id";
+        $result = mysqli_query($connection, $query);
+
+        if ($result) {
+            echo json_encode(['success' => true, 'message' => "El estado se actualizó a '$nuevoEstado'."]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'No se pudo actualizar el estado.']);
+        }
+        exit;
+    }
+
+    echo json_encode(['success' => false, 'message' => 'Acción no válida.']);
     exit;
 }
-
-
-?>

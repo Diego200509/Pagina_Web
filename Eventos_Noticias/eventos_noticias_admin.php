@@ -176,7 +176,7 @@ if (isset($_GET['delete'])) {
 
                     <label for="imagen">Imagen:</label>
                     <input type="file" name="imagen" id="imagen" accept="image/png, image/jpeg, image/jpg">
-                    <input type="hidden" name="imagen_actual" value="<?php echo $evento['IMAGEN_EVT_NOT'] ?? ''; ?>">
+                    <input type="hidden" name="imagen_actual" id="imagen_actual" value="<?php echo $evento['IMAGEN_EVT_NOT'] ?? ''; ?>">
 
                     <button type="submit" class="btn btn-danger">Guardar</button>
                 </form>
