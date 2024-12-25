@@ -1,65 +1,130 @@
+/* Estilo general del cuerpo */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f8f9fa;
+    background-color: #ffffff;
+    /* Fondo blanco */
+    color: #333;
     margin: 0;
     padding: 0;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
+.navbar {
+    background-color: #00bfff; /* Azul vibrante */
+    display: flex;
+    justify-content: space-between; /* Espacio entre logo y menú */
+    align-items: center;
+    padding: 10px 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    flex-wrap: wrap; /* Permitir que los elementos se ajusten en pantallas pequeñas */
+}
+
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: #ffffff; /* Blanco */
+    flex: 1; /* Toma el espacio necesario */
+}
+
+.navbar-logo img {
+    max-width: 150px; /* Ajusta el tamaño del logo */
+    height: auto;
+}
+
+.navbar-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap; /* Ajustar elementos en pantallas pequeñas */
+}
+
+.navbar-menu li {
+    list-style: none;
+}
+
+.navbar-menu li a {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espacio entre ícono y texto */
+    color: #ffffff; /* Blanco */
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.navbar-menu li a:hover {
+    color: #ff0050; /* Rosa brillante */
+}
+
+/* Botón de regreso */
+.btn-danger {
+    background-color: #ff1493;
+    /* Rosa */
+    border-color: #ff1493;
+    color: #fff;
+    padding: 10px 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-    text-align: center;
-    font-size: 2.5rem;
-    color: #dc3545;
-    margin-bottom: 20px;
+    font-size: 16px;
     font-weight: bold;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    /* Espacio entre ícono y texto */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
 }
 
-h2 {
-    text-align: center;
-    font-size: 2rem;
-    color: #6c757d;
-    margin-top: 30px;
-    margin-bottom: 20px;
-    font-weight: 600;
+.btn-danger:hover {
+    background-color: #e01183;
+    /* Rosa más oscuro */
+    transform: translateY(-2px);
+    /* Movimiento hacia arriba */
 }
 
+/* Tabla */
 .table {
-    margin-top: 20px;
-    border-collapse: separate;
-    border-spacing: 0;
     width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 16px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
 }
 
-.table th {
-    background-color: #f8d7da;
-    color: #721c24;
-    text-align: center;
-    padding: 12px;
-    border: 1px solid #dee2e6;
+.table thead {
+    background-color: #00bfff;
+    /* Azul vibrante */
+    color: white;
     font-weight: bold;
+    text-align: left;
 }
 
+.table th,
 .table td {
-    padding: 10px;
-    text-align: center;
-    border: 1px solid #dee2e6;
-    vertical-align: middle;
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.table tbody tr:nth-child(odd) {
+    background: linear-gradient(135deg, rgba(255, 20, 147, 0.1), white);
+    /* Degradado rosa claro */
 }
 
 .table tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background: linear-gradient(135deg, rgba(0, 191, 255, 0.1), white);
+    /* Degradado azul claro */
 }
 
 .table tbody tr:hover {
-    background-color: #ffe8e8;
+    background-color: rgba(0, 0, 0, 0.05);
+    /* Color de fondo al pasar el mouse */
 }
 
 .table .btn-warning {
@@ -80,130 +145,20 @@ h2 {
     border-radius: 5px;
 }
 
-form {
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-form label {
-    font-weight: bold;
-    color: #495057;
-    display: block;
-    margin-bottom: 5px;
-}
-
-form input,
-form select,
-form textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ced4da;
-    border-radius: 5px;
-    background-color: #f8f9fa;
-    font-size: 1rem;
-    color: #495057;
-}
-
-form input:focus,
-form select:focus,
-form textarea:focus {
-    outline: none;
-    border-color: #dc3545;
-    box-shadow: 0 0 5px rgba(220, 53, 69, 0.5);
-}
-
-form button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    font-size: 1rem;
-    font-weight: bold;
-    background-color: #dc3545;
-    color: #ffffff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-form button:hover {
-    background-color: #c82333;
-}
-
-form button+button {
-    margin-top: 10px;
-}
-
-form h1 {
-    text-align: center;
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: #dc3545;
-    font-weight: bold;
-}
-
-form textarea {
-    resize: none;
-    height: 100px;
-}
-
 @media (max-width: 768px) {
-    form {
-        max-width: 90%;
-        padding: 15px;
+    .navbar {
+        flex-direction: column;
+        /* Apilar elementos verticalmente */
+        align-items: center;
     }
-}
 
-.navbar {
-    background-color: #b22222;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
-}
+    .navbar-menu {
+        justify-content: center;
+        width: 100%;
+        /* Asegura que los elementos se centren */
+    }
 
-.navbar-logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: white;
-}
-
-.navbar-logo i {
-    font-size: 24px;
-}
-
-.navbar-menu {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    gap: 20px;
-}
-
-.navbar-menu li {
-    list-style: none;
-}
-
-.navbar-menu li a {
-    display: flex;
-    align-items: center;
-    gap: 8px; /* Espacio entre icono y texto */
-    color: white;
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: bold;
-}
-.navbar-menu li a i {
-    font-size: 18px; /* Tamaño del icono */
-}
-
-.navbar-menu li a:hover {
-    color: black;
+    .navbar-logo {
+        justify-content: center;
+    }
 }
