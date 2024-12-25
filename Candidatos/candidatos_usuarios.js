@@ -1,42 +1,63 @@
 document.addEventListener("DOMContentLoaded", function () {
     const apiEndpoint = '../src/candidatos_queries.php';
-    const cardContainer = document.getElementById('candidateCards');
+    const candidateContainer = document.getElementById('candidateContainer');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
 
-    // Función para cargar los candidatos
+    let candidates = [];
+    let currentIndex = 0;
+
+    // Función para cargar todos los candidatos
     function loadCandidates() {
         fetch(apiEndpoint)
             .then(response => response.json())
-            .then(candidates => {
-                cardContainer.innerHTML = ''; // Limpiar las tarjetas antes de agregar
-                candidates
-                    .filter(candidate => candidate.ESTADO_CAN === 'Activo') // Filtrar solo activos
-                    .forEach(candidate => {
-                        const card = document.createElement('div');
-                        card.className = 'candidate-card';
-
-                        // Crear tarjeta con información agrupada
-                        card.innerHTML = `
-                            <div class="card-image">
-                                <img src="../${candidate.IMG_CAN}" alt="${candidate.NOM_CAN}">
-                            </div>
-                            <div class="card-content">
-                                <h3>${candidate.NOM_CAN}</h3>
-                                <p>
-                                    
-                                    <strong>Biografía:</strong> ${candidate.BIOGRAFIA_CAN}<br>
-                                    <strong>Experiencia:</strong> ${candidate.EXPERIENCIA_CAN}<br>
-                                    <strong>Visión:</strong> ${candidate.VISION_CAN}<br>
-                                    <strong>Logros:</strong> ${candidate.LOGROS_CAN}
-                                </p>
-                                <p><strong>Partido:</strong> ${candidate.NOM_PAR || 'Sin partido'}</p>
-                            </div>
-                        `;
-
-                        cardContainer.appendChild(card); // Agregar la tarjeta al contenedor
-                    });
+            .then(data => {
+                candidates = data.filter(candidate => candidate.ESTADO_CAN === 'Activo'); // Filtrar solo activos
+                showCandidate(currentIndex);
             })
             .catch(error => console.error('Error al cargar candidatos:', error));
     }
+
+    // Función para mostrar un candidato según el índice
+    function showCandidate(index) {
+        if (index >= 0 && index < candidates.length) {
+            const candidate = candidates[index];
+            candidateContainer.innerHTML = `
+                <div class="candidate-image">
+                    <img src="../${candidate.IMG_CAN}" alt="${candidate.NOM_CAN}">
+                </div>
+                <div class="candidate-info">
+                    <h3>${candidate.NOM_CAN}</h3>
+                    <p><strong>Fecha de Nacimiento:</strong> ${candidate.FECHA_NAC_CAN || 'No disponible'}</p>
+                    <p><strong>Cargo:</strong> ${candidate.CARGO_CAN || 'No disponible'}</p>
+                    <p><strong>Información:</strong> ${candidate.EDUCACION_CAN || 'No disponible'}</p>
+                    <p><strong>Experiencia:</strong> ${candidate.EXPERIENCIA_CAN || 'No disponible'}</p>
+                </div>
+            `;
+        }
+        updatePaginationButtons();
+    }
+
+    // Función para actualizar el estado de los botones de paginación
+    function updatePaginationButtons() {
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.disabled = currentIndex === candidates.length - 1;
+    }
+
+    // Eventos para los botones de navegación
+    prevBtn.addEventListener('click', () => {
+        if (currentIndex > 0) {
+            currentIndex--;
+            showCandidate(currentIndex);
+        }
+    });
+
+    nextBtn.addEventListener('click', () => {
+        if (currentIndex < candidates.length - 1) {
+            currentIndex++;
+            showCandidate(currentIndex);
+        }
+    });
 
     // Inicializar
     loadCandidates();
