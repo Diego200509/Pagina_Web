@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const apiEndpoint = '../src/candidatos_queries.php';
-    const candidateContainer = document.getElementById('candidateContainer');
+    const candidateContent = document.getElementById('candidateContent');
     const prevArrow = document.getElementById('prevArrow');
     const nextArrow = document.getElementById('nextArrow');
 
@@ -21,12 +21,12 @@ document.addEventListener("DOMContentLoaded", function () {
     // Función para mostrar un candidato según el índice
     function showCandidate(index) {
         if (candidates.length === 0) {
-            candidateContainer.innerHTML = `<p>No hay candidatos disponibles.</p>`;
+            candidateContent.innerHTML = `<p>No hay candidatos disponibles.</p>`;
             return;
         }
 
         const candidate = candidates[index];
-        candidateContainer.innerHTML = `
+        candidateContent.innerHTML = `
             <div class="candidate-image">
                 <img src="../${candidate.IMG_CAN}" alt="${candidate.NOM_CAN}">
             </div>
@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
         `;
     }
 
-    // Eventos para las flechas de navegación
+    // Eventos para las flechas
     prevArrow.addEventListener('click', () => {
         currentIndex = (currentIndex - 1 + candidates.length) % candidates.length; // Circular hacia atrás
         showCandidate(currentIndex);

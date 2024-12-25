@@ -65,55 +65,56 @@ header nav a:hover {
     width: 100%;
     margin-top: 50px;
 }
-
-/* Contenedor principal */
+/* Contenedor general */
 .candidate-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 80%;
+    position: relative;
+    width: 100%;
     max-width: 1200px;
     height: 500px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    position: relative;
     margin: 20px auto;
+    border-radius: 15px;
     overflow: hidden;
 }
 
+/* Contenedor del candidato */
 .candidate-content {
     display: flex;
+    align-items: center;
+    justify-content: space-between;
     gap: 20px;
+    width: 80%;
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo transparente */
     padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+/* Imagen del candidato */
 .candidate-image img {
     width: 250px;
     height: 250px;
     object-fit: cover;
     border-radius: 10px;
-    border: 1px solid #ddd;
+    border: 2px solid #ddd;
 }
+
+/* Información del candidato */
 .candidate-info {
-    flex: 2;
-    background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semitransparente */
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex: 1;
 }
 
 .candidate-info h3 {
-    margin-top: 0;
     font-size: 1.8rem;
-    color: #333;
+    margin: 0;
+    font-weight: 800;
 }
 
 .candidate-info p {
     margin: 10px 0;
     color: #555;
-    line-height: 1.5;
 }
 
 /* Flechas de navegación */
@@ -121,28 +122,30 @@ header nav a:hover {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: #007bff;
-    color: white;
+    background-color: rgba(0, 0, 0, 0.1);
+    color: #333;
     border: none;
     border-radius: 50%;
     width: 50px;
     height: 50px;
     cursor: pointer;
-    font-size: 1.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 100;
-}
-
-#prevArrow {
-    left: 10px;
-}
-
-#nextArrow {
-    right: 10px;
+    font-size: 1.5rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
 }
 
 .arrow:hover {
-    background-color: #0056b3;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #000;
+}
+
+.left-arrow {
+    left: 20px;
+}
+
+.right-arrow {
+    right: 20px;
 }

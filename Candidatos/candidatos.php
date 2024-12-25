@@ -30,15 +30,19 @@
     </header>
     <main>
     <h2 class="title">Información del Candidato</h2>
-    <div id="candidateContainer" class="candidate-container">
-        <!-- Aquí se cargará dinámicamente el candidato -->
-    </div>
-    <!-- Flechas de navegación -->
-    <div class="navigation-arrows">
-        <button id="prevArrow" class="arrow">&#8593;</button> <!-- Flecha hacia arriba -->
-        <button id="nextArrow" class="arrow">&#8595;</button> <!-- Flecha hacia abajo -->
+    <div class="candidate-container">
+        <button id="prevArrow" class="arrow left-arrow">
+            <i class="fas fa-chevron-left"></i> <!-- Ícono de flecha izquierda -->
+        </button>
+        <div id="candidateContent" class="candidate-content">
+            <!-- Aquí se cargará dinámicamente el candidato -->
+        </div>
+        <button id="nextArrow" class="arrow right-arrow">
+            <i class="fas fa-chevron-right"></i> <!-- Ícono de flecha derecha -->
+        </button>
     </div>
 </main>
+
 
 
 
