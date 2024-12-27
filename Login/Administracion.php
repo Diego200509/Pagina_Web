@@ -25,6 +25,7 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="administrador_estilos.css">
+    <script src="../Login/administracion.js"></script>
 
     <style>
         body {
@@ -67,9 +68,50 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
             /* Rosa intenso */
 
         }
+
         :root {
-    --navbar-bg-color: <?php echo $navbarBgColor; ?>;
-}
+            --navbar-bg-color: <?php echo $navbarBgColor; ?>;
+        }
+
+        /* Colores tomados de la imagen */
+        .header-text {
+            color: #00CFFF;
+            /* Azul claro */
+            font-weight: bold;
+        }
+
+        .secondary-text {
+            color: #FF00FF;
+            /* Rosa */
+        }
+
+        /* Estilo para el botón "Aceptar" */
+        .btn-aceptar {
+            background-color: #FF00FF;
+            /* Rosa */
+            color: white;
+            border: none;
+        }
+
+        .btn-aceptar:hover {
+            background-color: #e600e6;
+            /* Tonalidad más oscura de rosa */
+            color: white;
+        }
+
+        /* Estilo para el botón "Cancelar" */
+        .btn-cancelar {
+            background-color: #00CFFF;
+            /* Celeste */
+            color: white;
+            border: none;
+        }
+
+        .btn-cancelar:hover {
+            background-color: #009ac7;
+            /* Tonalidad más oscura de celeste */
+            color: white;
+        }
     </style>
 </head>
 
@@ -152,32 +194,36 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
                                 <div class="col-md-6">
                                     <!-- Cambiar colores Navbar -->
                                     <div class="color-section mb-4">
-    <h5 class="text-uppercase" style="color: #00BFFF;">Navbar General</h5>
-    <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
-    <form action="cambiar_colores.php" method="POST">
-        <div class="d-flex align-items-center justify-content-between">
-            <input type="color" class="form-control form-control-color me-3" id="colorNavbar" name="colorNavbar" value="#00bfff">
-            <input type="text" class="form-control form-control-hex me-3" id="hexColorNavbar" name="hexColorNavbar" placeholder="#00bfff" maxlength="7" style="width: 80px;">
-            <div class="d-flex">
-                <!-- Botón Aceptar -->
-                <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
-                    Aceptar
-                </button>
+                                        <h5 class="text-uppercase" style="color: #00BFFF;">Navbar General</h5>
+                                        <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
+                                        <form action="cambiar_colores.php" method="POST" id="formNavbar">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <!-- Selector de color -->
+                                                <input type="color" class="form-control form-control-color me-3" id="colorNavbar" name="colorNavbar" value="#00bfff">
 
-                <!-- Botón Restablecer -->
-                <button type="submit" name="resetNavbar" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; margin-left: 10px; transition: transform 0.3s;">
-                    Restablecer
-                </button>
+                                                <!-- Campo de texto hexadecimal -->
+                                                <input type="text" class="form-control form-control-hex me-3" id="hexColorNavbar" name="hexColorNavbar" value="#00bfff" maxlength="7" style="width: 80px;">
+
+                                                <div class="d-flex">
+                                                    <!-- Botón Aceptar -->
+                                                    <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
+                                                        Aceptar
+                                                    </button>
+
+                                                    <!-- Botón Restablecer -->
+                                                    <button type="submit" name="resetNavbar" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; margin-left: 10px; transition: transform 0.3s;">
+                                                        Restablecer
+                                                    </button>
+                                                </div>
+
                                             </div>
-
-                                        </div>
                                     </div>
                                     <!-- Cambiar colores Candidatos -->
                                     <div class="color-section mb-4">
                                         <h5 class="text-uppercase" style="color: #00BFFF;">Inicio Candidatos</h5>
                                         <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
                                         <form action="cambiar_colores.php" method="POST" id="formInicioCandidatos">
-                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="d-flex align-items-center justify-content-between">
                                                 <input type="color" class="form-control form-control-color me-3" id="colorCandidatos" name="colorCandidatos" value="#FF0000">
                                                 <input type="text" class="form-control form-control-hex me-3" id="hexColorCandidatos" name="hexColorCandidatos" placeholder="#FF0000" maxlength="7" style="width: 80px;">
                                                 <div class="d-flex">
@@ -192,6 +238,7 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
                                                     </button>
                                                 </div>
                                             </div>
+                                            
                                     </div>
 
                                     <!-- Cambiar colores Propuestas -->
@@ -245,7 +292,7 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
                                         <h5 class="text-uppercase" style="color: #00BFFF;">Login</h5>
                                         <p class="subtitle" style="color: #FF69B4;">Seleccionar degradado:</p>
                                         <form action="cambiar_colores.php" method="POST" id="formLogin">
-                                        <!-- Contenedor para los colores -->
+                                            <!-- Contenedor para los colores -->
                                             <div class="d-flex align-items-center justify-content-between mb-3">
                                                 <!-- Color Inicial -->
                                                 <div class="d-flex align-items-center me-4">
@@ -262,17 +309,17 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
                                                 </div>
                                             </div>
 
-                                                <!-- Botones -->
-                                                <div class="d-flex justify-content-center mt-3">
-                                                    <!-- Botón Aceptar -->
-                                                    <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
-                                                        Aceptar
-                                                    </button>
+                                            <!-- Botones -->
+                                            <div class="d-flex justify-content-center mt-3">
+                                                <!-- Botón Aceptar -->
+                                                <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
+                                                    Aceptar
+                                                </button>
 
-                                                    <!-- Botón Restablecer -->
-                                                    <button type="submit" name="reset" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; margin-left: 10px; transition: transform 0.3s;">
-                                                        Restablecer
-                                                    </button>
+                                                <!-- Botón Restablecer -->
+                                                <button type="submit" name="reset" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; margin-left: 10px; transition: transform 0.3s;">
+                                                    Restablecer
+                                                </button>
                                             </div>
                                         </form>
                                     </div>
@@ -280,67 +327,65 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
 
                                 <!-- Columna derecha -->
                                 <div class="col-md-6">
-                                    <!-- Página Candidatos -->
-                                    <div class="color-section mb-4">
-                                        <h5 class="text-uppercase" style="color: #00BFFF;">Página Candidatos</h5>
-                                        <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <input type="color" class="form-control form-control-color me-3" id="colorPagCandidatos" name="colorPagCandidatos" value="#FF5733">
-                                            <input type="text" class="form-control form-control-hex me-3" id="hexColorPagCandidatos" name="hexColorPagCandidatos" placeholder="#FF5733" maxlength="7" style="width: 80px;">
-                                            <div class="d-flex">
-                                                <!-- Botón Aceptar -->
-                                                <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
-                                                    Aceptar
-                                                </button>
+<!-- Página Candidatos -->
+<div class="color-section mb-4">
+    <h5 class="text-uppercase" style="color: #00BFFF;">Página Candidatos</h5>
+    <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
+    <form action="cambiar_colores.php" method="POST" id="formInicioCandidatos">
+        <div class="d-flex align-items-center justify-content-between">
+            <input type="color" class="form-control form-control-color me-3" id="colorPagCandidatos" name="colorCandidatos" value="#FF5733">
+            <input type="text" class="form-control form-control-hex me-3" id="hexColorPagCandidatos" name="hexColorCandidatos" placeholder="#FF5733" maxlength="7" style="width: 80px;">
+            <div class="d-flex">
+                <!-- Botón Aceptar -->
+                <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
+                    Aceptar
+                </button>
 
-                                                <!-- Botón Restablecer -->
-                                                <button type="submit" name="reset-pagina-candidatos" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; margin-left: 10px; transition: transform 0.3s;">
-                                                    Restablecer
-                                                </button>
+                <!-- Botón Restablecer -->
+                <button type="submit" name="resetCandidatos" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-left: 10px; transition: transform 0.3s;">
+                    Restablecer
+                </button>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <!-- Página Eventos y Noticias -->
-                                    <div class="color-section mb-4">
-                                        <h5 class="text-uppercase" style="color: #00BFFF;">Página Eventos y Noticias</h5>
-                                        <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <input type="color" class="form-control form-control-color me-3" id="colorPagEventos" name="colorPagEventos" value="#33FF57">
-                                            <input type="text" class="form-control form-control-hex me-3" id="hexColorPagEventos" name="colorPagEventos" placeholder="#33FF57" maxlength="7" style="width: 80px;">
-                                            <div class="d-flex">
-                                                <!-- Botón Aceptar -->
-                                                <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
-                                                    Aceptar
-                                                </button>
+<!-- Página Eventos y Noticias -->
+<div class="color-section mb-4">
+    <h5 class="text-uppercase" style="color: #00BFFF;">Página Eventos y Noticias</h5>
+    <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
+    <form action="cambiar_colores.php" method="POST" id="formInicioEventos">
+        <div class="d-flex align-items-center justify-content-between">
+            <input type="color" class="form-control form-control-color me-3" id="colorPagEventos" name="colorPagEventos" value="#33FF58">
+            <input type="text" class="form-control form-control-hex me-3" id="hexColorPagEventos" name="hexColorPagEventos" placeholder="#33FF58" maxlength="7" style="width: 80px;">
+            <div class="d-flex">
+                <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
+                    Aceptar
+                </button>
+                <button type="submit" name="reset-pagina-eventos-noticias" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-left: 10px; transition: transform 0.3s;">
+                    Restablecer
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
 
-                                                <!-- Botón Restablecer -->
-                                                <button type="submit" name="reset-pagina-eventos-noticias" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; margin-left: 10px; transition: transform 0.3s;">
-                                                    Restablecer
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
 
-
-                                    <!-- Página Propuestas -->
-                                    <div class="color-section mb-4">
-                                        <h5 class="text-uppercase" style="color: #00BFFF;">Página Propuestas</h5>
-                                        <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <input type="color" class="form-control form-control-color me-3" id="colorPagPropuestas" name="colorPagPropuestas" value="#337BFF">
-                                            <input type="text" class="form-control form-control-hex me-3" id="hexColorPagPropuestas" name="colorPagPropuestas" placeholder="#337BFF" maxlength="7" style="width: 80px;">
-                                            <div class="d-flex">
-                                                <!-- Botón Aceptar -->
-                                                <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
-                                                    Aceptar
-                                                </button>
-
-                                                <!-- Botón Restablecer -->
-                                                <button type="submit" name="reset-pagina-propuestas" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; margin-left: 10px; transition: transform 0.3s;">
-                                                    Restablecer
-                                                </button>
-                                            </div>
+<!-- Página Propuestas -->
+<div class="color-section mb-4">
+    <h5 class="text-uppercase" style="color: #00BFFF;">Página Propuestas</h5>
+    <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
+    <form action="cambiar_colores.php" method="POST" id="formInicioPropuestas">
+        <div class="d-flex align-items-center justify-content-between">
+            <input type="color" class="form-control form-control-color me-3" id="colorPagPropuestas" name="colorPagPropuestas" value="#337BFF">
+            <input type="text" class="form-control form-control-hex me-3" id="hexColorPagPropuestas" name="hexColorPagPropuestas" placeholder="#337BFF" maxlength="7" style="width: 80px;">
+            <div class="d-flex">
+                <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
+                    Aceptar
+                </button>
+                <button type="submit" name="reset-pagina-propuestas" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; margin-left: 10px; transition: transform 0.3s;">
+                    Restablecer
+                </button>
+            </div>
 
                                         </div>
                                     </div>
@@ -393,7 +438,6 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
                 </div>
             </div>
 
-
             <!-- Subir Imágenes -->
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingThree">
@@ -404,176 +448,96 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
                 <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#adminAccordion">
                     <div class="accordion-body">
                         <form action="subir_imagen.php" method="POST" enctype="multipart/form-data">
+                            <!-- Logo Navbar -->
                             <div class="mb-3">
-                                <label for="imagen" class="form-label">Imagen</label>
-                                <input type="file" class="form-control" id="imagen" name="imagen" required>
+                                <label for="logoNavbar" class="form-label header-text">Logo Navbar:</label>
+                                <input type="file" class="form-control" id="logoNavbar" name="logoNavbar" required>
                             </div>
-                            <button type="submit" class="btn btn-dark">Subir Imagen</button>
+                            <div class="d-flex justify-content-between">
+                                <button type="submit" class="btn btn-aceptar">Aceptar</button>
+                                <button type="button" class="btn btn-cancelar">Cancelar</button>
+                            </div>
+
+                            <!-- Imágenes Inicio -->
+                            <div class="mt-4">
+                                <h5 class="header-text">Imágenes Inicio</h5>
+
+                                <!-- Primera Imagen -->
+                                <div class="mb-3">
+                                    <label for="primeraImagen" class="form-label secondary-text">Primera Imagen:</label>
+                                    <input type="file" class="form-control" id="primeraImagen" name="primeraImagen" required>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <button type="submit" class="btn btn-aceptar">Aceptar</button>
+                                    <button type="button" class="btn btn-cancelar">Cancelar</button>
+                                </div>
+
+
+                                <!-- Segunda Imagen -->
+                                <div class="mt-4">
+                                    <label for="segundaImagen" class="form-label secondary-text">Segunda Imagen:</label>
+                                    <input type="file" class="form-control" id="segundaImagen" name="segundaImagen" required>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <button type="submit" class="btn btn-aceptar">Aceptar</button>
+                                    <button type="button" class="btn btn-cancelar">Cancelar</button>
+                                </div>
+
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <!-- MODAL MENSAJES -->
-    <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body text-center">
-                    <div class="mb-3">
-                        <i id="messageIcon" class="fas fa-check-circle fa-3x text-success"></i>
+
+            <!-- MODAL MENSAJES -->
+            <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-body text-center">
+                            <div class="mb-3">
+                                <i id="messageIcon" class="fas fa-check-circle fa-3x text-success"></i>
+                            </div>
+                            <h4 class="modal-title mb-2" id="messageModalLabel"></h4>
+                            <p id="messageText"></p>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+                        </div>
                     </div>
-                    <h4 class="modal-title mb-2" id="messageModalLabel"></h4>
-                    <p id="messageText"></p>
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
                 </div>
             </div>
-        </div>
-    </div>
 
 
 
-    <!-- JavaScript para cambiar fondo -->
-    <!-- JavaScript para cambiar fondo -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const adminAccordion = document.getElementById("adminAccordion");
-            const body = document.body;
-            const originalBackground = "linear-gradient(160deg, #ffffff, #1C9FFF)";
+            <!-- JavaScript para cambiar fondo -->
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    const sessionMessage = "<?php echo isset($_SESSION['message']) ? $_SESSION['message'] : ''; ?>";
+                    const sessionMessageType = "<?php echo isset($_SESSION['message_type']) ? $_SESSION['message_type'] : ''; ?>";
 
-            adminAccordion.addEventListener("click", (event) => {
-                if (event.target.matches(".accordion-button")) {
-                    const button = event.target;
+                    if (sessionMessage) {
+                        const messageModal = new bootstrap.Modal(document.getElementById('messageModal'));
+                        const messageIcon = document.getElementById('messageIcon');
+                        const messageModalLabel = document.getElementById('messageModalLabel');
+                        const messageText = document.getElementById('messageText');
 
-                    // Cambia el fondo según la sección seleccionada
-                    if (button.innerText.includes("Crear Admin")) {
-                        body.style.background = "linear-gradient(160deg, #00BFFF, #87CEFA)";
+                        if (sessionMessageType === 'success') {
+                            messageIcon.classList.add('text-success', 'fa-check-circle');
+                            messageModalLabel.textContent = '¡Éxito!';
+                        } else if (sessionMessageType === 'error') {
+                            messageIcon.classList.add('text-danger', 'fa-times-circle');
+                            messageModalLabel.textContent = '¡Error!';
+                        }
 
-                    } else if (button.innerText.includes("Cambiar Colores")) {
-                        body.style.background = "linear-gradient(160deg, #FF66CC, #FF1493)";
-                    } else if (button.innerText.includes("Subir Imágenes")) {
-                        body.style.background = "linear-gradient(355deg, #FF66CC,rgb(255, 255, 255))";
+                        messageText.textContent = sessionMessage;
+                        messageModal.show();
+
+                        <?php unset($_SESSION['message']); ?>
+                        <?php unset($_SESSION['message_type']); ?>
                     }
+                });
+            </script>
 
-                    // Si todas las secciones están contraídas, vuelve al fondo original
-                    const allCollapsed = [...document.querySelectorAll(".accordion-button")].every((btn) =>
-                        btn.classList.contains("collapsed")
-                    );
-
-                    if (allCollapsed) {
-                        body.style.background = originalBackground;
-                    }
-                }
-            });
-        });
-
-        document.addEventListener("DOMContentLoaded", function() {
-            const sessionMessage = "<?php echo isset($_SESSION['message']) ? $_SESSION['message'] : ''; ?>";
-            const sessionMessageType = "<?php echo isset($_SESSION['message_type']) ? $_SESSION['message_type'] : ''; ?>";
-
-            if (sessionMessage) {
-                const messageModal = new bootstrap.Modal(document.getElementById('messageModal'));
-                const messageIcon = document.getElementById('messageIcon');
-                const messageModalLabel = document.getElementById('messageModalLabel');
-                const messageText = document.getElementById('messageText');
-
-                if (sessionMessageType === 'success') {
-                    messageIcon.classList.add('text-success', 'fa-check-circle');
-                    messageModalLabel.textContent = '¡Éxito!';
-                } else if (sessionMessageType === 'error') {
-                    messageIcon.classList.add('text-danger', 'fa-times-circle');
-                    messageModalLabel.textContent = '¡Error!';
-                }
-
-                messageText.textContent = sessionMessage;
-                messageModal.show();
-
-                <?php unset($_SESSION['message']); ?>
-                <?php unset($_SESSION['message_type']); ?>
-            }
-        });
-        document.addEventListener("DOMContentLoaded", function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    const success = urlParams.get('success');
-    const message = urlParams.get('message');
-
-    if (message) {
-        const messageModal = new bootstrap.Modal(document.getElementById('messageModal'));
-        const messageIcon = document.getElementById('messageIcon');
-        const messageModalLabel = document.getElementById('messageModalLabel');
-        const messageText = document.getElementById('messageText');
-
-        if (success === '1') {
-            messageIcon.className = 'fas fa-check-circle fa-3x text-success';
-            messageModalLabel.textContent = '¡Éxito!';
-        } else {
-            messageIcon.className = 'fas fa-times-circle fa-3x text-danger';
-            messageModalLabel.textContent = '¡Error!';
-        }
-
-        messageText.textContent = message;
-        messageModal.show();
-    }
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-    const formNavbar = document.querySelector('form[action="cambiar_colores.php"]');
-
-    formNavbar.addEventListener("submit", function (event) {
-        const submitter = event.submitter; // Botón que envió el formulario
-
-        if (submitter) {
-            if (submitter.name === "resetNavbar" && submitter.value === "1") {
-                // Si se pulsó el botón Restablecer
-                localStorage.setItem("navbarColorUpdated", "reset");
-            } else {
-                // Si se pulsó el botón Aceptar
-                localStorage.setItem("navbarColorUpdated", "true");
-            }
-        }
-        
-
-        // Después de 1 segundo, limpiar el estado en el localStorage
-        setTimeout(() => {
-            localStorage.setItem("navbarColorUpdated", "false");
-        }, 1000);
-    });
-});
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    // Formulario de Login
-    const formLogin = document.getElementById("formLogin");
-
-    if (formLogin) {
-        formLogin.addEventListener("submit", function (event) {
-            const submitter = event.submitter; // Botón que envió el formulario
-
-            if (submitter) {
-                if (submitter.name === "reset" && submitter.value === "1") {
-                    // Si se pulsó el botón Restablecer
-                    localStorage.setItem("loginColorUpdated", "reset");
-                } else {
-                    // Si se pulsó el botón Aceptar
-                    localStorage.setItem("loginColorUpdated", "true");
-                }
-            }
-
-            // Después de 1 segundo, limpiar el estado en el localStorage
-            setTimeout(() => {
-                localStorage.setItem("loginColorUpdated", "false");
-            }, 1000);
-        });
-    }
-});
-
-
-
-    </script>
-
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+            <!-- Bootstrap JS -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

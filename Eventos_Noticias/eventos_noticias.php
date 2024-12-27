@@ -1,3 +1,14 @@
+<?php
+$configFileEventos = "../Login/PaginaEventos.json";
+
+if (file_exists($configFileEventos)) {
+    $config = json_decode(file_get_contents($configFileEventos), true);
+    $paginaBgColor = $config['paginaBgColor'] ?? "#33FF58";
+} else {
+    $paginaBgColor = "#33FF58";
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -5,8 +16,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eventos y Noticias</title>
-    <link rel="stylesheet" href="styleEvents.css">
+    <link rel="stylesheet" href="styleEvent.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --pagina-bg-color: <?php echo $paginaBgColor; ?>;
+        }
+    </style>
 </head>
 
 <body>

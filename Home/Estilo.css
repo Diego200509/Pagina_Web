@@ -10,7 +10,7 @@ body {
     background-color: #ffffff; 
     color: #333;
 }
-/* Navbar */
+
 /* Navbar */
 .navbar {
     background-color: var(--navbar-bg-color, #00bfff); /* Azul por defecto */

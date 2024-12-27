@@ -29,6 +29,20 @@ function truncateText(text, maxLength) {
     return text;
 }
 
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Escuchar cambios en el almacenamiento local
+    window.addEventListener("storage", function (event) {
+        if (event.key === "navbarColorUpdated" && (event.newValue === "true" || event.newValue === "reset")) {
+            // Recargar la página cuando se detecte un cambio o restablecimiento
+            window.location.reload();
+        }
+    });
+});
+
+
+
+
 function displayProposals(proposals) {
     const partido1Nombre = document.getElementById("partido1Nombre");
     const partido2Nombre = document.getElementById("partido2Nombre");

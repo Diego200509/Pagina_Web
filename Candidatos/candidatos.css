@@ -18,7 +18,7 @@ header {
 }
 
 .navbar {
-    background-color: #b22222;
+    background-color: var(--navbar-bg-color, #00bfff); /* Azul por defecto */
     display: flex;
     justify-content: space-between;
     align-items: center;

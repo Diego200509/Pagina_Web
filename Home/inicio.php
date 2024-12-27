@@ -5,7 +5,6 @@ $eventos_noticias = include('../src/inicio_queries.php');
 include('../config/config.php');
 
 $navbarConfigPath = "../Login/navbar_config.json"; // Ruta al archivo de configuración del Navbar
-$configFilePath = "../Login/candidatos_config.json"; // Ruta al archivo de configuración de Candidatos
 
 // Verificar si el archivo existe y cargar el color del Navbar
 if (file_exists($navbarConfigPath)) {
@@ -15,13 +14,6 @@ if (file_exists($navbarConfigPath)) {
     $navbarBgColor = '#00bfff'; // Azul por defecto si no existe el archivo
 }
 
-// Verificar si el archivo existe y cargar el color de la sección Candidatos
-if (file_exists($configFilePath)) {
-    $config = json_decode(file_get_contents($configFilePath), true);
-    $candidatosBgColor = $config['candidatosBgColor'] ?? '#00bfff'; // Azul por defecto
-} else {
-    $candidatosBgColor = '#00bfff'; // Azul por defecto si no existe el archivo
-}
 ?>
 
 
