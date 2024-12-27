@@ -1,6 +1,19 @@
 <?php
 // Incluir el archivo de consultas
 include_once('../src/partido1_sugerencias_queries.php');
+include('../config/config.php');
+
+
+$navbarConfigPath = "../Login/navbar_config.json"; // Ruta al archivo de configuración del Navbar
+
+// Verificar si el archivo existe y cargar el color del Navbar
+if (file_exists($navbarConfigPath)) {
+    $navbarConfig = json_decode(file_get_contents($navbarConfigPath), true);
+    $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff'; // Azul por defecto
+} else {
+    $navbarBgColor = '#00bfff'; // Azul por defecto si no existe el archivo
+}
+
 
 $eventos_noticias = include('../src/partido1_sugerencias_queries.php');
 include('../Config/config.php');
@@ -16,10 +29,19 @@ $nombrePartido = obtenerNombrePartido(1);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <style>
+        :root {
+            --navbar-bg-color: <?php echo $navbarBgColor; ?>;
+        }
+    </style>
     <title>Sobre nuestros estudiantes</title>
     <style>
+        
 @keyframes animatedBackground {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
@@ -55,39 +77,47 @@ textarea {
     align-items: center;
     justify-content: center;
     height: 100vh;
-    height: calc(100vh - 50px); /* Ajusta la altura para que deje espacio */
-    margin-top: 50px; /* Desplaza la tarjeta hacia abajo */
-    color: #FFF;
-    width: 100%;
     padding: 20px;
-    box-sizing: border-box;
-    max-width: 100vw;
-    overflow: hidden;
 }
 
 .card {
     display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    width: 100%;
+    height: auto;
     background-color: #F7F7F7;
-    width: 70%;
-    max-width: 4000px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
 }
 
-.card img {
-    width: 10%;
+.card .img {
+    flex: 0 0 40%; /* Ajusta el ancho de la tarjeta de imagen al 30% */
+    max-width: 100%; /* Garantiza que no exceda el 30% del contenedor */
     height: auto;
-    object-fit: cover;
 }
+.card img {
+    width: 100%; /* Reducir el espacio ocupado por la imagen */
+    object-fit: cover;
+    height: 100%;
+
+}    
+
 
 .content {
-    padding: 40px;
-    flex: 1;
+    flex: 1; /* El formulario ocupa el espacio restante */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .content h1 {
     color: #2B4657;
-    font-size: 2em;
-    margin-bottom: 20px;
+    font-size: 1.5em; /* Ajustar el tamaño del título */
+    margin-bottom: 15px;
+    text-align: center;
 }
 
 .content p {
@@ -109,68 +139,59 @@ textarea {
     background-color: #435A6A;
 }
 
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 50px;
-    background-color: #b22222;
-    width: 100%;
-    box-sizing: border-box;
-    margin: 0;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-}
-
-header.hidden {
-    transform: translateY(-100%);
-}
-
-header:not(.hidden) {
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-}
-
-header .logo {
+.navbar {
+    background-color: var(--navbar-bg-color, #00bfff);
     display: flex;
     align-items: center;
+    padding: 10px 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    gap: 20px; /* Espacio entre logo y menú */
 }
 
-header .logo img {
-    width: 50px;
-    margin-right: 10px;
-}
-
-header .logo h1 {
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     color: #ffffff;
-    font-size: 1.5em;
+    flex-shrink: 0; /* Mantener el tamaño fijo del logo */
 }
 
-header nav {
+.navbar-logo i {
+    font-size: 24px;
+}
+
+.navbar-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px; /* Espacio entre elementos del menú */
+    flex-grow: 1; /* Ocupa todo el espacio disponible */
+    justify-content: flex-end; /* Alinear los botones a la derecha */
+    padding-right: 20px; /* Asegura espacio entre el último botón y el borde derecho */
+}
+
+.navbar-menu li {
+    list-style: none;
+}
+
+.navbar-menu li a {
     display: flex;
     align-items: center;
-}
-
-header nav a {
-    color: white;
+    gap: 8px;
+    color: #ffffff;
     text-decoration: none;
-    margin: 0 15px;
-    font-size: 1em;
-    transition: color 0.3s;
-    display: flex;
-    align-items: center;
+    font-size: 16px;
+    font-weight: bold;
 }
 
-header nav a i {
-    margin-right: 8px;
+.navbar-menu li a:hover {
+    color: #ff0050;
 }
 
-header nav a:hover {
-    color: #2f2929;
+textarea {
+    resize: none;
+    height: 80px; /* Más altura para el textarea */
 }
 
 footer {
@@ -216,13 +237,10 @@ footer {
 
 .buttons {
     display: flex;
-    justify-content: space-between; /* Distribuye los botones con espacio entre ellos */
-    margin-top: 20px;
-    gap: 20px; /* Espaciado entre los botones */
-    width: 100%; /* Asegura que los botones ocupen el 100% del ancho disponible */
-    box-sizing: border-box; /* Para asegurarse de que el padding no afecte el tamaño total */
+    gap: 10px;
+    justify-content: center;
+    margin-top: 15px;
 }
-
 /* Estilo común para ambos botones */
 .buttons button, .buttons a {
     padding: 12px 20px;
@@ -264,14 +282,17 @@ footer {
 
 /* Asegura que los botones se vean bien en dispositivos pequeños */
 @media (max-width: 768px) {
-    .buttons {
-        flex-direction: column; /* Cambia los botones a una columna en pantallas pequeñas */
-        align-items: center;
+    .card {
+        flex-direction: column; /* Cambiar a diseño vertical en pantallas pequeñas */
+        max-width: 90%; /* Usar casi todo el ancho disponible */
     }
 
-    .buttons button, .buttons a {
-        width: 100%;  /* Los botones ocuparán el 100% del ancho disponible */
-        margin-bottom: 10px; /* Espaciado entre botones */
+    .card img {
+        width: 100%; /* Imagen ocupa todo el ancho */
+    }
+
+    .content {
+        padding: 20px;
     }
 }
 
@@ -280,30 +301,52 @@ footer {
 }
 
 .input-group {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .input-group label {
-    margin-right: 10px;
-    flex-basis: 30%;
-}
-
-.input-group input {
-    flex-basis: 65%;
-    padding: 10px;
     font-size: 1em;
-    border: 1px solid #CCC;
-    border-radius: 5px;
+    color: #555;
+    margin-bottom: 5px;
+    display: block; /* Asegurar que el label esté sobre el campo */
 }
 
+.input-group input, .input-group textarea {
+    width: 100%;
+    padding: 8px;
+    font-size: 0.9em;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
 
 .container { display: flex; align-items: center; justify-content: center; height: 100vh; }
-        .card { background-color: #F7F7F7; width: 60%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); border-radius: 10px; overflow: hidden; }
-        .card img { width: 100%; object-fit: cover; }
-        .content { padding: 20px; }
-        .form-section { margin-top: 20px; }
+        .card { background-color: #F7F7F7; width: 60%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); border-radius: 10px; overflow: hidden; 
+            height: auto;
+            align-items: stretch;
+            flex-direction: row;
+            display: flex;
+        }
+        .card .img {
+    flex: 0 0 40%; /* Ajusta el ancho de la tarjeta de imagen al 30% */
+    max-width: 40%; /* Garantiza que no exceda el 30% del contenedor */
+    height: auto;
+}
+        .card img {
+    flex-shrink: 0; /* Evita que la imagen se reduzca demasiado */
+    width: 100%; /* Ajusta el ancho de la imagen al 50% */
+    object-fit: cover; /* Recorta la imagen para ajustarse al contenedor */
+    height: auto; /* Mantén las proporciones */
+}  
+.content {
+    flex: 1; /* El formulario ocupa el espacio restante */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+        .form-section { margin-top: 90px; }
         .input-group { margin-bottom: 20px; }
         .input-group label { display: block; margin-bottom: 10px; font-size: 1.2em; color: #2B4657; }
         .input-group input, .input-group textarea {
@@ -311,29 +354,40 @@ footer {
         }
         .buttons { text-align: center; margin-top: 20px; }
         .buttons button {
-            padding: 12px 20px; font-size: 1.1em; text-align: center; border-radius: 8px; cursor: pointer;
+            padding: 10px 15px; font-size: 0.9em; text-align: center; border-radius: 5px; cursor: pointer;
             background-color: #6cace4; color: white; border: none; transition: background-color 0.3s ease;
         }
         .buttons button:hover { background-color: #56a5d7; }
     </style>
 </head>
 <body>
-    <header>
-        <div class="logo">
-            <img src="Img/logo.png" alt="UTA Logo">
-            <h1>Proceso de Elecciones UTA 2024</h1>
-        </div>
-        <nav>
-            <a href="../Home/inicio.php"><i class="fas fa-home"></i> Inicio</a>
-            <a href="../Candidatos/Candidatos.php"><i class="fas fa-user"></i> Candidatos</a>
-            <a href="../Propuestas/Propuestas.php"><i class="fas fa-bullhorn"></i> Propuestas</a>
-            <a href="../Eventos_Noticias/eventos_noticias.php"><i class="fas fa-calendar-alt"></i> Eventos y Noticias</a>
-            <a href="../Sugerencias/index.php"><i class="fas fa-comment-dots"></i> Sugerencias</a>
-            <a href="../Sugerencias/votos.php"><i class="fas fa-vote-yea"></i> Votos</a><!-- Nuevo campo -->
+<navbar>
 
-        </nav>
-    </header>
+<!-- Navbar -->
+<nav class="navbar">
+<div class="navbar-logo">
+<div class="text-center">
+</div>
+<!-- Logo existente -->
+<img src="Img/logoMariCruz.png" width="200px" style="margin-right: 20px;">
 
+</div>
+
+
+
+    </div>
+    <ul class="navbar-menu"> 
+    <li><a href="../Home/inicio.php"><i class="fa-solid fa-house"></i> <span>Inicio</span></a></li>
+        <li><a href="../Candidatos/candidatos.php"><i class="fa-solid fa-users"></i> <span>Candidatos</span></a></li>
+        <li><a href="../Eventos_Noticias/eventos_noticias.php"><i class="fa-solid fa-calendar-alt"></i> <span>Eventos y Noticias</span></a></li>
+        <li><a href="../Propuestas/Propuestas.php"><i class="fa-solid fa-lightbulb"></i> <span>Propuestas</span></a></li>
+        <li><a href="../Sugerencias/index.php"><i class="fa-solid fa-comment-dots"></i> <span>Sugerencias</span></a></li>
+        <li><a href="../Sugerencias/votos.php"><i class="fas fa-vote-yea"></i> Votos</a></li>
+    </ul>
+</nav>
+
+
+</navbar>
     <div class="container">
     <div class="card">
         <!-- Imagen en el lado izquierdo -->
