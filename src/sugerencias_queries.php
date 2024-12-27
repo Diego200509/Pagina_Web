@@ -5,15 +5,12 @@ include('../config/config.php');
 function obtenerSugerenciaPorId($id_sugerencia) {
     global $connection;  // Asegúrate de que la conexión esté disponible
 
-    // Consulta SQL corregida
     $sql = "SELECT 
                 s.ID_SUG AS id_sugerencia,
                 u.NOM_USU AS nombre_usuario,
                 u.EMAIL_USU AS correo_usuario,
                 c.NOM_CAN AS nombre_candidato,
                 s.SUGERENCIAS_SUG AS sugerencia,
-                s.PROPUESTA_SUG AS propuesta,
-                s.COMENTARIOS_SUG AS comentarios,
                 s.ESTADO_SUG AS estado,
                 s.CREATED_AT AS created_at
             FROM SUGERENCIAS s
@@ -23,50 +20,39 @@ function obtenerSugerenciaPorId($id_sugerencia) {
             WHERE s.ID_SUG = ?
             ORDER BY s.ID_SUG DESC";
 
-    // Preparar la consulta
     if ($stmt = $connection->prepare($sql)) {
-        // Bind el parámetro
-        $stmt->bind_param("i", $id_sugerencia);  // El tipo es "i" para un entero
-
-        // Ejecutar la consulta
+        $stmt->bind_param("i", $id_sugerencia);
         $stmt->execute();
-
-        // Obtener el resultado
         $result = $stmt->get_result();
 
-        // Si hay resultados, devolver la fila asociada
         if ($result->num_rows > 0) {
-            return $result->fetch_assoc();  // fetch_assoc() para obtener el resultado como un array asociativo
+            return $result->fetch_assoc();
         } else {
-            return null; // No se encuentra la sugerencia
+            return null;
         }
     } else {
-        return null; // Error en la preparación de la consulta
+        return null;
     }
 }
 
 
 
-function obtenerTodasSugerencias()
-{
+function obtenerTodasSugerencias() {
     global $connection;
 
-    // Consulta SQL corregida para obtener sugerencias junto con la información del usuario y del partido
     $sql = "SELECT 
-    s.ID_SUG AS id_sugerencia,
-    u.NOM_USU AS nombre_usuario,
-    u.EMAIL_USU AS correo_usuario,
-    c.NOM_CAN AS nombre_candidato,
-    s.SUGERENCIAS_SUG AS sugerencia,
-    s.PROPUESTA_SUG AS propuesta,
-    s.ESTADO_SUG AS estado,
-    s.CREATED_AT AS created_at
-FROM SUGERENCIAS s
-JOIN USUARIOS u ON s.ID_USU_PER = u.ID_USU
-JOIN PARTIDOS_POLITICOS p ON s.ID_PAR_SUG = p.ID_PAR
-JOIN CANDIDATOS c ON c.ID_PAR_CAN = p.ID_PAR
-ORDER BY s.ID_SUG DESC";
-
+                s.ID_SUG AS id_sugerencia,
+                u.NOM_USU AS nombre_usuario,
+                u.EMAIL_USU AS correo_usuario,
+                c.NOM_CAN AS nombre_candidato,
+                s.SUGERENCIAS_SUG AS sugerencia,
+                s.ESTADO_SUG AS estado,
+                s.CREATED_AT AS created_at
+            FROM SUGERENCIAS s
+            JOIN USUARIOS u ON s.ID_USU_PER = u.ID_USU
+            JOIN PARTIDOS_POLITICOS p ON s.ID_PAR_SUG = p.ID_PAR
+            JOIN CANDIDATOS c ON c.ID_PAR_CAN = p.ID_PAR
+            ORDER BY s.ID_SUG DESC";
 
     $result = $connection->query($sql);
 
@@ -79,6 +65,7 @@ ORDER BY s.ID_SUG DESC";
 
     return $sugerencias;
 }
+
 
 // Función para obtener el nombre del partido político según su ID_PAR
 function obtenerNombrePartido($idPartido)
@@ -185,7 +172,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </p>
                     
                     <div style='text-align: center; margin-top: 20px;'>
-                                    <a href='../Sugerencias/index.php' style='
+                                    <a href='../Sugerencias/votos.php' style='
                             display: inline-block; 
                             padding: 10px 20px; 
                             background-color: #f57c00; 
@@ -253,7 +240,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </p>
                             
                             <div style='text-align: center; margin-top: 20px;'>
-                                    <a href='../Sugerencias/index.php' style='
+                                    <a href='../Sugerencias/votos.php' style='
                                     display: inline-block; 
                                     padding: 10px 20px; 
                                     background-color: #00796b; 
@@ -294,7 +281,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             </p>
                                             
                                             <div style='text-align: center; margin-top: 20px;'>
-                                    <a href='../Sugerencias/index.php' style='
+                                    <a href='../Sugerencias/votos.php' style='
                                                     display: inline-block; 
                                                     padding: 10px 20px; 
                                                     background-color: #d32f2f; 
@@ -335,7 +322,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </p>
                         
                         <div style='text-align: center; margin-top: 20px;'>
-                <a href='../Sugerencias/index.php' style='
+                <a href='../Sugerencias/votos.php' style='
                                 display: inline-block; 
                                 padding: 10px 20px; 
                                 background-color: #d32f2f; 
@@ -415,7 +402,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </p>
     
     <div style='text-align: center; margin-top: 20px;'>
-        <a href='../Sugerencias/index.php' style='
+        <a href='../Sugerencias/votos.php' style='
             display: inline-block; 
             padding: 10px 20px; 
             background-color: #00796b; 

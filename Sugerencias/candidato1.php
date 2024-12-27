@@ -1,5 +1,7 @@
 <?php
 // Incluir el archivo de consultas
+include_once('../src/partido1_sugerencias_queries.php');
+
 $eventos_noticias = include('../src/partido1_sugerencias_queries.php');
 include('../Config/config.php');
 
@@ -53,6 +55,8 @@ textarea {
     align-items: center;
     justify-content: center;
     height: 100vh;
+    height: calc(100vh - 50px); /* Ajusta la altura para que deje espacio */
+    margin-top: 50px; /* Desplaza la tarjeta hacia abajo */
     color: #FFF;
     width: 100%;
     padding: 20px;
@@ -64,13 +68,13 @@ textarea {
 .card {
     display: flex;
     background-color: #F7F7F7;
-    width: 60%;
+    width: 70%;
     max-width: 4000px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .card img {
-    width: 50%;
+    width: 10%;
     height: auto;
     object-fit: cover;
 }
@@ -294,12 +298,29 @@ footer {
     border-radius: 5px;
 }
 
+
+.container { display: flex; align-items: center; justify-content: center; height: 100vh; }
+        .card { background-color: #F7F7F7; width: 60%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); border-radius: 10px; overflow: hidden; }
+        .card img { width: 100%; object-fit: cover; }
+        .content { padding: 20px; }
+        .form-section { margin-top: 20px; }
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; margin-bottom: 10px; font-size: 1.2em; color: #2B4657; }
+        .input-group input, .input-group textarea {
+            width: 100%; padding: 10px; font-size: 1em; border: 1px solid #CCC; border-radius: 5px;
+        }
+        .buttons { text-align: center; margin-top: 20px; }
+        .buttons button {
+            padding: 12px 20px; font-size: 1.1em; text-align: center; border-radius: 8px; cursor: pointer;
+            background-color: #6cace4; color: white; border: none; transition: background-color 0.3s ease;
+        }
+        .buttons button:hover { background-color: #56a5d7; }
     </style>
 </head>
 <body>
-    <header id="main-header">
+    <header>
         <div class="logo">
-            <img src="Img/logo.png" alt="UTA Logo"> 
+            <img src="Img/logo.png" alt="UTA Logo">
             <h1>Proceso de Elecciones UTA 2024</h1>
         </div>
         <nav>
@@ -308,55 +329,88 @@ footer {
             <a href="../Propuestas/Propuestas.php"><i class="fas fa-bullhorn"></i> Propuestas</a>
             <a href="../Eventos_Noticias/eventos_noticias.php"><i class="fas fa-calendar-alt"></i> Eventos y Noticias</a>
             <a href="../Sugerencias/index.php"><i class="fas fa-comment-dots"></i> Sugerencias</a>
+            <a href="../Sugerencias/votos.php"><i class="fas fa-vote-yea"></i> Votos</a><!-- Nuevo campo -->
+
         </nav>
     </header>
 
     <div class="container">
-        <div class="card">
-            <img src="Img/mari2.jpg" alt="Imagen de un estudiante">
-            <div class="content">
-            <div class="form-section">
-            <div class="form-section">
-            <h1 style="text-align: center;"><span style="color: #a30280; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;"><?php echo htmlspecialchars($nombrePartido); ?></span></h1>
-                <form method="POST" action="candidato1.php"> 
-    <div class="input-group">
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre" placeholder="Nombre de usuario" required>
-    </div>
-    <div class="input-group">
-        <label for="correo">Correo electrónico:</label>
-        <input type="email" id="email" name="email" placeholder="Correo electrónico" required>
+    <div class="card">
+        <!-- Imagen en el lado izquierdo -->
+        <div class="card img">
+            <img src="Img/mari2.jpg" alt="Imagen de Mary Cruz">
         </div>
-
-        <label for="sugerencias">Sugerencias:</label>
-        <textarea id="sugerencias" name="sugerencias" placeholder="Escribe tus sugerencias aquí..." required></textarea>
-        
-        <label for="propuestas">Propuestas:</label>
-        <textarea id="propuestas" name="propuestas" placeholder="Escribe tus propuestas aquí..." required></textarea>
-        
-        <label for="comentarios">Comentarios:</label>
-        <textarea id="comentarios" name="comentarios" placeholder="Escribe tus comentarios aquí..." required></textarea>
-        
-        <input type="hidden" name="id_partido" value="1"> 
-        
-        <div class="buttons">
-        <a href="index.php" class="btn-regresar">Regresar</a>
-
-            <button type="submit" class="btn1-enviar">Enviar Sugerencias</button>
-        </div>
-    </form>
-</div>
-
-</div>
-            </div>
+        <div class="content">
+            <h1 style="text-align: center; color: #2B4657;"><?php echo htmlspecialchars($nombrePartido); ?></h1>
+            <form id="suggestionForm">
+                <div class="input-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" placeholder="Nombre de usuario" required>
+                </div>
+                <div class="input-group">
+                    <label for="email">Correo electrónico (opcional):</label>
+                    <input type="email" id="email" name="email" placeholder="Correo electrónico">
+                </div>
+                <div class="input-group">
+                    <label for="sugerencias">Sugerencia:</label>
+                    <textarea id="sugerencias" name="sugerencias" placeholder="Escribe tu sugerencia aquí..." required></textarea>
+                </div>
+                <input type="hidden" name="id_partido" value="1">
+                <div class="buttons">
+                    <button type="submit">Enviar Sugerencia</button>
+                </div>
+            </form>
         </div>
     </div>
-
-
-
-<div class="footer-rights">
-    Derechos reservados Team Sangre 2024
 </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+$(document).ready(function() {
+    $('#suggestionForm').on('submit', function(e) {
+        e.preventDefault();
+        $.ajax({
+            url: '../src/partido1_sugerencias_queries.php',
+            type: 'POST',
+            data: $(this).serialize(),
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Sugerencia Enviada!',
+                        text: response.message,
+                        confirmButtonText: 'Aceptar',
+                        confirmButtonColor: '#388e3c',
+                        backdrop: true
+                    });
+                    $('#suggestionForm')[0].reset(); // Limpiar formulario tras el éxito
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: response.message,
+                        confirmButtonText: 'Aceptar',
+                        confirmButtonColor: '#d33',
+                        backdrop: true
+                    });
+                }
+            },
+            error: function() {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Ocurrió un problema al procesar la solicitud. Intenta nuevamente.',
+                    confirmButtonText: 'Aceptar',
+                    confirmButtonColor: '#d33',
+                    backdrop: true
+                });
+            }
+        });
+    });
+});
+</script>
 
 </body>
 </html>

@@ -44,11 +44,12 @@ if (empty($eventos_noticias)) {
 }
 
 // Consulta para obtener una sugerencia aleatoria junto con el nombre del partido político
-$sql_sugerencia = "SELECT S.SUGERENCIAS_SUG, S.PROPUESTA_SUG, P.NOM_PAR 
+$sql_sugerencia = "SELECT S.SUGERENCIAS_SUG, P.NOM_PAR 
                    FROM SUGERENCIAS S
                    JOIN PARTIDOS_POLITICOS P ON S.ID_PAR_SUG = P.ID_PAR
                    ORDER BY RAND() 
                    LIMIT 1";
+
 $stmt = $connection->prepare($sql_sugerencia);
 $stmt->execute();
 $result_sugerencia = $stmt->get_result();
