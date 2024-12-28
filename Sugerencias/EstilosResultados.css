@@ -1,7 +1,7 @@
 body, html {
     margin: 0;
     padding: 0;
-    height: 100%; /* Ocupa toda la altura de la ventana */
+    height: 116%; /* Ocupa toda la altura de la ventana */
     font-family: Arial, sans-serif;
     background-image: url('Img/fondovotos.jpg'); /* Ruta de la imagen de fondo */
     background-position: center;
@@ -13,9 +13,9 @@ body, html {
 }
 .container {
     background-color: rgba(252, 252, 252, 0.705); /* Fondo negro semi-transparente */
-    margin: 20px auto;
-    padding: 20px;
-    max-width: 1000px;
+    margin: 29px auto;
+    padding: 0px;
+    max-width: 100px;
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
     color: rgb(19, 17, 17);
@@ -30,12 +30,14 @@ body, html {
         h1 {
             font-size: 2.5em;
             margin-bottom: 10px;
+            color: rgb(0, 0, 0);
+
         }
 
         h2 {
             font-size: 1.5em;
             margin-top: 0;
-            color: rgb(248, 248, 248);
+            color: rgb(0, 0, 0);
         }
         h3 {
             font-size: 1.5em;
@@ -118,69 +120,57 @@ body, html {
             background-color: black;
         }
         
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 50px;
-            background-color: #b22222;
-            width: 100%;
-            box-sizing: border-box;
-            margin: 0;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-        }
 
-        header.hidden {
-            transform: translateY(-100%);
-        }
+/* Navbar */
+.navbar {
+    background-color: var(--navbar-bg-color, #00bfff);
+    display: flex;
+    align-items: center;
+    padding: 10px 20px; 
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    gap: 20px; /* Espacio entre logo y menú */
+}
 
-        header:not(.hidden) {
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-        }
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #ffffff;
+    flex-shrink: 0; /* Mantener el tamaño fijo del logo */
+}
 
-        header .logo {
-            display: flex;
-            align-items: center;
-        }
+.navbar-logo i {
+    font-size: 24px;
+}
 
-        header .logo img {
-            width: 50px;
-            margin-right: 10px;
-        }
+.navbar-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px; /* Espacio entre elementos del menú */
+    flex-grow: 1; /* Ocupa todo el espacio disponible */
+    justify-content: flex-end; /* Alinear los botones a la derecha */
+    padding-right: 20px; /* Asegura espacio entre el último botón y el borde derecho */
+}
 
-        header .logo h1 {
-            color: #ffffff;
-            font-size: 1.5em;
-        }
+.navbar-menu li {
+    list-style: none;
+}
 
-        header nav {
-            display: flex;
-            align-items: center;
-        }
+.navbar-menu li a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+}
 
-        header nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 15px;
-            font-size: 1em;
-            transition: color 0.3s;
-            display: flex;
-            align-items: center;
-        }
-
-        header nav a i {
-            margin-right: 8px;
-        }
-
-        header nav a:hover {
-            color: #2f2929;
-        }
+.navbar-menu li a:hover {
+    color: #ff0050;
+}
         footer {
             text-align: center;
             padding: 20px;

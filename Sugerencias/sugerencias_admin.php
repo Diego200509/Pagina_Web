@@ -1,5 +1,17 @@
 <?php
 session_start();
+include('../config/config.php');
+
+
+$navbarConfigPath = "../Login/navbar_config.json"; // Ruta al archivo de configuración del Navbar
+
+// Verificar si el archivo existe y cargar el color del Navbar
+if (file_exists($navbarConfigPath)) {
+    $navbarConfig = json_decode(file_get_contents($navbarConfigPath), true);
+    $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff'; // Azul por defecto
+} else {
+    $navbarBgColor = '#00bfff'; // Azul por defecto si no existe el archivo
+}
 
 // Verificar si el usuario está autenticado y tiene un rol válido
 if (!isset($_SESSION['user_role']) || !in_array($_SESSION['user_role'], ['SUPERADMIN', 'ADMIN'])) {
@@ -18,12 +30,19 @@ $sugerencias = obtenerTodasSugerencias();
 <!DOCTYPE html>
 <html lang="es">
 <head>
+<style>
+        :root {
+            --navbar-bg-color: <?php echo $navbarBgColor; ?>;
+        }
+</style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administrar Sugerencias</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <style>
 /* General */
 body {
@@ -229,30 +248,24 @@ tbody tr:hover {
 
 /* Navbar */
 .navbar {
-    background-color: rgb(122, 3, 23);
-    color: white;
+    background-color: var(--navbar-bg-color, #00bfff);
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    padding: 10px 20px; 
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    gap: 20px; /* Espacio entre logo y menú */
 }
 
 .navbar-logo {
     display: flex;
     align-items: center;
     gap: 10px;
-    color: white;
+    color: #ffffff;
+    flex-shrink: 0; /* Mantener el tamaño fijo del logo */
 }
 
-.navbar-logo img {
-    width: 50px;
-    margin-right: 10px;
-}
-
-.navbar-logo h2 {
-    font-size: 1.5rem;
-    margin: 0;
+.navbar-logo i {
+    font-size: 24px;
 }
 
 .navbar-menu {
@@ -260,7 +273,10 @@ tbody tr:hover {
     margin: 0;
     padding: 0;
     display: flex;
-    gap: 20px;
+    gap: 20px; /* Espacio entre elementos del menú */
+    flex-grow: 1; /* Ocupa todo el espacio disponible */
+    justify-content: flex-end; /* Alinear los botones a la derecha */
+    padding-right: 20px; /* Asegura espacio entre el último botón y el borde derecho */
 }
 
 .navbar-menu li {
@@ -271,11 +287,14 @@ tbody tr:hover {
     display: flex;
     align-items: center;
     gap: 8px;
-    color: white;
+    color: #ffffff;
     text-decoration: none;
     font-size: 16px;
     font-weight: bold;
-    transition: color 0.3s;
+}
+
+.navbar-menu li a:hover {
+    color: #ff0050;
 }
 /* From Uiverse.io by sihamjardi */ 
 .delete-btn {
@@ -340,9 +359,7 @@ tbody tr:hover {
 }
 
 
-.navbar-menu li a:hover {
-    color: #ffc107;
-}
+
 
 .logout {
     color: #ffc107;
@@ -685,7 +702,10 @@ tbody tr:hover {
     }
 }
 
+
     </style>
+
+
     <script>
         // Modal handling
         const showModal = () => {
@@ -741,24 +761,23 @@ tbody tr:hover {
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar">
-        <div class="navbar-logo">
-            <img src="../Home/Img/logo.png" alt="UTA Logo">
-            <h2><?php echo $_SESSION['user_role'] === 'SUPERADMIN' ? 'SuperAdmin' : 'Admin'; ?></h2>
+<nav class="navbar">
+    <div class="navbar-logo">
+        <div class="text-center">
+            <!-- Logo existente -->
+            <img src="Img/logoMariCruz.png" width="200px" style="margin-right: 20px;">
         </div>
-        <ul class="navbar-menu">
-            <li><a href="../Candidatos/candidatos_admin.php"><i class="fas fa-users"></i> Candidatos</a></li>
-            <li><a href="../Eventos_Noticias/eventos_noticias_admin.php"><i class="fas fa-calendar-alt"></i> Eventos y Noticias</a></li>
-            <li><a href="../Propuestas/gestionarPropuestas.php"><i class="fas fa-lightbulb"></i> Propuestas</a></li>
-            <li><a href="../Sugerencias/sugerencias_admin.php"><i class="fas fa-comment-dots"></i> Sugerencias</a></li>
-            <li><a href="../Sugerencias/resultados_admin.php"><i class="fas fa-vote-yea"></i> Votos</a></li> <!-- Nuevo campo -->
+    </div>
+    <ul class="navbar-menu">
+        <li><a href="../Home/inicio.php"><i class="fa-solid fa-house"></i> <span>Inicio</span></a></li>
+        <li><a href="../Candidatos/candidatos.php"><i class="fa-solid fa-users"></i> <span>Candidatos</span></a></li>
+        <li><a href="../Eventos_Noticias/eventos_noticias.php"><i class="fa-solid fa-calendar-alt"></i> <span>Eventos y Noticias</span></a></li>
+        <li><a href="../Propuestas/Propuestas.php"><i class="fa-solid fa-lightbulb"></i> <span>Propuestas</span></a></li>
+        <li><a href="../Sugerencias/sugerencias_admin.php"><i class="fa-solid fa-comment-dots"></i> <span>Sugerencias</span></a></li>
+        <li><a href="../Sugerencias/resultados_admin.php"><i class="fas fa-vote-yea"></i> Votos</a></li>
+    </ul>
+</nav>
 
-            <?php if ($_SESSION['user_role'] === 'SUPERADMIN'): ?>
-                <li><a href="#" onclick="showModal()"><i class="fas fa-user-plus"></i> Crear Admin</a></li>
-            <?php endif; ?>
-            <li><a href="../Login/Login.php" class="logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
-        </ul>
-    </nav>
 
       <!-- Modal para Crear Admin -->
       <?php if ($_SESSION['user_role'] === 'SUPERADMIN'): ?>
