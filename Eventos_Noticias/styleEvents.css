@@ -22,12 +22,14 @@ h2 {
     text-align: center;
     margin-bottom: 30px;
 }
+
 h2::after {
     content: '';
     display: block;
     width: 50px;
     height: 5.5px;
-    background-color: #ff1493; /* Color rosa */
+    background-color: #ff1493;
+    /* Color rosa */
     margin: 10px auto 0;
     border-radius: 2px;
 }
@@ -50,7 +52,8 @@ h2::after {
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 350px; /* Ancho incrementado */
+    width: 350px;
+    /* Ancho incrementado */
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -67,7 +70,8 @@ h2::after {
 .event-image,
 .news-image {
     width: 100%;
-    height: 250px; /* Altura incrementada */
+    height: 250px;
+    /* Altura incrementada */
     object-fit: cover;
     display: block;
     border-top-left-radius: 8px;
@@ -94,8 +98,10 @@ h2::after {
     line-height: 1.5;
     overflow: hidden;
     text-overflow: ellipsis;
-    display: block; /* Mostrar toda la descripción */
-    max-height: none; /* Sin límite de altura */
+    display: block;
+    /* Mostrar toda la descripción */
+    max-height: none;
+    /* Sin límite de altura */
 }
 
 
@@ -182,47 +188,57 @@ h2::after {
     background-color: #0d8ab3;
 }
 
-/* Estilos del header */
-header {
+.navbar {
+    background-color: var(--navbar-bg-color, #00bfff);
+    /* Azul vibrante como color por defecto */
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 50px;
-    background-color: #b22222;
+    padding: 10px 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    /* Sombra ligera */
 }
 
-header .logo {
+
+.navbar-logo {
     display: flex;
     align-items: center;
-}
-
-header .logo img {
-    width: 50px;
-    margin-right: 10px;
-}
-
-header .logo h1 {
+    gap: 10px;
     color: #ffffff;
-    font-size: 1.5em;
+    /* Blanco */
 }
 
-header nav {
+.navbar-logo i {
+    font-size: 24px;
+}
+
+.navbar-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+}
+
+.navbar-menu li {
+    list-style: none;
+}
+
+.navbar-menu li a {
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
-}
-
-header nav a {
-    color: white;
+    gap: 8px;
+    /* Espacio entre icono y texto */
+    color: #ffffff;
+    /* Blanco */
     text-decoration: none;
-    margin: 0 15px;
-    font-size: 1em;
-    transition: color 0.3s;
+    font-size: 16px;
+    font-weight: bold;
 }
 
-header nav a:hover {
-    color: #2f2929;
+.navbar-menu li a:hover {
+    color: #ff0050;
+    /* Rosa brillante */
 }
 
 /* Estilos del footer */
@@ -291,7 +307,8 @@ header nav a:hover {
 
 /* Ventana emergente */
 .modal {
-    display: none; /* Ocultar por defecto */
+    display: none;
+    /* Ocultar por defecto */
     position: fixed;
     z-index: 1000;
     left: 0;
@@ -299,7 +316,8 @@ header nav a:hover {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Fondo oscuro */
 }
 
 .modal-content {
