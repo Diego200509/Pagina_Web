@@ -46,19 +46,21 @@ h2::after {
     /* Espacio entre tarjetas */
 }
 
-/* Tarjetas de eventos y noticias */
 .event,
 .news {
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 350px;
-    /* Ancho incrementado */
     overflow: hidden;
     display: flex;
     flex-direction: column;
     text-align: left;
     transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    margin: 10px;
+    border: 6px solid;
+    border-image: linear-gradient(45deg, #ff1493, #00bfff) 1;
 }
 
 .event:hover,
@@ -243,7 +245,7 @@ h2::after {
 
 /* Estilos del footer */
 .footer-rights {
-    background-color: #b22222;
+    background-color: #00bfff;
     color: white;
     text-align: center;
     padding: 10px;
