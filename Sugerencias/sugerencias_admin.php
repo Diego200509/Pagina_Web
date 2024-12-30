@@ -53,7 +53,7 @@ body {
 }
 
 header {
-    background-color: #8a2b2b;
+    background-color: #ff1493;
     color: white;
     padding: 20px;
     text-align: center;
@@ -62,14 +62,14 @@ header {
 }
 /* Contenedor de la Tabla */
 .table-container {
-    width: 95%;
-    margin: 30px auto;
-    border-radius: 12px;
-    overflow-x: auto;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Sombra profesional */
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 16px;
     background-color: white;
-    animation: fadeIn 1s ease;
-    transition: box-shadow 0.3s ease;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
 }
 
 .sort-icon {
@@ -94,52 +94,60 @@ th[data-sort="desc"] .sort-icon {
 }
 
 /* Tabla */
-table {
+.table {
     width: 100%;
     border-collapse: collapse;
-    border-radius: 12px;
-    overflow: hidden;
+    margin-top: 20px;
+    font-size: 16px;
     background-color: white;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Sombra adicional */
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
 }
-
-thead {
-    background-color: #8a2b2b;
+.table thead {
+    background-color: #00bfff; /* Azul vibrante */
     color: white;
+    font-weight: bold;
+    text-align: left;
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1); /* Sombra destacada en encabezado */
 }
 
-th {
+
+.table th {
     cursor: pointer;
-    position: relative;
-    text-align: left;
     padding: 15px;
-    background-color: #8a2b2b;
+    background-color: #00bfff;
     color: white;
     user-select: none;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-th:hover {
-    background-color: #d94a4a;
-}
-th, td {
-    padding: 15px;
-    text-align: left;
-    border-bottom: 1px solid #e6e6e6;
+.table th:hover {
+    background-color: #008ccd;
 }
 
-tbody tr {
+
+.table th, 
+.table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.table tbody tr {
     background-color: #f9f9f9;
     transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
 }
-
-tbody tr:nth-child(even) {
-    background-color: #f0f0f5;
+.table tbody tr:nth-child(odd) {
+    background: linear-gradient(135deg, rgba(255, 20, 147, 0.1), white); /* Degradado rosa claro */
 }
 
-tbody tr:hover {
-    background-color: #e4e8f0;
+.table tbody tr:nth-child(even) {
+    background: linear-gradient(135deg, rgba(0, 191, 255, 0.1), white); /* Degradado azul claro */
+}
+
+.table tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.05); /* Fondo al pasar el mouse */
     transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Sombra dinámica al hover */
 }
@@ -815,7 +823,7 @@ tbody tr:hover {
     <header>Administrar Sugerencias</header>
     <main>
         <div class="table-container">
-            <table>
+            <table class="table">
             <thead>
     <tr>
         <th data-column="nombre_usuario" onclick="sortTable('nombre_usuario')">
@@ -998,6 +1006,8 @@ async function actualizarEstado(id) {
             estadoCelda.className = '';
             estadoCelda.classList.add('estado-btn', 'estado-revisado');
 
+            button.textContent = 'Revisado';
+            button.disabled = true;
             // Mostrar notificación de éxito
             showNotification('Estado actualizado a Revisado.', 'success');
         } else {
