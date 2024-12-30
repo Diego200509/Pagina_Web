@@ -1,3 +1,17 @@
+<?php
+include('../config/config.php');
+
+
+$navbarConfigPath = "../Login/navbar_config.json"; 
+
+if (file_exists($navbarConfigPath)) {
+    $navbarConfig = json_decode(file_get_contents($navbarConfigPath), true);
+    $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff'; 
+} else {
+    $navbarBgColor = '#00bfff'; 
+}
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -7,6 +21,12 @@
     <title>Eventos y Noticias</title>
     <link rel="stylesheet" href="styleEvents.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --navbar-bg-color: <?php echo $navbarBgColor; ?>;
+        }
+    </style>
 </head>
 
 <body>
@@ -16,7 +36,6 @@
             <div class="navbar-logo">
                 <div class="text-center">
                 </div>
-                <!-- Logo existente -->
                 <img src="../Login/Img/logoMariCruz.png" width="200px" style="margin-right: 20px;">
 
             </div>
@@ -114,6 +133,7 @@
     </div>
 
     <script src="scriptsEvents.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
