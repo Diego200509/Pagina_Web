@@ -73,23 +73,24 @@ textarea {
 }
 
 .container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  perspective: 1000px; /* Perspectiva para efecto 3D */
 }
 
+
 .card {
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    width: 100%;
-    height: auto;
-    background-color: #F7F7F7;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-    overflow: hidden;
+  width: 17em;
+  height: 22.5em;
+  background: #171717;
+  transition: 1s ease-in-out;
+  clip-path: polygon(30px 0%, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0% 30px);
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .card .img {
@@ -213,72 +214,192 @@ footer {
     margin-top: 0px;
 }
 
-.form-section {
-    margin-top: 20px;
+/* Contenedor del formulario */
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
 }
 
-.form-section label {
-    display: block;
-    margin-bottom: 10px;
-    font-size: 1.2em;
-    color: #2B4657;
+/* Estilo general del formulario */
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.8s ease-in-out; /* Animación más suave */
+
 }
 
-.form-section textarea {
-    width: 100%;
-    height: 80px;
-    padding: 10px;
-    font-size: 1em;
-    border: 1px solid #CCC;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    resize: none;
+/* Frente del formulario */
+.form .form_front {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  position: absolute;
+  backface-visibility: hidden;
+  padding: 30px;
+  border-radius: 15px;
+  background-color: #fff; /* Fondo blanco */
+  box-shadow: inset 2px 2px 10px rgba(0, 0, 0, 0.1), /* Sombra sutil */
+              inset -1px -1px 5px rgba(255, 255, 255, 0.6);
 }
 
-.buttons {
+/* Parte trasera del formulario */
+.form .form_back {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  position: absolute;
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
+  padding: 65px 45px;
+  border-radius: 15px;
+  background-color: #fff; /* Fondo blanco */
+  box-shadow: inset 2px 2px 10px rgba(0, 0, 0, 0.1),
+              inset -1px -1px 5px rgba(255, 255, 255, 0.6);
+}
+
+/* Títulos del formulario */
+.form_details {
+  font-size: 25px;
+  font-weight: 600;
+  padding-bottom: 10px;
+  color: #2B4657; /* Texto gris oscuro */
+}
+
+/* Campos de entrada */
+.input {
+    width: 245px;
+  min-height: 45px;
+  color: #333; /* Color oscuro */
+  outline: none;
+  transition: 0.35s ease-in-out; /* Transición suave */
+  padding: 5px 10px;
+  background-color: #f5f5f5; /* Fondo claro */
+  border-radius: 6px;
+  border: 2px solid #ddd; /* Borde gris claro */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  inset 1px 1px 4px rgba(0, 0, 0, 0.15); /* Sombras suaves */
+
+}
+
+.input-container input{
+  margin-bottom: 20px;
+}
+
+.input-container label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: #2B4657;
+  font-weight: bold;
+}
+/* Placeholder de los campos de entrada */
+.input::placeholder {
+  color: #999; /* Placeholder gris claro */
+}
+
+/* Placeholder cuando el campo está enfocado */
+.input:focus.input::placeholder {
+  transition: 0.3s;
+  opacity: 0;
+}
+
+/* Efecto al enfocar un campo */
+.input:focus {
+    transform: scale(1.05);
+  box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1),
+    1px 1px 10px rgba(255, 255, 255, 0.6),
+    inset 2px 2px 10px rgba(0, 0, 0, 0.1),
+    inset -1px -1px 5px rgba(255, 255, 255, 0.6);
+}
+
+.button {
+    display: flex; /* Usamos flexbox para centrar */
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente si es necesario */
+    margin-top: 20px; /* Espaciado superior */
+}
+
+/* Estilo del botón "Enviar Sugerencia" */
+button {
+    position: relative;
     display: flex;
-    gap: 10px;
     justify-content: center;
-    margin-top: 15px;
-}
-/* Estilo común para ambos botones */
-.buttons button, .buttons a {
-    padding: 12px 20px;
-    font-size: 1.1em;
-    text-align: center;
-    border-radius: 8px;  /* Bordes redondeados */
+    align-items: center;
+    border-radius: 5px;
+    background: #00bfff;
+    font-family: "Montserrat", sans-serif;
+    box-shadow: 0px 6px 24px 0px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
     cursor: pointer;
-    transition: all 0.3s ease;  /* Transición suave para el hover */
-    width: 48%;  /* Hace que ambos botones tengan el mismo tamaño */
-    box-sizing: border-box; /* Para evitar que el padding afecte el ancho total */
-}
-
-/* Estilo específico para el botón de "Enviar Sugerencias" */
-.btn1-enviar {
-    background-color: #6cace4; /* Azul suave */
-    color: white;
     border: none;
+    padding: 0px 0px; /* Tamaño más pequeño */
+    font-size: 1em; /* Ajustar el tamaño del texto */
 }
 
-.btn1-enviar:hover {
-    background-color: #56a5d7; /* Azul más oscuro al pasar el mouse */
+button:after {
+    content: " ";
+    width: 0%;
+    height: 100%;
+    background: #ff1493;
+    position: absolute;
+  transition: all 0.4s ease-in-out;
+  right: 0;
+  z-index: 1; /* Asegura que el fondo esté detrás del texto */
+
 }
 
-/* Estilo específico para el botón de "Regresar" */
-.btn-regresar {
-    background-color: #dcdcdc; /* Gris suave */
-    color: #2B4657; /* Texto oscuro para mayor contraste */
-    border: none;
+button:hover::after {
+    right: auto;
+    left: 0;
+    width: 100%;
 }
 
-.btn-regresar:hover {
-    background-color: #b0b0b0; /* Gris más oscuro al pasar el mouse */
+button span {
+    text-align: center;
+    text-decoration: none;
+    width: 100%;
+    padding: 18px 25px;
+    color: #fff;
+    font-size: 0.8em; /* Asegura tamaño adecuado para el texto */
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    z-index: 2;
+    transition: all 0.3s ease-in-out;
 }
 
-/* Asegura que los botones se agranden ligeramente al pasar el mouse */
-.buttons a:hover, .buttons button:hover {
-    transform: scale(1.05);  /* Efecto de agrandamiento sutil */
+button:hover span {
+    color: #fff;
+    animation: scaleUp 0.3s ease-in-out;
 }
+
+
+@keyframes scaleUp {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(0.95);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
 
 /* Asegura que los botones se vean bien en dispositivos pequeños */
 @media (max-width: 768px) {
@@ -296,31 +417,8 @@ footer {
     }
 }
 
-.content h1 {
-    text-align: center;
-}
 
-.input-group {
-    margin-bottom: 15px;
-}
 
-.input-group label {
-    font-size: 1em;
-    color: #555;
-    margin-bottom: 5px;
-    display: block; /* Asegurar que el label esté sobre el campo */
-}
-
-.input-group input, .input-group textarea {
-    width: 100%;
-    padding: 8px;
-    font-size: 0.9em;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
-
-.container { display: flex; align-items: center; justify-content: center; height: 100vh; }
         .card { background-color: #F7F7F7; width: 60%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); border-radius: 10px; overflow: hidden; 
             height: auto;
             align-items: stretch;
@@ -338,6 +436,24 @@ footer {
     object-fit: cover; /* Recorta la imagen para ajustarse al contenedor */
     height: auto; /* Mantén las proporciones */
 }  
+.form .switch {
+  font-size: 13px;
+  color:rgb(10, 15, 19);
+}
+
+.form .switch .signup_tog {
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.container #signup_toggle {
+  display: none;
+}
+
+.container #signup_toggle:checked + .form {
+  transform: rotateY(180deg);
+}
 .content {
     flex: 1; /* El formulario ocupa el espacio restante */
     padding: 20px;
@@ -345,19 +461,15 @@ footer {
     flex-direction: column;
     justify-content: center;
 }
+.content h1 {
+  text-align: center;
+  color: #2b4657;
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
 
-        .form-section { margin-top: 90px; }
-        .input-group { margin-bottom: 20px; }
-        .input-group label { display: block; margin-bottom: 10px; font-size: 1.2em; color: #2B4657; }
-        .input-group input, .input-group textarea {
-            width: 100%; padding: 10px; font-size: 1em; border: 1px solid #CCC; border-radius: 5px;
-        }
-        .buttons { text-align: center; margin-top: 20px; }
-        .buttons button {
-            padding: 10px 15px; font-size: 0.9em; text-align: center; border-radius: 5px; cursor: pointer;
-            background-color: #6cace4; color: white; border: none; transition: background-color 0.3s ease;
-        }
-        .buttons button:hover { background-color: #56a5d7; }
+
     </style>
 </head>
 <body>
@@ -388,7 +500,7 @@ footer {
 
 
 </navbar>
-    <div class="container">
+<div class="form-container">
     <div class="card">
         <!-- Imagen en el lado izquierdo -->
         <div class="card img">
@@ -396,22 +508,22 @@ footer {
         </div>
         <div class="content">
             <h1 style="text-align: center; color: #2B4657;"><?php echo htmlspecialchars($nombrePartido); ?></h1>
-            <form id="suggestionForm">
-                <div class="input-group">
+            <form id="suggestionForm"class="form">
+                <div class="input-container">
                     <label for="nombre">Nombre:</label>
-                    <input type="text" id="nombre" name="nombre" placeholder="Nombre de usuario" required>
+                    <input type="text" id="nombre" name="nombre" class="input"placeholder="Nombre de usuario" required>
                 </div>
-                <div class="input-group">
+                <div class="input-container">
                     <label for="email">Correo electrónico (opcional):</label>
-                    <input type="email" id="email" name="email" placeholder="Correo electrónico">
+                    <input type="email" id="email" name="email" class="input"placeholder="Correo electrónico">
                 </div>
-                <div class="input-group">
+                <div class="input-container">
                     <label for="sugerencias">Sugerencia:</label>
-                    <textarea id="sugerencias" name="sugerencias" placeholder="Escribe tu sugerencia aquí..." required></textarea>
+                    <textarea id="sugerencias" name="sugerencias" class="input"placeholder="Escribe tu sugerencia aquí..." required></textarea>
                 </div>
                 <input type="hidden" name="id_partido" value="1">
-                <div class="buttons">
-                    <button type="submit">Enviar Sugerencia</button>
+                <div class="button">
+                <button type="submit"><span>Enviar Sugerencia</span></button>
                 </div>
             </form>
         </div>
