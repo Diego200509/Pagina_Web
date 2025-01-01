@@ -64,11 +64,13 @@
         }
 
         .candidate img {
-            width: 100%;
+            width: 100%; /* Se ajusta al ancho del contenedor padre */
+            height: 200px; /* Altura fija para todas las imágenes */
+            object-fit: cover; /* Ajusta la imagen para llenar el espacio manteniendo la proporción */
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-
+        
         .candidate h3 {
             font-size: 1.2em;
             margin: 10px 0 5px;

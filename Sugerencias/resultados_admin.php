@@ -107,6 +107,40 @@ $imagenesActuales = obtenerImagenesResultados();
             color: #ffc107;
         }
 
+        .toggle-button {
+            background-color: #ff1493;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .toggle-button:hover {
+            background-color: #00bfff;
+        }
+        #image-update-container {
+            display: none; /* Oculto inicialmente */
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            margin-top: 15px;
+        }
+
+        #image-update-container h2 {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+
+
         /* Modal Styles */
         .modal {
             display: none;
@@ -210,37 +244,252 @@ body {
 }
 
 .image-modal-content {
-    background: white;
-    border-radius: 15px;
+    background: linear-gradient(135deg, #ffffff, #f8f9fa);
+    border-radius: 20px;
     padding: 30px;
-    width: 400px;
+    width: 500px;
     max-width: 90%;
-    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.2);
     position: relative;
     animation: fadeIn 0.3s ease-in-out;
 }
 
 .image-modal-content h2 {
-    font-size: 22px;
+    font-size: 24px;
     font-weight: bold;
     text-align: center;
     margin-bottom: 20px;
-    color: #333;
+    color: #00bfff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.dynamic-container {
+    background-color: rgba(245, 245, 245, 0.95); /* Fondo claro */
+    padding: 20px; /* Espaciado interno */
+    margin: 15px auto; /* Espaciado externo, centrado horizontal */
+    border-radius: 12px; /* Bordes redondeados */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra sutil */
+    width: auto; /* Ajuste dinámico según el contenido */
+    max-width: 85%; /* Limitar tamaño máximo */
+    transition: all 0.3s ease-in-out; /* Transiciones suaves */
+    overflow: hidden; /* Evitar desbordamiento */
+}
+
+.dynamic-container h2 {
+    font-size: 26px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333; /* Color de texto */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.dynamic-container .row {
+    display: flex;
+    flex-wrap: wrap; /* Ajuste dinámico en varias filas */
+    gap: 20px; /* Espaciado entre los elementos */
+    justify-content: center; /* Centrar el contenido */
+}
+
+.dynamic-container .col-md-4 {
+    flex: 1 1 calc(30% - 20px); /* Ajustar a un tercio del espacio disponible */
+    max-width: 300px; /* Limitar ancho máximo */
+    text-align: center; /* Centrar texto */
+}
+
+.dynamic-container .col-md-4 img {
+    width: 100%; /* Ajustar al contenedor */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Sombra */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Efecto de hover */
+}
+
+.dynamic-container .col-md-4 img:hover {
+    transform: scale(1.05); /* Ampliar ligeramente */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Intensificar sombra */
+}
+
+.dynamic-container .col-md-4 p {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #555; /* Color de texto gris */
+}
+
+.dynamic-container .button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.dynamic-container .button-container button {
+    background-color: #0044cc; /* Azul */
+    color: white; /* Texto blanco */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.dynamic-container .button-container button:hover {
+    background-color: #0033a1; /* Azul oscuro */
+    transform: scale(1.05); /* Ampliar ligeramente */
+}
+
+label {
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 10px 20px; /* Más ancho */
+    cursor: pointer;
+    user-select: none;
+    border-radius: 10px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    color: black;
+    transition: background-color 0.3s ease; /* Suavizar el fondo */
+    width: 200px; /* Ancho fijo para mejor visibilidad */
+    height: 50px; /* Altura consistente */
+}
+input {
+    display: none;
+}
+input[type="checkbox"] {
+    display: none; /* Ocultar el checkbox */
+}
+
+label svg {
+    transition: transform 0.3s ease, stroke 0.3s ease;
+}
+input:checked + label svg {
+    transform: rotate(360deg); /* Animación de giro */
+    stroke:rgb(0, 0, 0); /* Cambio de color del ícono */
+}
+input:checked + label {
+    background-color: white; /* No cambia el fondo completo */
+}
+@keyframes gearButton {
+    0% { transform: rotate(0); }
+    50% { transform: rotate(180deg); }
+    100% { transform: rotate(360deg); }
+}
+
+input + label .action {
+    position: relative;
+    overflow: hidden;
+    display: grid;
+}
+
+input + label .action span {
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 1;
+    grid-row-end: 1;
+    transition: all .5s;
+}
+
+input + label .action span.option-1 {
+    transform: translate(0px,0%);
+    opacity: 1;
+}
+
+input:checked + label .action span.option-1 {
+    transform: translate(0px,-100%);
+    opacity: 0;
+}
+
+input + label .action span.option-2 {
+    transform: translate(0px,100%);
+    opacity: 0;
+}
+
+input:checked + label .action span.option-2 {
+    transform: translate(0px,0%);
+    opacity: 1;
+}
+
+.form-label {
+            font-weight: bold;
+            color: #555;
+        }
+
+
+        .form-control,
+        .form-select {
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+.image-modal .form-label {
+    font-weight: bold;
+    color: #555;
+    font-size: 16px;
+}
+
+.image-modal .form-control, 
+.image-modal .form-select {
+    padding: 12px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+}
+.image-modal .form-control:focus, 
+.image-modal .form-select:focus {
+    border-color: #0044cc;
+    box-shadow: 0 0 8px rgba(0, 68, 204, 0.4);
+    outline: none;
+}
+.btn-primary {
+            background-color: #0044cc;
+            border-color: #0044cc;
+            padding: 10px 20px;
+            font-size: 14px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .btn-primary:hover {
+            background-color: #0033a1;
+        }
+.image-modal .btn-primary {
+    background-color: #0044cc;
+    border-color: #0044cc;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    width: 100%;
+    transition: all 0.3s ease-in-out;
+}
+
+.image-modal .btn-primary:hover {
+    background-color: #0033a1;
+    border-color: #0033a1;
+    transform: translateY(-2px);
 }
 
 .image-modal-close {
     position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 20px;
+    top: 15px;
+    right: 20px;
+    font-size: 24px;
     cursor: pointer;
-    color: #666;
-    transition: color 0.3s ease;
+    color: #888;
+    transition: color 0.3s ease-in-out;
 }
 
+
+
 .image-modal-close:hover {
-    color: red;
+    color: #cc0000;
 }
+
 
 .image-modal .btn-submit {
     background-color: #4caf50;
@@ -324,6 +573,39 @@ body {
             width: 100%;
             max-height: 300px;
         }
+
+        
+        .col-md-4 img {
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.col-md-4 img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+}
+
+.col-md-4 h3 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.container h2.section-title {
+    font-size: 26px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #0044cc;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+}
     </style>
 
 <script>
@@ -424,43 +706,10 @@ body {
 
 
 
-        <div class="container">
-    <h2 class="section-title">Votos</h2>
-    <div class="row">
-        <?php foreach (array_slice($imagenesActuales, 0, 3) as $posicion => $ruta): ?>
-            <div class="col-md-4 text-center">
-                <h3>
-                    <?php 
-                        if ($posicion == 2) {
-                            echo "Fondo";
-                        } else {
-                            echo "Candidato " . ($posicion + 1);
-                        }
-                    ?>
-                </h3>
-                <img src="<?php echo htmlspecialchars($ruta); ?>" class="img-fluid mb-3" alt="Imagen Posición <?php echo $posicion + 1; ?>">
-            </div>
-        <?php endforeach; ?>
-    </div>
-</div>
 
-        <h2 class="section-title">Resultados</h2>
-        <div class="row">
-            <?php foreach (array_slice($imagenesActuales, 3, 3) as $posicion => $ruta): ?>
-                <div class="col-md-4 text-center">
-                    <h3>                    <?php 
-                        if ($posicion == 2) {
-                            echo "Fondo";
-                        } else {
-                            echo "Candidato " . ($posicion + 1);
-                        }
-                    ?></h3>
-                    <img src="<?php echo htmlspecialchars($ruta); ?>" class="img-fluid mb-3" alt="Imagen Posición <?php echo $posicion + 4; ?>">
-                </div>
-            <?php endforeach; ?>
-        </div>
-        
-    <button class="btn-config" onclick="openImageModal()">
+
+<div class="container">
+<button class="btn-config" onclick="openImageModal()">
   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" class="svg-icon">
     <g stroke-width="1.5" stroke-linecap="round" stroke="#5d41de">
       <circle r="2.5" cy="10" cx="10"></circle>
@@ -495,7 +744,92 @@ body {
                 </form>
             </div>
         </div>
+   
+    <!-- Botón para mostrar/ocultar la sección Administrar Imágenes -->
+    <h2 class="section-title">Administrar Imágenes</h2>
+    <input type="checkbox" id="toggle-administrar-imagenes" />
+    <label for="toggle-administrar-imagenes">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2h-1.2a2 2 0 0 1-2-2v-.2a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2v-1.2a2 2 0 0 1 2-2h.2a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06c.31.31.7.48 1.13.53a1.65 1.65 0 0 0 1.82-.33V3a2 2 0 0 1 2-2h1.2a2 2 0 0 1 2 2v.2c.3.12.58.31.82.55s.43.52.55.82h.2a2 2 0 0 1 2 2v1.2a2 2 0 0 1-2 2h-.2a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+        <div class="action">
+            <span class="option-1">Mostrar</span>
+            <span class="option-2">Ocultar</span>
+        </div>
+    </label>
+
+    <!-- Contenedor Principal -->
+    <div id="administrar-imagenes-container" style="display: none;">
+        
+        <!-- Sección de Votos -->
+        <h3 class="section-subtitle">Votos</h3>
+        <button class="toggle-button" onclick="toggleContainer('votos-container')">Mostrar/Ocultar Votos</button>
+        <div id="votos-container" style="display: none;">
+            <div class="row">
+                <?php foreach (array_slice($imagenesActuales, 0, 3) as $posicion => $ruta): ?>
+                    <div class="col-md-4 text-center">
+                        <h4>
+                            <?php 
+                                if ($posicion == 2) {
+                                    echo "Fondo";
+                                } else {
+                                    echo "Candidato " . ($posicion + 1);
+                                }
+                            ?>
+                        </h4>
+                        <img src="<?php echo htmlspecialchars($ruta); ?>" class="img-fluid mb-3" alt="Imagen Posición <?php echo $posicion + 1; ?>">
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+
+        <!-- Sección de Resultados -->
+        <h3 class="section-subtitle">Resultados</h3>
+        <button class="toggle-button" onclick="toggleContainer('resultados-container')">Mostrar/Ocultar Resultados</button>
+        <div id="resultados-container" style="display: none;">
+            <div class="row">
+                <?php foreach (array_slice($imagenesActuales, 3, 3) as $posicion => $ruta): ?>
+                    <div class="col-md-4 text-center">
+                        <h4>
+                            <?php 
+                                if ($posicion == 2) {
+                                    echo "Fondo";
+                                } else {
+                                    echo "Candidato " . ($posicion + 1);
+                                }
+                            ?>
+                        </h4>
+                        <img src="<?php echo htmlspecialchars($ruta); ?>" class="img-fluid mb-3" alt="Imagen Posición <?php echo $posicion + 4; ?>">
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+
     </div>
+</div>
+
+<script>
+
+document.getElementById('toggle-administrar-imagenes').addEventListener('change', function () {
+    const container = document.getElementById('administrar-imagenes-container');
+    container.style.display = this.checked ? 'block' : 'none';
+});
+
+    // Función para alternar la visibilidad de un contenedor
+    function toggleContainer(containerId) {
+    const container = document.getElementById(containerId);
+    if (container.style.display === 'none' || container.style.display === '') {
+        container.style.display = 'block';
+    } else {
+        container.style.display = 'none';
+    }
+}
+
+
+</script>
+
+        
 
 
 
