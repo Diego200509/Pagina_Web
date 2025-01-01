@@ -237,7 +237,6 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
                                                         Restablecer
                                                     </button>
                                                 </div>
-                                            </div>
                                             
                                     </div>
 
@@ -447,45 +446,48 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
                 </h2>
                 <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#adminAccordion">
                     <div class="accordion-body">
-                        <form action="subir_imagen.php" method="POST" enctype="multipart/form-data">
-                            <!-- Logo Navbar -->
-                            <div class="mb-3">
-                                <label for="logoNavbar" class="form-label header-text">Logo Navbar:</label>
-                                <input type="file" class="form-control" id="logoNavbar" name="logoNavbar" required>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <button type="submit" class="btn btn-aceptar">Aceptar</button>
-                                <button type="button" class="btn btn-cancelar">Cancelar</button>
-                            </div>
+                    <form action="subir_imagen.php" method="POST" enctype="multipart/form-data">
+    <!-- Logo Navbar -->
+    <div class="mb-3">
+        <label for="logoNavbar" class="form-label header-text">Logo Navbar:</label>
+        <input type="file" class="form-control" id="logoNavbar" name="logoNavbar">
+    </div>
+    <div class="d-flex justify-content-between">
+        <button type="submit" class="btn btn-aceptar">Aceptar</button>
+        <button type="submit" name="reset" value="logoNavbar" class="btn btn-warning">Restablecer</button>
+    </div>
+</form>
 
-                            <!-- Imágenes Inicio -->
-                            <div class="mt-4">
-                                <h5 class="header-text">Imágenes Inicio</h5>
+<!-- Formulario para actualizar Slide 1 -->
+<form action="imagenes_slides.php" method="POST" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="slide1" class="form-label header-text">Actualizar Imagen Slide 1:</label>
+        <input type="file" class="form-control" id="slide1" name="slideImage">
+        <input type="hidden" name="section_name" value="slide1">
+    </div>
+    <div class="d-flex justify-content-between">
+        <button type="submit" class="btn btn-aceptar">Aceptar</button>
+        <button type="submit" name="reset" value="slide1" class="btn btn-warning">Restablecer</button>
+    </div>
+</form>
 
-                                <!-- Primera Imagen -->
-                                <div class="mb-3">
-                                    <label for="primeraImagen" class="form-label secondary-text">Primera Imagen:</label>
-                                    <input type="file" class="form-control" id="primeraImagen" name="primeraImagen" required>
-                                </div>
-                                <div class="d-flex justify-content-between">
-                                    <button type="submit" class="btn btn-aceptar">Aceptar</button>
-                                    <button type="button" class="btn btn-cancelar">Cancelar</button>
-                                </div>
+<hr>
+
+<!-- Formulario para actualizar Slide 5 -->
+<form action="imagenes_slides.php" method="POST" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="slide5" class="form-label header-text">Actualizar Imagen Slide 2:</label>
+        <input type="file" class="form-control" id="slide5" name="slideImage">
+        <input type="hidden" name="section_name" value="slide5">
+    </div>
+    <div class="d-flex justify-content-between">
+        <button type="submit" class="btn btn-aceptar">Aceptar</button>
+        <button type="submit" name="reset" value="slide5" class="btn btn-warning">Restablecer</button>
+    </div>
+</form>
 
 
-                                <!-- Segunda Imagen -->
-                                <div class="mt-4">
-                                    <label for="segundaImagen" class="form-label secondary-text">Segunda Imagen:</label>
-                                    <input type="file" class="form-control" id="segundaImagen" name="segundaImagen" required>
-                                </div>
-                                <div class="d-flex justify-content-between">
-                                    <button type="submit" class="btn btn-aceptar">Aceptar</button>
-                                    <button type="button" class="btn btn-cancelar">Cancelar</button>
-                                </div>
 
-                            </div>
-                        </form>
-                    </div>
                 </div>
             </div>
 
