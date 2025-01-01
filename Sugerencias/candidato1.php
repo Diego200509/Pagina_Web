@@ -1,7 +1,7 @@
 <?php
 // Incluir el archivo de consultas
-include_once('../src/partido1_sugerencias_queries.php');
-include('../config/config.php');
+include_once('../config/config.php');
+include_once('../src/sugerencias_queries.php'); // Cambia esta línea si la ruta es diferente
 
 
 $navbarConfigPath = "../Login/navbar_config.json"; // Ruta al archivo de configuración del Navbar
@@ -14,6 +14,13 @@ if (file_exists($navbarConfigPath)) {
     $navbarBgColor = '#00bfff'; // Azul por defecto si no existe el archivo
 }
 
+$imagenConfiguracion = obtenerImagenConfiguracion();
+
+if ($imagenConfiguracion && file_exists($_SERVER['DOCUMENT_ROOT'] . $imagenConfiguracion)) {
+    $imagenRuta = $imagenConfiguracion;
+} else {
+    $imagenRuta = '/Pagina_Web/Pagina_Web/Sugerencias/Img/default.jpg'; // Ruta completa para la imagen por defecto
+}
 
 $eventos_noticias = include('../src/partido1_sugerencias_queries.php');
 include('../Config/config.php');
@@ -504,7 +511,7 @@ button:hover span {
     <div class="card">
         <!-- Imagen en el lado izquierdo -->
         <div class="card img">
-            <img src="Img/mari2.jpg" alt="Imagen de Mary Cruz">
+        <img src="<?php echo htmlspecialchars($imagenRuta); ?>" alt="Imagen configurada">
         </div>
         <div class="content">
             <h1 style="text-align: center; color: #2B4657;"><?php echo htmlspecialchars($nombrePartido); ?></h1>

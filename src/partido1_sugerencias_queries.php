@@ -1,6 +1,6 @@
 <?php
 // Incluir archivo de configuración para la conexión a la base de datos
-include_once('../Config/config.php');
+include_once('../config/config.php');
 
 // Verificar si la función ya existe antes de declararla
 if (!function_exists('obtenerNombrePartido')) {

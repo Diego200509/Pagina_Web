@@ -1,7 +1,8 @@
 <?php
 // Incluir el archivo de consultas
 include('../src/sugerencias_queries.php');
-include('../config/config.php');
+include_once('../src/resultado_queries.php');
+include_once('../config/config.php');
 
 $nombrePartido1 = obtenerNombrePartido(1);
 $nombrePartido2 = obtenerNombrePartido(2);
@@ -46,6 +47,18 @@ if (file_exists($navbarConfigPath)) {
     $navbarBgColor = '#00bfff'; // Azul por defecto si no existe el archivo
 }
 
+
+// Obtener las imágenes desde la base de datos
+$imagenesActuales = obtenerImagenesResultados();
+if (!$imagenesActuales) {
+    $imagenesActuales = array_fill(0, 6, '/Pagina_Web/Pagina_Web/Sugerencias/Img_Res/default.jpg');
+}
+
+$imagenCandidato1 = isset($imagenesActuales[0]) ? $imagenesActuales[0] : '/Pagina_Web/Pagina_Web/Sugerencias/Img_Res/default.jpg';
+$imagenCandidato2 = isset($imagenesActuales[1]) ? $imagenesActuales[1] : '/Pagina_Web/Pagina_Web/Sugerencias/Img_Res/default.jpg';
+// Imagen de fondo
+$imagenFondo = isset($imagenesActuales[2]) ? $imagenesActuales[2] : '/Pagina_Web/Pagina_Web/Sugerencias/Img_Res/default.jpg';
+
 ?>
 
 
@@ -70,7 +83,7 @@ if (file_exists($navbarConfigPath)) {
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-image: url('Img/voto.JPG');
+            background-image: url('<?php echo htmlspecialchars($imagenFondo); ?>');
             background-size: cover;
             background-position: center;
             margin: 0;
@@ -420,8 +433,8 @@ if (file_exists($navbarConfigPath)) {
         <form action="../src/sugerencias_queries.php" method="POST" onsubmit="return validarFormulario();">
         <div class="candidatos">
         <div class="candidato">
-            <img src="Img/BANNERVOTOMARI.jpg" alt="Candidato 1">
-            <div>
+        <img src="<?php echo htmlspecialchars($imagenCandidato1); ?>" alt="Candidato 1">
+        <div>
                 <h2><?php echo htmlspecialchars($nombrePartido1); ?></h2>
                 <label>
                     <input type="radio" name="candidato" value="1"> Seleccionar
@@ -429,8 +442,8 @@ if (file_exists($navbarConfigPath)) {
             </div>
         </div>
         <div class="candidato">
-            <img src="Img/BANNERVOTOSARA.jpg" alt="Candidato 2">
-            <div>
+        <img src="<?php echo htmlspecialchars($imagenCandidato2); ?>" alt="Candidato 2">
+        <div>
                 <h2><?php echo htmlspecialchars($nombrePartido2); ?></h2>
                 <label>
                     <input type="radio" name="candidato" value="2"> Seleccionar
@@ -447,16 +460,16 @@ if (file_exists($navbarConfigPath)) {
         <div class="votos-section" id="votosSection">
             <h2>Resultados de Votos</h2>
             <div class="voto-candidato">
-                <img src="Img/BANNERVOTOMARI.jpg" alt="Candidato 1">
-                <div>
+            <img src="<?php echo htmlspecialchars($imagenCandidato1); ?>" alt="Candidato 1">
+            <div>
                     <h3><?php echo htmlspecialchars($nombrePartido1); ?></h3>
                     <p>Cantidad de votos:
                         <strong><?php echo isset($votosPorPartido[1]) ? $votosPorPartido[1] : 0; ?></strong></p>
                 </div>
             </div>
             <div class="voto-candidato">
-                <img src="Img/BANNERVOTOSARA.jpg" alt="Candidato 2">
-                <div>
+            <img src="<?php echo htmlspecialchars($imagenCandidato2); ?>" alt="Candidato 2">
+            <div>
                     <h3><?php echo htmlspecialchars($nombrePartido2); ?></h3>
                     <p>Cantidad de votos:
                         <strong><?php echo isset($votosPorPartido[2]) ? $votosPorPartido[2] : 0; ?></strong></p>

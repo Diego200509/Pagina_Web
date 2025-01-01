@@ -3,9 +3,9 @@
 include('../config/config.php');
 $eventos_noticias = include('../src/resultado_queries.php');
 
-$nombrePartido1 = obtenerNombrePartido(1);
-$nombrePartido2 = obtenerNombrePartido(2);
-$votosPorPartido = obtenerVotosPorPartido();
+$nombrePartido1 = obtenerNombrePartidoResultados(1);
+$nombrePartido2 = obtenerNombrePartidoResultados(2);
+$votosPorPartido = obtenerVotosPorPartidoResultados();
 // Sumar los votos para calcular el total
 $totalVotos = array_sum($votosPorPartido);
 
@@ -28,6 +28,16 @@ if (file_exists($navbarConfigPath)) {
 }
 
 
+//Obtener las imágenes desde la base de datos
+$imagenesActuales = obtenerImagenesResultados();
+if (!$imagenesActuales) {
+    $imagenesActuales = array_fill(0, 6, '/Pagina_Web/Pagina_Web/Sugerencias/Img_Res/default.jpg');
+}
+
+$imagenCandidato1 = isset($imagenesActuales[3]) ? $imagenesActuales[3] : '/Pagina_Web/Pagina_Web/Sugerencias/Img_Res/default.jpg';
+$imagenCandidato2 = isset($imagenesActuales[4]) ? $imagenesActuales[4] : '/Pagina_Web/Pagina_Web/Sugerencias/Img_Res/default.jpg';
+// Imagen de fondo
+$imagenFondo = isset($imagenesActuales[5]) ? $imagenesActuales[5] : '/Pagina_Web/Pagina_Web/Sugerencias/Img_Res/default.jpg';
 ?>
 
 <!DOCTYPE html>
@@ -47,10 +57,26 @@ if (file_exists($navbarConfigPath)) {
         :root {
             --navbar-bg-color: <?php echo $navbarBgColor; ?>;
         }
+
+
+        body, html {
+    margin: 0;
+    padding: 0;
+    height: 116%; /* Ocupa toda la altura de la ventana */
+    font-family: Arial, sans-serif;
+    background-image: url('<?php echo htmlspecialchars($imagenFondo); ?>');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover; /* Ajusta la imagen para cubrir toda la pantalla */
+    color: white;
+    text-align: center;
+    box-sizing: border-box;
+}
     </style>
     <title>Resultados Presidenciales Ecuador 2023</title>
 
 </head>
+
 
 <body>
     <navbar>
@@ -82,14 +108,10 @@ if (file_exists($navbarConfigPath)) {
 </navbar>
 
     <div class="container">
-        <div class="logo">
-            <img src="Img\logo.png" alt="CNE Logo">
             <div>
                 <h1>RESULTADOS OFICIALES</h1>
                 <h2>RECTORA DE LA UNIVERSIDAD TECNICA DE AMBATO</h2>
                 <h2>Elecciones Anticipadas 2024</h2>
-            </div>
-            <img src="Img\UTA.png" alt="Escudo UTA">
         </div>
 
         <div class="results">
@@ -97,7 +119,7 @@ if (file_exists($navbarConfigPath)) {
                 <h2><span
                         style="color: #a30280; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;"><?php echo htmlspecialchars($nombrePartido1); ?></span>
                 </h2>
-                <img src="Img\mari2.jpg" alt="Nombre del candidato2">
+                <img src="<?php echo htmlspecialchars($imagenCandidato1); ?>" alt="Candidato 1">
                 <div class="percentage">
                     <?php echo isset($votosPorPartido[1]) && $totalVotos > 0 ? number_format(calcularPorcentaje($votosPorPartido[1], $totalVotos), 2) . '%' : ''; ?>
                 </div>
@@ -110,7 +132,7 @@ if (file_exists($navbarConfigPath)) {
                 <h2><span
                         style="color: blue; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;"><?php echo htmlspecialchars($nombrePartido2); ?></span>
                 </h2>
-                <img src="Img\CANDIDATA2.jpg" alt="Nombre del candidato1">
+                <img src="<?php echo htmlspecialchars($imagenCandidato2); ?>" alt="Candidato 2">
                 <div class="percentage">
                     <?php echo isset($votosPorPartido[2]) && $totalVotos > 0 ? number_format(calcularPorcentaje($votosPorPartido[2], $totalVotos), 2) . '%' : ''; ?>
                 </div>
