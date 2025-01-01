@@ -171,7 +171,6 @@ section {
 }
 
 #candidatos {
-    background-color: #000000;
     background-size: cover; 
     background-position: center; 
     background-repeat: no-repeat; 
@@ -215,7 +214,6 @@ section {
 
 #propuestas {
     
-    background-color: #4d0a0a;
     background-size: cover; /* Asegura que la imagen cubra todo el área */
     background-position: center; /* Centra la imagen en la sección */
     background-repeat: no-repeat; /* Evita que la imagen se repita */
@@ -224,9 +222,6 @@ section {
 
 }
 
-#eventos {
-    background-color: #FF9800; /* Naranja */
-}
 
 
 

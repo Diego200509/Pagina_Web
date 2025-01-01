@@ -29,7 +29,17 @@ if ($result->num_rows > 0) {
 }
 
 
+function cargarEstilo($archivo, $default) {
+    if (file_exists($archivo)) {
+        $config = json_decode(file_get_contents($archivo), true);
+        return $config['bgColor'] ?? $default;
+    }
+    return $default;
+}
 
+$candidatosColor = cargarEstilo('../Login/candidatos_config.json', '#000000');
+$propuestasColor = cargarEstilo('../Login/propuestas_config.json', '#4d0a0a');
+$eventosColor = cargarEstilo('../Login/eventos_config.json', '#FF9800');
 
 // Definir rutas por defecto
 $slide1_path = "../Home/Img/FONDOMARI.jpg";
@@ -76,6 +86,15 @@ $stmt->close();
             background: url('<?php echo $slide5_path; ?>') no-repeat center center/cover;
             height: 300px;
         }
+    #candidatos {
+        background-color: <?= $candidatosColor ?>;
+    }
+    #propuestas {
+        background-color: <?= $propuestasColor ?>;
+    }
+    #eventos {
+        background-color: <?= $eventosColor ?>;
+    }
 
 
     
@@ -131,7 +150,7 @@ $stmt->close();
     <button class="next">&#10095;</button>
 </section>
 
-<section id="candidatos" style="background-color: <?php echo htmlspecialchars($candidatosBgColor); ?>;">
+<section id="candidatos">
     <h1>Conoce a nuestros candidatos</h1>
 </section>
 

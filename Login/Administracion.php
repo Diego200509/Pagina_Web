@@ -198,64 +198,53 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
                                         <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
                                         <form action="cambiar_colores.php" method="POST" id="formNavbar">
                                             <div class="d-flex align-items-center justify-content-between">
-                                                <!-- Selector de color -->
                                                 <input type="color" class="form-control form-control-color me-3" id="colorNavbar" name="colorNavbar" value="#00bfff">
-
-                                                <!-- Campo de texto hexadecimal -->
                                                 <input type="text" class="form-control form-control-hex me-3" id="hexColorNavbar" name="hexColorNavbar" value="#00bfff" maxlength="7" style="width: 80px;">
-
                                                 <div class="d-flex">
-                                                    <!-- Botón Aceptar -->
                                                     <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
                                                         Aceptar
                                                     </button>
-
-                                                    <!-- Botón Restablecer -->
-                                                    <button type="submit" name="resetNavbar" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; margin-left: 10px; transition: transform 0.3s;">
+                                                    <button type="submit" name="resetNavbar" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-left: 10px; transition: transform 0.3s;">
                                                         Restablecer
                                                     </button>
                                                 </div>
-
                                             </div>
+                                        </form>
                                     </div>
+
                                     <!-- Cambiar colores Candidatos -->
                                     <div class="color-section mb-4">
-                                        <h5 class="text-uppercase" style="color: #00BFFF;">Inicio Candidatos</h5>
+                                        <h5 class="text-uppercase" style="color: #00BFFF;">Sección Candidatos</h5>
                                         <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
-                                        <form action="cambiar_colores.php" method="POST" id="formInicioCandidatos">
+                                        <form action="cambiar_color_candidatos.php" method="POST" id="formInicioCandidatos">
                                             <div class="d-flex align-items-center justify-content-between">
-                                                <input type="color" class="form-control form-control-color me-3" id="colorCandidatos" name="colorCandidatos" value="#FF0000">
-                                                <input type="text" class="form-control form-control-hex me-3" id="hexColorCandidatos" name="hexColorCandidatos" placeholder="#FF0000" maxlength="7" style="width: 80px;">
+                                                <input type="color" class="form-control form-control-color me-3" id="colorCandidatos" name="colorCandidatos" value="#000000">
+                                                <input type="text" class="form-control form-control-hex me-3" id="hexColorCandidatos" name="hexColorCandidatos" placeholder="#000000" maxlength="7" style="width: 80px;">
                                                 <div class="d-flex">
-                                                    <!-- Botón Aceptar -->
                                                     <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
                                                         Aceptar
                                                     </button>
-
-                                                    <!-- Botón Restablecer -->
-                                                    <button type="submit" name="resetCandidatos" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; margin-left: 10px; transition: transform 0.3s;">
+                                                    <button type="submit" name="resetCandidatos" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-left: 10px; transition: transform 0.3s;">
                                                         Restablecer
                                                     </button>
                                                 </div>
-                                            
+                                            </div>
+                                        </form>
                                     </div>
 
                                     <!-- Cambiar colores Propuestas -->
                                     <div class="color-section mb-4">
-                                        <h5 class="text-uppercase" style="color: #00BFFF;">Inicio Propuestas</h5>
+                                        <h5 class="text-uppercase" style="color: #00BFFF;">Sección Propuestas</h5>
                                         <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
-                                        <form action="cambiar_colores.php" method="POST">
+                                        <form action="cambiar_color_propuestas.php" method="POST" id="formInicioPropuestas">
                                             <div class="d-flex align-items-center justify-content-between">
-                                                <input type="color" class="form-control form-control-color me-3" id="colorPropuestas" name="colorPropuestas" value="#00FF00">
-                                                <input type="text" class="form-control form-control-hex me-3" id="hexColorPropuestas" name="hexColorPropuestas" placeholder="#00FF00" maxlength="7" style="width: 80px;">
+                                                <input type="color" class="form-control form-control-color me-3" id="colorPropuestas" name="colorPropuestas" value="#4d0a0a">
+                                                <input type="text" class="form-control form-control-hex me-3" id="hexColorPropuestas" name="hexColorPropuestas" placeholder="#4d0a0a" maxlength="7" style="width: 80px;">
                                                 <div class="d-flex">
-                                                    <!-- Botón Aceptar -->
                                                     <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
                                                         Aceptar
                                                     </button>
-
-                                                    <!-- Botón Restablecer -->
-                                                    <button type="submit" name="resetPropuestas" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; margin-left: 10px; transition: transform 0.3s;">
+                                                    <button type="submit" name="resetPropuestas" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-left: 10px; transition: transform 0.3s;">
                                                         Restablecer
                                                     </button>
                                                 </div>
@@ -265,20 +254,17 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
 
                                     <!-- Cambiar colores Eventos y Noticias -->
                                     <div class="color-section mb-4">
-                                        <h5 class="text-uppercase" style="color: #00BFFF;">Inicio Eventos y Noticias</h5>
+                                        <h5 class="text-uppercase" style="color: #00BFFF;">Sección Eventos y Noticias</h5>
                                         <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
-                                        <form action="cambiar_colores.php" method="POST">
+                                        <form action="cambiar_color_eventos.php" method="POST" id="formInicioEventos">
                                             <div class="d-flex align-items-center justify-content-between">
-                                                <input type="color" class="form-control form-control-color me-3" id="colorEventosNoticias" name="colorEventosNoticias" value="#0000FF">
-                                                <input type="text" class="form-control form-control-hex me-3" id="hexColorEventosNoticias" name="hexColorEventosNoticias" placeholder="#0000FF" maxlength="7" style="width: 80px;">
+                                                <input type="color" class="form-control form-control-color me-3" id="colorEventosNoticias" name="colorEventosNoticias" value="#FF9800">
+                                                <input type="text" class="form-control form-control-hex me-3" id="hexColorEventosNoticias" name="hexColorEventosNoticias" placeholder="#FF9800" maxlength="7" style="width: 80px;">
                                                 <div class="d-flex">
-                                                    <!-- Botón Aceptar -->
                                                     <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
                                                         Aceptar
                                                     </button>
-
-                                                    <!-- Botón Restablecer -->
-                                                    <button type="submit" name="resetEventosNoticias" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; margin-left: 10px; transition: transform 0.3s;">
+                                                    <button type="submit" name="resetEventosNoticias" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-left: 10px; transition: transform 0.3s;">
                                                         Restablecer
                                                     </button>
                                                 </div>
@@ -291,32 +277,23 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
                                         <h5 class="text-uppercase" style="color: #00BFFF;">Login</h5>
                                         <p class="subtitle" style="color: #FF69B4;">Seleccionar degradado:</p>
                                         <form action="cambiar_colores.php" method="POST" id="formLogin">
-                                            <!-- Contenedor para los colores -->
                                             <div class="d-flex align-items-center justify-content-between mb-3">
-                                                <!-- Color Inicial -->
                                                 <div class="d-flex align-items-center me-4">
                                                     <label for="gradientStartLogin" class="form-label me-2" style="white-space: nowrap;">Color Inicial:</label>
                                                     <input type="color" class="form-control form-control-color me-2" id="gradientStartLogin" name="gradientStartLogin" value="#FF007B" style="width: 50px; height: 40px;">
                                                     <input type="text" class="form-control form-control-hex" id="hexGradientStartLogin" name="hexGradientStartLogin" placeholder="#FF007B" maxlength="7" style="width: 80px;">
                                                 </div>
-
-                                                <!-- Color Final -->
                                                 <div class="d-flex align-items-center">
                                                     <label for="gradientEndLogin" class="form-label me-2" style="white-space: nowrap;">Color Final:</label>
                                                     <input type="color" class="form-control form-control-color me-2" id="gradientEndLogin" name="gradientEndLogin" value="#1C9FFF" style="width: 50px; height: 40px;">
                                                     <input type="text" class="form-control form-control-hex" id="hexGradientEndLogin" name="hexGradientEndLogin" placeholder="#1C9FFF" maxlength="7" style="width: 80px;">
                                                 </div>
                                             </div>
-
-                                            <!-- Botones -->
                                             <div class="d-flex justify-content-center mt-3">
-                                                <!-- Botón Aceptar -->
                                                 <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
                                                     Aceptar
                                                 </button>
-
-                                                <!-- Botón Restablecer -->
-                                                <button type="submit" name="reset" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; margin-left: 10px; transition: transform 0.3s;">
+                                                <button type="submit" name="reset" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-left: 10px; transition: transform 0.3s;">
                                                     Restablecer
                                                 </button>
                                             </div>
@@ -326,109 +303,104 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
 
                                 <!-- Columna derecha -->
                                 <div class="col-md-6">
-<!-- Página Candidatos -->
-<div class="color-section mb-4">
-    <h5 class="text-uppercase" style="color: #00BFFF;">Página Candidatos</h5>
-    <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
-    <form action="cambiar_colores.php" method="POST" id="formInicioCandidatos">
-        <div class="d-flex align-items-center justify-content-between">
-            <input type="color" class="form-control form-control-color me-3" id="colorPagCandidatos" name="colorCandidatos" value="#FF5733">
-            <input type="text" class="form-control form-control-hex me-3" id="hexColorPagCandidatos" name="hexColorCandidatos" placeholder="#FF5733" maxlength="7" style="width: 80px;">
-            <div class="d-flex">
-                <!-- Botón Aceptar -->
-                <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
-                    Aceptar
-                </button>
-
-                <!-- Botón Restablecer -->
-                <button type="submit" name="resetCandidatos" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-left: 10px; transition: transform 0.3s;">
-                    Restablecer
-                </button>
+                                    <!-- Página Candidatos -->
+                                    <div class="color-section mb-4">
+                                        <h5 class="text-uppercase" style="color: #00BFFF;">Página Candidatos</h5>
+                                        <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
+                                        <form action="cambiar_colores.php" method="POST" id="formInicioCandidatos">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <input type="color" class="form-control form-control-color me-3" id="colorPagCandidatos" name="colorCandidatos" value="#FF5733">
+                                                <input type="text" class="form-control form-control-hex me-3" id="hexColorPagCandidatos" name="hexColorCandidatos" placeholder="#FF5733" maxlength="7" style="width: 80px;">
+                                                <div class="d-flex">
+                                                    <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
+                                                        Aceptar
+                                                    </button>
+                                                    <button type="submit" name="resetCandidatos" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-left: 10px; transition: transform 0.3s;">
+                                                        Restablecer
+                                                    </button>
+                                                </div>
                                             </div>
-                                        </div>
+                                        </form>
                                     </div>
 
-<!-- Página Eventos y Noticias -->
-<div class="color-section mb-4">
-    <h5 class="text-uppercase" style="color: #00BFFF;">Página Eventos y Noticias</h5>
-    <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
-    <form action="cambiar_colores.php" method="POST" id="formInicioEventos">
-        <div class="d-flex align-items-center justify-content-between">
-            <input type="color" class="form-control form-control-color me-3" id="colorPagEventos" name="colorPagEventos" value="#33FF58">
-            <input type="text" class="form-control form-control-hex me-3" id="hexColorPagEventos" name="hexColorPagEventos" placeholder="#33FF58" maxlength="7" style="width: 80px;">
-            <div class="d-flex">
-                <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
-                    Aceptar
-                </button>
-                <button type="submit" name="reset-pagina-eventos-noticias" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-left: 10px; transition: transform 0.3s;">
-                    Restablecer
-                </button>
-            </div>
-        </div>
-    </form>
-</div>
+                                    <!-- Página Eventos y Noticias -->
+                                    <div class="color-section mb-4">
+                                        <h5 class="text-uppercase" style="color: #00BFFF;">Página Eventos y Noticias</h5>
+                                        <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
+                                        <form action="cambiar_colores.php" method="POST" id="formInicioEventos">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <input type="color" class="form-control form-control-color me-3" id="colorPagEventos" name="colorPagEventos" value="#33FF58">
+                                                <input type="text" class="form-control form-control-hex me-3" id="hexColorPagEventos" name="hexColorPagEventos" placeholder="#33FF58" maxlength="7" style="width: 80px;">
+                                                <div class="d-flex">
+                                                    <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
+                                                        Aceptar
+                                                    </button>
+                                                    <button type="submit" name="reset-pagina-eventos-noticias" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-left: 10px; transition: transform 0.3s;">
+                                                        Restablecer
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
 
-
-<!-- Página Propuestas -->
-<div class="color-section mb-4">
-    <h5 class="text-uppercase" style="color: #00BFFF;">Página Propuestas</h5>
-    <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
-    <form action="cambiar_colores.php" method="POST" id="formInicioPropuestas">
-        <div class="d-flex align-items-center justify-content-between">
-            <input type="color" class="form-control form-control-color me-3" id="colorPagPropuestas" name="colorPagPropuestas" value="#337BFF">
-            <input type="text" class="form-control form-control-hex me-3" id="hexColorPagPropuestas" name="hexColorPagPropuestas" placeholder="#337BFF" maxlength="7" style="width: 80px;">
-            <div class="d-flex">
-                <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
-                    Aceptar
-                </button>
-                <button type="submit" name="reset-pagina-propuestas" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; margin-left: 10px; transition: transform 0.3s;">
-                    Restablecer
-                </button>
-            </div>
-
-                                        </div>
+                                    <!-- Página Propuestas -->
+                                    <div class="color-section mb-4">
+                                        <h5 class="text-uppercase" style="color: #00BFFF;">Página Propuestas</h5>
+                                        <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
+                                        <form action="cambiar_colores.php" method="POST" id="formInicioPropuestas">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <input type="color" class="form-control form-control-color me-3" id="colorPagPropuestas" name="colorPagPropuestas" value="#337BFF">
+                                                <input type="text" class="form-control form-control-hex me-3" id="hexColorPagPropuestas" name="hexColorPagPropuestas" placeholder="#337BFF" maxlength="7" style="width: 80px;">
+                                                <div class="d-flex">
+                                                    <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
+                                                        Aceptar
+                                                    </button>
+                                                    <button type="submit" name="reset-pagina-propuestas" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; margin-left: 10px; transition: transform 0.3s;">
+                                                        Restablecer
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
 
                                     <!-- Página Sugerencias -->
                                     <div class="color-section mb-4">
-                                        <h5 class="text-uppercase" style="color: #00BFFF;">Sugerencias</h5>
+                                        <h5 class="text-uppercase" style="color: #00BFFF;">Página Sugerencias</h5>
                                         <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <input type="color" class="form-control form-control-color me-3" id="colorPagSugerencias" name="colorPagSugerencias" value="#FF33A1">
-                                            <input type="text" class="form-control form-control-hex me-3" id="hexColorPagSugerencias" name="hexColorPagSugerencias" placeholder="#FF33A1" maxlength="7" style="width: 80px;">
-                                            <div class="d-flex">
-                                                <!-- Botón Aceptar -->
-                                                <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
-                                                    Aceptar
-                                                </button>
-
-                                                <!-- Botón Restablecer -->
-                                                <button type="submit" name="reset-pagina-sugerencias" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; margin-left: 10px; transition: transform 0.3s;">
-                                                    Restablecer
-                                                </button>
+                                        <form action="cambiar_colores.php" method="POST" id="formInicioSugerencias">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <input type="color" class="form-control form-control-color me-3" id="colorPagSugerencias" name="colorPagSugerencias" value="#FF33A1">
+                                                <input type="text" class="form-control form-control-hex me-3" id="hexColorPagSugerencias" name="hexColorPagSugerencias" placeholder="#FF33A1" maxlength="7" style="width: 80px;">
+                                                <div class="d-flex">
+                                                    <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
+                                                        Aceptar
+                                                    </button>
+                                                    <button type="submit" name="reset-pagina-sugerencias" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; margin-left: 10px; transition: transform 0.3s;">
+                                                        Restablecer
+                                                    </button>
+                                                </div>
                                             </div>
-                                        </div>
+                                        </form>
                                     </div>
 
                                     <!-- Página Votos -->
                                     <div class="color-section mb-4">
-                                        <h5 class="text-uppercase" style="color: #00BFFF;">Votos</h5>
+                                        <h5 class="text-uppercase" style="color: #00BFFF;">Página Votos</h5>
                                         <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <input type="color" class="form-control form-control-color me-3" id="colorPagVotos" name="colorPagVotos" value="#FF9A33">
-                                            <input type="text" class="form-control form-control-hex me-3" id="hexColorPagVotos" name="colorPagVotos" placeholder="#FF9A33" maxlength="7" style="width: 80px;">
-                                            <div class="d-flex">
-                                                <!-- Botón Aceptar -->
-                                                <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
-                                                    Aceptar
-                                                </button>
-
-                                                <!-- Botón Restablecer -->
-                                                <button type="submit" name="reset-pagina-votos" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; margin-left: 10px; transition: transform 0.3s;">
-                                                    Restablecer
-                                                </button>
+                                        <form action="cambiar_colores.php" method="POST" id="formInicioVotos">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <input type="color" class="form-control form-control-color me-3" id="colorPagVotos" name="colorPagVotos" value="#FF9A33">
+                                                <input type="text" class="form-control form-control-hex me-3" id="hexColorPagVotos" name="colorPagVotos" placeholder="#FF9A33" maxlength="7" style="width: 80px;">
+                                                <div class="d-flex">
+                                                    <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
+                                                        Aceptar
+                                                    </button>
+                                                    <button type="submit" name="reset-pagina-votos" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; margin-left: 10px; transition: transform 0.3s;">
+                                                        Restablecer
+                                                    </button>
+                                                </div>
                                             </div>
-                                        </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -436,6 +408,7 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
                     </div>
                 </div>
             </div>
+            
 
             <!-- Subir Imágenes -->
             <div class="accordion-item">
@@ -486,10 +459,13 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
     </div>
 </form>
 
+</div>
 
-
-                </div>
-            </div>
+</div>
+</form>
+</div>
+</div>
+</div>
 
             <!-- MODAL MENSAJES -->
             <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
@@ -543,3 +519,4 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
 </body>
 
 </html>
+```
