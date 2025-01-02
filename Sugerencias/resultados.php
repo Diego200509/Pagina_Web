@@ -120,7 +120,7 @@ $imagenFondo = isset($imagenesActuales[5]) ? $imagenesActuales[5] : '/Pagina_Web
                         style="color: #a30280; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;"><?php echo htmlspecialchars($nombrePartido1); ?></span>
                 </h2>
                 <img src="<?php echo htmlspecialchars($imagenCandidato1); ?>" alt="Candidato 1" 
-     style="width: 100%; max-width: 300px; height: 460px; object-fit: cover; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+     style="width: 100%; max-width: 300px; height: 420px; object-fit: cover; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
                 <div class="percentage">
                     <?php echo isset($votosPorPartido[1]) && $totalVotos > 0 ? number_format(calcularPorcentaje($votosPorPartido[1], $totalVotos), 2) . '%' : ''; ?>
                 </div>
@@ -134,7 +134,7 @@ $imagenFondo = isset($imagenesActuales[5]) ? $imagenesActuales[5] : '/Pagina_Web
                         style="color: blue; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;"><?php echo htmlspecialchars($nombrePartido2); ?></span>
                 </h2>
                 <img src="<?php echo htmlspecialchars($imagenCandidato2); ?>" alt="Candidato 2"
-                style="width: 100%; max-width: 300px; height: 460px; object-fit: cover; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                style="width: 100%; max-width: 300px; height: 420px; object-fit: cover; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
                 <div class="percentage">
                     <?php echo isset($votosPorPartido[2]) && $totalVotos > 0 ? number_format(calcularPorcentaje($votosPorPartido[2], $totalVotos), 2) . '%' : ''; ?>
                 </div>
