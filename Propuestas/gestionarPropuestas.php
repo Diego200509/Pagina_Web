@@ -364,26 +364,37 @@ function mostrarDescripcionConFormato($descripcion)
     </div>
 
     <script>
-        function abrirModal() {
-            const modal = document.getElementById("modalPropuesta");
-            if (modal) {
-                modal.style.display = "flex";
-            } else {
-                console.error("No se encontró el modal con ID 'modalPropuesta'.");
-            }
+        document.addEventListener("DOMContentLoaded", () => {
+    function abrirModal() {
+        const modal = document.getElementById("modalPropuesta");
+        if (modal) {
+            modal.style.display = "flex";
+        } else {
+            console.error("No se encontró el modal con ID 'modalPropuesta'.");
         }
+    }
 
-        function cerrarModal() {
-            const modal = document.getElementById("modalPropuesta");
+    function cerrarModal() {
+        const modal = document.getElementById("modalPropuesta");
+        if (modal) {
             modal.style.display = "none";
         }
+    }
 
-        window.onclick = function(event) {
-            const modal = document.getElementById("modalPropuesta");
-            if (event.target === modal) {
-                cerrarModal();
-            }
-        };
+    // Configurar evento para cerrar modal al hacer clic afuera
+    window.onclick = function (event) {
+        const modal = document.getElementById("modalPropuesta");
+        if (event.target === modal) {
+            cerrarModal();
+        }
+    };
+
+    // Asigna abrirModal a los botones con clase action-btn
+    document.querySelectorAll(".action-btn").forEach((btn) => {
+        btn.addEventListener("click", abrirModal);
+    });
+});
+
     </script>
 
 
