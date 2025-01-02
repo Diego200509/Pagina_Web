@@ -139,6 +139,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             die("Error al mostrar propuesta: " . $e->getMessage());
         }
     }
+
+    if ($accion === 'cambiarEstado') {
+        $id = $_POST['id'];
+        $nuevoEstado = $_POST['nuevoEstado'];
+
+        if (empty($id) || empty($nuevoEstado)) {
+            echo json_encode(['success' => false, 'message' => 'Faltan datos para cambiar el estado.']);
+            exit();
+        }
+
+        $query = "UPDATE PROPUESTAS SET ESTADO = ? WHERE ID_PRO = ?";
+        $stmt = $connection->prepare($query);
+        if (!$stmt) {
+            echo json_encode(['success' => false, 'message' => 'Error al preparar la consulta: ' . $connection->error]);
+            exit();
+        }
+        $stmt->bind_param('si', $nuevoEstado, $id);
+        $stmt->execute();
+
+        // Devuelve éxito incluso si no se afectan filas (estado ya está configurado)
+        echo json_encode(['success' => true]);
+        $stmt->close();
+        exit();
+    }
 }
 
 // Obtener el total de propuestas en la base de datos (sin duplicados)
@@ -268,7 +292,7 @@ function mostrarDescripcionConFormato($descripcion)
                             <td><?= htmlspecialchars($row['TIT_PRO']) ?></td>
                             <td><?= htmlspecialchars($row['DESC_PRO']) ?></td>
                             <td><?= htmlspecialchars($row['CAT_PRO']) ?></td>
-                            <td><?= htmlspecialchars($row['ESTADO']) ?></td>
+                            <td id="estado-<?= $row['ID_PRO'] ?>"><?= htmlspecialchars($row['ESTADO']) ?></td>
                             <td>
                                 <div class="dropdown-container">
                                     <!-- Botón principal -->
@@ -278,14 +302,15 @@ function mostrarDescripcionConFormato($descripcion)
 
                                     <!-- Menú desplegable -->
                                     <div class="custom-dropdown">
-                                        <a href="#" onclick="abrirModalEditar()">Editar</a>
-                                        <a href="#" class="text-danger">Eliminar</a>
-                                        <a href="#" class="text-warning">Ocultar</a>
+                                        <a role="button" onclick="abrirModalEditar(); event.preventDefault();">Editar</a>
+                                        <a role="button" class="text-danger" onclick="eliminarPropuesta(<?= $row['ID_PRO'] ?>); event.preventDefault();">Eliminar</a>
+                                        <a role="button" id="estado-opcion-<?= $row['ID_PRO'] ?>" class="text-warning"
+                                            onclick="cambiarEstado(<?= $row['ID_PRO'] ?>, '<?= $row['ESTADO'] ?>'); event.preventDefault();">
+                                            <?= $row['ESTADO'] === 'Visible' ? 'Ocultar' : 'Visible' ?>
+                                        </a>
                                     </div>
                                 </div>
                             </td>
-
-
                         </tr>
                     <?php endwhile; ?>
                 <?php else: ?>
@@ -294,6 +319,8 @@ function mostrarDescripcionConFormato($descripcion)
                     </tr>
                 <?php endif; ?>
             </tbody>
+
+
         </table>
 
         <script>
@@ -447,6 +474,37 @@ function mostrarDescripcionConFormato($descripcion)
                 }
             });
         });
+
+        function cambiarEstado(id, estadoActual) {
+            const nuevoEstado = estadoActual === 'Visible' ? 'Oculta' : 'Visible';
+            const formData = new FormData();
+            formData.append('accion', 'cambiarEstado');
+            formData.append('id', id);
+            formData.append('nuevoEstado', nuevoEstado);
+
+            fetch('gestionarPropuestas.php', {
+                    method: 'POST',
+                    body: formData,
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Actualiza el texto del estado en la tabla
+                        const estadoElemento = document.querySelector(`#estado-${id}`);
+                        const opcionElemento = document.querySelector(`#estado-opcion-${id}`);
+                        if (estadoElemento && opcionElemento) {
+                            estadoElemento.textContent = nuevoEstado; // Actualiza el estado mostrado
+                            opcionElemento.textContent = nuevoEstado === 'Visible' ? 'Ocultar' : 'Visible'; // Actualiza el texto de la opción
+                            opcionElemento.setAttribute('onclick', `cambiarEstado(${id}, '${nuevoEstado}')`); // Actualiza la lógica del clic
+                        }
+                    } else {
+                        alert('Error al cambiar el estado: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
     </script>
 
 
