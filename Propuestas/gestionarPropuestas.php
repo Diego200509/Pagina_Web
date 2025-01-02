@@ -239,6 +239,11 @@ function mostrarDescripcionConFormato($descripcion)
 
 
 
+        <div style="text-align: left; margin-bottom: 15px;">
+            <button id="btnAgregarPropuesta" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Agregar Propuesta
+            </button>
+        </div>
 
 
         <h3>Propuestas Existentes</h3>
