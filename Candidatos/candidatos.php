@@ -1,5 +1,6 @@
 <?php
-
+// Manejo de la lógica del backend aquí, si es necesario
+// Esto puede incluir validaciones o configuraciones específicas
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -10,13 +11,7 @@
     <link rel="stylesheet" href="candidatos_usuarios.css">
     <link rel="stylesheet" href="candidatos_usuarios.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        :root {
-            --navbar-bg-color: <?php echo $candidatosBgColor; ?>;
-        }
-    </style>
 </head>
-
 
 <body>
     <!-- Header -->
