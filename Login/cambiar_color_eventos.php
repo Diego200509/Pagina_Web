@@ -1,7 +1,7 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $archivo = 'eventos_config.json';
-    $defaultColor = '#FF9800';
+    $defaultColor = '#f4f4f4';
 
     function guardarConfiguracion($archivo, $datos, $mensajeExito, $mensajeError) {
         if (file_put_contents($archivo, json_encode($datos, JSON_PRETTY_PRINT))) {

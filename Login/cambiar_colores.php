@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
         // Restablecer colores
         if (isset($_POST['reset-pagina-eventos-noticias']) && $_POST['reset-pagina-eventos-noticias'] == "1") {
-            $defaultConfig = ["paginaBgColor" => "#33FF58"];
+            $defaultConfig = ["paginaBgColor" => "#f4f4f4"];
             guardarConfiguracion(
                 $configFileEventos,
                 $defaultConfig,

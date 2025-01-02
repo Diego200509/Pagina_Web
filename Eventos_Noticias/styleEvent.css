@@ -1,6 +1,6 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--pagina-bg-color, #33FF58); /* Color dinámico */
+    background-color: var(--pagina-bg-color, #f4f4f4); /* Color dinámico */
     margin: 0;
     padding: 0;
 }
@@ -192,7 +192,6 @@ h2::after {
 
 .navbar {
     background-color: var(--navbar-bg-color, #00bfff);
-    /* Azul vibrante como color por defecto */
     display: flex;
     justify-content: space-between;
     align-items: center;
