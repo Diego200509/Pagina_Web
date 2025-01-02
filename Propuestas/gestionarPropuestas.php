@@ -271,19 +271,18 @@ function mostrarDescripcionConFormato($descripcion)
                             <td><?= htmlspecialchars($row['ESTADO']) ?></td>
                             <td>
                                 <div class="dropdown">
-                                    <!-- El botón principal -->
-                                    <button class="btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <!-- Botón principal -->
+                                    <button class="btn dropdown-toggle" style="background-color: #ff69b4; color: white; border: none;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-pencil-square"></i>
                                     </button>
                                     <!-- Opciones del menú desplegable -->
-                                    <ul class="dropdown-menu">
+                                    <ul class="dropdown-menu dropdown-menu-end">
                                         <li><a class="dropdown-item" href="#" onclick="abrirModalEditar(<?= $row['ID_PRO'] ?>)">Editar</a></li>
                                         <li><a class="dropdown-item text-danger" href="eliminarPropuesta.php?id=<?= $row['ID_PRO'] ?>">Eliminar</a></li>
                                         <li><a class="dropdown-item text-warning" href="ocultarPropuesta.php?id=<?= $row['ID_PRO'] ?>">Ocultar</a></li>
                                     </ul>
                                 </div>
                             </td>
-
                         </tr>
                     <?php endwhile; ?>
                 <?php else: ?>
@@ -432,19 +431,29 @@ function mostrarDescripcionConFormato($descripcion)
             };
 
             function abrirModalEditar(id) {
-                // Configura los valores del modal con los datos correspondientes al ID
                 console.log("Abriendo modal para editar la propuesta con ID:", id);
+
+                // Abre el modal de edición
                 const modal = document.getElementById("modalPropuesta");
                 modal.style.display = "flex";
 
-                // Opcional: cargar datos de la propuesta si es necesario
-                // Puedes usar una petición AJAX para obtener la información del servidor.
+                // Si es necesario, carga los datos del servidor
+                // Ejemplo con fetch:
+                // fetch(`obtenerPropuesta.php?id=${id}`)
+                //     .then(response => response.json())
+                //     .then(data => {
+                //         document.getElementById("titulo").value = data.titulo;
+                //         document.getElementById("descripcion").value = data.descripcion;
+                //         // Actualiza otros campos según sea necesario
+                //     });
             }
+
         });
     </script>
 
 
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
