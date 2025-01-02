@@ -270,21 +270,21 @@ function mostrarDescripcionConFormato($descripcion)
                             <td><?= htmlspecialchars($row['CAT_PRO']) ?></td>
                             <td><?= htmlspecialchars($row['ESTADO']) ?></td>
                             <td>
-                                <div class="dropdown-container" style="position: relative;">
+                                <div class="dropdown-container">
                                     <!-- Botón principal -->
                                     <button class="action-btn" onclick="toggleDropdown(this)">
                                         <i class="bi bi-pencil-square"></i>
                                     </button>
 
-                                    <!-- Menú desplegable personalizado -->
+                                    <!-- Menú desplegable -->
                                     <div class="custom-dropdown">
                                         <a href="#" onclick="abrirModalEditar()">Editar</a>
                                         <a href="#" class="text-danger">Eliminar</a>
                                         <a href="#" class="text-warning">Ocultar</a>
                                     </div>
                                 </div>
-
                             </td>
+
 
                         </tr>
                     <?php endwhile; ?>
@@ -433,25 +433,24 @@ function mostrarDescripcionConFormato($descripcion)
                 }
             };
         });
-        function toggleDropdown(button) {
-                const container = button.closest('.dropdown-container');
-                container.classList.toggle('active');
-            }
 
-            document.addEventListener('click', (event) => {
-                const dropdowns = document.querySelectorAll('.dropdown-container');
-                dropdowns.forEach(dropdown => {
-                    if (!dropdown.contains(event.target)) {
-                        dropdown.classList.remove('active');
-                    }
-                });
+        function toggleDropdown(button) {
+            const container = button.closest('.dropdown-container');
+            container.classList.toggle('active');
+        }
+
+        document.addEventListener('click', (event) => {
+            const dropdowns = document.querySelectorAll('.dropdown-container');
+            dropdowns.forEach(dropdown => {
+                if (!dropdown.contains(event.target)) {
+                    dropdown.classList.remove('active');
+                }
             });
+        });
     </script>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="estilosPropuestas.css"></script>
-
 </body>
 
 </html>
