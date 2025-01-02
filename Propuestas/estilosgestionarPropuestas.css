@@ -205,3 +205,64 @@ body {
 }
 
 
+
+
+
+
+
+
+/* Menú desplegable personalizado */
+.custom-dropdown {
+    position: absolute;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 150px; /* Aumentar un poco el ancho */
+    display: none; /* Oculto por defecto */
+    z-index: 1000;
+    margin-top: 10px;
+    padding: 0; /* Elimina el espacio adicional */
+    overflow: hidden; /* Asegura bordes redondeados */
+}
+
+/* Enlaces dentro del menú desplegable */
+.custom-dropdown a {
+    display: block;
+    padding: 10px;
+    text-align: left; /* Cambia alineación del texto */
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    color: white;
+    transition: background-color 0.2s ease;
+}
+
+.custom-dropdown a:nth-child(1) {
+    background-color: #00bfff; /* Azul */
+}
+
+.custom-dropdown a:nth-child(1):hover {
+    background-color: #0099cc; /* Azul más oscuro */
+}
+
+.custom-dropdown a:nth-child(2) {
+    background-color: #ff4d4d; /* Rojo */
+}
+
+.custom-dropdown a:nth-child(2):hover {
+    background-color: #e60000; /* Rojo más oscuro */
+}
+
+.custom-dropdown a:nth-child(3) {
+    background-color: #ff69b4; /* Rosa */
+}
+
+.custom-dropdown a:nth-child(3):hover {
+    background-color: #e01183; /* Rosa más oscuro */
+}
+
+/* Muestra el menú cuando está activo */
+.dropdown-container.active .custom-dropdown {
+    display: block;
+}
+

@@ -194,11 +194,11 @@ function mostrarDescripcionConFormato($descripcion)
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Propuestas</title>
-    <link rel="stylesheet" href="estilosGestionarPropuestas.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="estilosGestionarPropuestas.css">
 </head>
+
 
 <body>
     <nav class="navbar">
@@ -270,19 +270,22 @@ function mostrarDescripcionConFormato($descripcion)
                             <td><?= htmlspecialchars($row['CAT_PRO']) ?></td>
                             <td><?= htmlspecialchars($row['ESTADO']) ?></td>
                             <td>
-                                <div class="dropdown">
+                                <div class="dropdown-container" style="position: relative;">
                                     <!-- Botón principal -->
-                                    <button class="btn dropdown-toggle" style="background-color: #ff69b4; color: white; border: none;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <button class="action-btn" onclick="toggleDropdown(this)">
                                         <i class="bi bi-pencil-square"></i>
                                     </button>
-                                    <!-- Opciones del menú desplegable -->
-                                    <ul class="dropdown-menu dropdown-menu-end">
-                                        <li><a class="dropdown-item" href="#" onclick="abrirModalEditar(<?= $row['ID_PRO'] ?>)">Editar</a></li>
-                                        <li><a class="dropdown-item text-danger" href="eliminarPropuesta.php?id=<?= $row['ID_PRO'] ?>">Eliminar</a></li>
-                                        <li><a class="dropdown-item text-warning" href="ocultarPropuesta.php?id=<?= $row['ID_PRO'] ?>">Ocultar</a></li>
-                                    </ul>
+
+                                    <!-- Menú desplegable personalizado -->
+                                    <div class="custom-dropdown">
+                                        <a href="#" onclick="abrirModalEditar()">Editar</a>
+                                        <a href="#" class="text-danger">Eliminar</a>
+                                        <a href="#" class="text-warning">Ocultar</a>
+                                    </div>
                                 </div>
+
                             </td>
+
                         </tr>
                     <?php endwhile; ?>
                 <?php else: ?>
@@ -429,31 +432,25 @@ function mostrarDescripcionConFormato($descripcion)
                     cerrarModal();
                 }
             };
-
-            function abrirModalEditar(id) {
-                console.log("Abriendo modal para editar la propuesta con ID:", id);
-
-                // Abre el modal de edición
-                const modal = document.getElementById("modalPropuesta");
-                modal.style.display = "flex";
-
-                // Si es necesario, carga los datos del servidor
-                // Ejemplo con fetch:
-                // fetch(`obtenerPropuesta.php?id=${id}`)
-                //     .then(response => response.json())
-                //     .then(data => {
-                //         document.getElementById("titulo").value = data.titulo;
-                //         document.getElementById("descripcion").value = data.descripcion;
-                //         // Actualiza otros campos según sea necesario
-                //     });
+        });
+        function toggleDropdown(button) {
+                const container = button.closest('.dropdown-container');
+                container.classList.toggle('active');
             }
 
-        });
+            document.addEventListener('click', (event) => {
+                const dropdowns = document.querySelectorAll('.dropdown-container');
+                dropdowns.forEach(dropdown => {
+                    if (!dropdown.contains(event.target)) {
+                        dropdown.classList.remove('active');
+                    }
+                });
+            });
     </script>
 
 
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="estilosPropuestas.css"></script>
 
 </body>
 
