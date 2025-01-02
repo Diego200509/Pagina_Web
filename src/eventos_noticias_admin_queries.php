@@ -1,10 +1,15 @@
 <?php
 include '../config/config.php';
 
-// Función para obtener todos los eventos y noticias
-function obtenerEventosNoticias()
+// Función para obtener todos los eventos y noticias con paginación
+function obtenerEventosNoticias($offset = 0, $limit = 6)
 {
     global $connection;
+
+    // Validación de parámetros
+    $offset = intval($offset);
+    $limit = intval($limit);
+
     $query = "
         SELECT 
             en.ID_EVT_NOT,
@@ -18,13 +23,25 @@ function obtenerEventosNoticias()
             p.NOM_PAR AS NOMBRE_PARTIDO
         FROM EVENTOS_NOTICIAS en
         LEFT JOIN PARTIDOS_POLITICOS p ON en.ID_PAR_EVT_NOT = p.ID_PAR
+        LIMIT $offset, $limit
     ";
+
     $result = mysqli_query($connection, $query);
     $data = [];
     while ($row = mysqli_fetch_assoc($result)) {
         $data[] = $row;
     }
     return $data;
+}
+
+// Función para obtener el número total de registros
+function obtenerTotalEventosNoticias()
+{
+    global $connection;
+    $query = "SELECT COUNT(*) AS total FROM EVENTOS_NOTICIAS";
+    $result = mysqli_query($connection, $query);
+    $row = mysqli_fetch_assoc($result);
+    return $row['total'];
 }
 
 // Función para crear un nuevo evento o noticia
@@ -85,12 +102,24 @@ if (isset($_GET['action'])) {
     }
 
     if ($_GET['action'] === 'fetch') {
-        $eventosNoticias = obtenerEventosNoticias();
-        echo json_encode(['success' => true, 'data' => $eventosNoticias]);
+        $paginaActual = isset($_GET['page']) ? intval($_GET['page']) : 1;
+        $registrosPorPagina = 6;
+        $offset = ($paginaActual - 1) * $registrosPorPagina;
+
+        $eventosNoticias = obtenerEventosNoticias($offset, $registrosPorPagina);
+        $totalRegistros = obtenerTotalEventosNoticias();
+        $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
+
+        echo json_encode([
+            'success' => true,
+            'data' => $eventosNoticias,
+            'totalPaginas' => $totalPaginas,
+            'paginaActual' => $paginaActual,
+        ]);
         exit;
     }
 
-    if (isset($_GET['action']) && $_GET['action'] === 'fetchById' && isset($_GET['id'])) {
+    if ($_GET['action'] === 'fetchById' && isset($_GET['id'])) {
         $id = intval($_GET['id']);
         $evento = obtenerEventoNoticiaPorID($id);
 
