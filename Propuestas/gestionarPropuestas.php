@@ -324,7 +324,19 @@ function mostrarDescripcionConFormato($descripcion)
 
                                     <!-- Menú desplegable -->
                                     <div class="custom-dropdown">
-                                        <a role="button" onclick="abrirModalEditar(); event.preventDefault();">Editar</a>
+                                        <a role="button" class="btn btn-primary"
+                                            onclick="abrirModalEditar(
+       '<?= htmlspecialchars($row['ID_PRO'] ?? '', ENT_QUOTES, 'UTF-8') ?>',
+       '<?= htmlspecialchars($row['TIT_PRO'] ?? '', ENT_QUOTES, 'UTF-8') ?>',
+       '<?= htmlspecialchars($row['DESC_PRO'] ?? '', ENT_QUOTES, 'UTF-8') ?>',
+       '<?= htmlspecialchars($row['CAT_PRO'] ?? '', ENT_QUOTES, 'UTF-8') ?>',
+       '<?= htmlspecialchars($row['ID_PAR'] ?? '', ENT_QUOTES, 'UTF-8') ?>',
+       '<?= htmlspecialchars($row['ESTADO'] ?? '', ENT_QUOTES, 'UTF-8') ?>'
+   ); event.preventDefault();">
+                                            Editar
+                                        </a>
+
+
                                         <a role="button" class="text-danger" onclick="eliminarPropuesta(<?= $row['ID_PRO'] ?>); event.preventDefault();">Eliminar</a>
                                         <a role="button" id="estado-opcion-<?= $row['ID_PRO'] ?>" class="text-warning"
                                             onclick="cambiarEstado(<?= $row['ID_PRO'] ?>, '<?= $row['ESTADO'] ?>'); event.preventDefault();">
@@ -439,6 +451,58 @@ function mostrarDescripcionConFormato($descripcion)
         </div>
     </div>
 
+    <div id="modalEditarPropuesta" class="modal">
+    <div class="modal-content">
+        <span class="close-button" onclick="cerrarModalEditar()">&times;</span>
+        <h2>Editar Propuesta</h2>
+        <form id="formEditarPropuesta" method="POST" action="gestionarPropuestas.php">
+            <input type="hidden" name="accion" value="editar">
+            <input type="hidden" name="id" id="idEditarPropuesta">
+
+            <label for="tituloEditar">Título:</label>
+            <input type="text" id="tituloEditar" name="titulo" class="form-control" required>
+
+            <label for="descripcionEditar">Descripción:</label>
+            <textarea id="descripcionEditar" name="descripcion" class="form-control" required></textarea>
+
+            <label for="categoriaEditar">Categoría:</label>
+            <select id="categoriaEditar" name="categoria" class="form-select" required>
+                <option value="Ciencias Administrativas">Ciencias Administrativas</option>
+                <option value="Ciencia e Ingeniería en Alimentos">Ciencia e Ingeniería en Alimentos</option>
+                <option value="Jurisprudencia y Ciencias Sociales">Jurisprudencia y Ciencias Sociales</option>
+                <option value="Contabilidad y Auditoría">Contabilidad y Auditoría</option>
+                <option value="Ciencias Humanas y de la Educación">Ciencias Humanas y de la Educación</option>
+                <option value="Ciencias de la Salud">Ciencias de la Salud</option>
+                <option value="Ingeniería Civil y Mecánica">Ingeniería Civil y Mecánica</option>
+                <option value="Ingeniería en Sistemas, Electrónica e Industrial">Ingeniería en Sistemas, Electrónica e Industrial</option>
+                <option value="Infraestructura">Infraestructura</option>
+                <option value="Deportes">Deportes</option>
+                <option value="Cultura">Cultura</option>
+                <option value="Investigación">Investigación</option>
+                <option value="Vinculación con la Sociedad">Vinculación con la Sociedad</option>
+            </select>
+
+            <label for="partidoEditar">Partido Político:</label>
+            <select id="partidoEditar" name="partido" class="form-select" required>
+                <?php while ($partido = $partidos->fetch_assoc()): ?>
+                    <option value="<?= $partido['ID_PAR'] ?>"><?= $partido['NOM_PAR'] ?></option>
+                <?php endwhile; ?>
+            </select>
+
+            <label for="estadoEditar">Estado:</label>
+            <select id="estadoEditar" name="estado" class="form-select" required>
+                <option value="Visible">Visible</option>
+                <option value="Oculta">Oculta</option>
+            </select>
+
+            <button type="submit" class="btn btn-danger">Actualizar Propuesta</button>
+        </form>
+    </div>
+</div>
+
+
+
+
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const modal = document.getElementById("modalPropuesta");
@@ -526,6 +590,26 @@ function mostrarDescripcionConFormato($descripcion)
                 .catch(error => {
                     console.error('Error:', error);
                 });
+        }
+
+
+        function abrirModalEditar(id, titulo, descripcion, categoria, partido, estado) {
+            // Llenar los campos del modal con los datos de la propuesta
+            document.getElementById('idEditarPropuesta').value = id;
+            document.getElementById('tituloEditar').value = titulo;
+            document.getElementById('descripcionEditar').value = descripcion;
+            document.getElementById('categoriaEditar').value = categoria;
+            document.getElementById('partidoEditar').value = partido;
+
+            // Seleccionar el estado correcto en el campo de estado
+            const estadoSelect = document.getElementById('estadoEditar');
+            if (estadoSelect) {
+                estadoSelect.value = estado; // Asegurarte de que se seleccione el estado actual
+            }
+
+            // Mostrar el modal
+            const modal = document.getElementById('modalEditarPropuesta');
+            modal.style.display = 'flex';
         }
     </script>
 
