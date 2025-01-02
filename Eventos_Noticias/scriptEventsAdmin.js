@@ -102,7 +102,7 @@ function recargarTabla() {
                 <button class="action-btn edit-btn">Editar</button>
                 <button class="action-btn delete-btn">Eliminar</button>
                 <button class="action-btn toggle-status-btn">
-                    ${evento.ESTADO_EVT_NOT === 'Activo' ? 'Ocultar' : 'Activar'}
+                    ${evento.ESTADO_EVT_NOT === 'Activo' ? 'Oculto' : 'Activo'}
                 </button>
             </div>
         </div>
@@ -175,10 +175,13 @@ document.querySelector('.table tbody').addEventListener('click', function (e) {
 // Cambiar estado de un evento
 function cambiarEstado(id, estadoActual) {
     const nuevoEstado = estadoActual === "Activo" ? "Oculto" : "Activo";
+    console.log(`Cambiando estado del ID ${id} a ${nuevoEstado}`); // Depuración
 
     fetch(`../src/eventos_noticias_admin_queries.php?action=changeState&id=${id}&newState=${nuevoEstado}`)
-        .then(response => response.json())
-        .then(data => {
+        .then(response => response.text()) // Cambiar a text temporalmente
+        .then(text => {
+            console.log("Respuesta del servidor:", text); // Verificar respuesta
+            const data = JSON.parse(text); // Convertir a JSON
             if (data.success) {
                 Swal.fire({
                     title: '¡Estado cambiado!',
