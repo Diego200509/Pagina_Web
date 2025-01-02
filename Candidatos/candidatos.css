@@ -16,21 +16,21 @@ header {
     padding: 20px 50px;
     background-color: #b22222; /* Fondo rojo */
 }
-
+/* Navbar */
 .navbar {
     background-color: var(--navbar-bg-color, #00bfff); /* Azul por defecto */
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
 }
 
 .navbar-logo {
     display: flex;
     align-items: center;
     gap: 10px;
-    color: white;
+    color: #ffffff; /* Blanco */
 }
 
 .navbar-logo i {
@@ -53,105 +53,190 @@ header {
     display: flex;
     align-items: center;
     gap: 8px; /* Espacio entre icono y texto */
-    color: white;
+    color: #ffffff; /* Blanco */
     text-decoration: none;
     font-size: 16px;
     font-weight: bold;
 }
-.navbar-menu li a i {
-    font-size: 18px; /* Tamaño del icono */
-}
 
 .navbar-menu li a:hover {
-    color: black;
+    color: #ff0050; /* Rosa brillante */
+}
+#addCandidateBtn {
+    background:  #ff1493; /* Degradado rosa a azul */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: inline-flex; /* Para alinear el ícono */
+    align-items: center; /* Centrar contenido verticalmente */
+    gap: 8px; /* Espacio entre ícono y texto */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra */
+    transition: all 0.3s ease;
+    
 }
 
-/* Estilo para la tabla */
-table {
+#addCandidateBtn:hover {
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3); /* Sombra más intensa */
+    transform: translateY(-2px); /* Movimiento hacia arriba */
+}
+
+#addCandidateBtn:active {
+    transform: translateY(0); /* Restablecer al hacer clic */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+#backBtn {
+    background:  #ff1493; /* Degradado rosa a azul */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: inline-flex; /* Para alinear el ícono */
+    align-items: center; /* Centrar contenido verticalmente */
+    gap: 8px; /* Espacio entre ícono y texto */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra */
+    transition: all 0.3s ease;
+    text-decoration: none; /* Eliminar subrayado del enlace */
+}
+
+#backBtn:hover {
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3); /* Sombra más intensa */
+    transform: translateY(-2px); /* Movimiento hacia arriba */
+}
+
+#backBtn:active {
+    transform: translateY(0); /* Restablecer al hacer clic */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Tabla */
+.styled-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    background-color: #ffffff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+    font-size: 16px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
 }
 
-table thead {
-    background-color: #b22222;
+.styled-table thead {
+    background:  #00bfff;
     color: white;
-    text-align: left;
     font-weight: bold;
-}
-
-table th, table td {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
     text-align: left;
 }
 
-table tbody tr:hover {
-    background-color: #f5f5f5;
-    cursor: pointer;
+.styled-table th, .styled-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-table tbody tr td img {
+.styled-table tbody tr:nth-child(odd) {
+    background: linear-gradient(135deg, rgba(255,20,147,0.1), white);
+}
+
+.styled-table tbody tr:nth-child(even) {
+    background: linear-gradient(135deg, rgba(0,191,255,0.1), white);
+}
+
+.styled-table tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.styled-table tbody tr td img {
     display: block;
     margin: 0 auto;
-    border-radius: 8px;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
 }
-table tbody tr td button {
-    display: inline-block; /* Para que todos tengan el mismo comportamiento */
-    width: 100px; /* Tamaño uniforme */
-    text-align: center; /* Centrar el texto dentro del botón */
-    padding: 10px 0; /* Espaciado interno vertical uniforme */
-    margin: 5px; /* Separación entre los botones */
+
+.styled-table tbody tr td:last-child {
+    text-align: center;
+}
+
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 2rem;
+    }
+
+    .filters {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .search-input, .filter-select {
+        width: 100%;
+    }
+
+    #addCandidateBtn {
+        width: 100%;
+    }
+}
+.action-container {
+    position: relative;
+    display: inline-block;
+}
+
+.icon-button {
+    background: none;
     border: none;
-    border-radius: 4px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.actions-dropdown {
+   
+    top: 50px; /* Ajusta según sea necesario */
+    left: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    width: 150px;
+    display: none; /* Oculto por defecto */
+}
+
+.actions-dropdown button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    text-align: left;
     font-size: 14px;
     cursor: pointer;
+}
+
+
+.actions-dropdown .edit-btn {
+    background-color: #00bfff; /* Azul */
     color: white;
-    transition: background-color 0.3s ease;
 }
 
-/* Botón Editar */
-.edit-btn {
-    background-color: #4caf50; /* Verde */
+.actions-dropdown .delete-btn {
+    background-color: #ff0000; /* Rojo */
+    color: white;
 }
 
-.edit-btn:hover {
-    background-color: #45a049; /* Verde oscuro */
+.actions-dropdown .toggle-status-btn {
+    background-color: #ff1493; /* Rosa */
+    color: white;
 }
 
-/* Botón Eliminar */
-.delete-btn {
-    background-color: #f44336; /* Rojo */
+.actions-dropdown button:hover {
+    background-color: #f0f0f0;
 }
 
-.delete-btn:hover {
-    background-color: #d32f2f; /* Rojo oscuro */
-}
-
-/* Botón Cambiar Estado */
-.toggle-status-btn {
-    background-color: #007bff; /* Azul */
-}
-
-.toggle-status-btn[data-status="Activo"] {
-    background-color: #dc3545; /* Rojo si el estado es 'Activo' (para Ocultar) */
-}
-
-.toggle-status-btn[data-status="Oculto"] {
-    background-color: #28a745; /* Verde si el estado es 'Oculto' (para Activar) */
-}
-
-.toggle-status-btn:hover {
-    opacity: 0.9; /* Reducir un poco la opacidad para el efecto visual */
-}
-
-.toggle-status-btn:active {
-    transform: scale(0.95); /* Efecto de clic */
-}
 .modal {
     display: none; /* Ocultar por defecto */
     position: fixed; /* Fijar en la pantalla */
@@ -203,59 +288,52 @@ table tbody tr td button {
     font-size: 14px;
 }
 
+.modal-content button {
+    background-color: #009fdd; /* Rosa */
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.modal-content button:hover {
+    background-color: #e01183; /* Más oscuro al pasar el mouse */
+}
+
+.modal-content button.secondary {
+    background-color: #00bfff; /* Azul */
+}
+
+.modal-content button.secondary:hover {
+    background-color: #009fdd; /* Azul más oscuro al pasar el mouse */
+}
+
 textarea {
     resize: vertical;
     min-height: 100px;
 }
-
-.modal-content button {
+.action-container .toggle-actions-btn {
+    background-color: #ff1493; /* Fondo rosa */
     border: none;
-    padding: 12px 20px;
-    border-radius: 5px;
-    font-size: 16px;
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 10px; /* Espaciado interno */
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Sombra */
     cursor: pointer;
-    margin-top: 15px;
-    background-color: #00ADEF;
-    color: white;
+    transition: all 0.3s ease;
 }
 
-.modal-content button:hover {
-    background-color: #007B9E;
+.action-container .toggle-actions-btn i {
+    color: white; /* Ícono blanco */
+    font-size: 20px; /* Tamaño del ícono */
 }
 
-/* Respuesta para dispositivos pequeños */
-@media (max-width: 768px) {
-    table {
-        font-size: 14px;
-    }
-
-    table th, table td {
-        padding: 8px;
-    }
-
-    .modal-content {
-        width: 95%;
-    }
+.action-container .toggle-actions-btn:hover {
+    background-color: #e01183; /* Fondo más oscuro al pasar el mouse */
+    transform: translateY(-2px); /* Efecto de elevación */
 }
-#addCandidateBtn {
-    background-color: #b22222; 
-    color: white; 
-    border: none; 
-    padding: 10px 20px; 
-    border-radius: 5px; 
-    font-size: 16px; 
-    cursor: pointer; 
-    transition: background-color 0.3s ease; 
-    font-weight: bold; 
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
-}
-
-#addCandidateBtn:hover {
-    background-color: #a11d1d; 
-    color: #f1f1f1; 
-}
-
-#addCandidateBtn:active {
-    background-color: #8f1a1a; 
-    transform: scale(0.98); 
+ .h2 {
+    margin-bottom: 120px; /* Más espacio debajo del encabezado */
 }
