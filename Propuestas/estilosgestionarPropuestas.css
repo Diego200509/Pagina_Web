@@ -274,3 +274,89 @@ body {
 
 
 
+
+
+/* Estilo del botón Agregar Propuesta */
+.btn-agregar {
+    background-color: #ff69b4; /* Fondo rosa */
+    color: #fff; /* Texto blanco */
+    border: none; /* Sin bordes */
+    border-radius: 12px; /* Bordes suavemente redondeados */
+    padding: 10px 20px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de fuente */
+    font-weight: bold; /* Texto en negrita */
+    display: inline-flex; /* Alineación del icono y texto */
+    align-items: center; /* Centrar verticalmente */
+    justify-content: center; /* Centrar horizontalmente */
+    text-decoration: none; /* Sin subrayado */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+    transition: background-color 0.3s, transform 0.2s; /* Transiciones suaves */
+    cursor: pointer; /* Cursor de mano */
+}
+
+.btn-agregar:hover {
+    background-color: #cc5289; /* Fondo más oscuro al pasar el mouse */
+    transform: translateY(-2px); /* Efecto de elevación */
+}
+
+.btn-agregar i {
+    margin-right: 10px; /* Espacio entre el icono y el texto */
+    font-size: 18px; /* Tamaño del icono */
+}
+
+
+.navbar {
+    background-color: var(--navbar-bg-color, #00bfff);
+    /* Azul vibrante como color por defecto */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    /* Sombra ligera */
+}
+
+
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #ffffff;
+    /* Blanco */
+}
+
+.navbar-logo i {
+    font-size: 24px;
+}
+
+.navbar-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+}
+
+.navbar-menu li {
+    list-style: none;
+}
+
+.navbar-menu li a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    /* Espacio entre icono y texto */
+    color: #ffffff;
+    /* Blanco */
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.navbar-menu li a:hover {
+    color: #ff0050;
+    /* Rosa brillante */
+}
+
+
+

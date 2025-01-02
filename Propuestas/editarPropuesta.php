@@ -38,7 +38,7 @@ if (isset($_GET['id'])) {
 
     try {
         // Llamar a la función de actualizar propuesta
-        $actualizado = actualizarPropuesta($connection, $id, $titulo, $descripcion, $categoria, $partido);
+        $actualizado = actualizarPropuesta($connection, $id, $titulo, $descripcion, $categoria, $partido, $estado);
 
         if ($actualizado) {
             header('Location: gestionarPropuestas.php?status=success');
