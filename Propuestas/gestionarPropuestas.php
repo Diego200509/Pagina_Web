@@ -36,11 +36,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $categoria = $_POST['categoria'];
         $partido = $_POST['partido'];
         $estado = $_POST['estado'];
-    
+
         if (empty($titulo) || empty($descripcion) || empty($categoria) || empty($partido) || empty($estado)) {
             die("Error: Faltan datos en el formulario. Verifique los campos.");
         }
-    
+
         try {
             agregarPropuestaYColaboracion($connection, $titulo, $descripcion, $categoria, $partido, $estado);
             header('Location: gestionarPropuestas.php?status=added');
@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         try {
-            actualizarPropuesta($connection, $id, $titulo, $descripcion, $categoria, $partido);
+            actualizarPropuesta($connection, $id, $titulo, $descripcion, $categoria, $partido, $estado);
             header('Location: gestionarPropuestas.php?status=edited');
             exit();
         } catch (Exception $e) {
@@ -345,17 +345,46 @@ function mostrarDescripcionConFormato($descripcion)
 
                 <label for="estado">Estado:</label>
                 <select name="estado" id="estado" class="form-select" required>
-                    <?php while ($estado = $estadosResult->fetch_assoc()): ?>
-                        <option value="<?= htmlspecialchars($estado['ID_ESTADO']) ?>">
-                            <?= htmlspecialchars($estado['NOMBRE_ESTADO']) ?>
-                        </option>
-                    <?php endwhile; ?>
+                    <?php if (isset($estadosResult) && $estadosResult->num_rows > 0): ?>
+                        <?php while ($estado = $estadosResult->fetch_assoc()): ?>
+                            <option value="<?= htmlspecialchars($estado['ID_ESTADO']) ?>">
+                                <?= htmlspecialchars($estado['NOMBRE_ESTADO']) ?>
+                            </option>
+                        <?php endwhile; ?>
+                    <?php else: ?>
+                        <option value="">No hay estados disponibles</option>
+                    <?php endif; ?>
                 </select>
+
+
 
                 <button type="submit" class="btn btn-danger">Guardar Propuesta</button>
             </form>
         </div>
     </div>
+
+    <script>
+        function abrirModal() {
+            const modal = document.getElementById("modalPropuesta");
+            if (modal) {
+                modal.style.display = "flex";
+            } else {
+                console.error("No se encontró el modal con ID 'modalPropuesta'.");
+            }
+        }
+
+        function cerrarModal() {
+            const modal = document.getElementById("modalPropuesta");
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById("modalPropuesta");
+            if (event.target === modal) {
+                cerrarModal();
+            }
+        };
+    </script>
 
 
 
@@ -405,23 +434,3 @@ function mostrarPropuesta($connection, $id)
 
 
 ?>
-
-<script>
-    function abrirModal() {
-        const modal = document.getElementById("modalPropuesta");
-        modal.style.display = "flex"; // Cambia a flex para centrar
-    }
-
-    function cerrarModal() {
-        const modal = document.getElementById("modalPropuesta");
-        modal.style.display = "none"; // Oculta el modal
-    }
-
-    // Cerrar el modal al hacer clic fuera del contenido
-    window.onclick = function(event) {
-        const modal = document.getElementById("modalPropuesta");
-        if (event.target === modal) {
-            cerrarModal();
-        }
-    };
-</script>

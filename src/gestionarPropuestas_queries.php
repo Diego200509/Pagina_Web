@@ -44,17 +44,17 @@ function obtenerPartidos($connection) {
 
 
 // Función para actualizar una propuesta
-function actualizarPropuesta($connection, $id, $titulo, $descripcion, $categoria, $partido) {
-    // Actualizar los datos de la propuesta en la tabla PROPUESTAS
-    $query = "UPDATE PROPUESTAS SET TIT_PRO = ?, DESC_PRO = ?, CAT_PRO = ? WHERE ID_PRO = ?";
+function actualizarPropuesta($connection, $id, $titulo, $descripcion, $categoria, $partido, $estado) {
+    // Actualizar los datos de la propuesta en la tabla PROPUESTAS, incluyendo el estado
+    $query = "UPDATE PROPUESTAS SET TIT_PRO = ?, DESC_PRO = ?, CAT_PRO = ?, ESTADO = ? WHERE ID_PRO = ?";
     $stmt = $connection->prepare($query);
     if (!$stmt) {
         die("Error al preparar la consulta de actualización: " . $connection->error);
     }
-    $stmt->bind_param("sssi", $titulo, $descripcion, $categoria, $id);
+    $stmt->bind_param("ssssi", $titulo, $descripcion, $categoria, $estado, $id);
     $stmt->execute();
 
-    // Verificar si se actualizó alguna fila
+    // Verificar si se actualizó alguna fila en la tabla PROPUESTAS
     $propuestaActualizada = $stmt->affected_rows > 0;
 
     // Actualizar la colaboración entre la propuesta y el partido político
@@ -75,6 +75,7 @@ function actualizarPropuesta($connection, $id, $titulo, $descripcion, $categoria
     // Retornar verdadero si alguna de las actualizaciones fue exitosa
     return $propuestaActualizada || $colaboracionActualizada;
 }
+
 
 
 
