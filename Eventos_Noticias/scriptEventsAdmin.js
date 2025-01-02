@@ -72,8 +72,8 @@ function editarEvento(id) {
 }
 
 // Función para recargar la tabla
-function recargarTabla() {
-    fetch(`../src/eventos_noticias_admin_queries.php?action=fetch`)
+function recargarTabla(paginaActual = 1) {
+    fetch(`../src/eventos_noticias_admin_queries.php?action=fetch&page=${paginaActual}`)
         .then(response => response.json())
         .then(data => {
             const tbody = document.querySelector(".table tbody");
@@ -84,38 +84,44 @@ function recargarTabla() {
                     const fila = document.createElement("tr");
                     fila.id = `fila-${evento.ID_EVT_NOT}`;
                     fila.innerHTML = `
-    <td>${evento.ID_EVT_NOT}</td>
-    <td>${evento.TIT_EVT_NOT}</td>
-    <td>${evento.DESC_EVT_NOT}</td>
-    <td>${evento.FECHA_EVT_NOT}</td>
-    <td>${evento.TIPO_REG_EVT_NOT}</td>
-    <td>${evento.UBICACION_EVT_NOT || 'N/A'}</td>
-    <td>${evento.NOMBRE_PARTIDO || 'N/A'}</td>
-    <td>${evento.ESTADO_EVT_NOT}</td>
-    <td><img src="${evento.IMAGEN_EVT_NOT}" alt="Imagen" style="width: 100px; height: auto;"></td>
-    <td>
-        <div class="action-container">
-            <button class="action-btn toggle-actions-btn" data-id="${evento.ID_EVT_NOT}">
-                <i class="bi bi-pencil-square"></i>
-            </button>
-            <div class="actions-dropdown" data-id="${evento.ID_EVT_NOT}" style="display: none;">
-                <button class="action-btn edit-btn">Editar</button>
-                <button class="action-btn delete-btn">Eliminar</button>
-                <button class="action-btn toggle-status-btn">
-                    ${evento.ESTADO_EVT_NOT === 'Activo' ? 'Oculto' : 'Activo'}
-                </button>
-            </div>
-        </div>
-    </td>
-`;
+                        <td>${evento.ID_EVT_NOT}</td>
+                        <td>${evento.TIT_EVT_NOT}</td>
+                        <td>${evento.DESC_EVT_NOT}</td>
+                        <td>${evento.FECHA_EVT_NOT}</td>
+                        <td>${evento.TIPO_REG_EVT_NOT}</td>
+                        <td>${evento.UBICACION_EVT_NOT || 'N/A'}</td>
+                        <td>${evento.NOMBRE_PARTIDO || 'N/A'}</td>
+                        <td>${evento.ESTADO_EVT_NOT}</td>
+                        <td><img src="${evento.IMAGEN_EVT_NOT}" alt="Imagen" style="width: 100px; height: auto;"></td>
+                        <td>
+                            <div class="action-container">
+                                <button class="action-btn toggle-actions-btn" data-id="${evento.ID_EVT_NOT}">
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
+                                <div class="actions-dropdown" data-id="${evento.ID_EVT_NOT}" style="display: none;">
+                                    <button class="action-btn edit-btn">Editar</button>
+                                    <button class="action-btn delete-btn">Eliminar</button>
+                                    <button class="action-btn toggle-status-btn">
+                                        ${evento.ESTADO_EVT_NOT === 'Activo' ? 'Oculto' : 'Activo'}
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+                    `;
                     tbody.appendChild(fila);
                 });
+
+                // Generar la paginación
+                generarPaginacion(data.totalPaginas, paginaActual);
             } else {
                 const fila = document.createElement("tr");
                 fila.innerHTML = `
                     <td colspan="10" class="text-center">No hay registros disponibles</td>
                 `;
                 tbody.appendChild(fila);
+
+                // Generar paginación vacía
+                generarPaginacion(1, paginaActual);
             }
         })
         .catch(error => {
@@ -222,7 +228,7 @@ document.getElementById('imagen').addEventListener('change', function (event) {
 // Ejecutar la función para habilitar/deshabilitar ubicación al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
     habilitarUbicacion();
-    recargarTabla(); // Cargar los datos al iniciar la página
+    recargarTabla(1);// Cargar los datos al iniciar la página
 });
 
 // Abrir el modal para agregar o editar
@@ -269,3 +275,37 @@ window.onclick = function (event) {
         closeModal();
     }
 };
+
+function generarPaginacion(totalPaginas, paginaActual) {
+    const paginationContainer = document.querySelector(".pagination-container");
+    if (!paginationContainer) {
+        console.error("Contenedor de paginación no encontrado");
+        return;
+    }
+
+    let paginacionHTML = `
+        <ul class="pagination justify-content-center">
+            ${paginaActual > 1
+                ? `<li class="page-item"><a class="page-link" href="#" onclick="recargarTabla(${paginaActual - 1})">Anterior</a></li>`
+                : ""
+            }
+    `;
+
+    for (let i = 1; i <= totalPaginas; i++) {
+        paginacionHTML += `
+            <li class="page-item ${i === paginaActual ? 'active' : ''}">
+                <a class="page-link" href="#" onclick="recargarTabla(${i})">${i}</a>
+            </li>
+        `;
+    }
+
+    paginacionHTML += `
+            ${paginaActual < totalPaginas
+                ? `<li class="page-item"><a class="page-link" href="#" onclick="recargarTabla(${paginaActual + 1})">Siguiente</a></li>`
+                : ""
+            }
+        </ul>
+    `;
+
+    paginationContainer.innerHTML = paginacionHTML;
+}
