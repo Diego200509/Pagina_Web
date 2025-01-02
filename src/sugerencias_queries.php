@@ -5,15 +5,12 @@ include('../config/config.php');
 function obtenerSugerenciaPorId($id_sugerencia) {
     global $connection;  // Asegúrate de que la conexión esté disponible
 
-    // Consulta SQL corregida
     $sql = "SELECT 
                 s.ID_SUG AS id_sugerencia,
                 u.NOM_USU AS nombre_usuario,
                 u.EMAIL_USU AS correo_usuario,
                 c.NOM_CAN AS nombre_candidato,
                 s.SUGERENCIAS_SUG AS sugerencia,
-                s.PROPUESTA_SUG AS propuesta,
-                s.COMENTARIOS_SUG AS comentarios,
                 s.ESTADO_SUG AS estado,
                 s.CREATED_AT AS created_at
             FROM SUGERENCIAS s
@@ -23,25 +20,18 @@ function obtenerSugerenciaPorId($id_sugerencia) {
             WHERE s.ID_SUG = ?
             ORDER BY s.ID_SUG DESC";
 
-    // Preparar la consulta
     if ($stmt = $connection->prepare($sql)) {
-        // Bind el parámetro
-        $stmt->bind_param("i", $id_sugerencia);  // El tipo es "i" para un entero
-
-        // Ejecutar la consulta
+        $stmt->bind_param("i", $id_sugerencia);
         $stmt->execute();
-
-        // Obtener el resultado
         $result = $stmt->get_result();
 
-        // Si hay resultados, devolver la fila asociada
         if ($result->num_rows > 0) {
-            return $result->fetch_assoc();  // fetch_assoc() para obtener el resultado como un array asociativo
+            return $result->fetch_assoc();
         } else {
-            return null; // No se encuentra la sugerencia
+            return null;
         }
     } else {
-        return null; // Error en la preparación de la consulta
+        return null;
     }
 }
 
@@ -51,22 +41,21 @@ function obtenerTodasSugerencias()
 {
     global $connection;
 
-    // Consulta SQL corregida para obtener sugerencias junto con la información del usuario y del partido
+    // Consulta SQL para excluir sugerencias eliminadas
     $sql = "SELECT 
-    s.ID_SUG AS id_sugerencia,
-    u.NOM_USU AS nombre_usuario,
-    u.EMAIL_USU AS correo_usuario,
-    c.NOM_CAN AS nombre_candidato,
-    s.SUGERENCIAS_SUG AS sugerencia,
-    s.PROPUESTA_SUG AS propuesta,
-    s.ESTADO_SUG AS estado,
-    s.CREATED_AT AS created_at
-FROM SUGERENCIAS s
-JOIN USUARIOS u ON s.ID_USU_PER = u.ID_USU
-JOIN PARTIDOS_POLITICOS p ON s.ID_PAR_SUG = p.ID_PAR
-JOIN CANDIDATOS c ON c.ID_PAR_CAN = p.ID_PAR
-ORDER BY s.ID_SUG DESC";
-
+        s.ID_SUG AS id_sugerencia,
+        u.NOM_USU AS nombre_usuario,
+        u.EMAIL_USU AS correo_usuario,
+        c.NOM_CAN AS nombre_candidato,
+        s.SUGERENCIAS_SUG AS sugerencia,
+        s.ESTADO_SUG AS estado,
+        s.CREATED_AT AS created_at
+    FROM SUGERENCIAS s
+    JOIN USUARIOS u ON s.ID_USU_PER = u.ID_USU
+    JOIN PARTIDOS_POLITICOS p ON s.ID_PAR_SUG = p.ID_PAR
+    JOIN CANDIDATOS c ON c.ID_PAR_CAN = p.ID_PAR
+    WHERE s.ESTADO_SUG != 'Eliminado' -- Excluir eliminadas
+    ORDER BY s.ID_SUG DESC";
 
     $result = $connection->query($sql);
 
@@ -79,6 +68,8 @@ ORDER BY s.ID_SUG DESC";
 
     return $sugerencias;
 }
+
+
 
 // Función para obtener el nombre del partido político según su ID_PAR
 function obtenerNombrePartido($idPartido)
@@ -120,378 +111,120 @@ function obtenerVotosPorPartido()
     return $votosPorPartido;
 }
 
-// Inicializar mensaje de error
-$mensajeError = "";
-
-
-// Verificar si se enviaron los datos del formulario
+// Función para manejar solicitudes POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nombre = $_POST['nombre'];
-    $correo = $_POST['correo'];
+    if (isset($_POST['accion']) && $_POST['accion'] === 'actualizar_imagen') {
+        if (isset($_FILES['imagen'])) {
+            $imagen = $_FILES['imagen'];
+            if ($imagen['error'] === UPLOAD_ERR_OK) {
+                $nombreImagen = uniqid() . '-' . basename($imagen['name']);
+                $directorioDestino = $_SERVER['DOCUMENT_ROOT'] . '/Pagina_Web/Pagina_Web/Sugerencias/Img/';
+                $rutaDestino = $directorioDestino . $nombreImagen;
+                $rutaBaseDatos = '/Pagina_Web/Pagina_Web/Sugerencias/Img/' . $nombreImagen;
 
-    // Validar si se ha seleccionado un candidato
-    if (isset($_POST['candidato']) && !empty($_POST['candidato'])) {
-        $candidato = $_POST['candidato'];
-    } else {
-        $mensajeError = "Por favor selecciona un Partido politico.";
+                if (!is_dir($directorioDestino)) {
+                    mkdir($directorioDestino, 0777, true);
+                }
 
+                if (move_uploaded_file($imagen['tmp_name'], $rutaDestino)) {
+                    if (actualizarImagenConfiguracion($rutaBaseDatos)) {
+                        // Generar salida solo sin redirigir
+
+
+                        
+                        return; // No uses exit aquí
+                    } else {
+                        return;
+                    }
+                } else {
+                    return;
+                }
+            } else {
+                return;
+            }
+        }
     }
 
 
-    // Validar que todos los campos estén llenos
-    if (!empty($nombre) && !empty($correo) && !empty($candidato)) {
-        // Verificar si el usuario ya existe en la tabla USUARIOS
-        $stmt_check = $connection->prepare("SELECT ID_USU FROM USUARIOS WHERE NOM_USU = ? OR EMAIL_USU = ?");
-        $stmt_check->bind_param("ss", $nombre, $correo);
-        $stmt_check->execute();
-        $result_check = $stmt_check->get_result();
 
-        if ($result_check->num_rows > 0) {
-            // El usuario ya existe, obtener su ID
-            $usuario = $result_check->fetch_assoc();
-            $id_usuario = $usuario['ID_USU'];
+    
 
-            // Verificar si el usuario ya ha votado
-            $stmt_vot_check = $connection->prepare("SELECT * FROM REGISTROS_VOTOS WHERE ID_USU_RES = ?");
-            $stmt_vot_check->bind_param("i", $id_usuario);
-            $stmt_vot_check->execute();
-            $result_vot_check = $stmt_vot_check->get_result();
 
-            if ($result_vot_check->num_rows > 0) {
-                // El usuario ya ha votado
-                echo "
-                <div style='
-                    background-color: #ffe0b2; 
-                    color: #e65100; 
-                    border: 2px solid #ef6c00; 
-                    padding: 20px; 
-                    border-radius: 10px; 
-                    font-family: Arial, sans-serif; 
-                    max-width: 600px; 
-                    margin: 290px auto 20px auto; 
-                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);'>
-                    
-                    <div style='display: flex; align-items: center;'>
-                        <img src='https://img.icons8.com/fluency/48/000000/error.png' alt='Error de voto' style='margin-right: 15px;'/>
-                        <h2 style='margin: 0; font-size: 24px;'>¡Ya has emitido un voto!</h2>
-                    </div>
-                    
-                    <p style='font-size: 18px; margin-top: 10px;'>
-                        <strong>Lo sentimos</strong>, pero según nuestros registros, este usuario o correo electrónico (<em>$correo</em>) ya ha emitido su voto en las elecciones.
-                    </p>
-                    
-                    <p style='font-size: 16px;'>
-                        Si crees que esto es un error, por favor contáctanos para más asistencia. Te agradecemos por participar.
-                    </p>
-                    
-                    <div style='text-align: center; margin-top: 20px;'>
-                                    <a href='../Sugerencias/index.php' style='
-                            display: inline-block; 
-                            padding: 10px 20px; 
-                            background-color: #f57c00; 
-                            color: white; 
-                            text-decoration: none; 
-                            border-radius: 5px; 
-                            font-size: 16px;'>
-                            Volver al inicio
-                        </a>
-                    </div>
-                </div>";
-            } else {
-                // Permitir votar ya que no ha votado antes
-                $stmt_voto = $connection->prepare("INSERT INTO VOTOS (ID_PAR_VOT) VALUES (?)");
-                $stmt_voto->bind_param("i", $candidato);
 
-                if ($stmt_voto->execute()) {
-                    // Obtener ID del voto
-                    $id_voto = $stmt_voto->insert_id;
+    if (isset($_COOKIE['ya_voto'])) {
+        // Redirigir a resultados si ya votó
+        header("Location: ../Sugerencias/resultados.php");
+        exit;
+    }
 
-                    // Registrar la relación en la tabla REGISTROS_VOTOS
-                    $stmt_registro = $connection->prepare("INSERT INTO REGISTROS_VOTOS (ID_USU_RES, ID_VOT_RES) VALUES (?, ?)");
-                    $stmt_registro->bind_param("ii", $id_usuario, $id_voto);
-                    if ($stmt_registro->execute()) {
-                        // Enviar correo al usuario
-                        $url = "http://localhost:3001/send-email";  // Cambia a la ruta correcta de tu servidor Node.js
-                        $data = array(
-                            'to' => $correo,
-                            'subject' => 'Confirmación de Voto',
-                            'message' => 'Gracias por votar en las elecciones.'
-                        );
+    if (isset($_POST['candidato']) && !empty($_POST['candidato'])) {
+        $candidato = (int)$_POST['candidato'];
 
-                        // Usar cURL para hacer la solicitud HTTP POST a Node.js
-                        $ch = curl_init($url);
-                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                        curl_setopt($ch, CURLOPT_POST, true);
-                        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-                        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-
-                        $response = curl_exec($ch);
-                        curl_close($ch);
-                        echo "
-                        <div style='
-                            background-color: #e0f7fa; 
-                            color: #00695c; 
-                            border: 2px solid #004d40; 
-                            padding: 20px; 
-                            border-radius: 10px; 
-                            font-family: Arial, sans-serif; 
-                            max-width: 600px; 
-                            margin: 400px auto 20px auto; 
-                            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);'>
-                            
-                            <div style='display: flex; align-items: center;'>
-                                <img src='https://img.icons8.com/fluency/48/000000/ballot.png' alt='Voto registrado' style='margin-right: 15px;'/>
-                                <h2 style='margin: 0; font-size: 24px;'>¡Tu voto ha sido registrado con éxito!</h2>
-                            </div>
-                            
-                            <p style='font-size: 18px; margin-top: 10px;'>
-                                <strong>¡Gracias por participar en las elecciones!</strong> Hemos registrado tu voto y se ha enviado una confirmación a tu correo electrónico (<em>$correo</em>).
-                            </p>
-                            
-                            <p style='font-size: 16px;'>
-                                Revisa tu bandeja de entrada (o la carpeta de spam) para confirmar la recepción. Si tienes alguna pregunta o inquietud, no dudes en contactarnos. ¡Tu participación es importante para el futuro!
-                            </p>
-                            
-                            <div style='text-align: center; margin-top: 20px;'>
-                                    <a href='../Sugerencias/index.php' style='
-                                    display: inline-block; 
-                                    padding: 10px 20px; 
-                                    background-color: #00796b; 
-                                    color: white; 
-                                    text-decoration: none; 
-                                    border-radius: 5px; 
-                                    font-size: 16px;'>
-                                    Volver al inicio
-                                </a>
-                            </div>
-                        </div>";
-
-                    } else {
-                        echo "
-                                        <div style='
-                                            background-color: #ffcdd2; 
-                                            color: #b71c1c; 
-                                            border: 2px solid #d32f2f; 
-                                            padding: 20px; 
-                                            border-radius: 10px; 
-                                            font-family: Arial, sans-serif; 
-                                            max-width: 600px; 
-                                            margin: 250px auto 20px auto;
-                                            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);'>
-                                            
-                                            <div style='display: flex; align-items: center;'>
-                                                <img src='https://img.icons8.com/fluency/48/000000/error-cloud.png' alt='Error técnico' style='margin-right: 15px;'/>
-                                                <h2 style='margin: 0; font-size: 24px;'>¡Error al registrar el voto!</h2>
-                                            </div>
-                                            
-                                            <p style='font-size: 18px; margin-top: 10px;'>
-                                                <strong>Lo sentimos</strong>, pero hemos encontrado un error mientras intentábamos registrar tu voto.
-                                            </p>
-                                            
-                                            <p style='font-size: 16px;'>
-                                                El problema técnico es el siguiente: <em>" . $stmt_voto->error . "</em>.
-                                                Intenta de nuevo más tarde o contacta a soporte si el problema persiste.
-                                            </p>
-                                            
-                                            <div style='text-align: center; margin-top: 20px;'>
-                                    <a href='../Sugerencias/index.php' style='
-                                                    display: inline-block; 
-                                                    padding: 10px 20px; 
-                                                    background-color: #d32f2f; 
-                                                    color: white; 
-                                                    text-decoration: none; 
-                                                    border-radius: 5px; 
-                                                    font-size: 16px;'>
-                                                    Volver al inicio
-                                                </a>
-                                            </div>
-                                        </div>";
-                    }
-                } else {
-                    echo "
-                    <div style='
-                        background-color: #ffcdd2; 
-                        color: #b71c1c; 
-                        border: 2px solid #d32f2f; 
-                        padding: 20px; 
-                        border-radius: 10px; 
-                        font-family: Arial, sans-serif; 
-                        max-width: 600px; 
-                        margin: 250px auto 20px auto; 
-                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);'>
-                        
-                        <div style='display: flex; align-items: center;'>
-                            <img src='https://img.icons8.com/fluency/48/000000/error-cloud.png' alt='Error técnico' style='margin-right: 15px;'/>
-                            <h2 style='margin: 0; font-size: 24px;'>¡Error al registrar el voto!</h2>
-                        </div>
-                        
-                        <p style='font-size: 18px; margin-top: 10px;'>
-                            <strong>Lo sentimos</strong>, pero hemos encontrado un error mientras intentábamos registrar tu voto.
-                        </p>
-                        
-                        <p style='font-size: 16px;'>
-                            El problema técnico es el siguiente: <em>" . $stmt_voto->error . "</em>.
-                            Intenta de nuevo más tarde o contacta a soporte si el problema persiste.
-                        </p>
-                        
-                        <div style='text-align: center; margin-top: 20px;'>
-                <a href='../Sugerencias/index.php' style='
-                                display: inline-block; 
-                                padding: 10px 20px; 
-                                background-color: #d32f2f; 
-                                color: white; 
-                                text-decoration: none; 
-                                border-radius: 5px; 
-                                font-size: 16px;'>
-                                Volver al inicio
-                            </a>
-                        </div>
-                    </div>";
-                }
-            }
-            $stmt_vot_check->close();
+        if (registrarVoto($candidato)) {
+            setcookie("ya_voto", true, time() + 3600 * 24, "/");
+            header("Location: ../Sugerencias/resultados.php");
         } else {
-            // Insertar nuevo usuario si no existe
-            $stmt = $connection->prepare("INSERT INTO USUARIOS (NOM_USU, EMAIL_USU, PASSWORD_USU, ROL_USU)VALUES (?, ?, NULL, 'USUARIO')");
-            $stmt->bind_param("ss", $nombre, $correo);
-
-            if ($stmt->execute()) {
-                // Obtener ID del usuario recién insertado
-                $id_usuario = $stmt->insert_id;
-
-                // Preparar consulta para insertar voto
-                $stmt_voto = $connection->prepare("INSERT INTO VOTOS (ID_PAR_VOT) VALUES (?)");
-                $stmt_voto->bind_param("i", $candidato);
-
-                if ($stmt_voto->execute()) {
-                    // Obtener ID del voto
-                    $id_voto = $stmt_voto->insert_id;
-
-                    // Registrar la relación en la tabla REGISTROS_VOTOS
-                    $stmt_registro = $connection->prepare("INSERT INTO REGISTROS_VOTOS (ID_USU_RES, ID_VOT_RES) VALUES (?, ?)");
-                    $stmt_registro->bind_param("ii", $id_usuario, $id_voto);
-                    if ($stmt_registro->execute()) {
-                        // Enviar correo al usuario
-                        $url = "http://localhost:3001/send-email";  // Cambia a la ruta correcta de tu servidor Node.js
-                        $data = array(
-                            'to' => $correo,
-                            'subject' => 'Confirmación de Voto',
-                            'message' => 'Gracias por votar en las elecciones.'
-                        );
-
-                        // Usar cURL para hacer la solicitud HTTP POST a Node.js
-                        $ch = curl_init($url);
-                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                        curl_setopt($ch, CURLOPT_POST, true);
-                        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-                        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-
-                        $response = curl_exec($ch);
-                        curl_close($ch);
-
-                        echo "
-<div style='
-    background-color: #e0f7fa; 
-    color: #00695c; 
-    border: 2px solid #004d40; 
-    padding: 20px; 
-    border-radius: 10px; 
-    font-family: Arial, sans-serif; 
-    max-width: 700px; 
-    margin: 400px auto 20px auto; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);'>
-    
-    <div style='display: flex; align-items: center;'>
-        <img src='https://img.icons8.com/fluency/48/000000/ballot.png' alt='Voto registrado' style='margin-right: 15px;'/>
-        <h2 style='margin: 0; font-size: 24px;'>¡Tu voto ha sido registrado con éxito!</h2>
-    </div>
-    
-    <p style='font-size: 18px; margin-top: 50px;'>
-        <strong>¡Gracias por participar en las elecciones!</strong> Hemos registrado tu voto y se ha enviado una confirmación a tu correo electrónico (<em>$correo</em>).
-    </p>
-    
-    <p style='font-size: 16px;'>
-        Revisa tu bandeja de entrada (o la carpeta de spam) para confirmar la recepción. Si tienes alguna pregunta o inquietud, no dudes en contactarnos. ¡Tu participación es importante para el futuro!
-    </p>
-    
-    <div style='text-align: center; margin-top: 20px;'>
-        <a href='../Sugerencias/index.php' style='
-            display: inline-block; 
-            padding: 10px 20px; 
-            background-color: #00796b; 
-            color: white; 
-            text-decoration: none; 
-            border-radius: 5px; 
-            font-size: 16px;'>
-            Volver al inicio
-        </a>
-    </div>
-</div>";
-
-                    } else {
-                        echo "Error al registrar el voto: " . $stmt_registro->error;
-                    }
-                } else {
-                    echo "Error al registrar el voto: " . $stmt_voto->error;
-                }
-            } else {
-                echo "Error al registrar el usuario: " . $stmt->error;
-            }
-
-            // Cerrar declaraciones
-            $stmt->close();
-            $stmt_voto->close();
-            $stmt_registro->close();
+            header("Location: ../Sugerencias/votos.php?mensaje=error");
         }
-        $stmt_check->close();
     } else {
-        // Mostrar mensaje de error si no se completan todos los campos
-        if (!empty($mensajeError)) {
-            echo $mensajeError;  // Mostrar el mensaje de error
-        } else {
+        header("Location: ../Sugerencias/votos.php?mensaje=no_candidato");
+    }
+    exit;
+}
+function obtenerImagenConfiguracion() {
+    global $connection;
 
-            echo "
-            <div style='
-                background-color: #ffe0b2; 
-                color: #e65100; 
-                border: 2px solid #ef6c00; 
-                padding: 20px; 
-                border-radius: 10px; 
-                font-family: Arial, sans-serif; 
-                max-width: 600px; 
-                margin: 150px auto 20px auto; /* Ajuste para que aparezca más abajo */
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);'>
-                
-                <div style='display: flex; align-items: center;'>
-                    <img src='https://img.icons8.com/fluency/48/000000/warning.png' alt='Advertencia' style='margin-right: 15px;'/>
-                    <h2 style='margin: 0; font-size: 24px;'>¡Atención!</h2>
-                </div>
-                
-                <p style='font-size: 18px; margin-top: 10px;'>
-                    <strong>Por favor, asegúrate de completar todos los campos</strong> del formulario antes de enviar tu voto.
-                </p>
-                
-                <p style='font-size: 16px;'>
-                    Cada información es importante para que tu voto sea contado correctamente. 
-                    Tómate un momento para revisar antes de continuar.
-                </p>
-                
-                <div style='text-align: center; margin-top: 20px;'>
-                    <a href='javascript:history.back()' style='
-                        display: inline-block; 
-                        padding: 10px 20px; 
-                        background-color: #ef6c00; 
-                        color: white; 
-                        text-decoration: none; 
-                        border-radius: 5px; 
-                        font-size: 16px;'>
-                        Volver atrás
-                    </a>
-                </div>
-            </div>";
+    $sql = "SELECT IMG_SUG FROM CONFIGURACION_SUGERENCIAS ORDER BY CREATED_AT DESC LIMIT 1";
+    $result = $connection->query($sql);
 
-        }
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row['IMG_SUG'];
+    }
+
+    return null; // Si no hay imagen configurada
+}
+
+
+function actualizarImagenConfiguracion($rutaImagen) {
+    global $connection;
+
+    $sql = "INSERT INTO CONFIGURACION_SUGERENCIAS (IMG_SUG) VALUES (?)";
+    $stmt = $connection->prepare($sql);
+
+    if (!$stmt) {
+        error_log("Error al preparar la consulta: " . $connection->error);
+        return false;
+    }
+
+    $stmt->bind_param("s", $rutaImagen);
+
+    if ($stmt->execute()) {
+        $stmt->close();
+        return true;
+    } else {
+        error_log("Error al ejecutar la consulta: " . $stmt->error);
+        $stmt->close();
+        return false;
     }
 }
-$connection->close();
+
+
+
+function registrarVoto($candidato) {
+    global $connection;
+
+    // Intentar registrar el voto en la base de datos
+    $stmt_voto = $connection->prepare("INSERT INTO VOTOS (ID_PAR_VOT) VALUES (?)");
+    $stmt_voto->bind_param("i", $candidato);
+
+    if ($stmt_voto->execute()) {
+        $stmt_voto->close();
+        return true;
+    } else {
+        error_log("Error al registrar el voto: " . $stmt_voto->error);
+        $stmt_voto->close();
+        return false;
+    }
+}
 ?>
