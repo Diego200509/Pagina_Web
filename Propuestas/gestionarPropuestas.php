@@ -257,7 +257,7 @@ function mostrarDescripcionConFormato($descripcion)
                             <td><?= htmlspecialchars($row['CAT_PRO']) ?></td>
                             <td><?= htmlspecialchars($row['ESTADO']) ?></td>
                             <td>
-                                <button class="action-btn" onclick="abrirModal()">
+                                <button class="action-btn" data-modal="modalPropuesta">
                                     <i class="bi bi-pencil-square"></i>
                                 </button>
                             </td>
@@ -365,36 +365,35 @@ function mostrarDescripcionConFormato($descripcion)
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-    function abrirModal() {
-        const modal = document.getElementById("modalPropuesta");
-        if (modal) {
-            modal.style.display = "flex";
-        } else {
-            console.error("No se encontró el modal con ID 'modalPropuesta'.");
-        }
-    }
+            function abrirModal() {
+                const modal = document.getElementById("modalPropuesta");
+                if (modal) {
+                    modal.style.display = "flex";
+                } else {
+                    console.error("No se encontró el modal con ID 'modalPropuesta'.");
+                }
+            }
 
-    function cerrarModal() {
-        const modal = document.getElementById("modalPropuesta");
-        if (modal) {
-            modal.style.display = "none";
-        }
-    }
+            function cerrarModal() {
+                const modal = document.getElementById("modalPropuesta");
+                if (modal) {
+                    modal.style.display = "none";
+                }
+            }
 
-    // Configurar evento para cerrar modal al hacer clic afuera
-    window.onclick = function (event) {
-        const modal = document.getElementById("modalPropuesta");
-        if (event.target === modal) {
-            cerrarModal();
-        }
-    };
+            // Configurar evento para cerrar modal al hacer clic afuera
+            window.onclick = function(event) {
+                const modal = document.getElementById("modalPropuesta");
+                if (event.target === modal) {
+                    cerrarModal();
+                }
+            };
 
-    // Asigna abrirModal a los botones con clase action-btn
-    document.querySelectorAll(".action-btn").forEach((btn) => {
-        btn.addEventListener("click", abrirModal);
-    });
-});
-
+            // Asigna abrirModal a los botones con clase action-btn
+            document.querySelectorAll(".action-btn").forEach((btn) => {
+                btn.addEventListener("click", abrirModal);
+            });
+        });
     </script>
 
 
