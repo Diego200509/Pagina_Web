@@ -70,13 +70,11 @@ function displayNews() {
 
 
 // Función para filtrar por partido político
-function filterByParty() {
-    const selectedParty = document.getElementById('partySelect').value;
-
-    // Filtrar eventos por partido
+// Función para filtrar eventos y noticias por partido automáticamente
+function filterByParty(selectedParty = 'all') {
+    // Filtrar eventos
     events.forEach(event => {
         const eventParty = event.getAttribute('data-party');
-        // Mostrar u ocultar según el partido seleccionado
         if (selectedParty === 'all' || eventParty === selectedParty) {
             event.style.display = 'block';
         } else {
@@ -84,10 +82,9 @@ function filterByParty() {
         }
     });
 
-    // Filtrar noticias por partido
+    // Filtrar noticias
     news.forEach(newsItem => {
         const newsParty = newsItem.getAttribute('data-party');
-        // Mostrar u ocultar según el partido seleccionado
         if (selectedParty === 'all' || newsParty === selectedParty) {
             newsItem.style.display = 'block';
         } else {
@@ -95,12 +92,13 @@ function filterByParty() {
         }
     });
 
-    // Reiniciar las páginas a 1 cuando cambie el filtro
+    // Reiniciar las páginas
     currentPageEvents = 1;
     currentPageNews = 1;
 
-    displayEvents();  // Mostrar eventos filtrados y paginados
-    displayNews();    // Mostrar noticias filtradas y paginadas
+    // Mostrar los datos paginados
+    displayEvents();
+    displayNews();
 }
 
 
@@ -139,12 +137,31 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.querySelector("#noNewsMessage").style.display = 'block';
             }
 
-            // Filtrar y mostrar los datos iniciales
-            filterByParty();
+            // Aplicar filtro predeterminado automáticamente
+            filterByParty('all'); // Mantiene todo visible por defecto
         })
         .catch(error => console.error('Error fetching events and news:', error));
 });
 
+
+// Función para mostrar la ventana emergente
+function showModal(text) {
+    const modal = document.getElementById('modal');
+    const modalText = document.getElementById('modal-text');
+    modalText.textContent = text;
+    modal.style.display = 'block';
+
+    // Cerrar ventana emergente
+    document.querySelector('.close-button').onclick = function () {
+        modal.style.display = 'none';
+    };
+
+    window.onclick = function (event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    };
+}
 
 // Función para crear el HTML de un evento
 function createEventHTML(event) {
@@ -152,32 +169,49 @@ function createEventHTML(event) {
     eventDiv.classList.add('event');
     eventDiv.setAttribute('data-party', event.NOM_PAR);
 
+    const isTruncated = event.DESC_EVT_NOT.length > 150; // Límite para truncar texto
+
     eventDiv.innerHTML = `
         <div class="event-title">${event.TIT_EVT_NOT}</div>
         <img src="${event.IMAGEN_EVT_NOT || '/Eventos_Noticias/img/evento_default.jpg'}" alt="Imagen del Evento" class="event-image">
-        <div class="event-description">${event.DESC_EVT_NOT}</div>
-        <div class="event-date">Fecha: ${event.FECHA_EVT_NOT} | Ubicación: ${event.UBICACION_EVT_NOT || 'No disponible'}</div>
-        <div class="event-party">Partido: ${event.NOM_PAR}</div>
+        <div class="event-description">
+            <span class="truncated-text">
+                ${isTruncated ? event.DESC_EVT_NOT.substring(0, 150) + '...' : event.DESC_EVT_NOT}
+            </span>
+            ${isTruncated ? '<button class="view-more" onclick="showModal(`' + event.DESC_EVT_NOT + '`)">Ver más</button>' : ''}
+        </div>
+        <div class="event-date-location">
+            <span class="event-date">${event.FECHA_EVT_NOT}</span>
+            |
+            <span class="event-location">
+                <i class="fas fa-map-marker-alt"></i>${event.UBICACION_EVT_NOT || 'No disponible'}
+            </span>
+        </div>
     `;
 
     return eventDiv;
 }
 
-// Función para crear el HTML de una noticia
 function createNewsHTML(newsItem) {
     const newsDiv = document.createElement('div');
     newsDiv.classList.add('news');
     newsDiv.setAttribute('data-party', newsItem.NOM_PAR);
 
+    const isTruncated = newsItem.DESC_EVT_NOT.length > 150; // Límite para truncar texto
+
     newsDiv.innerHTML = `
         <div class="news-title">${newsItem.TIT_EVT_NOT}</div>
         <img src="${newsItem.IMAGEN_EVT_NOT || '/Eventos_Noticias/img/noticia_default.jpg'}" alt="Imagen de la Noticia" class="news-image">
-        <div class="news-description">${newsItem.DESC_EVT_NOT}</div>
-        <div class="news-date">Fecha: ${newsItem.FECHA_EVT_NOT}</div>
-        <div class="news-party">Partido: ${newsItem.NOM_PAR}</div>
+        <div class="news-description">
+            <span class="truncated-text">
+                ${isTruncated ? newsItem.DESC_EVT_NOT.substring(0, 150) + '...' : newsItem.DESC_EVT_NOT}
+            </span>
+            ${isTruncated ? '<button class="view-more" onclick="showModal(`' + newsItem.DESC_EVT_NOT + '`)">Ver más</button>' : ''}
+        </div>
+        <div class="news-date-location">
+            <span class="news-date">${newsItem.FECHA_EVT_NOT}</span>
+        </div>
     `;
 
     return newsDiv;
 }
-    
-

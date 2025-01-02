@@ -30,13 +30,26 @@
 
         </nav>
     </header>
-
     <main>
-    <h2>Lista de Candidatos</h2>
-    <div id="candidateCards" class="card-container">
-        <!-- Aquí se cargarán dinámicamente las tarjetas -->
+    <h2 class="title">Información del Candidato</h2>
+
+    <div class="candidate-container">
+        <button id="prevArrow" class="arrow left-arrow">
+            <i class="fas fa-chevron-left"></i> <!-- Ícono de flecha izquierda -->
+        </button>
+        <div id="candidateContent" class="candidate-content">
+            <!-- Aquí se cargará dinámicamente el candidato -->
+        </div>
+        <button id="nextArrow" class="arrow right-arrow">
+            <i class="fas fa-chevron-right"></i> <!-- Ícono de flecha derecha -->
+        </button>
     </div>
 </main>
+
+<div class="footer-rights">
+        Derechos reservados UTA 2024
+    </div>
+
 
 
     <script src="candidatos_usuarios.js"></script>

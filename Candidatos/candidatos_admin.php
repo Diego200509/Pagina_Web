@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 if (!isset($_SESSION['user_role'])) {
@@ -23,88 +22,94 @@ $dashboard_url = $user_role === 'SUPERADMIN' ? '../Login/superadmin_dasboard.php
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-    <header>
-        <nav class="navbar">
+    <!-- Navbar -->
+    <nav class="navbar">
         <div class="navbar-logo">
-            
-            <img src="../Home/Img/logo.png" width="50px" margin-right="10px">
-            <h1>Gestión de Candidatos</h1>
-           
+            <div class="text-center">
+                <i class="fa-solid fa-user-shield fa-2x"></i>
+                <h6 class="mt-2">SuperAdmin</h6>
+            </div>
+            <img src="../Candidatos/Img/logoMariCruz.png" width="200px" margin-right="20px">
         </div>
+        <ul class="navbar-menu">
+            <li><a href="../Candidatos/candidatos_admin.php"><i class="fa-solid fa-users"></i> <span>Candidatos</span></a></li>
+            <li><a href="../Eventos_Noticias/eventos_noticias_admin.php"><i class="fa-solid fa-calendar-alt"></i> <span>Eventos y Noticias</span></a></li>
+            <li><a href="../Propuestas/gestionarPropuestas.php"><i class="fa-solid fa-lightbulb"></i> <span>Propuestas</span></a></li>
+            <li><a href="../Sugerencias/sugerencias_admin.php"><i class="fa-solid fa-comment-dots"></i> <span>Sugerencias</span></a></li>
+            <li><a href="../Sugerencias/resultados_admin.php"><i class="fas fa-vote-yea"></i> Votos</a></li>
+            <li><a href="../Login/Administracion.php"><i class="fa-solid fa-cogs"></i> <span>Administración</span></a></li>
+            <li><a href="../Login/Login.php" class="logout"><i class="fa-solid fa-sign-out-alt"></i> <span>Cerrar Sesión</span></a></li>
+        </ul>
     </nav>
-    </header>
-    <div class="container">
-        <div class="d-flex justify-content-end mb-3">
-            <a href="<?php echo $dashboard_url; ?>" class="btn btn-danger btn-lg">
-                <i class="bi bi-arrow-left-circle me-2"></i> Regresar
-            </a>
-        </div>
     
-    <main>
-        <h2>Lista de Candidatos</h2>
-        <button id="addCandidateBtn" class="btn">Agregar Candidato</button>
-        <table id="candidatesTable">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Biografía</th>
-                    <th>Experiencia</th>
-                    <th>Visión</th>
-                    <th>Logros</th>
-                    <th>Partido</th>
-                    <th>Imagen</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody id="candidateList">
-                <!-- Se llenará dinámicamente -->
-            </tbody>
-        </table>
-    </main>
+        <main>
+            <h2>Lista de Candidatos</h2>
+            <button id="addCandidateBtn" class="btn">
+    <i class="fa fa-plus"></i> Agregar Candidato
+</button>
 
-    <!-- Modal para Crear/Editar Candidato -->
-    <div id="addCandidateModal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <h2 id="modalTitle">Agregar Candidato</h2>
-            <form id="candidateForm">
-                <input type="hidden" id="candidateId" name="candidateId">
-                <label for="name">Nombre:</label>
-                <input type="text" id="name" name="name" required>
+    <table id="candidatesTable" class="styled-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Fecha de Nacimiento</th>
+                        <th>Cargo</th>
+                        <th>Educación</th>
+                        <th>Experiencia</th>
+                        <th>Estado</th>
+                        <th>Imagen</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="candidateList">
+                    <!-- Se llenará dinámicamente -->
+                </tbody>
+            </table>
+        </main>
 
-                <label for="party_id">Partido:</label>
-                <select id="party_id" name="party_id" required>
-                    <!-- Opciones llenadas dinámicamente -->
-                </select>
+      <div id="addCandidateModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <h2 id="modalTitle">Agregar Candidato</h2>
+                <form id="candidateForm">
+                    <input type="hidden" id="candidateId" name="candidateId">
+                    <label for="name">Nombre:</label>
+                    <input type="text" id="name" name="name" required>
 
-                <label for="bio">Biografía:</label>
-                <textarea id="bio" name="bio" required></textarea>
+                    <label for="surname">Apellido:</label>
+                    <input type="text" id="surname" name="surname" required>
 
-                <label for="experience">Experiencia:</label>
-                <textarea id="experience" name="experience" required></textarea>
+                    <label for="birth_date">Fecha de Nacimiento:</label>
+                    <input type="date" id="birth_date" name="birth_date" required>
 
-                <label for="vision">Visión:</label>
-                <textarea id="vision" name="vision" required></textarea>
+                    <label for="position">Cargo:</label>
+                    <select id="position" name="position" required>
+                        <option value="Rectora">Rectora</option>
+                        <option value="Vicerrector de Investigación, Innovación Vinculación con la Sociedad">Vicerrector de Investigación, Innovación Vinculación con la Sociedad</option>
+                        <option value="Vicerrectora Administrativa">Vicerrectora Administrativa</option>
+                        <option value="Vicerrector Académico">Vicerrector Académico</option>
+                    </select>
 
-                <label for="achievements">Logros:</label>
-                <textarea id="achievements" name="achievements" required></textarea>
+                    <label for="education">Educación:</label>
+                    <textarea id="education" name="education" required></textarea>
 
-                <label for="image">Imagen:</label>
-                <input type="file" id="image" name="image" accept="image/*" required>
+                    <label for="experience">Experiencia:</label>
+                    <textarea id="experience" name="experience" required></textarea>
 
-                <button type="submit">Guardar</button>
-                <button type="button" id="closeModal" class="btn">Cancelar</button>
-            </form>
+                    <label for="image">Imagen:</label>
+                    <input type="file" id="image" name="image" accept="image/*" required>
+
+                    <button type="submit">Guardar</button>
+                    <button type="button" id="closeModal" class="btn">Cancelar</button>
+                </form>
+
+               
+            </div>
         </div>
-    </div>
-    <div id="customAlert" class="alert hidden">
-    <span id="alertMessage"></span>
-</div>
-
     <script src="candidatos_admin.js"></script>
 </body>
 </html>
