@@ -270,10 +270,20 @@ function mostrarDescripcionConFormato($descripcion)
                             <td><?= htmlspecialchars($row['CAT_PRO']) ?></td>
                             <td><?= htmlspecialchars($row['ESTADO']) ?></td>
                             <td>
-                                <button class="action-btn" data-modal="modalPropuesta">
-                                    <i class="bi bi-pencil-square"></i>
-                                </button>
+                                <div class="dropdown">
+                                    <!-- El botón principal -->
+                                    <button class="btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </button>
+                                    <!-- Opciones del menú desplegable -->
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#" onclick="abrirModalEditar(<?= $row['ID_PRO'] ?>)">Editar</a></li>
+                                        <li><a class="dropdown-item text-danger" href="eliminarPropuesta.php?id=<?= $row['ID_PRO'] ?>">Eliminar</a></li>
+                                        <li><a class="dropdown-item text-warning" href="ocultarPropuesta.php?id=<?= $row['ID_PRO'] ?>">Ocultar</a></li>
+                                    </ul>
+                                </div>
                             </td>
+
                         </tr>
                     <?php endwhile; ?>
                 <?php else: ?>
@@ -400,6 +410,20 @@ function mostrarDescripcionConFormato($descripcion)
                 }
             }
 
+            // Configurar evento para abrir el modal al hacer clic en el botón "Agregar Propuesta"
+            const btnAgregarPropuesta = document.getElementById("btnAgregarPropuesta");
+            if (btnAgregarPropuesta) {
+                btnAgregarPropuesta.addEventListener("click", abrirModal);
+            } else {
+                console.error("No se encontró el botón con ID 'btnAgregarPropuesta'.");
+            }
+
+            // Configurar el evento en los botones de cierre del modal
+            const closeButton = document.querySelector(".close-button");
+            if (closeButton) {
+                closeButton.addEventListener("click", cerrarModal);
+            }
+
             // Configurar evento para cerrar modal al hacer clic afuera
             window.onclick = function(event) {
                 if (event.target === modal) {
@@ -407,15 +431,18 @@ function mostrarDescripcionConFormato($descripcion)
                 }
             };
 
-            // Configurar el evento en los botones con clase 'action-btn'
-            document.querySelectorAll(".action-btn").forEach((btn) => {
-                btn.addEventListener("click", abrirModal);
-            });
+            function abrirModalEditar(id) {
+                // Configura los valores del modal con los datos correspondientes al ID
+                console.log("Abriendo modal para editar la propuesta con ID:", id);
+                const modal = document.getElementById("modalPropuesta");
+                modal.style.display = "flex";
 
-            // Configurar el botón de cierre del modal
-            document.querySelector(".close-button").addEventListener("click", cerrarModal);
+                // Opcional: cargar datos de la propuesta si es necesario
+                // Puedes usar una petición AJAX para obtener la información del servidor.
+            }
         });
     </script>
+
 
 
 
