@@ -5,68 +5,146 @@ body {
     padding: 0;
 }
 
-/* Hacer las secciones de contenido flexibles */
+/* Secciones de contenido flexibles */
 .content-section {
     padding: 20px;
     background-color: white;
     margin: 20px auto;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 90%; /* Cambiado de 800px a 90% para más flexibilidad */
+    max-width: 1200px;
 }
 
 /* Centrando los títulos */
 h2 {
-    color: #b22222;
+    font-size: 2.3rem;
+    color: #000000;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+h2::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 5.5px;
+    background-color: #ff1493;
+    /* Color rosa */
+    margin: 10px auto 0;
+    border-radius: 2px;
+}
+
+
+/* Contenedor para las tarjetas */
+#eventList,
+#newsList {
+    display: flex;
+    flex-wrap: wrap;
+    /* Permite que las tarjetas se ajusten automáticamente */
+    justify-content: center;
+    gap: 20px;
+    /* Espacio entre tarjetas */
 }
 
 .event,
 .news {
-    margin-bottom: 40px;
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 15px;
-    text-align: center;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    margin: 10px;
+    border: 6px solid;
+    border-image: linear-gradient(45deg, #ff1493, #00bfff) 1;
 }
 
-/* Flexibilidad en los títulos */
+.event:hover,
+.news:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.event-image,
+.news-image {
+    width: 100%;
+    height: 250px;
+    /* Altura incrementada */
+    object-fit: cover;
+    display: block;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+
+
+/* Contenedor de texto */
 .event-title,
 .news-title {
-    font-size: 1.5em;
+    font-size: 1.2em;
     color: #333;
-    margin-bottom: 5px;
+    margin: 15px 10px 10px;
+    font-weight: bold;
+    text-align: center;
 }
 
 .event-description,
 .news-description {
     font-size: 1em;
     color: #666;
-    margin-bottom: 10px;
+    margin: 10px;
+    line-height: 1.5;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    /* Mostrar toda la descripción */
+    max-height: none;
+    /* Sin límite de altura */
 }
 
+
+/* Contenedor para la fecha y la ubicación */
+.event-date-location,
+.news-date-location {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1em;
+    margin-top: 10px;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Fecha específica */
 .event-date,
 .news-date {
-    font-size: 0.9em;
-    color: #999;
-    margin-bottom: 20px;
+    color: #00bfff;
+    margin-right: 10px;
 }
 
-/* Imágenes flexibles */
-.event-image,
-.news-image {
-    width: 100%;
-    height: auto;
-    max-width: 100%; /* Cambiado de 500px a 100% para mejor ajuste */
-    margin-bottom: 20px;
+/* Ubicación específica */
+.event-location,
+.news-location {
+    display: flex;
+    align-items: center;
+    color: #333;
+}
+
+.event-location i,
+.news-location i {
+    color: #b22222;
+    margin-right: 5px;
 }
 
 /* Estilo del select-box */
 .select-box {
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
-    margin-top: 20px;
+    margin: 20px 0;
 }
 
 .select-box label {
@@ -97,7 +175,7 @@ h2 {
 .pagination button {
     padding: 10px;
     margin: 0 5px;
-    background-color: #b22222;
+    background-color: #00bfff;
     color: white;
     border: none;
     border-radius: 5px;
@@ -109,106 +187,96 @@ h2 {
 }
 
 .pagination button:hover:not(:disabled) {
-    background-color: #ff6347;
+    background-color: #0d8ab3;
 }
 
-.event-party,
-.news-party {
-    font-style: italic;
-    color: #555;
-    margin-top: 10px;
-}
-
-/* Estilos del header */
-header {
+.navbar {
+    background-color: var(--navbar-bg-color, #00bfff);
+    /* Azul vibrante como color por defecto */
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 50px;
-    background-color: #b22222;
+    padding: 10px 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    /* Sombra ligera */
 }
 
-header .logo {
+
+.navbar-logo {
     display: flex;
     align-items: center;
-}
-
-header .logo img {
-    width: 50px;
-    margin-right: 10px;
-}
-
-header .logo h1 {
+    gap: 10px;
     color: #ffffff;
-    font-size: 1.5em;
+    /* Blanco */
 }
 
-header nav {
+.navbar-logo i {
+    font-size: 24px;
+}
+
+.navbar-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+}
+
+.navbar-menu li {
+    list-style: none;
+}
+
+.navbar-menu li a {
     display: flex;
     align-items: center;
-    flex-wrap: wrap; /* Asegura que los enlaces se ajusten en pantallas pequeñas */
-}
-
-header nav a {
-    color: white;
+    gap: 8px;
+    /* Espacio entre icono y texto */
+    color: #ffffff;
+    /* Blanco */
     text-decoration: none;
-    margin: 0 15px;
-    font-size: 1em;
-    transition: color 0.3s;
-    display: flex;
-    align-items: center;
+    font-size: 16px;
+    font-weight: bold;
 }
 
-header nav a i {
-    margin-right: 8px;
-}
-
-header nav a:hover {
-    color: #2f2929;
+.navbar-menu li a:hover {
+    color: #ff0050;
+    /* Rosa brillante */
 }
 
 /* Estilos del footer */
 .footer-rights {
-    background-color: #b22222;
+    background-color: #00bfff;
     color: white;
     text-align: center;
     padding: 10px;
-    position: relative;
-    bottom: 0;
-    width: 100%;
     margin-top: 50px;
 }
 
 /* Media Queries para pantallas pequeñas */
 @media (max-width: 768px) {
-    header {
-        padding: 10px 20px;
+
+    #eventList,
+    #newsList {
+        flex-direction: column;
+        align-items: center;
     }
 
-    header .logo img {
-        width: 40px;
+    .event,
+    .news {
+        width: 90%;
+        /* Ajusta las tarjetas en pantallas pequeñas */
     }
 
-    header .logo h1 {
-        font-size: 1.2em;
+    header nav {
+        justify-content: center;
     }
+}
 
-    .select-box label {
-        font-size: 1em;
-    }
-
-    .select-box select {
-        width: 180px;
-    }
-
-    h2 {
-        font-size: 1.4em;
-    }
+@media (max-width: 480px) {
 
     .event-title,
     .news-title {
-        font-size: 1.2em;
+        font-size: 1em;
     }
 
     .event-description,
@@ -222,41 +290,64 @@ header nav a:hover {
     }
 }
 
-@media (max-width: 480px) {
-    header {
-        flex-direction: column;
-        text-align: center;
-    }
+/* Botón Ver más */
+.view-more {
+    background-color: #ff1493;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+}
 
-    header nav {
-        justify-content: center;
-        margin-top: 10px;
-    }
+.view-more:hover {
+    background-color: #ff69b4;
+}
 
-    .select-box label {
-        font-size: 0.9em;
-    }
+/* Ventana emergente */
+.modal {
+    display: none;
+    /* Ocultar por defecto */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Fondo oscuro */
+}
 
-    .select-box select {
-        width: 150px;
-    }
+.modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 50%;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
 
-    h2 {
-        font-size: 1.2em;
-    }
+.close-button {
+    color: black;
+    float: right;
+    font-size: 1.5em;
+    font-weight: bold;
+    cursor: pointer;
+}
 
-    .event-title,
-    .news-title {
-        font-size: 1em;
-    }
+.close-button:hover {
+    color: red;
+}
 
-    .event-description,
-    .news-description {
-        font-size: 0.8em;
-    }
-
-    .event-date,
-    .news-date {
-        font-size: 0.7em;
-    }
+/* Descripción debajo del título */
+.section-description {
+    font-size: 1em;
+    color: #666;
+    text-align: center;
+    margin-bottom: 20px;
 }
