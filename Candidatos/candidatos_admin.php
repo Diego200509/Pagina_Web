@@ -11,21 +11,6 @@ $user_role = $_SESSION['user_role'];
 // Determinar la URL del dashboard según el rol del usuario
 $dashboard_url = $user_role === 'SUPERADMIN' ? '../Login/superadmin_dasboard.php' : '../Login/admin_dashboard.php';
 ?>
-<?php
-include('../config/config.php');
-
-
-$navbarConfigPath = "../Login/navbar_config.json"; // Ruta al archivo de configuración del Navbar
-
-// Verificar si el archivo existe y cargar el color del Navbar
-if (file_exists($navbarConfigPath)) {
-    $navbarConfig = json_decode(file_get_contents($navbarConfigPath), true);
-    $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff'; // Azul por defecto
-} else {
-    $navbarBgColor = '#00bfff'; // Azul por defecto si no existe el archivo
-}
-
-?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
