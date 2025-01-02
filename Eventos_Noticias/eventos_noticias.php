@@ -22,7 +22,7 @@ if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $logo_path = $row['image_path'];
 } else {
-    $logo_path = "../Login/Img/logoMariCruz.png"; // Imagen por defecto
+    $logo_path = "/Pagina_Web/Pagina_Web/Login/Img/logoMariCruz.png"; // Imagen por defecto
 }
 
 
@@ -33,6 +33,7 @@ if (file_exists($configFileEventos)) {
     $paginaBgColor = $config['paginaBgColor'] ?? "#f4f4f4";
 } else {
     $paginaBgColor = "#f4f4f4";
+    
 }
 ?>
 

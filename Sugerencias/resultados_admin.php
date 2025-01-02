@@ -22,15 +22,6 @@ function calcularPorcentaje($votos, $total)
 include('../config/config.php');
 
 
-$navbarConfigPath = "../Login/navbar_config.json"; // Ruta al archivo de configuración del Navbar
-
-// Verificar si el archivo existe y cargar el color del Navbar
-if (file_exists($navbarConfigPath)) {
-    $navbarConfig = json_decode(file_get_contents($navbarConfigPath), true);
-    $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff'; // Azul por defecto
-} else {
-    $navbarBgColor = '#00bfff'; // Azul por defecto si no existe el archivo
-}
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['imagen']) && isset($_POST['posicion'])) {
@@ -90,11 +81,7 @@ $imagenesActuales = obtenerImagenesResultados();
     <link rel="stylesheet" href="EstilosResultados.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        :root {
-            --navbar-bg-color: <?php echo $navbarBgColor; ?>;
-        }
-</style>
+
     <style>
         
         @keyframes animatedBackground {
@@ -631,7 +618,12 @@ input:checked + label .action span.option-2 {
     <!-- Navbar -->
     <nav class="navbar">
         <div class="navbar-logo">
-            <img src="Img/logoMariCruz.png" alt="Logo" width="200">
+        <div class="text-center">
+                <!-- Icono SuperAdmin existente -->
+                <i class="fa-solid fa-user-shield fa-2x"></i>
+                <h6 class="mt-2">SuperAdmin</h6>
+            </div>
+        <img src="/Pagina_Web/Pagina_Web/Login/Img/logoMariCruz.png" width="200px" style="margin-right: 20px;">
         </div>
         <ul class="navbar-menu">
             <li><a href="../Candidatos/candidatos_admin.php"><i class="fas fa-users"></i> Candidatos</a></li>

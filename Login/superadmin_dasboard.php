@@ -33,7 +33,7 @@ unset($_SESSION['message']); // Limpiar mensaje después de mostrarlo
                 <i class="fa-solid fa-user-shield fa-2x"></i>
                 <h6 class="mt-2">SuperAdmin</h6>
             </div>
-            <img src="../Login/Img/logoMariCruz.png" width="200px" style="margin-right: 20px;">
+            <img src="/Pagina_Web/Pagina_Web/Login/Img/logoMariCruz.png" width="200px" style="margin-right: 20px;">
         </div>
         <ul class="navbar-menu">
             <li><a href="../Candidatos/candidatos_admin.php"><i class="fa-solid fa-users"></i> <span>Candidatos</span></a></li>

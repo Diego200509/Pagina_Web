@@ -5,6 +5,9 @@ if (!isset($_SESSION['user_role'])) {
     exit;
 }
 
+
+
+
 // Obtener el rol del usuario
 $user_role = $_SESSION['user_role'];
 
@@ -23,6 +26,9 @@ $dashboard_url = $user_role === 'SUPERADMIN' ? '../Login/superadmin_dasboard.php
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+
+    </style>
 </head>
 <body>
     <!-- Navbar -->

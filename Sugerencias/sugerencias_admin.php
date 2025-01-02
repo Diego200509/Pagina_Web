@@ -47,15 +47,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['imagen'])) {
 }
 
 
-$navbarConfigPath = "../Login/navbar_config.json"; // Ruta al archivo de configuración del Navbar
-
-// Verificar si el archivo existe y cargar el color del Navbar
-if (file_exists($navbarConfigPath)) {
-    $navbarConfig = json_decode(file_get_contents($navbarConfigPath), true);
-    $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff'; // Azul por defecto
-} else {
-    $navbarBgColor = '#00bfff'; // Azul por defecto si no existe el archivo
-}
 
 // Verificar si el usuario está autenticado y tiene un rol válido
 
@@ -71,9 +62,7 @@ $sugerencias = obtenerTodasSugerencias();
 <html lang="es">
 <head>
 <style>
-        :root {
-            --navbar-bg-color: <?php echo $navbarBgColor; ?>;
-        }
+
 </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -910,9 +899,13 @@ const showModal = () => {
 <nav class="navbar">
     <div class="navbar-logo">
         <div class="text-center">
+                <!-- Icono SuperAdmin existente -->
+                <i class="fa-solid fa-user-shield fa-2x"></i>
+                <h6 class="mt-2">SuperAdmin</h6>
+            </div>
             <!-- Logo existente -->
-            <img src="Img/logoMariCruz.png" width="200px" style="margin-right: 20px;">
-        </div>
+            <img src="/Pagina_Web/Pagina_Web/Login/Img/logoMariCruz.png" width="200px" style="margin-right: 20px;">
+            </div>
     </div>
     <ul class="navbar-menu">
         <li><a href="../Home/inicio.php"><i class="fa-solid fa-house"></i> <span>Inicio</span></a></li>

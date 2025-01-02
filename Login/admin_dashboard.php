@@ -34,7 +34,7 @@ unset($_SESSION['message']); // Limpiar mensaje después de mostrarlo
         <h6 class="mt-2">Admin</h6>
     </div>
     <!-- Logo existente -->
-    <img src="../Login/Img/logoMariCruz.png" width="200px" style="margin-right: 20px;">
+    <img src="../Pagina_Web/Login/Img/logoMariCruz.png" width="200px" style="margin-right: 20px;">
 
 </div>
 

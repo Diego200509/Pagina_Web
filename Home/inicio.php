@@ -1,8 +1,7 @@
 <?php
 include('../config/config.php');
 
-$eventos_noticias = include('../src/inicio_queries.php');
-include('../config/config.php');
+
 
 $navbarConfigPath = "../Login/navbar_config.json"; // Ruta al archivo de configuración del Navbar
 

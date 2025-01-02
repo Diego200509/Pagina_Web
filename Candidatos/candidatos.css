@@ -18,7 +18,7 @@ header {
 }
 /* Navbar */
 .navbar {
-    background-color: #00bfff; /* Azul vibrante inspirado en la imagen */
+    background-color: var(--navbar-bg-color, #00bfff);
     display: flex;
     justify-content: space-between;
     align-items: center;

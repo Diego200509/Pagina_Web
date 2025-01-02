@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt_reset->close();
 
         // Redirigir con mensaje
-        header("Location: ../Login/administracion.php?success=$success&message=" . urlencode($message));
+        header("Location: /Pagina_Web/Pagina_Web/Login/administracion.php?success=$success&message=" . urlencode($message));
         exit;
     }
 
@@ -88,6 +88,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $connection->close();
 
 // Redirigir con los parámetros de éxito y mensaje
-header("Location: ../Login/administracion.php?success=$success&message=" . urlencode($message));
+header("Location: /Pagina_Web/Pagina_Web/Login/administracion.php?success=$success&message=" . urlencode($message));
 exit;
 ?>

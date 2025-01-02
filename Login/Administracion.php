@@ -125,11 +125,7 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
                 <h6 class="mt-2">SuperAdmin</h6>
             </div>
             <!-- Logo existente -->
-            <img src="../Login/Img/logoMariCruz.png" width="200px" style="margin-right: 20px;">
-            <!-- Nuevo icono de Inicio -->
-            <div class="text-center" style="cursor: pointer;" onclick="window.location.href='../Login/superadmin_dasboard.php'">
-                <i class="fa-solid fa-house fa-2x house-icon"></i>
-            </div>
+            <img src="/Pagina_Web/Pagina_Web/Login/Img/logoMariCruz.png" width="200px" style="margin-right: 20px;">
         </div>
 
 
@@ -232,6 +228,7 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
                                         </form>
                                     </div>
 
+
                                     <!-- Cambiar colores Propuestas -->
                                     <div class="color-section mb-4">
                                         <h5 class="text-uppercase" style="color: #00BFFF;">Sección Propuestas</h5>
@@ -272,6 +269,7 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
                                         </form>
                                     </div>
 
+
                                     <!-- Página Login -->
                                     <div class="color-section mb-4">
                                         <h5 class="text-uppercase" style="color: #00BFFF;">Login</h5>
@@ -303,25 +301,31 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
 
                                 <!-- Columna derecha -->
                                 <div class="col-md-6">
+
+
                                     <!-- Página Candidatos -->
                                     <div class="color-section mb-4">
                                         <h5 class="text-uppercase" style="color: #00BFFF;">Página Candidatos</h5>
                                         <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
                                         <form action="cambiar_colores.php" method="POST" id="formInicioCandidatos">
                                             <div class="d-flex align-items-center justify-content-between">
-                                                <input type="color" class="form-control form-control-color me-3" id="colorPagCandidatos" name="colorCandidatos" value="#FF5733">
+                                                <input type="color" class="form-control form-control-color me-3" id="colorPagCandidatos" name="colorPagCandidatos" value="#FF5733">
                                                 <input type="text" class="form-control form-control-hex me-3" id="hexColorPagCandidatos" name="hexColorCandidatos" placeholder="#FF5733" maxlength="7" style="width: 80px;">
                                                 <div class="d-flex">
                                                     <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
                                                         Aceptar
                                                     </button>
-                                                    <button type="submit" name="resetCandidatos" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-left: 10px; transition: transform 0.3s;">
+                                                    <button type="submit" name="reset-pagina-candidatos" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-left: 10px; transition: transform 0.3s;">
                                                         Restablecer
                                                     </button>
                                                 </div>
                                             </div>
                                         </form>
                                     </div>
+
+
+
+
 
                                     <!-- Página Eventos y Noticias -->
                                     <div class="color-section mb-4">
@@ -343,6 +347,9 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
                                         </form>
                                     </div>
 
+
+
+
                                     <!-- Página Propuestas -->
                                     <div class="color-section mb-4">
                                         <h5 class="text-uppercase" style="color: #00BFFF;">Página Propuestas</h5>
@@ -362,6 +369,7 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
                                             </div>
                                         </form>
                                     </div>
+
 
                                     <!-- Página Sugerencias -->
                                     <div class="color-section mb-4">
@@ -383,139 +391,421 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
                                         </form>
                                     </div>
 
-                                    <!-- Página Votos -->
-                                    <div class="color-section mb-4">
-                                        <h5 class="text-uppercase" style="color: #00BFFF;">Página Votos</h5>
-                                        <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
-                                        <form action="cambiar_colores.php" method="POST" id="formInicioVotos">
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <input type="color" class="form-control form-control-color me-3" id="colorPagVotos" name="colorPagVotos" value="#FF9A33">
-                                                <input type="text" class="form-control form-control-hex me-3" id="hexColorPagVotos" name="colorPagVotos" placeholder="#FF9A33" maxlength="7" style="width: 80px;">
-                                                <div class="d-flex">
-                                                    <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
-                                                        Aceptar
-                                                    </button>
-                                                    <button type="submit" name="reset-pagina-votos" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; margin-left: 10px; transition: transform 0.3s;">
-                                                        Restablecer
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
+
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-            
+
 
             <!-- Subir Imágenes -->
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingThree">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                        Subir Imágenes
+                        Cambiar Imágenes Inicio
                     </button>
                 </h2>
                 <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#adminAccordion">
                     <div class="accordion-body">
-                    <form action="subir_imagen.php" method="POST" enctype="multipart/form-data">
-    <!-- Logo Navbar -->
-    <div class="mb-3">
-        <label for="logoNavbar" class="form-label header-text">Logo Navbar:</label>
-        <input type="file" class="form-control" id="logoNavbar" name="logoNavbar">
-    </div>
-    <div class="d-flex justify-content-between">
-        <button type="submit" class="btn btn-aceptar">Aceptar</button>
-        <button type="submit" name="reset" value="logoNavbar" class="btn btn-warning">Restablecer</button>
-    </div>
-</form>
-
-<!-- Formulario para actualizar Slide 1 -->
-<form action="imagenes_slides.php" method="POST" enctype="multipart/form-data">
-    <div class="mb-3">
-        <label for="slide1" class="form-label header-text">Actualizar Imagen Slide 1:</label>
-        <input type="file" class="form-control" id="slide1" name="slideImage">
-        <input type="hidden" name="section_name" value="slide1">
-    </div>
-    <div class="d-flex justify-content-between">
-        <button type="submit" class="btn btn-aceptar">Aceptar</button>
-        <button type="submit" name="reset" value="slide1" class="btn btn-warning">Restablecer</button>
-    </div>
-</form>
-
-<hr>
-
-<!-- Formulario para actualizar Slide 5 -->
-<form action="imagenes_slides.php" method="POST" enctype="multipart/form-data">
-    <div class="mb-3">
-        <label for="slide5" class="form-label header-text">Actualizar Imagen Slide 2:</label>
-        <input type="file" class="form-control" id="slide5" name="slideImage">
-        <input type="hidden" name="section_name" value="slide5">
-    </div>
-    <div class="d-flex justify-content-between">
-        <button type="submit" class="btn btn-aceptar">Aceptar</button>
-        <button type="submit" name="reset" value="slide5" class="btn btn-warning">Restablecer</button>
-    </div>
-</form>
-
-</div>
-
-</div>
-</form>
-</div>
-</div>
-</div>
-
-            <!-- MODAL MENSAJES -->
-            <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-body text-center">
+                        <form action="subir_imagen.php" method="POST" enctype="multipart/form-data">
+                            <!-- Logo Navbar -->
                             <div class="mb-3">
-                                <i id="messageIcon" class="fas fa-check-circle fa-3x text-success"></i>
+                                <label for="logoNavbar" class="form-label header-text">Logo Navbar:</label>
+                                <input type="file" class="form-control" id="logoNavbar" name="logoNavbar">
                             </div>
-                            <h4 class="modal-title mb-2" id="messageModalLabel"></h4>
-                            <p id="messageText"></p>
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
-                        </div>
+                            <div class="d-flex justify-content-between">
+                                <button type="submit" class="btn btn-aceptar">Aceptar</button>
+                                <button type="submit" name="reset" value="logoNavbar" class="btn btn-warning" style="background-color: #00BFFF; color: white; border: 2px solid #FF69B4;">Restablecer</button>
+                            </div>
+                        </form>
+
+                        <!-- Formulario para actualizar Slide 1 -->
+                        <form action="imagenes_slides.php" method="POST" enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <label for="slide1" class="form-label header-text">Actualizar Imagen Slide 1:</label>
+                                <input type="file" class="form-control" id="slide1" name="slideImage">
+                                <input type="hidden" name="section_name" value="slide1">
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <button type="submit" class="btn btn-aceptar">Aceptar</button>
+                                <button type="submit" name="reset" value="slide1" class="btn btn-warning" style="background-color: #00BFFF; color: white; border: 2px solid #FF69B4;">Restablecer</button>
+                            </div>
+                        </form>
+
+                        <hr>
+
+                        <!-- Formulario para actualizar Slide 5 -->
+                        <form action="imagenes_slides.php" method="POST" enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <label for="slide5" class="form-label header-text">Actualizar Imagen Slide 2:</label>
+                                <input type="file" class="form-control" id="slide5" name="slideImage">
+                                <input type="hidden" name="section_name" value="slide5">
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <button type="submit" class="btn btn-aceptar">Aceptar</button>
+                                <button type="submit" name="reset" value="slide5" class="btn btn-warning" style="background-color: #00BFFF; color: white; border: 2px solid #FF69B4;">Restablecer</button>
+                            </div>
+                        </form>
+
                     </div>
+
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL MENSAJES -->
+    <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <div class="mb-3">
+                        <i id="messageIcon" class="fas fa-check-circle fa-3x text-success"></i>
+                    </div>
+                    <h4 class="modal-title mb-2" id="messageModalLabel"></h4>
+                    <p id="messageText"></p>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
                 </div>
             </div>
+        </div>
+    </div>
 
 
 
-            <!-- JavaScript para cambiar fondo -->
-            <script>
-                document.addEventListener("DOMContentLoaded", function() {
-                    const sessionMessage = "<?php echo isset($_SESSION['message']) ? $_SESSION['message'] : ''; ?>";
-                    const sessionMessageType = "<?php echo isset($_SESSION['message_type']) ? $_SESSION['message_type'] : ''; ?>";
+    <!-- JavaScript para cambiar fondo -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const sessionMessage = "<?php echo isset($_SESSION['message']) ? $_SESSION['message'] : ''; ?>";
+            const sessionMessageType = "<?php echo isset($_SESSION['message_type']) ? $_SESSION['message_type'] : ''; ?>";
 
-                    if (sessionMessage) {
-                        const messageModal = new bootstrap.Modal(document.getElementById('messageModal'));
-                        const messageIcon = document.getElementById('messageIcon');
-                        const messageModalLabel = document.getElementById('messageModalLabel');
-                        const messageText = document.getElementById('messageText');
+            if (sessionMessage) {
+                const messageModal = new bootstrap.Modal(document.getElementById('messageModal'));
+                const messageIcon = document.getElementById('messageIcon');
+                const messageModalLabel = document.getElementById('messageModalLabel');
+                const messageText = document.getElementById('messageText');
 
-                        if (sessionMessageType === 'success') {
-                            messageIcon.classList.add('text-success', 'fa-check-circle');
-                            messageModalLabel.textContent = '¡Éxito!';
-                        } else if (sessionMessageType === 'error') {
-                            messageIcon.classList.add('text-danger', 'fa-times-circle');
-                            messageModalLabel.textContent = '¡Error!';
-                        }
+                if (sessionMessageType === 'success') {
+                    messageIcon.classList.add('text-success', 'fa-check-circle');
+                    messageModalLabel.textContent = '¡Éxito!';
+                } else if (sessionMessageType === 'error') {
+                    messageIcon.classList.add('text-danger', 'fa-times-circle');
+                    messageModalLabel.textContent = '¡Error!';
+                }
 
-                        messageText.textContent = sessionMessage;
-                        messageModal.show();
+                messageText.textContent = sessionMessage;
+                messageModal.show();
 
-                        <?php unset($_SESSION['message']); ?>
-                        <?php unset($_SESSION['message_type']); ?>
-                    }
-                });
-            </script>
+                <?php unset($_SESSION['message']); ?>
+                <?php unset($_SESSION['message_type']); ?>
+            }
+        });
 
-            <!-- Bootstrap JS -->
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const colorInputCandidatos = document.getElementById("colorCandidatos");
+            const hexInputCandidatos = document.getElementById("hexColorCandidatos");
+            const defaultColorCandidatos = "#000000";
+
+            // Sincronizar el campo de texto hexadecimal con el selector de color
+            colorInputCandidatos.addEventListener("input", function() {
+                hexInputCandidatos.value = colorInputCandidatos.value;
+            });
+
+            // Sincronizar el selector de color con el campo de texto hexadecimal
+            hexInputCandidatos.addEventListener("input", function() {
+                const value = hexInputCandidatos.value;
+                if (/^#[0-9A-Fa-f]{6}$/.test(value)) {
+                    colorInputCandidatos.value = value;
+                }
+            });
+
+            // Manejar el evento del formulario
+            const formInicioCandidatos = document.getElementById("formInicioCandidatos");
+            formInicioCandidatos.addEventListener("submit", function(event) {
+                const submitter = event.submitter;
+
+                if (submitter.name === "resetCandidatos" && submitter.value === "1") {
+                    // Restablecer el color al valor por defecto
+                    colorInputCandidatos.value = defaultColorCandidatos;
+                    hexInputCandidatos.value = defaultColorCandidatos;
+
+                    // Guardar en localStorage que se ha restablecido
+                    localStorage.setItem("candidatosColorUpdated", "reset");
+                } else {
+                    // Guardar que el color ha sido actualizado
+                    localStorage.setItem("candidatosColorUpdated", "true");
+                }
+
+                // Limpiar el estado en el localStorage después de 1 segundo
+                setTimeout(() => {
+                    localStorage.removeItem("candidatosColorUpdated");
+                }, 1000);
+            });
+        });
+
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const colorInputPropuestas = document.getElementById("colorPropuestas");
+            const hexInputPropuestas = document.getElementById("hexColorPropuestas");
+            const defaultColorPropuestas = "#4d0a0a";
+
+            // Sincronizar el campo de texto hexadecimal con el selector de color
+            colorInputPropuestas.addEventListener("input", function() {
+                hexInputPropuestas.value = colorInputPropuestas.value;
+            });
+
+            // Sincronizar el selector de color con el campo de texto hexadecimal
+            hexInputPropuestas.addEventListener("input", function() {
+                const value = hexInputPropuestas.value;
+                if (/^#[0-9A-Fa-f]{6}$/.test(value)) {
+                    colorInputPropuestas.value = value;
+                }
+            });
+
+            // Manejar el evento del formulario
+            const formInicioPropuestas = document.getElementById("formInicioPropuestas");
+            formInicioPropuestas.addEventListener("submit", function(event) {
+                const submitter = event.submitter;
+
+                if (submitter.name === "resetPropuestas" && submitter.value === "1") {
+                    // Restablecer el color al valor por defecto
+                    colorInputPropuestas.value = defaultColorPropuestas;
+                    hexInputPropuestas.value = defaultColorPropuestas;
+
+                    // Guardar en localStorage que se ha restablecido
+                    localStorage.setItem("propuestasColorUpdated", "reset");
+                } else {
+                    // Guardar que el color ha sido actualizado
+                    localStorage.setItem("propuestasColorUpdated", "true");
+                }
+
+                // Limpiar el estado en el localStorage después de 1 segundo
+                setTimeout(() => {
+                    localStorage.removeItem("propuestasColorUpdated");
+                }, 1000);
+            });
+        });
+
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const colorInputEventosNoticias = document.getElementById("colorEventosNoticias");
+            const hexInputEventosNoticias = document.getElementById("hexColorEventosNoticias");
+            const defaultColorEventosNoticias = "#FF9800";
+
+            // Sincronizar el campo de texto hexadecimal con el selector de color
+            colorInputEventosNoticias.addEventListener("input", function() {
+                hexInputEventosNoticias.value = colorInputEventosNoticias.value;
+            });
+
+            // Sincronizar el selector de color con el campo de texto hexadecimal
+            hexInputEventosNoticias.addEventListener("input", function() {
+                const value = hexInputEventosNoticias.value;
+                if (/^#[0-9A-Fa-f]{6}$/.test(value)) {
+                    colorInputEventosNoticias.value = value;
+                }
+            });
+
+            // Manejar el evento del formulario
+            const formInicioEventos = document.getElementById("formInicioEventos");
+            formInicioEventos.addEventListener("submit", function(event) {
+                const submitter = event.submitter;
+
+                if (submitter.name === "resetEventosNoticias" && submitter.value === "1") {
+                    // Restablecer el color al valor por defecto
+                    colorInputEventosNoticias.value = defaultColorEventosNoticias;
+                    hexInputEventosNoticias.value = defaultColorEventosNoticias;
+
+                    // Guardar en localStorage que se ha restablecido
+                    localStorage.setItem("eventosNoticiasColorUpdated", "reset");
+                } else {
+                    // Guardar que el color ha sido actualizado
+                    localStorage.setItem("eventosNoticiasColorUpdated", "true");
+                }
+
+                // Limpiar el estado en el localStorage después de 1 segundo
+                setTimeout(() => {
+                    localStorage.removeItem("eventosNoticiasColorUpdated");
+                }, 1000);
+            });
+        });
+
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const colorInputPagSugerencias = document.getElementById("colorPagSugerencias");
+            const hexInputPagSugerencias = document.getElementById("hexColorPagSugerencias");
+            const defaultColorPagSugerencias = "#FF33A1";
+
+            // Sincronizar el campo de texto hexadecimal con el selector de color
+            colorInputPagSugerencias.addEventListener("input", function() {
+                hexInputPagSugerencias.value = colorInputPagSugerencias.value;
+            });
+
+            // Sincronizar el selector de color con el campo de texto hexadecimal
+            hexInputPagSugerencias.addEventListener("input", function() {
+                const value = hexInputPagSugerencias.value;
+                if (/^#[0-9A-Fa-f]{6}$/.test(value)) {
+                    colorInputPagSugerencias.value = value;
+                }
+            });
+
+            // Manejar el evento del formulario
+            const formInicioPagSugerencias = document.getElementById("formInicioSugerencias");
+            formInicioPagSugerencias.addEventListener("submit", function(event) {
+                const submitter = event.submitter;
+
+                if (submitter.name === "reset-pagina-sugerencias" && submitter.value === "1") {
+                    // Restablecer el color al valor por defecto
+                    colorInputPagSugerencias.value = defaultColorPagSugerencias;
+                    hexInputPagSugerencias.value = defaultColorPagSugerencias;
+
+                    // Guardar en localStorage que se ha restablecido
+                    localStorage.setItem("paginaSugerenciasColorUpdated", "reset");
+                } else {
+                    // Guardar que el color ha sido actualizado
+                    localStorage.setItem("paginaSugerenciasColorUpdated", "true");
+                }
+
+                // Limpiar el estado en el localStorage después de 1 segundo
+                setTimeout(() => {
+                    localStorage.removeItem("paginaSugerenciasColorUpdated");
+                }, 1000);
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const colorInputPagPropuestas = document.getElementById("colorPagPropuestas");
+            const hexInputPagPropuestas = document.getElementById("hexColorPagPropuestas");
+            const defaultColorPagPropuestas = "#337BFF";
+
+            // Sincronizar el campo de texto hexadecimal con el selector de color
+            colorInputPagPropuestas.addEventListener("input", function() {
+                hexInputPagPropuestas.value = colorInputPagPropuestas.value;
+            });
+
+            // Sincronizar el selector de color con el campo de texto hexadecimal
+            hexInputPagPropuestas.addEventListener("input", function() {
+                const value = hexInputPagPropuestas.value;
+                if (/^#[0-9A-Fa-f]{6}$/.test(value)) {
+                    colorInputPagPropuestas.value = value;
+                }
+            });
+
+            // Manejar el evento del formulario
+            const formInicioPagPropuestas = document.getElementById("formInicioPropuestas");
+            formInicioPagPropuestas.addEventListener("submit", function(event) {
+                const submitter = event.submitter;
+
+                if (submitter.name === "reset-pagina-propuestas" && submitter.value === "1") {
+                    // Restablecer el color al valor por defecto
+                    colorInputPagPropuestas.value = defaultColorPagPropuestas;
+                    hexInputPagPropuestas.value = defaultColorPagPropuestas;
+
+                    // Guardar en localStorage que se ha restablecido
+                    localStorage.setItem("paginaPropuestasColorUpdated", "reset");
+                } else {
+                    // Guardar que el color ha sido actualizado
+                    localStorage.setItem("paginaPropuestasColorUpdated", "true");
+                }
+
+                // Limpiar el estado en el localStorage después de 1 segundo
+                setTimeout(() => {
+                    localStorage.removeItem("paginaPropuestasColorUpdated");
+                }, 1000);
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const colorInputPagEventos = document.getElementById("colorPagEventos");
+            const hexInputPagEventos = document.getElementById("hexColorPagEventos");
+            const defaultColorPagEventos = "#33FF58";
+
+            // Sincronizar el campo de texto hexadecimal con el selector de color
+            colorInputPagEventos.addEventListener("input", function() {
+                hexInputPagEventos.value = colorInputPagEventos.value;
+            });
+
+            // Sincronizar el selector de color con el campo de texto hexadecimal
+            hexInputPagEventos.addEventListener("input", function() {
+                const value = hexInputPagEventos.value;
+                if (/^#[0-9A-Fa-f]{6}$/.test(value)) {
+                    colorInputPagEventos.value = value;
+                }
+            });
+
+            // Manejar el evento del formulario
+            const formInicioPagEventos = document.getElementById("formInicioEventos");
+            formInicioPagEventos.addEventListener("submit", function(event) {
+                const submitter = event.submitter;
+
+                if (submitter.name === "reset-pagina-eventos-noticias" && submitter.value === "1") {
+                    // Restablecer el color al valor por defecto
+                    colorInputPagEventos.value = defaultColorPagEventos;
+                    hexInputPagEventos.value = defaultColorPagEventos;
+
+                    // Guardar en localStorage que se ha restablecido
+                    localStorage.setItem("paginaEventosNoticiasColorUpdated", "reset");
+                } else {
+                    // Guardar que el color ha sido actualizado
+                    localStorage.setItem("paginaEventosNoticiasColorUpdated", "true");
+                }
+
+                // Limpiar el estado en el localStorage después de 1 segundo
+                setTimeout(() => {
+                    localStorage.removeItem("paginaEventosNoticiasColorUpdated");
+                }, 1000);
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const colorInputPagCandidatos = document.getElementById("colorPagCandidatos");
+            const hexInputPagCandidatos = document.getElementById("hexColorPagCandidatos");
+            const defaultColorPagCandidatos = "#FF5733";
+
+            // Sincronizar el campo de texto hexadecimal con el selector de color
+            colorInputPagCandidatos.addEventListener("input", function() {
+                hexInputPagCandidatos.value = colorInputPagCandidatos.value;
+            });
+
+            // Sincronizar el selector de color con el campo de texto hexadecimal
+            hexInputPagCandidatos.addEventListener("input", function() {
+                const value = hexInputPagCandidatos.value;
+                if (/^#[0-9A-Fa-f]{6}$/.test(value)) {
+                    colorInputPagCandidatos.value = value;
+                }
+            });
+
+            // Manejar el evento del formulario
+            const formInicioPagCandidatos = document.getElementById("formInicioCandidatos");
+            formInicioPagCandidatos.addEventListener("submit", function(event) {
+                const submitter = event.submitter;
+
+                if (submitter.name === "reset-pagina-candidatos" && submitter.value === "1") {
+                    // Restablecer el color al valor por defecto
+                    colorInputPagCandidatos.value = defaultColorPagCandidatos;
+                    hexInputPagCandidatos.value = defaultColorPagCandidatos;
+
+                    // Guardar en localStorage que se ha restablecido
+                    localStorage.setItem("paginaCandidatosColorUpdated", "reset");
+                } else {
+                    // Guardar que el color ha sido actualizado
+                    localStorage.setItem("paginaCandidatosColorUpdated", "true");
+                }
+
+                // Limpiar el estado en el localStorage después de 1 segundo
+                setTimeout(() => {
+                    localStorage.removeItem("paginaCandidatosColorUpdated");
+                }, 1000);
+            });
+        });
+    </script>
+
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

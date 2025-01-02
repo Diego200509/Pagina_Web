@@ -1,26 +1,28 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f4f4;
+
+
     margin: 0;
     padding: 0;
 }
-
-
-/* Navbar */
 .navbar {
-    background-color: var(--navbar-bg-color, #00bfff); /* Azul vibrante como color por defecto */
+    background-color: var(--navbar-bg-color, #00bfff);
+    /* Azul vibrante como color por defecto */
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    /* Sombra ligera */
 }
+
 
 .navbar-logo {
     display: flex;
     align-items: center;
     gap: 10px;
-    color: #ffffff; /* Blanco */
+    color: #ffffff;
+    /* Blanco */
 }
 
 .navbar-logo i {
@@ -42,26 +44,26 @@ body {
 .navbar-menu li a {
     display: flex;
     align-items: center;
-    gap: 8px; /* Espacio entre icono y texto */
-    color: #ffffff; /* Blanco */
+    gap: 8px;
+    /* Espacio entre icono y texto */
+    color: #ffffff;
+    /* Blanco */
     text-decoration: none;
     font-size: 16px;
     font-weight: bold;
 }
 
 .navbar-menu li a:hover {
-    color: #ff0050; /* Rosa brillante */
+    color: #ff0050;
+    /* Rosa brillante */
 }
 
 /* Estilos del footer */
 .footer-rights {
-    background-color: #b22222;
+    background-color: #00bfff;
     color: white;
     text-align: center;
     padding: 10px;
-    position: relative;
-    bottom: 0;
-    width: 100%;
     margin-top: 50px;
 }
 /* Contenedor general */

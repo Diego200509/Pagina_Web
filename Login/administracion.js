@@ -164,93 +164,46 @@ if (formLogin) {
 });
 
 
-    // Variables para el formulario y los inputs
-    const formPropuestas = document.getElementById("formInicioPropuestas");
-    const colorInput = document.getElementById("colorPagPropuestas");
-    const hexInput = document.getElementById("hexColorPagPropuestas");
-    const defaultColor = "#337BFF"; // Color por defecto de la página
 
-    // Evento de envío del formulario
-    formPropuestas.addEventListener("submit", function(event) {
-        const submitter = event.submitter; // Botón que disparó el evento
 
-        if (submitter.name === "reset-pagina-propuestas" && submitter.value === "1") {
+document.addEventListener("DOMContentLoaded", function() { 
+    const colorInputCandidatos = document.getElementById("colorCandidatos");
+    const hexInputCandidatos = document.getElementById("hexColorCandidatos");
+    const defaultColorCandidatos = "#000000";
+
+    // Sincronizar el campo de texto hexadecimal con el selector de color
+    colorInputCandidatos.addEventListener("input", function() {
+        hexInputCandidatos.value = colorInputCandidatos.value;
+    });
+
+    // Sincronizar el selector de color con el campo de texto hexadecimal
+    hexInputCandidatos.addEventListener("input", function() {
+        const value = hexInputCandidatos.value;
+        if (/^#[0-9A-Fa-f]{6}$/.test(value)) {
+            colorInputCandidatos.value = value;
+        }
+    });
+
+    // Manejar el evento del formulario
+    const formInicioCandidatos = document.getElementById("formInicioCandidatos");
+    formInicioCandidatos.addEventListener("submit", function(event) {
+        const submitter = event.submitter;
+
+        if (submitter.name === "resetCandidatos" && submitter.value === "1") {
             // Restablecer el color al valor por defecto
-            colorInput.value = defaultColor;
-            hexInput.value = defaultColor;
+            colorInputCandidatos.value = defaultColorCandidatos;
+            hexInputCandidatos.value = defaultColorCandidatos;
 
             // Guardar en localStorage que se ha restablecido
-            localStorage.setItem("propuestasColorUpdated", "reset");
+            localStorage.setItem("candidatosColorUpdated", "reset");
         } else {
             // Guardar que el color ha sido actualizado
-            localStorage.setItem("propuestasColorUpdated", "true");
+            localStorage.setItem("candidatosColorUpdated", "true");
         }
 
         // Limpiar el estado en el localStorage después de 1 segundo
         setTimeout(() => {
-            localStorage.removeItem("propuestasColorUpdated");
+            localStorage.removeItem("candidatosColorUpdated");
         }, 1000);
     });
-
-    // Verificar el estado del localStorage al cargar la página
-    document.addEventListener("DOMContentLoaded", function () {
-        const updateStatus = localStorage.getItem("propuestasColorUpdated");
-
-        if (updateStatus === "true") {
-            alert("El color de fondo de la página propuestas ha sido actualizado.");
-        } else if (updateStatus === "reset") {
-            alert("El color de fondo de la página propuestas ha sido restablecido.");
-        }
-    });
-
-    // Sincronizar inputs de color (opcional)
-    colorInput.addEventListener("input", function () {
-        hexInput.value = colorInput.value;
-    });
-
-    hexInput.addEventListener("input", function () {
-        if (/^#[0-9A-Fa-f]{6}$/.test(hexInput.value)) {
-            colorInput.value = hexInput.value;
-        }
-    });
-
-
-    const formEventos = document.getElementById("formInicioEventos");
-    const colorInputEventos = document.getElementById("colorPagEventos");
-    const hexInputEventos = document.getElementById("hexColorPagEventos");
-    const defaultColorEventos = "#33FF58"; // Color por defecto
-
-    formEventos.addEventListener("submit", function (event) {
-        const submitter = event.submitter;
-
-        if (submitter.name === "reset-pagina-eventos-noticias" && submitter.value === "1") {
-            colorInputEventos.value = defaultColorEventos;
-            hexInputEventos.value = defaultColorEventos;
-            localStorage.setItem("eventosColorUpdated", "reset");
-        } else {
-            localStorage.setItem("eventosColorUpdated", "true");
-        }
-
-        setTimeout(() => {
-            localStorage.removeItem("eventosColorUpdated");
-        }, 1000);
-    });
-
-    document.addEventListener("DOMContentLoaded", function () {
-        const updateStatus = localStorage.getItem("eventosColorUpdated");
-        if (updateStatus === "true") {
-            alert("El color de fondo de la Página Eventos y Noticias ha sido actualizado.");
-        } else if (updateStatus === "reset") {
-            alert("El color de fondo de la Página Eventos y Noticias ha sido restablecido.");
-        }
-    });
-
-    colorInputEventos.addEventListener("input", function () {
-        hexInputEventos.value = colorInputEventos.value;
-    });
-
-    hexInputEventos.addEventListener("input", function () {
-        if (/^#[0-9A-Fa-f]{6}$/.test(hexInputEventos.value)) {
-            colorInputEventos.value = hexInputEventos.value;
-        }
-    });
+});

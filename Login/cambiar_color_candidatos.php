@@ -14,12 +14,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (isset($_POST['resetCandidatos']) && $_POST['resetCandidatos'] === "1") {
         $datos = ["bgColor" => $defaultColor];
-        guardarConfiguracion($archivo, $datos, "El color de Candidatos ha sido restablecido.", "Error al restablecer el color de Candidatos.");
+        guardarConfiguracion($archivo, $datos, "El color de la sección Candidatos ha sido restablecido.", "Error al restablecer el color de Candidatos.");
     }
 
     if (isset($_POST['colorCandidatos'])) {
         $datos = ["bgColor" => $_POST['colorCandidatos']];
-        guardarConfiguracion($archivo, $datos, "El color de Candidatos ha sido actualizado.", "Error al actualizar el color de Candidatos.");
+        guardarConfiguracion($archivo, $datos, "El color de la sección  Candidatos ha sido actualizado.", "Error al actualizar el color de Candidatos.");
     }
 }
 ?>
