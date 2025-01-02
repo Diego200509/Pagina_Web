@@ -35,13 +35,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $descripcion = $_POST['descripcion'];
         $categoria = $_POST['categoria'];
         $partido = $_POST['partido'];
-
-        if (empty($titulo) || empty($descripcion) || empty($categoria) || empty($partido)) {
+        $estado = $_POST['estado'];
+    
+        if (empty($titulo) || empty($descripcion) || empty($categoria) || empty($partido) || empty($estado)) {
             die("Error: Faltan datos en el formulario. Verifique los campos.");
         }
-
+    
         try {
-            agregarPropuestaYColaboracion($connection, $titulo, $descripcion, $categoria, $partido);
+            agregarPropuestaYColaboracion($connection, $titulo, $descripcion, $categoria, $partido, $estado);
             header('Location: gestionarPropuestas.php?status=added');
             exit();
         } catch (Exception $e) {
@@ -230,44 +231,18 @@ function mostrarDescripcionConFormato($descripcion)
 
 
 
-        <form method="POST" action="gestionarPropuestas.php">
-            <h3>Agregar Nueva Propuesta</h3>
-            <input type="text" name="titulo" placeholder="Título de la Propuesta" required>
-            <textarea name="descripcion" placeholder="Descripción de la Propuesta" required></textarea>
-            <select name="categoria" required>
-                <option value="">Seleccionar Facultad o Interés</option>
-                <option value="Ciencias Administrativas">Ciencias Administrativas</option>
-                <option value="Ciencia e Ingeniería en Alimentos">Ciencia e Ingeniería en Alimentos</option>
-                <option value="Jurisprudencia y Ciencias Sociales">Jurisprudencia y Ciencias Sociales</option>
-                <option value="Contabilidad y Auditoría">Contabilidad y Auditoría</option>
-                <option value="Ciencias Humanas y de la Educación">Ciencias Humanas y de la Educación</option>
-                <option value="Ciencias de la Salud">Ciencias de la Salud</option>
-                <option value="Ingeniería Civil y Mecánica">Ingeniería Civil y Mecánica</option>
-                <option value="Ingeniería en Sistemas, Electrónica e Industrial">Ingeniería en Sistemas, Electrónica e Industrial</option>
-                <option value="Infraestructura">Infraestructura</option>
-                <option value="Deportes">Deportes</option>
-                <option value="Cultura">Cultura</option>
-                <option value="Investigación">Investigación</option>
-                <option value="Vinculación con la Sociedad">Vinculación con la Sociedad</option>
-            </select>
-            <select name="partido" required>
-                <option value="">Seleccionar Partido Político</option>
-                <?php while ($partido = $partidos->fetch_assoc()): ?>
-                    <option value="<?= $partido['ID_PAR'] ?>"><?= $partido['NOM_PAR'] ?></option>
-                <?php endwhile; ?>
-            </select>
-            <button type="submit" name="accion" value="agregar">Agregar Propuesta</button>
-        </form>
+
 
         <h3>Propuestas Existentes</h3>
-        <table>
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Partido Político</th> <!-- Partido Político después del ID -->
+                    <th>Partido Político</th>
                     <th>Título</th>
                     <th>Descripción</th>
-                    <th>Categoría</th>
+                    <th>Categorías</th>
+                    <th>Estado</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -275,42 +250,22 @@ function mostrarDescripcionConFormato($descripcion)
                 <?php if ($result->num_rows > 0): ?>
                     <?php while ($row = $result->fetch_assoc()): ?>
                         <tr>
-                            <td><?= $row['ID_PRO'] ?></td>
-                            <td><?= $row['PARTIDOS'] ?></td> <!-- Mostrar el partido político -->
-                            <td><?= $row['TIT_PRO'] ?></td>
-                            <td><?= mostrarDescripcionConFormato($row['DESC_PRO']) ?></td>
-                            <td><?= $row['CAT_PRO'] ?></td>
+                            <td><?= htmlspecialchars($row['ID_PRO']) ?></td>
+                            <td><?= htmlspecialchars($row['PARTIDOS']) ?></td>
+                            <td><?= htmlspecialchars($row['TIT_PRO']) ?></td>
+                            <td><?= htmlspecialchars($row['DESC_PRO']) ?></td>
+                            <td><?= htmlspecialchars($row['CAT_PRO']) ?></td>
+                            <td><?= htmlspecialchars($row['ESTADO']) ?></td>
                             <td>
-                                <form method="POST" action="gestionarPropuestas.php" style="display: inline;">
-                                    <input type="hidden" name="id" value="<?= $row['ID_PRO'] ?>">
-                                    <button type="submit" name="accion" value="ocultar"
-                                        class="btn btn-warning"
-                                        <?= $row['ESTADO'] === 'Oculta' ? 'disabled' : '' ?>>Ocultar</button>
-                                </form>
-
-                                <?php if ($row['ESTADO'] === 'Oculta'): ?>
-                                    <form method="POST" action="gestionarPropuestas.php" style="display: inline;">
-                                        <input type="hidden" name="id" value="<?= $row['ID_PRO'] ?>">
-                                        <button type="submit" name="accion" value="mostrar" class="btn btn-success">Mostrar</button>
-                                    </form>
-                                <?php endif; ?>
-
-                                <form method="POST" action="gestionarPropuestas.php" style="display: inline;">
-                                    <input type="hidden" name="id" value="<?= $row['ID_PRO'] ?>">
-                                    <button type="submit" name="accion" value="eliminar" class="btn btn-danger">Eliminar</button>
-                                </form>
-                                <form method="GET" action="editarPropuesta.php" style="display: inline;">
-                                    <input type="hidden" name="id" value="<?= $row['ID_PRO'] ?>">
-                                    <button type="submit" class="btn btn-primary">Editar</button>
-                                </form>
+                                <button class="action-btn" onclick="abrirModal()">
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
                             </td>
-
-
                         </tr>
                     <?php endwhile; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="6">No hay propuestas registradas.</td>
+                        <td colspan="7">No hay propuestas registradas.</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
@@ -346,6 +301,63 @@ function mostrarDescripcionConFormato($descripcion)
 
 
     </div>
+    </div>
+
+    <div id="modalPropuesta" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="cerrarModal()">&times;</span>
+            <h2>Agregar Nueva Propuesta</h2>
+            <form method="POST" action="gestionarPropuestas.php">
+                <input type="hidden" name="accion" value="agregar">
+
+                <label for="titulo">Título:</label>
+                <input type="text" name="titulo" id="titulo" class="form-control" required>
+
+                <label for="descripcion">Descripción:</label>
+                <textarea name="descripcion" id="descripcion" class="form-control" required></textarea>
+
+                <label for="categoria">Categoría:</label>
+                <select name="categoria" id="categoria" class="form-select" required>
+                    <option value="">Seleccionar Facultad o Interés</option>
+                    <option value="Ciencias Administrativas">Ciencias Administrativas</option>
+                    <option value="Ciencia e Ingeniería en Alimentos">Ciencia e Ingeniería en Alimentos</option>
+                    <option value="Jurisprudencia y Ciencias Sociales">Jurisprudencia y Ciencias Sociales</option>
+                    <option value="Contabilidad y Auditoría">Contabilidad y Auditoría</option>
+                    <option value="Ciencias Humanas y de la Educación">Ciencias Humanas y de la Educación</option>
+                    <option value="Ciencias de la Salud">Ciencias de la Salud</option>
+                    <option value="Ingeniería Civil y Mecánica">Ingeniería Civil y Mecánica</option>
+                    <option value="Ingeniería en Sistemas, Electrónica e Industrial">Ingeniería en Sistemas, Electrónica e Industrial</option>
+                    <option value="Infraestructura">Infraestructura</option>
+                    <option value="Deportes">Deportes</option>
+                    <option value="Cultura">Cultura</option>
+                    <option value="Investigación">Investigación</option>
+                    <option value="Vinculación con la Sociedad">Vinculación con la Sociedad</option>
+                </select>
+
+                <label for="partido">Partido Político:</label>
+                <select name="partido" id="partido" class="form-select" required>
+                    <?php while ($partido = $partidos->fetch_assoc()): ?>
+                        <option value="<?= htmlspecialchars($partido['ID_PAR']) ?>">
+                            <?= htmlspecialchars($partido['NOM_PAR']) ?>
+                        </option>
+                    <?php endwhile; ?>
+                </select>
+
+                <label for="estado">Estado:</label>
+                <select name="estado" id="estado" class="form-select" required>
+                    <?php while ($estado = $estadosResult->fetch_assoc()): ?>
+                        <option value="<?= htmlspecialchars($estado['ID_ESTADO']) ?>">
+                            <?= htmlspecialchars($estado['NOMBRE_ESTADO']) ?>
+                        </option>
+                    <?php endwhile; ?>
+                </select>
+
+                <button type="submit" class="btn btn-danger">Guardar Propuesta</button>
+            </form>
+        </div>
+    </div>
+
+
 
 </body>
 
@@ -393,3 +405,23 @@ function mostrarPropuesta($connection, $id)
 
 
 ?>
+
+<script>
+    function abrirModal() {
+        const modal = document.getElementById("modalPropuesta");
+        modal.style.display = "flex"; // Cambia a flex para centrar
+    }
+
+    function cerrarModal() {
+        const modal = document.getElementById("modalPropuesta");
+        modal.style.display = "none"; // Oculta el modal
+    }
+
+    // Cerrar el modal al hacer clic fuera del contenido
+    window.onclick = function(event) {
+        const modal = document.getElementById("modalPropuesta");
+        if (event.target === modal) {
+            cerrarModal();
+        }
+    };
+</script>

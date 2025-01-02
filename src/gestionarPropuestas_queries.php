@@ -79,14 +79,14 @@ function actualizarPropuesta($connection, $id, $titulo, $descripcion, $categoria
 
 
 // Función para agregar propuesta y colaboración
-function agregarPropuestaYColaboracion($connection, $titulo, $descripcion, $categoria, $idPartido) {
+function agregarPropuestaYColaboracion($connection, $titulo, $descripcion, $categoria, $idPartido, $estado) {
     // Insertar en la tabla PROPUESTAS
-    $queryPropuesta = "INSERT INTO PROPUESTAS (TIT_PRO, DESC_PRO, CAT_PRO) VALUES (?, ?, ?)";
+    $queryPropuesta = "INSERT INTO PROPUESTAS (TIT_PRO, DESC_PRO, CAT_PRO, ESTADO) VALUES (?, ?, ?, ?)";
     $stmtPropuesta = $connection->prepare($queryPropuesta);
     if (!$stmtPropuesta) {
         die("Error al preparar consulta propuesta: " . $connection->error);
     }
-    $stmtPropuesta->bind_param("sss", $titulo, $descripcion, $categoria);
+    $stmtPropuesta->bind_param("ssss", $titulo, $descripcion, $categoria, $estado);
     $stmtPropuesta->execute();
 
     if ($stmtPropuesta->affected_rows > 0) {
@@ -116,6 +116,7 @@ function agregarPropuestaYColaboracion($connection, $titulo, $descripcion, $cate
     $stmtPropuesta->close();
     $stmtColaboracion->close();
 }
+
 
 // Función para eliminar propuesta
 // Función para eliminar propuesta
