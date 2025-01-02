@@ -146,6 +146,14 @@ $totalPropuestasResult = $connection->query("SELECT COUNT(*) AS total FROM PROPU
 $totalPropuestas = $totalPropuestasResult->fetch_assoc()['total'];
 $totalPaginas = ceil($totalPropuestas / $propuestasPorPagina);
 
+// Consulta para obtener los estados
+$queryEstados = "SELECT DISTINCT ESTADO FROM PROPUESTAS";
+$estadosResult = $connection->query($queryEstados);
+if (!$estadosResult) {
+    die("Error al obtener los estados: " . $connection->error);
+}
+
+
 // Depuración de variables
 //echo "<pre>";
 //echo "Página actual: " . $paginaActual . "\n";
@@ -345,16 +353,18 @@ function mostrarDescripcionConFormato($descripcion)
 
                 <label for="estado">Estado:</label>
                 <select name="estado" id="estado" class="form-select" required>
-                    <?php if (isset($estadosResult) && $estadosResult->num_rows > 0): ?>
+                    <?php if ($estadosResult->num_rows > 0): ?>
                         <?php while ($estado = $estadosResult->fetch_assoc()): ?>
-                            <option value="<?= htmlspecialchars($estado['ID_ESTADO']) ?>">
-                                <?= htmlspecialchars($estado['NOMBRE_ESTADO']) ?>
+                            <option value="<?= htmlspecialchars($estado['ESTADO']) ?>">
+                                <?= htmlspecialchars($estado['ESTADO']) ?>
                             </option>
                         <?php endwhile; ?>
                     <?php else: ?>
                         <option value="">No hay estados disponibles</option>
                     <?php endif; ?>
                 </select>
+
+
 
 
 
@@ -365,8 +375,10 @@ function mostrarDescripcionConFormato($descripcion)
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+            const modal = document.getElementById("modalPropuesta");
+
+            // Función para abrir el modal
             function abrirModal() {
-                const modal = document.getElementById("modalPropuesta");
                 if (modal) {
                     modal.style.display = "flex";
                 } else {
@@ -374,25 +386,29 @@ function mostrarDescripcionConFormato($descripcion)
                 }
             }
 
+            // Función para cerrar el modal
             function cerrarModal() {
-                const modal = document.getElementById("modalPropuesta");
                 if (modal) {
                     modal.style.display = "none";
+                } else {
+                    console.error("No se encontró el modal con ID 'modalPropuesta'.");
                 }
             }
 
             // Configurar evento para cerrar modal al hacer clic afuera
             window.onclick = function(event) {
-                const modal = document.getElementById("modalPropuesta");
                 if (event.target === modal) {
                     cerrarModal();
                 }
             };
 
-            // Asigna abrirModal a los botones con clase action-btn
+            // Configurar el evento en los botones con clase 'action-btn'
             document.querySelectorAll(".action-btn").forEach((btn) => {
                 btn.addEventListener("click", abrirModal);
             });
+
+            // Configurar el botón de cierre del modal
+            document.querySelector(".close-button").addEventListener("click", cerrarModal);
         });
     </script>
 
