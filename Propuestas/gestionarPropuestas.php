@@ -73,11 +73,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $categoria = $_POST['categoria'] ?? '';
         $partido = $_POST['partido'] ?? '';
         $estado = $_POST['estado'] ?? ''; // Corregido
-    
+
         if (empty($titulo) || empty($descripcion) || empty($categoria) || empty($partido)) {
             die("Error: Faltan datos en el formulario. Verifique los campos.");
         }
-    
+
         try {
             actualizarPropuesta($connection, $id, $titulo, $descripcion, $categoria, $partido, $estado);
             header('Location: gestionarPropuestas.php?status=edited');
@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             die("Error al editar propuesta: " . $e->getMessage());
         }
     }
-    
+
 
 
 
@@ -148,6 +148,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->close();
         exit();
     }
+
+    if ($accion === 'cambiarFavorito') {
+        $id = $_POST['id'];
+        $esFavorita = $_POST['esFavorita']; // 'Sí' o 'No'
+    
+        if (empty($id) || empty($esFavorita)) {
+            echo json_encode(['success' => false, 'message' => 'Faltan datos para actualizar favorito.']);
+            exit();
+        }
+    
+        $query = "UPDATE PROPUESTAS SET ES_FAVORITA = ? WHERE ID_PRO = ?";
+        $stmt = $connection->prepare($query);
+        if (!$stmt) {
+            echo json_encode(['success' => false, 'message' => 'Error al preparar la consulta: ' . $connection->error]);
+            exit();
+        }
+        $stmt->bind_param('si', $esFavorita, $id);
+        $stmt->execute();
+    
+        echo json_encode(['success' => true]);
+        $stmt->close();
+        exit();
+    }
+    
 }
 
 // Obtener el total de propuestas en la base de datos (sin duplicados)
@@ -182,18 +206,20 @@ if (!$estadosResult) {
 $query = "
     SELECT 
         PROPUESTAS.ID_PRO, 
-        IFNULL(PROPUESTAS.TIT_PRO, 'Sin título') AS TIT_PRO, 
-        IFNULL(PROPUESTAS.DESC_PRO, 'Sin descripción') AS DESC_PRO, 
-        IFNULL(PROPUESTAS.CAT_PRO, 'Sin categoría') AS CAT_PRO, 
-        IFNULL(PROPUESTAS.ESTADO, 'Sin estado') AS ESTADO,
-        GROUP_CONCAT(IFNULL(PARTIDOS_POLITICOS.NOM_PAR, 'Sin partido') SEPARATOR ', ') AS PARTIDOS,
+        PROPUESTAS.TIT_PRO, 
+        PROPUESTAS.DESC_PRO, 
+        PROPUESTAS.CAT_PRO, 
+        PROPUESTAS.ESTADO, 
+        PROPUESTAS.ES_FAVORITA, -- Incluye el campo favorito
+        GROUP_CONCAT(PARTIDOS_POLITICOS.NOM_PAR SEPARATOR ', ') AS PARTIDOS,
         PARTIDOS_POLITICOS.ID_PAR AS ID_PAR
     FROM PROPUESTAS
-    INNER JOIN COLABORACIONES ON PROPUESTAS.ID_PRO = COLABORACIONES.ID_PRO_COL
-    INNER JOIN PARTIDOS_POLITICOS ON COLABORACIONES.ID_PAR_COL = PARTIDOS_POLITICOS.ID_PAR
+    LEFT JOIN COLABORACIONES ON PROPUESTAS.ID_PRO = COLABORACIONES.ID_PRO_COL
+    LEFT JOIN PARTIDOS_POLITICOS ON COLABORACIONES.ID_PAR_COL = PARTIDOS_POLITICOS.ID_PAR
     GROUP BY PROPUESTAS.ID_PRO
     ORDER BY PROPUESTAS.ID_PRO ASC
     LIMIT ? OFFSET ?";
+
 
 $stmt = $connection->prepare($query);
 
@@ -304,6 +330,7 @@ function mostrarDescripcionConFormato($descripcion)
                     <th>Descripción</th>
                     <th>Categorías</th>
                     <th>Estado</th>
+                    <th>Favorito</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -317,6 +344,13 @@ function mostrarDescripcionConFormato($descripcion)
                             <td><?= htmlspecialchars($row['DESC_PRO']) ?></td>
                             <td><?= htmlspecialchars($row['CAT_PRO']) ?></td>
                             <td id="estado-<?= $row['ID_PRO'] ?>"><?= htmlspecialchars($row['ESTADO']) ?></td>
+                            <td>
+                                <i
+                                    class="fa-star <?= $row['ES_FAVORITA'] === 'Sí' ? 'fas' : 'far' ?>"
+                                    style="cursor: pointer; color: gold;"
+                                    onclick="toggleFavorito(<?= $row['ID_PRO'] ?>, '<?= $row['ES_FAVORITA'] === 'Sí' ? 'No' : 'Sí' ?>')">
+                                </i>
+                            </td>
                             <td>
                                 <div class="dropdown-container">
                                     <!-- Botón principal -->
@@ -458,77 +492,77 @@ function mostrarDescripcionConFormato($descripcion)
     </div>
 
     <div id="modalEditarPropuesta" class="modal">
-    <div class="modal-content">
-        <span class="close-button" onclick="cerrarModalEditar()">&times;</span>
-        <h2>Editar Propuesta</h2>
-        <form id="formEditarPropuesta" method="POST" action="gestionarPropuestas.php">
-            <input type="hidden" name="accion" value="editar">
-            <input type="hidden" name="id" id="idEditarPropuesta">
+        <div class="modal-content">
+            <span class="close-button" onclick="cerrarModalEditar()">&times;</span>
+            <h2>Editar Propuesta</h2>
+            <form id="formEditarPropuesta" method="POST" action="gestionarPropuestas.php">
+                <input type="hidden" name="accion" value="editar">
+                <input type="hidden" name="id" id="idEditarPropuesta">
 
-            <!-- Título -->
-            <label for="tituloEditar">Título:</label>
-            <input type="text" id="tituloEditar" name="titulo" class="form-control" required>
+                <!-- Título -->
+                <label for="tituloEditar">Título:</label>
+                <input type="text" id="tituloEditar" name="titulo" class="form-control" required>
 
-            <!-- Descripción -->
-            <label for="descripcionEditar">Descripción:</label>
-            <textarea id="descripcionEditar" name="descripcion" class="form-control" required></textarea>
+                <!-- Descripción -->
+                <label for="descripcionEditar">Descripción:</label>
+                <textarea id="descripcionEditar" name="descripcion" class="form-control" required></textarea>
 
-            <!-- Categoría -->
-            <label for="categoriaEditar">Categoría:</label>
-            <select id="categoriaEditar" name="categoria" class="form-select" required>
-                <?php 
-                $categorias = [
-                    "Ciencias Administrativas",
-                    "Ciencia e Ingeniería en Alimentos",
-                    "Jurisprudencia y Ciencias Sociales",
-                    "Contabilidad y Auditoría",
-                    "Ciencias Humanas y de la Educación",
-                    "Ciencias de la Salud",
-                    "Ingeniería Civil y Mecánica",
-                    "Ingeniería en Sistemas, Electrónica e Industrial",
-                    "Infraestructura",
-                    "Deportes",
-                    "Cultura",
-                    "Investigación",
-                    "Vinculación con la Sociedad"
-                ];
-                $categoriaSeleccionada = isset($row['CAT_PRO']) && $row['CAT_PRO'] !== null ? $row['CAT_PRO'] : ''; 
-                foreach ($categorias as $categoria): ?>
-                    <option value="<?= htmlspecialchars($categoria, ENT_QUOTES, 'UTF-8') ?>" 
-                        <?= $categoria == $categoriaSeleccionada ? 'selected' : '' ?>>
-                        <?= htmlspecialchars($categoria, ENT_QUOTES, 'UTF-8') ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
+                <!-- Categoría -->
+                <label for="categoriaEditar">Categoría:</label>
+                <select id="categoriaEditar" name="categoria" class="form-select" required>
+                    <?php
+                    $categorias = [
+                        "Ciencias Administrativas",
+                        "Ciencia e Ingeniería en Alimentos",
+                        "Jurisprudencia y Ciencias Sociales",
+                        "Contabilidad y Auditoría",
+                        "Ciencias Humanas y de la Educación",
+                        "Ciencias de la Salud",
+                        "Ingeniería Civil y Mecánica",
+                        "Ingeniería en Sistemas, Electrónica e Industrial",
+                        "Infraestructura",
+                        "Deportes",
+                        "Cultura",
+                        "Investigación",
+                        "Vinculación con la Sociedad"
+                    ];
+                    $categoriaSeleccionada = isset($row['CAT_PRO']) && $row['CAT_PRO'] !== null ? $row['CAT_PRO'] : '';
+                    foreach ($categorias as $categoria): ?>
+                        <option value="<?= htmlspecialchars($categoria, ENT_QUOTES, 'UTF-8') ?>"
+                            <?= $categoria == $categoriaSeleccionada ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($categoria, ENT_QUOTES, 'UTF-8') ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
 
-            <!-- Partido Político -->
-            <label for="partidoEditar">Partido Político:</label>
-            <select id="partidoEditar" name="partido" class="form-select" required>
-                <?php mysqli_data_seek($partidos, 0); ?>
-                <?php while ($partido = $partidos->fetch_assoc()): ?>
-                    <?php 
-                    $idPar = isset($partido['ID_PAR']) ? $partido['ID_PAR'] : '';
-                    $nomPar = isset($partido['NOM_PAR']) ? $partido['NOM_PAR'] : '';
-                    ?>
-                    <option value="<?= htmlspecialchars($idPar, ENT_QUOTES, 'UTF-8') ?>"
-                        <?= isset($row['ID_PAR']) && $row['ID_PAR'] === $idPar ? 'selected' : '' ?>>
-                        <?= htmlspecialchars($nomPar, ENT_QUOTES, 'UTF-8') ?>
-                    </option>
-                <?php endwhile; ?>
-            </select>
+                <!-- Partido Político -->
+                <label for="partidoEditar">Partido Político:</label>
+                <select id="partidoEditar" name="partido" class="form-select" required>
+                    <?php mysqli_data_seek($partidos, 0); ?>
+                    <?php while ($partido = $partidos->fetch_assoc()): ?>
+                        <?php
+                        $idPar = isset($partido['ID_PAR']) ? $partido['ID_PAR'] : '';
+                        $nomPar = isset($partido['NOM_PAR']) ? $partido['NOM_PAR'] : '';
+                        ?>
+                        <option value="<?= htmlspecialchars($idPar, ENT_QUOTES, 'UTF-8') ?>"
+                            <?= isset($row['ID_PAR']) && $row['ID_PAR'] === $idPar ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($nomPar, ENT_QUOTES, 'UTF-8') ?>
+                        </option>
+                    <?php endwhile; ?>
+                </select>
 
-            <!-- Estado -->
-            <label for="estadoEditar">Estado:</label>
-            <select id="estadoEditar" name="estado" class="form-select" required>
-                <option value="Visible" <?= isset($row['ESTADO']) && $row['ESTADO'] === 'Visible' ? 'selected' : '' ?>>Visible</option>
-                <option value="Oculta" <?= isset($row['ESTADO']) && $row['ESTADO'] === 'Oculta' ? 'selected' : '' ?>>Oculta</option>
-            </select>
+                <!-- Estado -->
+                <label for="estadoEditar">Estado:</label>
+                <select id="estadoEditar" name="estado" class="form-select" required>
+                    <option value="Visible" <?= isset($row['ESTADO']) && $row['ESTADO'] === 'Visible' ? 'selected' : '' ?>>Visible</option>
+                    <option value="Oculta" <?= isset($row['ESTADO']) && $row['ESTADO'] === 'Oculta' ? 'selected' : '' ?>>Oculta</option>
+                </select>
 
-            <!-- Botón para actualizar -->
-            <button type="submit" class="btn btn-danger">Actualizar Propuesta</button>
-        </form>
+                <!-- Botón para actualizar -->
+                <button type="submit" class="btn btn-danger">Actualizar Propuesta</button>
+            </form>
+        </div>
     </div>
-</div>
 
 
 
@@ -682,6 +716,33 @@ function mostrarDescripcionConFormato($descripcion)
                 .catch(error => {
                     console.error('Error:', error);
                 });
+        }
+
+        function toggleFavorito(id, nuevoEstado) {
+            const formData = new FormData();
+            formData.append('accion', 'cambiarFavorito');
+            formData.append('id', id);
+            formData.append('esFavorita', nuevoEstado);
+
+            fetch('gestionarPropuestas.php', {
+                    method: 'POST',
+                    body: formData,
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Cambia el icono de la estrella en la tabla
+                        const star = document.querySelector(`i[onclick="toggleFavorito(${id}, '${nuevoEstado}')"]`);
+                        if (star) {
+                            star.classList.toggle('fas');
+                            star.classList.toggle('far');
+                            star.setAttribute('onclick', `toggleFavorito(${id}, '${nuevoEstado === 'Sí' ? 'No' : 'Sí'}')`);
+                        }
+                    } else {
+                        alert('Error al cambiar el favorito: ' + data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
         }
     </script>
 

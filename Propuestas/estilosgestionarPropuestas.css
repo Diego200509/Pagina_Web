@@ -257,6 +257,17 @@ body {
     box-sizing: border-box; /* Incluye padding y border en el ancho */
 }
 
+.fa-star {
+    font-size: 20px;
+    margin: 0 auto;
+    transition: transform 0.3s ease;
+}
+
+.fa-star:hover {
+    transform: scale(1.2);
+    color: orange;
+}
+
 
 
 
