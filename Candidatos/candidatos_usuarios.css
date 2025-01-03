@@ -4,7 +4,6 @@ body {
     margin: 0;
     padding: 0;
 }
-
 .navbar {
     background-color: var(--navbar-bg-color, #00bfff);
     /* Azul vibrante como color por defecto */
@@ -15,6 +14,7 @@ body {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     /* Sombra ligera */
 }
+
 
 .navbar-logo {
     display: flex;
