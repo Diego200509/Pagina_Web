@@ -152,12 +152,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($accion === 'cambiarFavorito') {
         $id = $_POST['id'];
         $esFavorita = $_POST['esFavorita']; // 'Sí' o 'No'
-    
+
         if (empty($id) || empty($esFavorita)) {
             echo json_encode(['success' => false, 'message' => 'Faltan datos para actualizar favorito.']);
             exit();
         }
-    
+
         $query = "UPDATE PROPUESTAS SET ES_FAVORITA = ? WHERE ID_PRO = ?";
         $stmt = $connection->prepare($query);
         if (!$stmt) {
@@ -166,12 +166,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $stmt->bind_param('si', $esFavorita, $id);
         $stmt->execute();
-    
+
         echo json_encode(['success' => true]);
         $stmt->close();
         exit();
     }
-    
 }
 
 // Obtener el total de propuestas en la base de datos (sin duplicados)
@@ -345,12 +344,15 @@ function mostrarDescripcionConFormato($descripcion)
                             <td><?= htmlspecialchars($row['CAT_PRO']) ?></td>
                             <td id="estado-<?= $row['ID_PRO'] ?>"><?= htmlspecialchars($row['ESTADO']) ?></td>
                             <td>
-                                <i
-                                    class="fa-star <?= $row['ES_FAVORITA'] === 'Sí' ? 'fas' : 'far' ?>"
-                                    style="cursor: pointer; color: gold;"
-                                    onclick="toggleFavorito(<?= $row['ID_PRO'] ?>, '<?= $row['ES_FAVORITA'] === 'Sí' ? 'No' : 'Sí' ?>')">
-                                </i>
+                                <div class="star-container">
+                                    <i
+                                        class="fa-star <?= $row['ES_FAVORITA'] === 'Sí' ? 'fas' : 'far' ?>"
+                                        style="cursor: pointer; color: gold;"
+                                        onclick="toggleFavorito(<?= $row['ID_PRO'] ?>, '<?= $row['ES_FAVORITA'] === 'Sí' ? 'No' : 'Sí' ?>')">
+                                    </i>
+                                </div>
                             </td>
+
                             <td>
                                 <div class="dropdown-container">
                                     <!-- Botón principal -->
@@ -377,7 +379,9 @@ function mostrarDescripcionConFormato($descripcion)
 
 
 
-                                        <a role="button" class="text-danger" onclick="eliminarPropuesta(<?= $row['ID_PRO'] ?>); event.preventDefault();">Eliminar</a>
+                                        <a role="button" class="text-danger" onclick="eliminarPropuesta(<?= $row['ID_PRO'] ?>); event.preventDefault();">
+                                            Eliminar
+                                        </a>
                                         <a role="button" id="estado-opcion-<?= $row['ID_PRO'] ?>" class="text-warning"
                                             onclick="cambiarEstado(<?= $row['ID_PRO'] ?>, '<?= $row['ESTADO'] ?>'); event.preventDefault();">
                                             <?= $row['ESTADO'] === 'Visible' ? 'Ocultar' : 'Visible' ?>
@@ -743,6 +747,33 @@ function mostrarDescripcionConFormato($descripcion)
                     }
                 })
                 .catch(error => console.error('Error:', error));
+        }
+
+        function eliminarPropuesta(id) {
+            if (confirm('¿Estás seguro de que deseas eliminar esta propuesta?')) {
+                const formData = new FormData();
+                formData.append('accion', 'eliminar');
+                formData.append('id', id);
+
+                fetch('gestionarPropuestas.php', {
+                        method: 'POST',
+                        body: formData,
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Error en la solicitud de eliminación.');
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        alert('Propuesta eliminada con éxito.');
+                        location.reload(); // Recarga la página para reflejar los cambios
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Ocurrió un error al eliminar la propuesta.');
+                    });
+            }
         }
     </script>
 

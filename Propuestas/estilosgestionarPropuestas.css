@@ -257,6 +257,14 @@ body {
     box-sizing: border-box; /* Incluye padding y border en el ancho */
 }
 
+.star-container {
+    display: flex; /* Flexbox para alinear */
+    justify-content: center; /* Centrado horizontal */
+    align-items: center; /* Centrado vertical */
+    height: 100%; /* Ajusta la altura según el diseño */
+    width: 100%; /* Ajusta el ancho según el diseño */
+}
+
 .fa-star {
     font-size: 20px;
     margin: 0 auto;
