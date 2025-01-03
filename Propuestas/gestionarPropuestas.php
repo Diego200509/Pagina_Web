@@ -467,6 +467,7 @@ function mostrarDescripcionConFormato($descripcion)
 
                 <label for="partido">Partido Político:</label>
                 <select name="partido" id="partido" class="form-select" required>
+                    <option value="" disabled selected>Seleccione el Partido Político</option>
                     <?php while ($partido = $partidos->fetch_assoc()): ?>
                         <option value="<?= htmlspecialchars($partido['ID_PAR']) ?>">
                             <?= htmlspecialchars($partido['NOM_PAR']) ?>
@@ -476,6 +477,7 @@ function mostrarDescripcionConFormato($descripcion)
 
                 <label for="estado">Estado:</label>
                 <select name="estado" id="estado" class="form-select" required>
+                    <option value="" disabled selected>Seleccione el Estado</option>
                     <?php if ($estadosResult->num_rows > 0): ?>
                         <?php while ($estado = $estadosResult->fetch_assoc()): ?>
                             <option value="<?= htmlspecialchars($estado['ESTADO']) ?>">
