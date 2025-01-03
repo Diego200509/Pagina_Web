@@ -24,14 +24,15 @@ try {
         case 'POST': // Crear o editar candidato
             $candidateId = isset($_POST['candidateId']) ? intval($_POST['candidateId']) : null;
             $name = mysqli_real_escape_string($connection, $_POST['name'] ?? '');
-            $bio = mysqli_real_escape_string($connection, $_POST['bio'] ?? '');
+            $surname = mysqli_real_escape_string($connection, $_POST['surname'] ?? '');
+            $birth_date = mysqli_real_escape_string($connection, $_POST['birth_date'] ?? '');
+            $position = mysqli_real_escape_string($connection, $_POST['position'] ?? '');
+            $education = mysqli_real_escape_string($connection, $_POST['education'] ?? '');
             $experience = mysqli_real_escape_string($connection, $_POST['experience'] ?? '');
-            $vision = mysqli_real_escape_string($connection, $_POST['vision'] ?? '');
-            $achievements = mysqli_real_escape_string($connection, $_POST['achievements'] ?? '');
-            $party_id = isset($_POST['party_id']) ? intval($_POST['party_id']) : null;
             $estado = isset($_POST['estado']) ? mysqli_real_escape_string($connection, $_POST['estado']) : 'Activo'; // Valor por defecto
             $image_url = null;
 
+            // Manejar la imagen subida
             if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
                 $image = $_FILES['image'];
                 $imageName = uniqid() . '-' . basename($image['name']);
@@ -47,15 +48,16 @@ try {
                     exit;
                 }
 
+                
                 $image_url = "Candidatos/Img/" . $imageName;
             }
 
             if ($candidateId) {
                 // Actualizar candidato
                 $query = "UPDATE CANDIDATOS 
-                          SET NOM_CAN = '$name', BIOGRAFIA_CAN = '$bio', EXPERIENCIA_CAN = '$experience', 
-                              VISION_CAN = '$vision', LOGROS_CAN = '$achievements', ID_PAR_CAN = $party_id, 
-                              ESTADO_CAN = '$estado'" . 
+                          SET NOM_CAN = '$name', APE_CAN = '$surname', FECHA_NAC_CAN = '$birth_date', 
+                              CARGO_CAN = '$position', EDUCACION_CAN = '$education', EXPERIENCIA_CAN = '$experience', 
+                              ID_PAR_CAN = '1', ESTADO_CAN = '$estado'" . 
                               ($image_url ? ", IMG_CAN = '$image_url'" : "") . 
                           " WHERE ID_CAN = $candidateId";
 
@@ -67,8 +69,8 @@ try {
                 echo json_encode(["message" => "Candidato actualizado exitosamente."]);
             } else {
                 // Crear nuevo candidato
-                $query = "INSERT INTO CANDIDATOS (NOM_CAN, BIOGRAFIA_CAN, EXPERIENCIA_CAN, VISION_CAN, LOGROS_CAN, ID_PAR_CAN, IMG_CAN, ESTADO_CAN)
-                          VALUES ('$name', '$bio', '$experience', '$vision', '$achievements', $party_id, '$image_url', '$estado')";
+                $query = "INSERT INTO CANDIDATOS (NOM_CAN, APE_CAN, FECHA_NAC_CAN, CARGO_CAN, EDUCACION_CAN, EXPERIENCIA_CAN, ID_PAR_CAN, IMG_CAN, ESTADO_CAN)
+                          VALUES ('$name', '$surname', '$birth_date', '$position', '$education', '$experience', '1', '$image_url', '$estado')";
 
                 if (!mysqli_query($connection, $query)) {
                     echo json_encode(["error" => "Error al insertar el candidato: " . mysqli_error($connection)]);
@@ -80,26 +82,9 @@ try {
             break;
 
         case 'GET': // Obtener datos
-            if (isset($_GET['fetch']) && $_GET['fetch'] === 'parties') {
-                $query = "SELECT ID_PAR, NOM_PAR FROM partidos_politicos";
-                $result = mysqli_query($connection, $query);
-
-                if ($result) {
-                    $parties = [];
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        $parties[] = $row;
-                    }
-                    echo json_encode($parties);
-                } else {
-                    http_response_code(500);
-                    echo json_encode(["error" => "Error al obtener los partidos: " . mysqli_error($connection)]);
-                }
-                break;
-            }
-
             if (isset($_GET['id'])) {
                 $id = intval($_GET['id']);
-                $query = "SELECT ID_CAN, NOM_CAN, BIOGRAFIA_CAN, EXPERIENCIA_CAN, VISION_CAN, LOGROS_CAN, ID_PAR_CAN, IMG_CAN, ESTADO_CAN 
+                $query = "SELECT ID_CAN, NOM_CAN, APE_CAN, FECHA_NAC_CAN, CARGO_CAN, EDUCACION_CAN, EXPERIENCIA_CAN, ID_PAR_CAN, IMG_CAN, ESTADO_CAN 
                           FROM CANDIDATOS WHERE ID_CAN = $id";
                 $result = mysqli_query($connection, $query);
 
@@ -118,10 +103,8 @@ try {
                 break;
             }
 
-            $query = "SELECT c.ID_CAN, c.NOM_CAN, c.BIOGRAFIA_CAN, c.EXPERIENCIA_CAN, c.VISION_CAN, c.LOGROS_CAN, 
-                 c.IMG_CAN, c.ESTADO_CAN, c.ID_PAR_CAN, p.NOM_PAR 
-          FROM CANDIDATOS c
-          LEFT JOIN partidos_politicos p ON c.ID_PAR_CAN = p.ID_PAR";
+            $query = "SELECT ID_CAN, NOM_CAN, APE_CAN, FECHA_NAC_CAN, CARGO_CAN, EDUCACION_CAN, EXPERIENCIA_CAN, ID_PAR_CAN, IMG_CAN, ESTADO_CAN 
+                      FROM CANDIDATOS";
 
             $result = mysqli_query($connection, $query);
 
