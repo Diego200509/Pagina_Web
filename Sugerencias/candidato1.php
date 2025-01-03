@@ -240,13 +240,13 @@ textarea {
 footer {
     text-align: center;
     padding: 20px;
-    background-color: #b22222;
+    background-color: #00bfff;
     color: white;
     margin-top: 50px;
 }
 
 .footer-rights {
-    background-color: #b22222;
+    background-color: #00bfff;
     color: white;
     text-align: center;
     padding: 10px;
