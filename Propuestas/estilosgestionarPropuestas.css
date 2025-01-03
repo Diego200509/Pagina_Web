@@ -34,6 +34,15 @@ body {
     border-bottom: 2px solid white;
 }
 
+/* Para la descripción larga, ajustamos el texto */
+.table td {
+    max-width: 200px; /* Ajusta el ancho máximo de la columna de la descripción */
+    overflow: hidden; /* Oculta cualquier contenido que se desborde */
+    text-overflow: ellipsis; /* Muestra puntos suspensivos si el contenido es demasiado largo */
+    word-wrap: break-word; /* Permite que el texto largo se divida y se ajuste dentro de la celda */
+}
+
+
 /* Estilo para celdas */
 .table th,
 .table td {

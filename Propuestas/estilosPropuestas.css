@@ -14,11 +14,11 @@ body {
 
 /* Navbar */
 .navbar {
-    background-color: #00bfff; /* Celeste */
+    background-color: #00bfff;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
+    padding: 15px 20px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
@@ -77,6 +77,14 @@ h2 {
     background-color: #fff;
 }
 
+/* Contenedor para las tarjetas */
+.proposals-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
 /* Estilos de la grid de propuestas */
 .proposals-grid {
     display: grid;
@@ -89,39 +97,44 @@ h2 {
 .proposal-card {
     background: linear-gradient(145deg, #ffffff, #f7f7f7);
     border-radius: 12px;
-    padding: 25px;
+    padding: 20px;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 350px;
+    max-width: 330px;
     transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.2s ease;
-    min-height: 350px;
-    border-left: 8px solid #ff1493; /* Rosa brillante */
-}
-
-.proposal-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-    background-color: #f2f2f2;
+    min-height: 280px; /* Ajustado para mejor proporción */
+    border-left: 8px solid #ff1493;
+    margin-bottom: 20px;
+    word-wrap: break-word; /* Asegura que el texto largo se ajuste */
+    overflow-wrap: break-word; /* Evita desbordes por palabras largas */
+    display: flex;
+    flex-direction: column;
 }
 
 /* Título de la propuesta */
 .proposal-card h3 {
-    font-size: 2em;
+    font-size: 1.5em;
     margin-bottom: 15px;
     color: #ff1493;
     font-weight: bold;
     text-align: center;
     border-bottom: 2px solid #ff1493;
     padding-bottom: 10px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 /* Descripción de la propuesta */
 .proposal-description {
-    font-size: 1.1em;
+    font-size: 1em;
     color: #444;
     text-align: justify;
-    line-height: 1.6;
+    line-height: 1.5;
     margin-top: 10px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal; /* Permite que el texto se ajuste */
 }
 
 /* Estilo de los botones de la categoría */
