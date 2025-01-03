@@ -1,9 +1,15 @@
 <?php
 session_start();
-if (!isset($_SESSION['user_role']) || !in_array($_SESSION['user_role'], ['SUPERADMIN', 'ADMIN'])) {
+if (!isset($_SESSION['user_role'])) {
     header("Location: ../Login/Login.php");
     exit;
 }
+
+// Obtener el rol del usuario
+$user_role = $_SESSION['user_role'];
+
+// Determinar la URL del dashboard según el rol del usuario
+$dashboard_url = $user_role === 'SUPERADMIN' ? '../Login/superadmin_dasboard.php' : '../Login/admin_dashboard.php';
 include('../src/sugerencias_queries.php');
 
 include('../config/config.php');
@@ -83,7 +89,19 @@ $sugerencias = obtenerTodasSugerencias();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <style>
+        .fa-user-shield {
+    font-size: 17px; /* Ajusta según tus necesidades */
+}
+        .navbar .fa-user-shield {
+    font-size: 1.9rem; /* Ajusta según lo necesario */
+}
+
 /* General */
 body {
     font-family: 'Arial', sans-serif;
@@ -432,7 +450,15 @@ th[data-sort="desc"] .sort-icon {
 }
 
 .navbar-logo i {
-    font-size: 2px;
+    font-size: 20px; /* Ajusta según la necesidad */
+    margin-right: 10px; /* Espaciado con el texto */
+    color: white;
+
+}
+.navbar-logo img {
+    width: 170px; /* Reduce el ancho de la imagen */
+    height: auto; /* Mantén la proporción de aspecto */
+    margin-right: 10px; /* Ajusta el espacio entre el logo y el texto si es necesario */
 }
 
 .navbar-menu {
@@ -908,7 +934,11 @@ th[data-sort="desc"] .sort-icon {
         transform: translateY(0);
     }
 }
-
+.navbar-role {
+    margin-bottom: 9px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
 
     </style>
 
@@ -968,25 +998,26 @@ const showModal = () => {
 </head>
 <body>
     <!-- Navbar -->
-<nav class="navbar">
-    <div class="navbar-logo">
-        <div class="text-center">
-            <!-- Logo existente -->
-            <img src="Img/logoMariCruz.png" width="200px" style="margin-right: 20px;">
+    <nav class="navbar">
+        <div class="navbar-logo">
+            <div class="text-center">
+                <i class="fa-solid fa-user-shield fa-2x"></i>
+                <h6 class="mt-2 navbar-role"><?php echo $user_role === 'SUPERADMIN' ? 'SuperAdmin' : 'Admin'; ?></h6>
+            </div>
+            <img src="../Login/Img/logoMariCruz.png" width="200px" margin-right="20px">
         </div>
-    </div>
-    <ul class="navbar-menu">
-        <li><a href="../Home/inicio.php"><i class="fa-solid fa-house"></i> <span>Inicio</span></a></li>
-        <li><a href="../Candidatos/candidatos.php"><i class="fa-solid fa-users"></i> <span>Candidatos</span></a></li>
-        <li><a href="../Eventos_Noticias/eventos_noticias.php"><i class="fa-solid fa-calendar-alt"></i> <span>Eventos y Noticias</span></a></li>
-        <li><a href="../Propuestas/Propuestas.php"><i class="fa-solid fa-lightbulb"></i> <span>Propuestas</span></a></li>
-        <li><a href="../Sugerencias/sugerencias_admin.php"><i class="fa-solid fa-comment-dots"></i> <span>Sugerencias</span></a></li>
-        <li><a href="../Sugerencias/resultados_admin.php"><i class="fas fa-vote-yea"></i> Votos</a></li>
-        <li><a href="../Login/Administracion.php"><i class="fa-solid fa-cogs"></i> <span>Administración</span></a></li>
+        <ul class="navbar-menu">
+            <li><a href="../Candidatos/candidatos_admin.php"><i class="fa-solid fa-users"></i> <span>Candidatos</span></a></li>
+            <li><a href="../Eventos_Noticias/eventos_noticias_admin.php"><i class="fa-solid fa-calendar-alt"></i> <span>Eventos y Noticias</span></a></li>
+            <li><a href="../Propuestas/gestionarPropuestas.php"><i class="fa-solid fa-lightbulb"></i> <span>Propuestas</span></a></li>
+            <li><a href="../Sugerencias/sugerencias_admin.php"><i class="fa-solid fa-comment-dots"></i> <span>Sugerencias</span></a></li>
+            <li><a href="../Sugerencias/resultados_admin.php"><i class="fas fa-vote-yea"></i> Votos</a></li>
+            <li><a href="../Login/Administracion.php"><i class="fa-solid fa-cogs"></i> <span>Administración</span></a></li>
+            <li><a href="../Login/Login.php" class="logout"><i class="fa-solid fa-sign-out-alt"></i> <span>Cerrar Sesión</span></a></li>
+            
+        </ul>
+    </nav>
 
-            <li><a href="../Login/Login.php" class="logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
-    </ul>
-</nav>
 
 
  
