@@ -258,6 +258,7 @@ function mostrarDescripcionConFormato($descripcion)
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="estilosGestionarPropuestas.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 
@@ -622,13 +623,71 @@ function mostrarDescripcionConFormato($descripcion)
         }
 
 
+        function mostrarMensajeActualizado() {
+            Swal.fire({
+                title: '¡Actualizado!',
+                text: 'El evento/noticia se actualizó correctamente.',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                window.location.reload(); // Recarga la página después de cerrar el mensaje
+            });
+        }
 
+        function mostrarMensajeEliminado() {
+            Swal.fire({
+                title: '¡Eliminado!',
+                text: 'La propuesta se eliminó correctamente.',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                window.location.reload(); // Recarga la página después de cerrar el mensaje
+            });
+        }
 
+        function mostrarMensajeOcultar() {
+            Swal.fire({
+                title: '¡Ocultado!',
+                text: 'La propuesta ahora está oculta.',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                window.location.reload(); // Recarga la página después de cerrar el mensaje
+            });
+        }
 
+        function mostrarMensajeVisible() {
+            Swal.fire({
+                title: '¡Visible!',
+                text: 'La propuesta ahora es visible.',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                window.location.reload(); // Recarga la página después de cerrar el mensaje
+            });
+        }
 
+        function mostrarMensajeFavorito() {
+            Swal.fire({
+                title: '¡Favorito!',
+                text: 'La propuesta se marcó como favorita.',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                window.location.reload(); // Recarga la página después de cerrar el mensaje
+            });
+        }
 
-
-
+        function mostrarMensajeNoFavorito() {
+            Swal.fire({
+                title: '¡No favorito!',
+                text: 'La propuesta se desmarcó como favorita.',
+                icon: 'info',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                window.location.reload(); // Recarga la página después de cerrar el mensaje
+            });
+        }
 
 
         // Función para cerrar el modal de edición
@@ -640,6 +699,86 @@ function mostrarDescripcionConFormato($descripcion)
                 console.error("No se encontró el modal con ID 'modalEditarPropuesta'.");
             }
         }
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const status = urlParams.get('status');
+
+            if (status === 'added') {
+                Swal.fire({
+                    title: '¡Agregado!',
+                    text: 'La propuesta se agregó correctamente.',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    // Redirigir a la misma página pero sin el parámetro 'status'
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                    window.location.reload(); // Recarga la página después de redirigir sin el parámetro
+                });
+            } else if (status === 'edited') {
+                Swal.fire({
+                    title: '¡Actualizado!',
+                    text: 'La propuesta se actualizó correctamente.',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                    window.location.reload(); // Recarga la página después de redirigir sin el parámetro
+                });
+            } else if (status === 'deleted') {
+                Swal.fire({
+                    title: '¡Eliminado!',
+                    text: 'La propuesta se eliminó correctamente.',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                    window.location.reload(); // Recarga la página después de redirigir sin el parámetro
+                });
+            } else if (status === 'hidden') {
+                Swal.fire({
+                    title: '¡Ocultado!',
+                    text: 'La propuesta ahora está oculta.',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                    window.location.reload(); // Recarga la página después de redirigir sin el parámetro
+                });
+            } else if (status === 'visible') {
+                Swal.fire({
+                    title: '¡Visible!',
+                    text: 'La propuesta ahora es visible.',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                    window.location.reload(); // Recarga la página después de redirigir sin el parámetro
+                });
+            } else if (status === 'favorited') {
+                Swal.fire({
+                    title: '¡Favorito!',
+                    text: 'La propuesta se marcó como favorita.',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                    window.location.reload(); // Recarga la página después de redirigir sin el parámetro
+                });
+            } else if (status === 'unfavorited') {
+                Swal.fire({
+                    title: '¡No favorito!',
+                    text: 'La propuesta se desmarcó como favorita.',
+                    icon: 'info',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                    window.location.reload(); // Recarga la página después de redirigir sin el parámetro
+                });
+            }
+        });
+
 
         // Esta parte garantiza que el código se ejecute cuando el DOM esté completamente cargado
         document.addEventListener("DOMContentLoaded", () => {
@@ -723,31 +862,55 @@ function mostrarDescripcionConFormato($descripcion)
         }
 
         function toggleFavorito(id, nuevoEstado) {
-            const formData = new FormData();
-            formData.append('accion', 'cambiarFavorito');
-            formData.append('id', id);
-            formData.append('esFavorita', nuevoEstado);
+    const formData = new FormData();
+    formData.append('accion', 'cambiarFavorito');
+    formData.append('id', id);
+    formData.append('esFavorita', nuevoEstado);
 
-            fetch('gestionarPropuestas.php', {
-                    method: 'POST',
-                    body: formData,
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Cambia el icono de la estrella en la tabla
-                        const star = document.querySelector(`i[onclick="toggleFavorito(${id}, '${nuevoEstado}')"]`);
-                        if (star) {
-                            star.classList.toggle('fas');
-                            star.classList.toggle('far');
-                            star.setAttribute('onclick', `toggleFavorito(${id}, '${nuevoEstado === 'Sí' ? 'No' : 'Sí'}')`);
-                        }
-                    } else {
-                        alert('Error al cambiar el favorito: ' + data.message);
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-        }
+    fetch('gestionarPropuestas.php', {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Cambia el icono de la estrella en la tabla
+                const star = document.querySelector(`i[onclick="toggleFavorito(${id}, '${nuevoEstado}')"]`);
+                if (star) {
+                    star.classList.toggle('fas');
+                    star.classList.toggle('far');
+                    star.setAttribute('onclick', `toggleFavorito(${id}, '${nuevoEstado === 'Sí' ? 'No' : 'Sí'}')`);
+                }
+
+                // Mostrar el mensaje de éxito
+                Swal.fire({
+                    title: nuevoEstado === 'Sí' ? '¡Favorito!' : '¡No favorito!',
+                    text: nuevoEstado === 'Sí' ? 'La propuesta se marcó como favorita.' : 'La propuesta se desmarcó como favorita.',
+                    icon: nuevoEstado === 'Sí' ? 'success' : 'info',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    window.location.reload(); // Recarga la página después de cerrar el mensaje
+                });
+            } else {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Ocurrió un error al cambiar el favorito.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            Swal.fire({
+                title: 'Error',
+                text: 'Ocurrió un error al cambiar el favorito.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        });
+}
+
 
         function eliminarPropuesta(id) {
             if (confirm('¿Estás seguro de que deseas eliminar esta propuesta?')) {
@@ -766,12 +929,25 @@ function mostrarDescripcionConFormato($descripcion)
                         return response.text();
                     })
                     .then(data => {
-                        alert('Propuesta eliminada con éxito.');
-                        location.reload(); // Recarga la página para reflejar los cambios
+                        Swal.fire({
+                            title: '¡Eliminado!',
+                            text: 'La propuesta se eliminó correctamente.',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            // Redirige a la misma página pero sin el parámetro 'status' en la URL
+                            window.history.replaceState({}, document.title, window.location.pathname);
+                            window.location.reload(); // Recarga la página después de cerrar el mensaje
+                        });
                     })
                     .catch(error => {
                         console.error('Error:', error);
-                        alert('Ocurrió un error al eliminar la propuesta.');
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Ocurrió un error al eliminar la propuesta.',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
                     });
             }
         }
