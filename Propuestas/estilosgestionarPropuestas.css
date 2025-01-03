@@ -244,7 +244,29 @@ body {
 /* Colores específicos para las opciones */
 .custom-dropdown a:nth-child(1) { /* "Editar" */
     background-color: #00bfff; /* Azul brillante */
+    color: #fff; /* Texto blanco */
+    font-size: 16px; /* Tamaño del texto */
+    font-weight: bold; /* Texto en negrita */
+    padding: 10px 20px 10px 50px; /* Espaciado general ajustado */
+    text-align: left; /* Alineación a la izquierda */
+    width: 100%; /* Asegura que ocupe todo el ancho */
+    display: block; /* Para que ocupe toda la línea */
+    border: none; /* Quita cualquier borde */
+    border-radius: 5px; /* Bordes redondeados */
+    transition: background-color 0.3s ease; /* Animación suave */
+    box-sizing: border-box; /* Incluye padding y border en el ancho */
 }
+
+
+
+
+
+
+
+
+
+
+
 
 .custom-dropdown a:nth-child(1):hover {
     background-color: #0099cc; /* Azul más oscuro */
@@ -271,6 +293,7 @@ body {
     display: block;
     text-align: center;
 }
+
 
 
 
