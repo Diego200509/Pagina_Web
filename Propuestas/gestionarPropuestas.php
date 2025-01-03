@@ -15,7 +15,7 @@ if (!isset($_SESSION['user_role']) || !in_array($_SESSION['user_role'], ['ADMIN'
 }
 
 // Configuración de paginación
-$propuestasPorPagina = 10; // Número de propuestas por página
+$propuestasPorPagina = 6; // Número de propuestas por página
 $paginaActual = isset($_GET['pagina']) ? (int) $_GET['pagina'] : 1;
 $offset = ($paginaActual - 1) * $propuestasPorPagina;
 
@@ -209,7 +209,7 @@ $query = "
         PROPUESTAS.DESC_PRO, 
         PROPUESTAS.CAT_PRO, 
         PROPUESTAS.ESTADO, 
-        PROPUESTAS.ES_FAVORITA, -- Incluye el campo favorito
+        PROPUESTAS.ES_FAVORITA, 
         GROUP_CONCAT(PARTIDOS_POLITICOS.NOM_PAR SEPARATOR ', ') AS PARTIDOS,
         PARTIDOS_POLITICOS.ID_PAR AS ID_PAR
     FROM PROPUESTAS
@@ -219,19 +219,22 @@ $query = "
     ORDER BY PROPUESTAS.ID_PRO ASC
     LIMIT ? OFFSET ?";
 
-
+// Prepara la consulta
 $stmt = $connection->prepare($query);
 
 if (!$stmt) {
     die("Error al preparar la consulta: " . $connection->error);
 }
 
+// Vínculo de los parámetros
 $stmt->bind_param("ii", $propuestasPorPagina, $offset);
 
+// Ejecutar la consulta
 if (!$stmt->execute()) {
     die("Error al ejecutar la consulta: " . $stmt->error);
 }
 
+// Obtener los resultados
 $result = $stmt->get_result();
 
 
@@ -365,21 +368,15 @@ function mostrarDescripcionConFormato($descripcion)
                                     <div class="custom-dropdown">
                                         <a role="button" class="btn btn-primary"
                                             onclick="abrirModalEditar(
-        '<?= htmlspecialchars($row['ID_PRO'], ENT_QUOTES, 'UTF-8') ?>',
-        '<?= htmlspecialchars($row['TIT_PRO'], ENT_QUOTES, 'UTF-8') ?>',
-        '<?= htmlspecialchars($row['DESC_PRO'], ENT_QUOTES, 'UTF-8') ?>',
-        '<?= htmlspecialchars($row['CAT_PRO'], ENT_QUOTES, 'UTF-8') ?>',
-        '<?= htmlspecialchars($row['ID_PAR'], ENT_QUOTES, 'UTF-8') ?>',
-        '<?= htmlspecialchars($row['ESTADO'], ENT_QUOTES, 'UTF-8') ?>'
-    ); event.preventDefault();">
+                                    '<?= htmlspecialchars($row['ID_PRO'], ENT_QUOTES, 'UTF-8') ?>',
+                                    '<?= htmlspecialchars($row['TIT_PRO'], ENT_QUOTES, 'UTF-8') ?>',
+                                    '<?= htmlspecialchars($row['DESC_PRO'], ENT_QUOTES, 'UTF-8') ?>',
+                                    '<?= htmlspecialchars($row['CAT_PRO'], ENT_QUOTES, 'UTF-8') ?>',
+                                    '<?= htmlspecialchars($row['ID_PAR'], ENT_QUOTES, 'UTF-8') ?>',
+                                    '<?= htmlspecialchars($row['ESTADO'], ENT_QUOTES, 'UTF-8') ?>'
+                                ); event.preventDefault();">
                                             Editar
                                         </a>
-
-
-
-
-
-
                                         <a role="button" class="text-danger" onclick="eliminarPropuesta(<?= $row['ID_PRO'] ?>); event.preventDefault();">
                                             Eliminar
                                         </a>
@@ -398,9 +395,31 @@ function mostrarDescripcionConFormato($descripcion)
                     </tr>
                 <?php endif; ?>
             </tbody>
-
-
         </table>
+
+        <div class="pagination-container text-center">
+            <nav>
+                <ul class="pagination justify-content-center">
+                    <?php if ($paginaActual > 1): ?>
+                        <li class="page-item">
+                            <a class="page-link" href="?pagina=<?php echo $paginaActual - 1; ?>">Anterior</a>
+                        </li>
+                    <?php endif; ?>
+
+                    <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
+                        <li class="page-item <?php echo $i === $paginaActual ? 'active' : ''; ?>">
+                            <a class="page-link" href="?pagina=<?php echo $i; ?>"><?php echo $i; ?></a>
+                        </li>
+                    <?php endfor; ?>
+
+                    <?php if ($paginaActual < $totalPaginas): ?>
+                        <li class="page-item">
+                            <a class="page-link" href="?pagina=<?php echo $paginaActual + 1; ?>">Siguiente</a>
+                        </li>
+                    <?php endif; ?>
+                </ul>
+            </nav>
+        </div>
 
         <script>
             // Ocultar los mensajes de estado después de 5 segundos
@@ -411,25 +430,6 @@ function mostrarDescripcionConFormato($descripcion)
                 });
             }, 5000); // 5000 ms = 5 segundos
         </script>
-
-
-        <!-- Barra de navegación para la paginación -->
-        <div class="pagination">
-            <?php if ($paginaActual > 1): ?>
-                <a href="?pagina=1">Primera</a>
-                <a href="?pagina=<?= $paginaActual - 1 ?>">Anterior</a>
-            <?php endif; ?>
-
-            <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
-                <a href="?pagina=<?= $i ?>" <?= $i === $paginaActual ? 'class="active"' : '' ?>><?= $i ?></a>
-            <?php endfor; ?>
-
-            <?php if ($paginaActual < $totalPaginas): ?>
-                <a href="?pagina=<?= $paginaActual + 1 ?>">Siguiente</a>
-                <a href="?pagina=<?= $totalPaginas ?>">Última</a>
-            <?php endif; ?>
-        </div>
-
 
     </div>
     </div>
