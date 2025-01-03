@@ -56,7 +56,7 @@ try {
                 $query = "UPDATE CANDIDATOS 
                           SET NOM_CAN = '$name', APE_CAN = '$surname', FECHA_NAC_CAN = '$birth_date', 
                               CARGO_CAN = '$position', EDUCACION_CAN = '$education', EXPERIENCIA_CAN = '$experience', 
-                              PARTIDO_CAN = 'Sueña, Crea, Innova', ESTADO_CAN = '$estado'" . 
+                              ID_PAR_CAN = '1', ESTADO_CAN = '$estado'" . 
                               ($image_url ? ", IMG_CAN = '$image_url'" : "") . 
                           " WHERE ID_CAN = $candidateId";
 
@@ -68,8 +68,8 @@ try {
                 echo json_encode(["message" => "Candidato actualizado exitosamente."]);
             } else {
                 // Crear nuevo candidato
-                $query = "INSERT INTO CANDIDATOS (NOM_CAN, APE_CAN, FECHA_NAC_CAN, CARGO_CAN, EDUCACION_CAN, EXPERIENCIA_CAN, PARTIDO_CAN, IMG_CAN, ESTADO_CAN)
-                          VALUES ('$name', '$surname', '$birth_date', '$position', '$education', '$experience', 'Sueña, Crea, Innova', '$image_url', '$estado')";
+                $query = "INSERT INTO CANDIDATOS (NOM_CAN, APE_CAN, FECHA_NAC_CAN, CARGO_CAN, EDUCACION_CAN, EXPERIENCIA_CAN, ID_PAR_CAN, IMG_CAN, ESTADO_CAN)
+                          VALUES ('$name', '$surname', '$birth_date', '$position', '$education', '$experience', '1', '$image_url', '$estado')";
 
                 if (!mysqli_query($connection, $query)) {
                     echo json_encode(["error" => "Error al insertar el candidato: " . mysqli_error($connection)]);
@@ -102,7 +102,7 @@ try {
                 break;
             }
 
-            $query = "SELECT ID_CAN, NOM_CAN, APE_CAN, FECHA_NAC_CAN, CARGO_CAN, EDUCACION_CAN, EXPERIENCIA_CAN, PARTIDO_CAN, IMG_CAN, ESTADO_CAN 
+            $query = "SELECT ID_CAN, NOM_CAN, APE_CAN, FECHA_NAC_CAN, CARGO_CAN, EDUCACION_CAN, EXPERIENCIA_CAN, ID_PAR_CAN, IMG_CAN, ESTADO_CAN 
                       FROM CANDIDATOS";
 
             $result = mysqli_query($connection, $query);

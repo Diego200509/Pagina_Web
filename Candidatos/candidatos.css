@@ -63,7 +63,7 @@ header {
     color: #ff0050; /* Rosa brillante */
 }
 #addCandidateBtn {
-    background:  #ff1493; /* Degradado rosa a azul */
+    background: #ff1493; /* Degradado rosa a azul */
     color: white;
     border: none;
     padding: 12px 20px;
@@ -76,8 +76,10 @@ header {
     gap: 8px; /* Espacio entre ícono y texto */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra */
     transition: all 0.3s ease;
-    
+    position: relative; /* O posición absoluta si es necesario */
+    right: -35px; /* Ajusta según el espacio deseado */
 }
+
 
 #addCandidateBtn:hover {
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3); /* Sombra más intensa */
@@ -117,41 +119,47 @@ header {
 
 /* Tabla */
 .styled-table {
-    width: 100%;
+    width: 95%; /* Reduce el ancho al 95% para dar más espacio */
     border-collapse: collapse;
-    margin-top: 20px;
+    margin: 20px auto; /* Centra la tabla horizontalmente y añade espacio arriba/abajo */
     font-size: 16px;
     background-color: white;
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+    overflow: hidden; /* Asegura que los bordes redondeados funcionen correctamente */
 }
 
+/* Encabezado de la tabla */
 .styled-table thead {
-    background:  #00bfff;
+    background: #00bfff;
     color: white;
     font-weight: bold;
     text-align: left;
 }
 
+/* Celdas de la tabla */
 .styled-table th, .styled-table td {
-    padding: 15px;
+    padding: 20px 25px; /* Más espacio interno para las celdas */
     text-align: left;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    word-wrap: break-word; /* Permite dividir texto largo */
 }
 
+/* Filas alternas */
 .styled-table tbody tr:nth-child(odd) {
-    background: linear-gradient(135deg, rgba(255,20,147,0.1), white);
+    background: linear-gradient(135deg, rgba(255, 20, 147, 0.1), white);
 }
 
 .styled-table tbody tr:nth-child(even) {
-    background: linear-gradient(135deg, rgba(0,191,255,0.1), white);
+    background: linear-gradient(135deg, rgba(0, 191, 255, 0.1), white);
 }
 
+/* Efecto hover */
 .styled-table tbody tr:hover {
     background-color: rgba(0, 0, 0, 0.05);
 }
 
+/* Ajustes para imágenes dentro de celdas */
 .styled-table tbody tr td img {
     display: block;
     margin: 0 auto;
@@ -161,10 +169,21 @@ header {
     object-fit: cover;
 }
 
+/* Última celda alineada al centro */
 .styled-table tbody tr td:last-child {
     text-align: center;
 }
 
+/* Contenedor para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .styled-table {
+        width: 100%; /* En pantallas pequeñas, usa el ancho completo */
+    }
+
+    .styled-table th, .styled-table td {
+        padding: 15px; /* Reduce el relleno en pantallas pequeñas */
+    }
+}
 
 @media (max-width: 768px) {
     .title {
@@ -334,6 +353,8 @@ textarea {
     background-color: #e01183; /* Fondo más oscuro al pasar el mouse */
     transform: translateY(-2px); /* Efecto de elevación */
 }
- .h2 {
+.h2 {
     margin-bottom: 120px; /* Más espacio debajo del encabezado */
+    position: relative; /* Establece la posición relativa al contenedor */
+    right: -100px; /* Ajusta el valor negativo para moverlo más hacia la derecha */
 }
