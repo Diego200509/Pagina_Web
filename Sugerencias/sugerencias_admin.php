@@ -92,24 +92,62 @@ body {
     background: linear-gradient(to bottom, #ffffff, #f0f0f0);
 }
 
+/* Header */
 header {
-    background-color: #ff1493;
+    background: linear-gradient(90deg, #ff1493, #ff69b4); /* Tono rosa intenso con gradiente suave */
     color: white;
-    padding: 20px;
     text-align: center;
+    padding: 20px 15px;
+    font-size: 1.8em;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    margin: 20px auto;
+    max-width: 95%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Efectos hover */
+header:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Iconos dentro del header */
+header i {
     font-size: 1.5em;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+/* Responsividad para dispositivos más pequeños */
+@media (max-width: 768px) {
+    header {
+        font-size: 1.5em;
+        padding: 15px 10px;
+    }
+
+    header i {
+        font-size: 1.2em;
+        margin-right: 8px;
+    }
 }
 /* Contenedor de la Tabla */
 .table-container {
-    width: 100%;
+    width: 95%;
+    max-width: 100%; /* Ajusta el ancho máximo según tus necesidades */
+    margin: 20px auto; /* Centra la tabla horizontalmente con un margen */
     border-collapse: collapse;
     margin-top: 20px;
+    overflow: hidden; /* Asegura que el contenido respete los bordes redondeados */
     font-size: 16px;
     background-color: white;
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+    overflow-x: auto; /* Permite el scroll si el contenido es demasiado ancho */
+    padding: 20px; /* Opcional: Añade un espacio interior si lo deseas */
+
 }
 
 .sort-icon {
@@ -150,6 +188,13 @@ th[data-sort="desc"] .sort-icon {
     font-weight: bold;
     text-align: left;
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1); /* Sombra destacada en encabezado */
+    border-top-left-radius: 12px; /* Bordes superiores redondeados */
+    border-top-right-radius: 12px;
+}
+@media (max-width: 768px) {
+    .table-container {
+        overflow-x: scroll;
+    }
 }
 
 
@@ -165,13 +210,22 @@ th[data-sort="desc"] .sort-icon {
 .table th:hover {
     background-color: #008ccd;
 }
-
+.table td.acciones {
+    text-align: center;
+    width: 180px; /* Asegúrate de que los botones tengan espacio suficiente */
+    text-align: center; /* Centra el contenido en la celda */
+    white-space: nowrap; /* Evita que el texto en los botones haga un salto de línea */
+    width: auto; /* Permite que se ajuste automáticamente */
+}
 
 .table th, 
 .table td {
     padding: 15px;
     text-align: left;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    min-width: 8px; /* Ajusta según las necesidades */
+    word-wrap: break-word;
+
 }
 
 .table tbody tr {
@@ -228,6 +282,10 @@ th[data-sort="desc"] .sort-icon {
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
+    min-width: 50px; /* Asegura que los botones tengan un ancho mínimo */
+    white-space: nowrap; /* Evita que el texto dentro del botón se divida */
+    text-overflow: ellipsis; /* Añade "..." si el texto es demasiado largo */
+
 }
 .image-modal {
     display: none; /* Oculto inicialmente */
@@ -417,6 +475,9 @@ th[data-sort="desc"] .sort-icon {
   border: 1px solid #cc0000;
   background-color: #e50000;
   overflow: hidden;
+  min-width: 20px; /* Asegura que los botones tengan un ancho mínimo */
+  white-space: nowrap; /* Evita que el texto dentro del botón se divida */
+
 }
 
 .delete-btn,
@@ -921,9 +982,8 @@ const showModal = () => {
         <li><a href="../Propuestas/Propuestas.php"><i class="fa-solid fa-lightbulb"></i> <span>Propuestas</span></a></li>
         <li><a href="../Sugerencias/sugerencias_admin.php"><i class="fa-solid fa-comment-dots"></i> <span>Sugerencias</span></a></li>
         <li><a href="../Sugerencias/resultados_admin.php"><i class="fas fa-vote-yea"></i> Votos</a></li>
-        <?php if ($_SESSION['user_role'] === 'SUPERADMIN'): ?>
-                <li><a href="#" onclick="showModal()"><i class="fas fa-user-plus"></i> Crear Admin</a></li>
-            <?php endif; ?>
+        <li><a href="../Login/Administracion.php"><i class="fa-solid fa-cogs"></i> <span>Administración</span></a></li>
+
             <li><a href="../Login/Login.php" class="logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
     </ul>
 </nav>
