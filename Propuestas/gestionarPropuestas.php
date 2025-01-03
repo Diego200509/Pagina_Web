@@ -67,16 +67,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($accion === 'editar') {
-        $id = $_POST['id'];
-        $titulo = $_POST['titulo'];
-        $descripcion = $_POST['descripcion'];
-        $categoria = $_POST['categoria'];
-        $partido = $_POST['partido'];
-
+        $id = $_POST['id'] ?? '';
+        $titulo = $_POST['titulo'] ?? '';
+        $descripcion = $_POST['descripcion'] ?? '';
+        $categoria = $_POST['categoria'] ?? '';
+        $partido = $_POST['partido'] ?? '';
+        $estado = $_POST['estado'] ?? ''; // Corregido
+    
         if (empty($titulo) || empty($descripcion) || empty($categoria) || empty($partido)) {
             die("Error: Faltan datos en el formulario. Verifique los campos.");
         }
-
+    
         try {
             actualizarPropuesta($connection, $id, $titulo, $descripcion, $categoria, $partido, $estado);
             header('Location: gestionarPropuestas.php?status=edited');
@@ -85,6 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             die("Error al editar propuesta: " . $e->getMessage());
         }
     }
+    
 
 
 
@@ -104,23 +106,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             die("Error al ocultar propuesta: " . $e->getMessage());
         }
     }
-
-    if ($accion === 'mostrar') {
-        $id = $_POST['id'];
-
-        if (empty($id)) {
-            die("Error: No se recibió el ID de la propuesta para mostrar.");
-        }
-
-        try {
-            mostrarPropuesta($connection, $id);
-            header('Location: gestionarPropuestas.php?status=visible');
-            exit();
-        } catch (Exception $e) {
-            die("Error al mostrar propuesta: " . $e->getMessage());
-        }
-    }
-
 
     if ($accion === 'mostrar') {
         $id = $_POST['id'];
@@ -196,18 +181,35 @@ if (!$estadosResult) {
 // Consulta simplificada para ver si la paginación funciona sin GROUP_CONCAT
 $query = "
     SELECT 
-        PROPUESTAS.ID_PRO, PROPUESTAS.TIT_PRO, PROPUESTAS.DESC_PRO, PROPUESTAS.CAT_PRO, PROPUESTAS.ESTADO,
-        GROUP_CONCAT(PARTIDOS_POLITICOS.NOM_PAR SEPARATOR ', ') AS PARTIDOS
+        PROPUESTAS.ID_PRO, 
+        IFNULL(PROPUESTAS.TIT_PRO, 'Sin título') AS TIT_PRO, 
+        IFNULL(PROPUESTAS.DESC_PRO, 'Sin descripción') AS DESC_PRO, 
+        IFNULL(PROPUESTAS.CAT_PRO, 'Sin categoría') AS CAT_PRO, 
+        IFNULL(PROPUESTAS.ESTADO, 'Sin estado') AS ESTADO,
+        GROUP_CONCAT(IFNULL(PARTIDOS_POLITICOS.NOM_PAR, 'Sin partido') SEPARATOR ', ') AS PARTIDOS,
+        PARTIDOS_POLITICOS.ID_PAR AS ID_PAR
     FROM PROPUESTAS
     INNER JOIN COLABORACIONES ON PROPUESTAS.ID_PRO = COLABORACIONES.ID_PRO_COL
     INNER JOIN PARTIDOS_POLITICOS ON COLABORACIONES.ID_PAR_COL = PARTIDOS_POLITICOS.ID_PAR
     GROUP BY PROPUESTAS.ID_PRO
     ORDER BY PROPUESTAS.ID_PRO ASC
     LIMIT ? OFFSET ?";
+
 $stmt = $connection->prepare($query);
+
+if (!$stmt) {
+    die("Error al preparar la consulta: " . $connection->error);
+}
+
 $stmt->bind_param("ii", $propuestasPorPagina, $offset);
-$stmt->execute();
+
+if (!$stmt->execute()) {
+    die("Error al ejecutar la consulta: " . $stmt->error);
+}
+
 $result = $stmt->get_result();
+
+
 
 $partidos = obtenerPartidos($connection);
 
@@ -326,15 +328,16 @@ function mostrarDescripcionConFormato($descripcion)
                                     <div class="custom-dropdown">
                                         <a role="button" class="btn btn-primary"
                                             onclick="abrirModalEditar(
-       '<?= htmlspecialchars($row['ID_PRO'] ?? '', ENT_QUOTES, 'UTF-8') ?>',
-       '<?= htmlspecialchars($row['TIT_PRO'] ?? '', ENT_QUOTES, 'UTF-8') ?>',
-       '<?= htmlspecialchars($row['DESC_PRO'] ?? '', ENT_QUOTES, 'UTF-8') ?>',
-       '<?= htmlspecialchars($row['CAT_PRO'] ?? '', ENT_QUOTES, 'UTF-8') ?>',
-       '<?= htmlspecialchars($row['ID_PAR'] ?? '', ENT_QUOTES, 'UTF-8') ?>',
-       '<?= htmlspecialchars($row['ESTADO'] ?? '', ENT_QUOTES, 'UTF-8') ?>'
-   ); event.preventDefault();">
+        '<?= htmlspecialchars($row['ID_PRO'], ENT_QUOTES, 'UTF-8') ?>',
+        '<?= htmlspecialchars($row['TIT_PRO'], ENT_QUOTES, 'UTF-8') ?>',
+        '<?= htmlspecialchars($row['DESC_PRO'], ENT_QUOTES, 'UTF-8') ?>',
+        '<?= htmlspecialchars($row['CAT_PRO'], ENT_QUOTES, 'UTF-8') ?>',
+        '<?= htmlspecialchars($row['ID_PAR'], ENT_QUOTES, 'UTF-8') ?>',
+        '<?= htmlspecialchars($row['ESTADO'], ENT_QUOTES, 'UTF-8') ?>'
+    ); event.preventDefault();">
                                             Editar
                                         </a>
+
 
 
 
@@ -455,62 +458,79 @@ function mostrarDescripcionConFormato($descripcion)
     </div>
 
     <div id="modalEditarPropuesta" class="modal">
-        <div class="modal-content">
-            <span class="close-button" onclick="cerrarModalEditar()">&times;</span>
-            <h2>Editar Propuesta</h2>
-            <form id="formEditarPropuesta" method="POST" action="gestionarPropuestas.php">
-                <input type="hidden" name="accion" value="editar">
-                <input type="hidden" name="id" id="idEditarPropuesta">
+    <div class="modal-content">
+        <span class="close-button" onclick="cerrarModalEditar()">&times;</span>
+        <h2>Editar Propuesta</h2>
+        <form id="formEditarPropuesta" method="POST" action="gestionarPropuestas.php">
+            <input type="hidden" name="accion" value="editar">
+            <input type="hidden" name="id" id="idEditarPropuesta">
 
-                <label for="tituloEditar">Título:</label>
-                <input type="text" id="tituloEditar" name="titulo" class="form-control" required>
+            <!-- Título -->
+            <label for="tituloEditar">Título:</label>
+            <input type="text" id="tituloEditar" name="titulo" class="form-control" required>
 
-                <label for="descripcionEditar">Descripción:</label>
-                <textarea id="descripcionEditar" name="descripcion" class="form-control" required></textarea>
+            <!-- Descripción -->
+            <label for="descripcionEditar">Descripción:</label>
+            <textarea id="descripcionEditar" name="descripcion" class="form-control" required></textarea>
 
-                <label for="categoriaEditar">Categoría:</label>
-                <select id="categoriaEditar" name="categoria" class="form-select" required>
-                    <option value="Ciencias Administrativas">Ciencias Administrativas</option>
-                    <option value="Ciencia e Ingeniería en Alimentos">Ciencia e Ingeniería en Alimentos</option>
-                    <option value="Jurisprudencia y Ciencias Sociales">Jurisprudencia y Ciencias Sociales</option>
-                    <option value="Contabilidad y Auditoría">Contabilidad y Auditoría</option>
-                    <option value="Ciencias Humanas y de la Educación">Ciencias Humanas y de la Educación</option>
-                    <option value="Ciencias de la Salud">Ciencias de la Salud</option>
-                    <option value="Ingeniería Civil y Mecánica">Ingeniería Civil y Mecánica</option>
-                    <option value="Ingeniería en Sistemas, Electrónica e Industrial">Ingeniería en Sistemas, Electrónica e Industrial</option>
-                    <option value="Infraestructura">Infraestructura</option>
-                    <option value="Deportes">Deportes</option>
-                    <option value="Cultura">Cultura</option>
-                    <option value="Investigación">Investigación</option>
-                    <option value="Vinculación con la Sociedad">Vinculación con la Sociedad</option>
-                </select>
+            <!-- Categoría -->
+            <label for="categoriaEditar">Categoría:</label>
+            <select id="categoriaEditar" name="categoria" class="form-select" required>
+                <?php 
+                $categorias = [
+                    "Ciencias Administrativas",
+                    "Ciencia e Ingeniería en Alimentos",
+                    "Jurisprudencia y Ciencias Sociales",
+                    "Contabilidad y Auditoría",
+                    "Ciencias Humanas y de la Educación",
+                    "Ciencias de la Salud",
+                    "Ingeniería Civil y Mecánica",
+                    "Ingeniería en Sistemas, Electrónica e Industrial",
+                    "Infraestructura",
+                    "Deportes",
+                    "Cultura",
+                    "Investigación",
+                    "Vinculación con la Sociedad"
+                ];
+                $categoriaSeleccionada = isset($row['CAT_PRO']) && $row['CAT_PRO'] !== null ? $row['CAT_PRO'] : ''; 
+                foreach ($categorias as $categoria): ?>
+                    <option value="<?= htmlspecialchars($categoria, ENT_QUOTES, 'UTF-8') ?>" 
+                        <?= $categoria == $categoriaSeleccionada ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($categoria, ENT_QUOTES, 'UTF-8') ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
 
-                <label for="partidoEditar">Partido Político:</label>
-                <select id="partidoEditar" name="partido" class="form-select" required>
-    <?php mysqli_data_seek($partidos, 0); ?>
-    <?php while ($partido = $partidos->fetch_assoc()): ?>
-        <option value="<?= htmlspecialchars($partido['ID_PAR']) ?>">
-            <?= htmlspecialchars($partido['NOM_PAR']) ?>
-        </option>
-    <?php endwhile; ?>
-</select>
+            <!-- Partido Político -->
+            <label for="partidoEditar">Partido Político:</label>
+            <select id="partidoEditar" name="partido" class="form-select" required>
+                <?php mysqli_data_seek($partidos, 0); ?>
+                <?php while ($partido = $partidos->fetch_assoc()): ?>
+                    <?php 
+                    $idPar = isset($partido['ID_PAR']) ? $partido['ID_PAR'] : '';
+                    $nomPar = isset($partido['NOM_PAR']) ? $partido['NOM_PAR'] : '';
+                    ?>
+                    <option value="<?= htmlspecialchars($idPar, ENT_QUOTES, 'UTF-8') ?>"
+                        <?= isset($row['ID_PAR']) && $row['ID_PAR'] === $idPar ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($nomPar, ENT_QUOTES, 'UTF-8') ?>
+                    </option>
+                <?php endwhile; ?>
+            </select>
 
+            <!-- Estado -->
+            <label for="estadoEditar">Estado:</label>
+            <select id="estadoEditar" name="estado" class="form-select" required>
+                <option value="Visible" <?= isset($row['ESTADO']) && $row['ESTADO'] === 'Visible' ? 'selected' : '' ?>>Visible</option>
+                <option value="Oculta" <?= isset($row['ESTADO']) && $row['ESTADO'] === 'Oculta' ? 'selected' : '' ?>>Oculta</option>
+            </select>
 
-
-
-
-
-
-                <label for="estadoEditar">Estado:</label>
-                <select id="estadoEditar" name="estado" class="form-select" required>
-                    <option value="Visible">Visible</option>
-                    <option value="Oculta">Oculta</option>
-                </select>
-
-                <button type="submit" class="btn btn-danger">Actualizar Propuesta</button>
-            </form>
-        </div>
+            <!-- Botón para actualizar -->
+            <button type="submit" class="btn btn-danger">Actualizar Propuesta</button>
+        </form>
     </div>
+</div>
+
+
 
 
 
@@ -544,18 +564,25 @@ function mostrarDescripcionConFormato($descripcion)
             document.getElementById('descripcionEditar').value = descripcion;
             document.getElementById('categoriaEditar').value = categoria;
 
+            // Asignar el ID del partido político
             const partidoSelect = document.getElementById('partidoEditar');
             if (partidoSelect) {
-                partidoSelect.value = partido; // Asignar el ID del partido seleccionado
+                partidoSelect.value = partido;
+            } else {
+                console.error("No se encontró el select para partidos.");
             }
 
+            // Asignar el estado de la propuesta
             const estadoSelect = document.getElementById('estadoEditar');
             if (estadoSelect) {
                 estadoSelect.value = estado;
+            } else {
+                console.error("No se encontró el select para estado.");
             }
 
             document.getElementById("modalEditarPropuesta").style.display = 'flex';
         }
+
 
 
 
