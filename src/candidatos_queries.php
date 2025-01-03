@@ -103,9 +103,9 @@ try {
                 break;
             }
 
-            $query = "SELECT ID_CAN, NOM_CAN, APE_CAN, FECHA_NAC_CAN, CARGO_CAN, EDUCACION_CAN, EXPERIENCIA_CAN, IMG_CAN, ESTADO_CAN 
-            FROM CANDIDATOS";
-  
+            $query = "SELECT ID_CAN, NOM_CAN, APE_CAN, FECHA_NAC_CAN, CARGO_CAN, EDUCACION_CAN, EXPERIENCIA_CAN, ID_PAR_CAN, IMG_CAN, ESTADO_CAN 
+                      FROM CANDIDATOS";
+
             $result = mysqli_query($connection, $query);
 
             if ($result) {
