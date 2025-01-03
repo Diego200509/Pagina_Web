@@ -19,7 +19,14 @@ include '../src/eventos_noticias_admin_queries.php';
 $rutaBaseImagenes = "/Pagina_Web/Pagina_Web/Eventos_Noticias/img/";
 
 // Obtener todos los eventos y noticias
-$eventosNoticias = obtenerEventosNoticias();
+$totalRegistros = obtenerTotalEventosNoticias();
+$registrosPorPagina = 6;
+$totalPaginas = ceil($totalRegistros / $registrosPorPagina);
+$paginaActual = isset($_GET['page']) ? intval($_GET['page']) : 1;
+$offset = ($paginaActual - 1) * $registrosPorPagina;
+
+// Obtener los registros para la página actual
+$eventosNoticias = obtenerEventosNoticias($offset, $registrosPorPagina);
 
 // Manejar creación y edición
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -225,6 +232,30 @@ if (isset($_GET['delete'])) {
             </table>
         </div>
 
+        <div class="pagination-container text-center">
+            <nav>
+                <ul class="pagination justify-content-center">
+                    <?php if ($paginaActual > 1): ?>
+                        <li class="page-item">
+                            <a class="page-link" href="?page=<?php echo $paginaActual - 1; ?>">Anterior</a>
+                        </li>
+                    <?php endif; ?>
+
+                    <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
+                        <li class="page-item <?php echo $i === $paginaActual ? 'active' : ''; ?>">
+                            <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                        </li>
+                    <?php endfor; ?>
+
+                    <?php if ($paginaActual < $totalPaginas): ?>
+                        <li class="page-item">
+                            <a class="page-link" href="?page=<?php echo $paginaActual + 1; ?>">Siguiente</a>
+                        </li>
+                    <?php endif; ?>
+                </ul>
+            </nav>
+        </div>
+        
         <!-- Ventana emergente -->
         <div class="toast-container position-fixed bottom-0 end-0 p-3">
             <div id="toastNotificacion" class="toast align-items-center text-bg-success border-0" role="alert"
