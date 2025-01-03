@@ -452,166 +452,201 @@ function mostrarDescripcionConFormato($descripcion)
     </div>
 
     <div id="modalEditarPropuesta" class="modal">
-    <div class="modal-content">
-        <span class="close-button" onclick="cerrarModalEditar()">&times;</span>
-        <h2>Editar Propuesta</h2>
-        <form id="formEditarPropuesta" method="POST" action="gestionarPropuestas.php">
-            <input type="hidden" name="accion" value="editar">
-            <input type="hidden" name="id" id="idEditarPropuesta">
+        <div class="modal-content">
+            <span class="close-button" onclick="cerrarModalEditar()">&times;</span>
+            <h2>Editar Propuesta</h2>
+            <form id="formEditarPropuesta" method="POST" action="gestionarPropuestas.php">
+                <input type="hidden" name="accion" value="editar">
+                <input type="hidden" name="id" id="idEditarPropuesta">
 
-            <label for="tituloEditar">Título:</label>
-            <input type="text" id="tituloEditar" name="titulo" class="form-control" required>
+                <label for="tituloEditar">Título:</label>
+                <input type="text" id="tituloEditar" name="titulo" class="form-control" required>
 
-            <label for="descripcionEditar">Descripción:</label>
-            <textarea id="descripcionEditar" name="descripcion" class="form-control" required></textarea>
+                <label for="descripcionEditar">Descripción:</label>
+                <textarea id="descripcionEditar" name="descripcion" class="form-control" required></textarea>
 
-            <label for="categoriaEditar">Categoría:</label>
-            <select id="categoriaEditar" name="categoria" class="form-select" required>
-                <option value="Ciencias Administrativas">Ciencias Administrativas</option>
-                <option value="Ciencia e Ingeniería en Alimentos">Ciencia e Ingeniería en Alimentos</option>
-                <option value="Jurisprudencia y Ciencias Sociales">Jurisprudencia y Ciencias Sociales</option>
-                <option value="Contabilidad y Auditoría">Contabilidad y Auditoría</option>
-                <option value="Ciencias Humanas y de la Educación">Ciencias Humanas y de la Educación</option>
-                <option value="Ciencias de la Salud">Ciencias de la Salud</option>
-                <option value="Ingeniería Civil y Mecánica">Ingeniería Civil y Mecánica</option>
-                <option value="Ingeniería en Sistemas, Electrónica e Industrial">Ingeniería en Sistemas, Electrónica e Industrial</option>
-                <option value="Infraestructura">Infraestructura</option>
-                <option value="Deportes">Deportes</option>
-                <option value="Cultura">Cultura</option>
-                <option value="Investigación">Investigación</option>
-                <option value="Vinculación con la Sociedad">Vinculación con la Sociedad</option>
-            </select>
+                <label for="categoriaEditar">Categoría:</label>
+                <select id="categoriaEditar" name="categoria" class="form-select" required>
+                    <option value="Ciencias Administrativas">Ciencias Administrativas</option>
+                    <option value="Ciencia e Ingeniería en Alimentos">Ciencia e Ingeniería en Alimentos</option>
+                    <option value="Jurisprudencia y Ciencias Sociales">Jurisprudencia y Ciencias Sociales</option>
+                    <option value="Contabilidad y Auditoría">Contabilidad y Auditoría</option>
+                    <option value="Ciencias Humanas y de la Educación">Ciencias Humanas y de la Educación</option>
+                    <option value="Ciencias de la Salud">Ciencias de la Salud</option>
+                    <option value="Ingeniería Civil y Mecánica">Ingeniería Civil y Mecánica</option>
+                    <option value="Ingeniería en Sistemas, Electrónica e Industrial">Ingeniería en Sistemas, Electrónica e Industrial</option>
+                    <option value="Infraestructura">Infraestructura</option>
+                    <option value="Deportes">Deportes</option>
+                    <option value="Cultura">Cultura</option>
+                    <option value="Investigación">Investigación</option>
+                    <option value="Vinculación con la Sociedad">Vinculación con la Sociedad</option>
+                </select>
 
-            <label for="partidoEditar">Partido Político:</label>
-            <select id="partidoEditar" name="partido" class="form-select" required>
-                <?php while ($partido = $partidos->fetch_assoc()): ?>
-                    <option value="<?= $partido['ID_PAR'] ?>"><?= $partido['NOM_PAR'] ?></option>
-                <?php endwhile; ?>
-            </select>
+                <label for="partidoEditar">Partido Político:</label>
+                <select id="partidoEditar" name="partido" class="form-select" required>
+                    <?php while ($partido = $partidos->fetch_assoc()): ?>
+                        <option value="<?= $partido['ID_PAR'] ?>"><?= $partido['NOM_PAR'] ?></option>
+                    <?php endwhile; ?>
+                </select>
 
-            <label for="estadoEditar">Estado:</label>
-            <select id="estadoEditar" name="estado" class="form-select" required>
-                <option value="Visible">Visible</option>
-                <option value="Oculta">Oculta</option>
-            </select>
 
-            <button type="submit" class="btn btn-danger">Actualizar Propuesta</button>
-        </form>
+                <label for="estadoEditar">Estado:</label>
+                <select id="estadoEditar" name="estado" class="form-select" required>
+                    <option value="Visible">Visible</option>
+                    <option value="Oculta">Oculta</option>
+                </select>
+
+                <button type="submit" class="btn btn-danger">Actualizar Propuesta</button>
+            </form>
+        </div>
     </div>
-</div>
+
 
 
 
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const modal = document.getElementById("modalPropuesta");
+    // Función para abrir el modal de agregar propuesta
+    function abrirModal() {
+        const modal = document.getElementById("modalPropuesta");
+        if (modal) {
+            modal.style.display = "flex";
+        } else {
+            console.error("No se encontró el modal con ID 'modalPropuesta'.");
+        }
+    }
 
-            // Función para abrir el modal
-            function abrirModal() {
-                if (modal) {
-                    modal.style.display = "flex";
-                } else {
-                    console.error("No se encontró el modal con ID 'modalPropuesta'.");
-                }
-            }
+    // Función para cerrar el modal de agregar propuesta
+    function cerrarModal() {
+        const modal = document.getElementById("modalPropuesta");
+        if (modal) {
+            modal.style.display = "none";
+        } else {
+            console.error("No se encontró el modal con ID 'modalPropuesta'.");
+        }
+    }
 
-            // Función para cerrar el modal
-            function cerrarModal() {
-                if (modal) {
-                    modal.style.display = "none";
-                } else {
-                    console.error("No se encontró el modal con ID 'modalPropuesta'.");
-                }
-            }
+    // Función para abrir el modal de editar propuesta
+    function abrirModalEditar(id, titulo, descripcion, categoria, partido, estado) {
+        // Llenar los campos del modal con los datos de la propuesta
+        document.getElementById('idEditarPropuesta').value = id;
+        document.getElementById('tituloEditar').value = titulo;
+        document.getElementById('descripcionEditar').value = descripcion;
+        document.getElementById('categoriaEditar').value = categoria;
 
-            // Configurar evento para abrir el modal al hacer clic en el botón "Agregar Propuesta"
-            const btnAgregarPropuesta = document.getElementById("btnAgregarPropuesta");
-            if (btnAgregarPropuesta) {
-                btnAgregarPropuesta.addEventListener("click", abrirModal);
-            } else {
-                console.error("No se encontró el botón con ID 'btnAgregarPropuesta'.");
-            }
-
-            // Configurar el evento en los botones de cierre del modal
-            const closeButton = document.querySelector(".close-button");
-            if (closeButton) {
-                closeButton.addEventListener("click", cerrarModal);
-            }
-
-            // Configurar evento para cerrar modal al hacer clic afuera
-            window.onclick = function(event) {
-                if (event.target === modal) {
-                    cerrarModal();
-                }
-            };
-        });
-
-        function toggleDropdown(button) {
-            const container = button.closest('.dropdown-container');
-            container.classList.toggle('active');
+        // Asignamos el valor al select de Partido Político
+        const partidoSelect = document.getElementById('partidoEditar');
+        if (partidoSelect) {
+            partidoSelect.value = partido; // Asigna el valor del partido seleccionado
         }
 
-        document.addEventListener('click', (event) => {
-            const dropdowns = document.querySelectorAll('.dropdown-container');
-            dropdowns.forEach(dropdown => {
-                if (!dropdown.contains(event.target)) {
-                    dropdown.classList.remove('active');
-                }
-            });
+        // Seleccionar el estado correcto en el campo de estado
+        const estadoSelect = document.getElementById('estadoEditar');
+        if (estadoSelect) {
+            estadoSelect.value = estado; // Asegúrate de que se seleccione el estado actual
+        }
+
+        // Mostrar el modal de edición
+        const modalEditar = document.getElementById("modalEditarPropuesta");
+        if (modalEditar) {
+            modalEditar.style.display = 'flex';
+        } else {
+            console.error("No se encontró el modal con ID 'modalEditarPropuesta'.");
+        }
+    }
+
+    // Función para cerrar el modal de edición
+    function cerrarModalEditar() {
+        const modalEditar = document.getElementById("modalEditarPropuesta");
+        if (modalEditar) {
+            modalEditar.style.display = "none"; // Cierra el modal
+        } else {
+            console.error("No se encontró el modal con ID 'modalEditarPropuesta'.");
+        }
+    }
+
+    // Esta parte garantiza que el código se ejecute cuando el DOM esté completamente cargado
+    document.addEventListener("DOMContentLoaded", () => {
+        // Configurar evento para abrir el modal al hacer clic en el botón "Agregar Propuesta"
+        const btnAgregarPropuesta = document.getElementById("btnAgregarPropuesta");
+        if (btnAgregarPropuesta) {
+            btnAgregarPropuesta.addEventListener("click", abrirModal);
+        } else {
+            console.error("No se encontró el botón con ID 'btnAgregarPropuesta'.");
+        }
+
+        // Configurar el evento en los botones de cierre del modal (la "X") para ambos modales
+        const closeButton = document.querySelector(".close-button");
+        if (closeButton) {
+            closeButton.addEventListener("click", cerrarModal);
+        }
+
+        // Configurar el evento en los botones de cierre del modal de edición (la "X")
+        const closeButtonEditar = document.querySelectorAll(".close-button");
+        if (closeButtonEditar) {
+            closeButtonEditar.forEach(btn => btn.addEventListener("click", cerrarModalEditar));
+        }
+
+        // Configurar evento para cerrar el modal al hacer clic afuera del modal
+        window.onclick = function(event) {
+            const modalPropuesta = document.getElementById("modalPropuesta");
+            const modalEditar = document.getElementById("modalEditarPropuesta");
+            if (event.target === modalPropuesta) {
+                cerrarModal();
+            } else if (event.target === modalEditar) { // Si el clic fue en el fondo (fuera del contenido del modal)
+                cerrarModalEditar(); // Cierra el modal de edición
+            }
+        };
+    });
+
+    // Función para manejar los dropdowns (acciones de los botones)
+    function toggleDropdown(button) {
+        const container = button.closest('.dropdown-container');
+        container.classList.toggle('active');
+    }
+
+    document.addEventListener('click', (event) => {
+        const dropdowns = document.querySelectorAll('.dropdown-container');
+        dropdowns.forEach(dropdown => {
+            if (!dropdown.contains(event.target)) {
+                dropdown.classList.remove('active');
+            }
         });
+    });
 
-        function cambiarEstado(id, estadoActual) {
-            const nuevoEstado = estadoActual === 'Visible' ? 'Oculta' : 'Visible';
-            const formData = new FormData();
-            formData.append('accion', 'cambiarEstado');
-            formData.append('id', id);
-            formData.append('nuevoEstado', nuevoEstado);
+    // Función para cambiar el estado de la propuesta (visible u oculta)
+    function cambiarEstado(id, estadoActual) {
+        const nuevoEstado = estadoActual === 'Visible' ? 'Oculta' : 'Visible';
+        const formData = new FormData();
+        formData.append('accion', 'cambiarEstado');
+        formData.append('id', id);
+        formData.append('nuevoEstado', nuevoEstado);
 
-            fetch('gestionarPropuestas.php', {
-                    method: 'POST',
-                    body: formData,
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Actualiza el texto del estado en la tabla
-                        const estadoElemento = document.querySelector(`#estado-${id}`);
-                        const opcionElemento = document.querySelector(`#estado-opcion-${id}`);
-                        if (estadoElemento && opcionElemento) {
-                            estadoElemento.textContent = nuevoEstado; // Actualiza el estado mostrado
-                            opcionElemento.textContent = nuevoEstado === 'Visible' ? 'Ocultar' : 'Visible'; // Actualiza el texto de la opción
-                            opcionElemento.setAttribute('onclick', `cambiarEstado(${id}, '${nuevoEstado}')`); // Actualiza la lógica del clic
-                        }
-                    } else {
-                        alert('Error al cambiar el estado: ' + data.message);
+        fetch('gestionarPropuestas.php', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Actualiza el texto del estado en la tabla
+                    const estadoElemento = document.querySelector(`#estado-${id}`);
+                    const opcionElemento = document.querySelector(`#estado-opcion-${id}`);
+                    if (estadoElemento && opcionElemento) {
+                        estadoElemento.textContent = nuevoEstado; // Actualiza el estado mostrado
+                        opcionElemento.textContent = nuevoEstado === 'Visible' ? 'Ocultar' : 'Visible'; // Actualiza el texto de la opción
+                        opcionElemento.setAttribute('onclick', `cambiarEstado(${id}, '${nuevoEstado}')`); // Actualiza la lógica del clic
                     }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        }
+                } else {
+                    alert('Error al cambiar el estado: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+</script>
 
-
-        function abrirModalEditar(id, titulo, descripcion, categoria, partido, estado) {
-            // Llenar los campos del modal con los datos de la propuesta
-            document.getElementById('idEditarPropuesta').value = id;
-            document.getElementById('tituloEditar').value = titulo;
-            document.getElementById('descripcionEditar').value = descripcion;
-            document.getElementById('categoriaEditar').value = categoria;
-            document.getElementById('partidoEditar').value = partido;
-
-            // Seleccionar el estado correcto en el campo de estado
-            const estadoSelect = document.getElementById('estadoEditar');
-            if (estadoSelect) {
-                estadoSelect.value = estado; // Asegurarte de que se seleccione el estado actual
-            }
-
-            // Mostrar el modal
-            const modal = document.getElementById('modalEditarPropuesta');
-            modal.style.display = 'flex';
-        }
-    </script>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
