@@ -852,64 +852,87 @@ function mostrarDescripcionConFormato($descripcion)
                             opcionElemento.textContent = nuevoEstado === 'Visible' ? 'Ocultar' : 'Visible'; // Actualiza el texto de la opción
                             opcionElemento.setAttribute('onclick', `cambiarEstado(${id}, '${nuevoEstado}')`); // Actualiza la lógica del clic
                         }
+
+                        // Mostrar mensaje con SweetAlert
+                        Swal.fire({
+                            title: nuevoEstado === 'Visible' ? '¡Visible!' : '¡Ocultado!',
+                            text: nuevoEstado === 'Visible' ? 'La propuesta ahora es visible.' : 'La propuesta ahora está oculta.',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            window.location.reload(); // Recarga la página después de cerrar el mensaje
+                        });
+
                     } else {
-                        alert('Error al cambiar el estado: ' + data.message);
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Ocurrió un error al cambiar el estado.',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
                     }
                 })
                 .catch(error => {
                     console.error('Error:', error);
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Ocurrió un error al cambiar el estado.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
                 });
         }
 
+
         function toggleFavorito(id, nuevoEstado) {
-    const formData = new FormData();
-    formData.append('accion', 'cambiarFavorito');
-    formData.append('id', id);
-    formData.append('esFavorita', nuevoEstado);
+            const formData = new FormData();
+            formData.append('accion', 'cambiarFavorito');
+            formData.append('id', id);
+            formData.append('esFavorita', nuevoEstado);
 
-    fetch('gestionarPropuestas.php', {
-            method: 'POST',
-            body: formData,
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                // Cambia el icono de la estrella en la tabla
-                const star = document.querySelector(`i[onclick="toggleFavorito(${id}, '${nuevoEstado}')"]`);
-                if (star) {
-                    star.classList.toggle('fas');
-                    star.classList.toggle('far');
-                    star.setAttribute('onclick', `toggleFavorito(${id}, '${nuevoEstado === 'Sí' ? 'No' : 'Sí'}')`);
-                }
+            fetch('gestionarPropuestas.php', {
+                    method: 'POST',
+                    body: formData,
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Cambia el icono de la estrella en la tabla
+                        const star = document.querySelector(`i[onclick="toggleFavorito(${id}, '${nuevoEstado}')"]`);
+                        if (star) {
+                            star.classList.toggle('fas');
+                            star.classList.toggle('far');
+                            star.setAttribute('onclick', `toggleFavorito(${id}, '${nuevoEstado === 'Sí' ? 'No' : 'Sí'}')`);
+                        }
 
-                // Mostrar el mensaje de éxito
-                Swal.fire({
-                    title: nuevoEstado === 'Sí' ? '¡Favorito!' : '¡No favorito!',
-                    text: nuevoEstado === 'Sí' ? 'La propuesta se marcó como favorita.' : 'La propuesta se desmarcó como favorita.',
-                    icon: nuevoEstado === 'Sí' ? 'success' : 'info',
-                    confirmButtonText: 'OK'
-                }).then(() => {
-                    window.location.reload(); // Recarga la página después de cerrar el mensaje
+                        // Mostrar el mensaje de éxito
+                        Swal.fire({
+                            title: nuevoEstado === 'Sí' ? '¡Favorito!' : '¡No favorito!',
+                            text: nuevoEstado === 'Sí' ? 'La propuesta se marcó como favorita.' : 'La propuesta se desmarcó como favorita.',
+                            icon: nuevoEstado === 'Sí' ? 'success' : 'info',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            window.location.reload(); // Recarga la página después de cerrar el mensaje
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Ocurrió un error al cambiar el favorito.',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Ocurrió un error al cambiar el favorito.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
                 });
-            } else {
-                Swal.fire({
-                    title: 'Error',
-                    text: 'Ocurrió un error al cambiar el favorito.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            Swal.fire({
-                title: 'Error',
-                text: 'Ocurrió un error al cambiar el favorito.',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-        });
-}
+        }
 
 
         function eliminarPropuesta(id) {
