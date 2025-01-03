@@ -17,12 +17,57 @@ body {
     flex-direction: column;
 }
 
-header {
+.navbar {
+    background-color: var(--navbar-bg-color, #00bfff);
+    /* Azul vibrante como color por defecto */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 50px;
-    background-color: #b22222;
+    padding: 10px 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    /* Sombra ligera */
+}
+
+
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #ffffff;
+    /* Blanco */
+}
+
+.navbar-logo i {
+    font-size: 24px;
+}
+
+.navbar-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+}
+
+.navbar-menu li {
+    list-style: none;
+}
+
+.navbar-menu li a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    /* Espacio entre icono y texto */
+    color: #ffffff;
+    /* Blanco */
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.navbar-menu li a:hover {
+    color: #ff0050;
+    /* Rosa brillante */
 }
 
 header .logo {
@@ -40,28 +85,7 @@ header .logo h1 {
     font-size: 1.5em;
 }
 
-header nav {
-    display: flex;
-    align-items: center;
-}
 
-header nav a {
-    color: white;
-    text-decoration: none;
-    margin: 0 15px;
-    font-size: 1em;
-    transition: color 0.3s;
-    display: flex;
-    align-items: center;
-}
-
-header nav a i {
-    margin-right: 8px;
-}
-
-header nav a:hover {
-    color: #f0f0f0;
-}
 
 .container {
     flex-grow: 1;
