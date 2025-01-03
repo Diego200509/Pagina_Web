@@ -337,6 +337,9 @@ function mostrarDescripcionConFormato($descripcion)
                                         </a>
 
 
+
+
+
                                         <a role="button" class="text-danger" onclick="eliminarPropuesta(<?= $row['ID_PRO'] ?>); event.preventDefault();">Eliminar</a>
                                         <a role="button" id="estado-opcion-<?= $row['ID_PRO'] ?>" class="text-warning"
                                             onclick="cambiarEstado(<?= $row['ID_PRO'] ?>, '<?= $row['ESTADO'] ?>'); event.preventDefault();">
@@ -484,10 +487,18 @@ function mostrarDescripcionConFormato($descripcion)
 
                 <label for="partidoEditar">Partido Político:</label>
                 <select id="partidoEditar" name="partido" class="form-select" required>
-                    <?php while ($partido = $partidos->fetch_assoc()): ?>
-                        <option value="<?= $partido['ID_PAR'] ?>"><?= $partido['NOM_PAR'] ?></option>
-                    <?php endwhile; ?>
-                </select>
+    <?php mysqli_data_seek($partidos, 0); ?>
+    <?php while ($partido = $partidos->fetch_assoc()): ?>
+        <option value="<?= htmlspecialchars($partido['ID_PAR']) ?>">
+            <?= htmlspecialchars($partido['NOM_PAR']) ?>
+        </option>
+    <?php endwhile; ?>
+</select>
+
+
+
+
+
 
 
                 <label for="estadoEditar">Estado:</label>
@@ -506,146 +517,146 @@ function mostrarDescripcionConFormato($descripcion)
 
 
     <script>
-    // Función para abrir el modal de agregar propuesta
-    function abrirModal() {
-        const modal = document.getElementById("modalPropuesta");
-        if (modal) {
-            modal.style.display = "flex";
-        } else {
-            console.error("No se encontró el modal con ID 'modalPropuesta'.");
-        }
-    }
-
-    // Función para cerrar el modal de agregar propuesta
-    function cerrarModal() {
-        const modal = document.getElementById("modalPropuesta");
-        if (modal) {
-            modal.style.display = "none";
-        } else {
-            console.error("No se encontró el modal con ID 'modalPropuesta'.");
-        }
-    }
-
-    // Función para abrir el modal de editar propuesta
-    function abrirModalEditar(id, titulo, descripcion, categoria, partido, estado) {
-        // Llenar los campos del modal con los datos de la propuesta
-        document.getElementById('idEditarPropuesta').value = id;
-        document.getElementById('tituloEditar').value = titulo;
-        document.getElementById('descripcionEditar').value = descripcion;
-        document.getElementById('categoriaEditar').value = categoria;
-
-        // Asignamos el valor al select de Partido Político
-        const partidoSelect = document.getElementById('partidoEditar');
-        if (partidoSelect) {
-            partidoSelect.value = partido; // Asigna el valor del partido seleccionado
+        // Función para abrir el modal de agregar propuesta
+        function abrirModal() {
+            const modal = document.getElementById("modalPropuesta");
+            if (modal) {
+                modal.style.display = "flex";
+            } else {
+                console.error("No se encontró el modal con ID 'modalPropuesta'.");
+            }
         }
 
-        // Seleccionar el estado correcto en el campo de estado
-        const estadoSelect = document.getElementById('estadoEditar');
-        if (estadoSelect) {
-            estadoSelect.value = estado; // Asegúrate de que se seleccione el estado actual
+        // Función para cerrar el modal de agregar propuesta
+        function cerrarModal() {
+            const modal = document.getElementById("modalPropuesta");
+            if (modal) {
+                modal.style.display = "none";
+            } else {
+                console.error("No se encontró el modal con ID 'modalPropuesta'.");
+            }
         }
 
-        // Mostrar el modal de edición
-        const modalEditar = document.getElementById("modalEditarPropuesta");
-        if (modalEditar) {
-            modalEditar.style.display = 'flex';
-        } else {
-            console.error("No se encontró el modal con ID 'modalEditarPropuesta'.");
-        }
-    }
+        // Función para abrir el modal de editar propuesta
+        function abrirModalEditar(id, titulo, descripcion, categoria, partido, estado) {
+            document.getElementById('idEditarPropuesta').value = id;
+            document.getElementById('tituloEditar').value = titulo;
+            document.getElementById('descripcionEditar').value = descripcion;
+            document.getElementById('categoriaEditar').value = categoria;
 
-    // Función para cerrar el modal de edición
-    function cerrarModalEditar() {
-        const modalEditar = document.getElementById("modalEditarPropuesta");
-        if (modalEditar) {
-            modalEditar.style.display = "none"; // Cierra el modal
-        } else {
-            console.error("No se encontró el modal con ID 'modalEditarPropuesta'.");
-        }
-    }
+            const partidoSelect = document.getElementById('partidoEditar');
+            if (partidoSelect) {
+                partidoSelect.value = partido; // Asignar el ID del partido seleccionado
+            }
 
-    // Esta parte garantiza que el código se ejecute cuando el DOM esté completamente cargado
-    document.addEventListener("DOMContentLoaded", () => {
-        // Configurar evento para abrir el modal al hacer clic en el botón "Agregar Propuesta"
-        const btnAgregarPropuesta = document.getElementById("btnAgregarPropuesta");
-        if (btnAgregarPropuesta) {
-            btnAgregarPropuesta.addEventListener("click", abrirModal);
-        } else {
-            console.error("No se encontró el botón con ID 'btnAgregarPropuesta'.");
+            const estadoSelect = document.getElementById('estadoEditar');
+            if (estadoSelect) {
+                estadoSelect.value = estado;
+            }
+
+            document.getElementById("modalEditarPropuesta").style.display = 'flex';
         }
 
-        // Configurar el evento en los botones de cierre del modal (la "X") para ambos modales
-        const closeButton = document.querySelector(".close-button");
-        if (closeButton) {
-            closeButton.addEventListener("click", cerrarModal);
-        }
 
-        // Configurar el evento en los botones de cierre del modal de edición (la "X")
-        const closeButtonEditar = document.querySelectorAll(".close-button");
-        if (closeButtonEditar) {
-            closeButtonEditar.forEach(btn => btn.addEventListener("click", cerrarModalEditar));
-        }
 
-        // Configurar evento para cerrar el modal al hacer clic afuera del modal
-        window.onclick = function(event) {
-            const modalPropuesta = document.getElementById("modalPropuesta");
+
+
+
+
+
+
+
+        // Función para cerrar el modal de edición
+        function cerrarModalEditar() {
             const modalEditar = document.getElementById("modalEditarPropuesta");
-            if (event.target === modalPropuesta) {
-                cerrarModal();
-            } else if (event.target === modalEditar) { // Si el clic fue en el fondo (fuera del contenido del modal)
-                cerrarModalEditar(); // Cierra el modal de edición
+            if (modalEditar) {
+                modalEditar.style.display = "none"; // Cierra el modal
+            } else {
+                console.error("No se encontró el modal con ID 'modalEditarPropuesta'.");
             }
-        };
-    });
+        }
 
-    // Función para manejar los dropdowns (acciones de los botones)
-    function toggleDropdown(button) {
-        const container = button.closest('.dropdown-container');
-        container.classList.toggle('active');
-    }
-
-    document.addEventListener('click', (event) => {
-        const dropdowns = document.querySelectorAll('.dropdown-container');
-        dropdowns.forEach(dropdown => {
-            if (!dropdown.contains(event.target)) {
-                dropdown.classList.remove('active');
+        // Esta parte garantiza que el código se ejecute cuando el DOM esté completamente cargado
+        document.addEventListener("DOMContentLoaded", () => {
+            // Configurar evento para abrir el modal al hacer clic en el botón "Agregar Propuesta"
+            const btnAgregarPropuesta = document.getElementById("btnAgregarPropuesta");
+            if (btnAgregarPropuesta) {
+                btnAgregarPropuesta.addEventListener("click", abrirModal);
+            } else {
+                console.error("No se encontró el botón con ID 'btnAgregarPropuesta'.");
             }
-        });
-    });
 
-    // Función para cambiar el estado de la propuesta (visible u oculta)
-    function cambiarEstado(id, estadoActual) {
-        const nuevoEstado = estadoActual === 'Visible' ? 'Oculta' : 'Visible';
-        const formData = new FormData();
-        formData.append('accion', 'cambiarEstado');
-        formData.append('id', id);
-        formData.append('nuevoEstado', nuevoEstado);
+            // Configurar el evento en los botones de cierre del modal (la "X") para ambos modales
+            const closeButton = document.querySelector(".close-button");
+            if (closeButton) {
+                closeButton.addEventListener("click", cerrarModal);
+            }
 
-        fetch('gestionarPropuestas.php', {
-                method: 'POST',
-                body: formData,
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Actualiza el texto del estado en la tabla
-                    const estadoElemento = document.querySelector(`#estado-${id}`);
-                    const opcionElemento = document.querySelector(`#estado-opcion-${id}`);
-                    if (estadoElemento && opcionElemento) {
-                        estadoElemento.textContent = nuevoEstado; // Actualiza el estado mostrado
-                        opcionElemento.textContent = nuevoEstado === 'Visible' ? 'Ocultar' : 'Visible'; // Actualiza el texto de la opción
-                        opcionElemento.setAttribute('onclick', `cambiarEstado(${id}, '${nuevoEstado}')`); // Actualiza la lógica del clic
-                    }
-                } else {
-                    alert('Error al cambiar el estado: ' + data.message);
+            // Configurar el evento en los botones de cierre del modal de edición (la "X")
+            const closeButtonEditar = document.querySelectorAll(".close-button");
+            if (closeButtonEditar) {
+                closeButtonEditar.forEach(btn => btn.addEventListener("click", cerrarModalEditar));
+            }
+
+            // Configurar evento para cerrar el modal al hacer clic afuera del modal
+            window.onclick = function(event) {
+                const modalPropuesta = document.getElementById("modalPropuesta");
+                const modalEditar = document.getElementById("modalEditarPropuesta");
+                if (event.target === modalPropuesta) {
+                    cerrarModal();
+                } else if (event.target === modalEditar) { // Si el clic fue en el fondo (fuera del contenido del modal)
+                    cerrarModalEditar(); // Cierra el modal de edición
                 }
-            })
-            .catch(error => {
-                console.error('Error:', error);
+            };
+        });
+
+        // Función para manejar los dropdowns (acciones de los botones)
+        function toggleDropdown(button) {
+            const container = button.closest('.dropdown-container');
+            container.classList.toggle('active');
+        }
+
+        document.addEventListener('click', (event) => {
+            const dropdowns = document.querySelectorAll('.dropdown-container');
+            dropdowns.forEach(dropdown => {
+                if (!dropdown.contains(event.target)) {
+                    dropdown.classList.remove('active');
+                }
             });
-    }
-</script>
+        });
+
+        // Función para cambiar el estado de la propuesta (visible u oculta)
+        function cambiarEstado(id, estadoActual) {
+            const nuevoEstado = estadoActual === 'Visible' ? 'Oculta' : 'Visible';
+            const formData = new FormData();
+            formData.append('accion', 'cambiarEstado');
+            formData.append('id', id);
+            formData.append('nuevoEstado', nuevoEstado);
+
+            fetch('gestionarPropuestas.php', {
+                    method: 'POST',
+                    body: formData,
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Actualiza el texto del estado en la tabla
+                        const estadoElemento = document.querySelector(`#estado-${id}`);
+                        const opcionElemento = document.querySelector(`#estado-opcion-${id}`);
+                        if (estadoElemento && opcionElemento) {
+                            estadoElemento.textContent = nuevoEstado; // Actualiza el estado mostrado
+                            opcionElemento.textContent = nuevoEstado === 'Visible' ? 'Ocultar' : 'Visible'; // Actualiza el texto de la opción
+                            opcionElemento.setAttribute('onclick', `cambiarEstado(${id}, '${nuevoEstado}')`); // Actualiza la lógica del clic
+                        }
+                    } else {
+                        alert('Error al cambiar el estado: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
 
 
 
