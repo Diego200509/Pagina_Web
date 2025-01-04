@@ -1,5 +1,5 @@
 <?php
-// Archivo: cambiar_colores.php
+include_once('../config/config.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Función para guardar configuración en un archivo JSON
@@ -10,6 +10,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header("Location: ../Login/Administracion.php?success=0&message=" . urlencode($mensajeError));
         }
         exit;
+    }
+
+    // Manejo de Colores del Login
+    $configFileLogin = "../Login/styles_config.json";
+    if (!file_exists($configFileLogin)) {
+        file_put_contents($configFileLogin, json_encode([
+            "gradientStartLogin" => "#FF007B",
+            "gradientEndLogin" => "#1C9FFF"
+        ], JSON_PRETTY_PRINT));
+    }
+
+    // Restablecer colores del Login
+    if (isset($_POST['reset']) && $_POST['reset'] == "1") {
+        $defaultConfig = [
+            "gradientStartLogin" => "#FF007B",
+            "gradientEndLogin" => "#1C9FFF"
+        ];
+        guardarConfiguracion(
+            $configFileLogin,
+            $defaultConfig,
+            "Los colores del login han sido restablecidos a los valores originales.",
+            "No se pudieron restablecer los colores del login."
+        );
+    }
+
+    // Actualizar colores del Login
+    if (isset($_POST['gradientStartLogin']) && isset($_POST['gradientEndLogin'])) {
+        $config = json_decode(file_get_contents($configFileLogin), true);
+        $config['gradientStartLogin'] = $_POST['gradientStartLogin'];
+        $config['gradientEndLogin'] = $_POST['gradientEndLogin'];
+        guardarConfiguracion(
+            $configFileLogin,
+            $config,
+            "Los colores del login se han actualizado correctamente.",
+            "No se pudieron actualizar los colores del login."
+        );
     }
 
     // Manejo del Navbar
@@ -148,7 +184,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $config,
             "El color de fondo de la Página Sugerencias se ha actualizado correctamente.",
             "No se pudo actualizar el color de fondo de la Página Sugerencias."
-        );
-    }
+     );
+ }
 }
 ?>
