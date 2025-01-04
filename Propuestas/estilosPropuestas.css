@@ -1,12 +1,12 @@
+/* Reset de márgenes y rellenos */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-html,
+/* Estilo general del body */
 body {
-    height: 100%;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--pagina-bg-color, #000000); /* Color dinámico */
     color: #333;
@@ -64,135 +64,151 @@ body {
 }
 
 
+/* Contenedor de la página */
 .container {
-    flex-grow: 1;
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 30px;
 }
 
+/* Título */
 h2 {
     text-align: center;
-    margin-bottom: 20px;
-    font-size: 2.2em;
+    margin-bottom: 40px;
+    font-size: 2.5em;
     color: #333;
-    letter-spacing: 1px;
+    font-weight: bold;
 }
 
+/* Estilo del filtro */
 .filter-box {
     text-align: center;
     margin-bottom: 40px;
 }
 
 .filter-box select {
-    padding: 10px 15px;
-    font-size: 1em;
-    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 1.1em;
+    border-radius: 10px;
     border: 1px solid #ccc;
     width: 100%;
     max-width: 400px;
     margin-bottom: 20px;
     background-color: #fff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease;
 }
 
-.filter-box select:hover {
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
-}
-
-.proposals-grid {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-
-.proposal-card {
-    background-color: #fff;
+/* Contenedor para las tarjetas */
+.proposals-container {
+    background-color: #ffffff;
     padding: 20px;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: calc(50% - 10px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos de la grid de propuestas */
+.proposals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    justify-items: center;
+}
+
+/* Estilo para cada tarjeta de propuesta */
+.proposal-card {
+    background: linear-gradient(145deg, #ffffff, #f7f7f7);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 330px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.2s ease;
+    min-height: 280px; /* Ajustado para mejor proporción */
+    border-left: 8px solid #ff1493;
     margin-bottom: 20px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    min-height: 250px;
-    border-left: 6px solid #b22222;
+    word-wrap: break-word; /* Asegura que el texto largo se ajuste */
+    overflow-wrap: break-word; /* Evita desbordes por palabras largas */
+    display: flex;
+    flex-direction: column;
 }
 
-.proposal-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-}
-
+/* Título de la propuesta */
 .proposal-card h3 {
-    font-size: 1.8em;
+    font-size: 1.5em;
     margin-bottom: 15px;
-    color: #b22222;
-    text-align: center;
-    border-bottom: 2px solid #f0f0f0;
-    padding-bottom: 10px;
-}
-
-.proposal-card .proposal-title {
-    font-size: 1.3em;
+    color: #ff1493;
     font-weight: bold;
+    text-align: center;
+    border-bottom: 2px solid #ff1493;
+    padding-bottom: 10px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+/* Descripción de la propuesta */
+.proposal-description {
+    font-size: 1em;
     color: #444;
-    margin-bottom: 8px;
-    text-align: left;
+    text-align: justify;
+    line-height: 1.5;
+    margin-top: 10px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal; /* Permite que el texto se ajuste */
 }
 
-.proposal-card .proposal-description {
-    white-space: normal;       /* Asegura que el texto se ajuste al ancho del contenedor */
-    word-wrap: break-word;     /* Rompe palabras largas */
-    overflow-wrap: break-word; /* Rompe palabras si exceden el ancho del contenedor */
-    overflow: hidden;          /* Evita que el contenido se desborde */
-    text-align: justify;       /* Alinea el texto para un aspecto más limpio */
-    max-height: 200px;         /* Establece una altura máxima para evitar que el texto sea demasiado largo */
-    overflow-y: auto;          /* Añade un scroll si el texto excede el espacio disponible */
-    padding: 10px;             /* Añade un espacio interno para que el texto no toque los bordes */
+/* Estilo de los botones de la categoría */
+.card-category {
+    background-color: #00bfff;
+    color: white;
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-size: 0.9em;
+    font-weight: 500;
+    display: inline-block;
+    text-align: center;
+    margin-top: 20px;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
 }
 
+.card-category:hover {
+    background-color: #008b8b;
+}
 
-
+/* Footer */
 footer {
-    background-color: #b22222;
+    background-color: #ff1493;
     color: white;
     text-align: center;
-    padding: 10px;
+    padding: 15px;
     position: relative;
     bottom: 0;
     width: 100%;
 }
 
-.proposal-item {
-    margin-bottom: 15px;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-    font-size: 1.1em;
-    background-color: #fafafa;
-    border-radius: 8px;
-    padding: 12px 15px;
-}
+/* Responsive */
+@media (max-width: 768px) {
+    .navbar-menu {
+        display: none;
+    }
 
-.proposal-item p {
-    white-space: normal;       /* Asegura que el texto se ajuste al ancho del contenedor */
-    word-wrap: break-word;     /* Rompe palabras largas si es necesario */
-    overflow-wrap: break-word; /* Rompe palabras largas automáticamente */
-    text-align: justify;       /* Alinea el texto para un mejor diseño */
-    overflow: hidden;          /* Evita que el texto sobresalga del contenedor */
-    margin: 5px 0;             /* Añade espacio entre líneas */
-}
+    .header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
 
-.proposal-item:last-child {
-    border-bottom: none;
-}
+    .proposals-grid {
+        grid-template-columns: 1fr;
+    }
 
-.proposal-item {
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 
-.proposal-item.visible {
-    opacity: 1;
-    transform: translateY(0);
+    .navbar-logo {
+        margin-bottom: 15px;
+    }
 }

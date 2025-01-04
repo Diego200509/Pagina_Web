@@ -1,9 +1,15 @@
 <?php
 session_start();
-if (!isset($_SESSION['user_role']) || !in_array($_SESSION['user_role'], ['SUPERADMIN', 'ADMIN'])) {
+if (!isset($_SESSION['user_role'])) {
     header("Location: ../Login/Login.php");
     exit;
 }
+
+// Obtener el rol del usuario
+$user_role = $_SESSION['user_role'];
+
+// Determinar la URL del dashboard según el rol del usuario
+$dashboard_url = $user_role === 'SUPERADMIN' ? '../Login/superadmin_dasboard.php' : '../Login/admin_dashboard.php';
 include('../src/sugerencias_queries.php');
 
 include('../config/config.php');
@@ -72,7 +78,19 @@ $sugerencias = obtenerTodasSugerencias();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <style>
+        .fa-user-shield {
+    font-size: 17px; /* Ajusta según tus necesidades */
+}
+        .navbar .fa-user-shield {
+    font-size: 1.9rem; /* Ajusta según lo necesario */
+}
+
 /* General */
 body {
     font-family: 'Arial', sans-serif;
@@ -81,24 +99,62 @@ body {
     background: linear-gradient(to bottom, #ffffff, #f0f0f0);
 }
 
+/* Header */
 header {
-    background-color: #ff1493;
+    background: linear-gradient(90deg, #ff1493, #ff69b4); /* Tono rosa intenso con gradiente suave */
     color: white;
-    padding: 20px;
     text-align: center;
+    padding: 20px 15px;
+    font-size: 1.8em;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    margin: 20px auto;
+    max-width: 95%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Efectos hover */
+header:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Iconos dentro del header */
+header i {
     font-size: 1.5em;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+/* Responsividad para dispositivos más pequeños */
+@media (max-width: 768px) {
+    header {
+        font-size: 1.5em;
+        padding: 15px 10px;
+    }
+
+    header i {
+        font-size: 1.2em;
+        margin-right: 8px;
+    }
 }
 /* Contenedor de la Tabla */
 .table-container {
-    width: 100%;
+    width: 95%;
+    max-width: 100%; /* Ajusta el ancho máximo según tus necesidades */
+    margin: 20px auto; /* Centra la tabla horizontalmente con un margen */
     border-collapse: collapse;
     margin-top: 20px;
+    overflow: hidden; /* Asegura que el contenido respete los bordes redondeados */
     font-size: 16px;
     background-color: white;
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+    overflow-x: auto; /* Permite el scroll si el contenido es demasiado ancho */
+    padding: 20px; /* Opcional: Añade un espacio interior si lo deseas */
+
 }
 
 .sort-icon {
@@ -139,6 +195,13 @@ th[data-sort="desc"] .sort-icon {
     font-weight: bold;
     text-align: left;
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1); /* Sombra destacada en encabezado */
+    border-top-left-radius: 12px; /* Bordes superiores redondeados */
+    border-top-right-radius: 12px;
+}
+@media (max-width: 768px) {
+    .table-container {
+        overflow-x: scroll;
+    }
 }
 
 
@@ -154,13 +217,22 @@ th[data-sort="desc"] .sort-icon {
 .table th:hover {
     background-color: #008ccd;
 }
-
+.table td.acciones {
+    text-align: center;
+    width: 180px; /* Asegúrate de que los botones tengan espacio suficiente */
+    text-align: center; /* Centra el contenido en la celda */
+    white-space: nowrap; /* Evita que el texto en los botones haga un salto de línea */
+    width: auto; /* Permite que se ajuste automáticamente */
+}
 
 .table th, 
 .table td {
     padding: 15px;
     text-align: left;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    min-width: 8px; /* Ajusta según las necesidades */
+    word-wrap: break-word;
+
 }
 
 .table tbody tr {
@@ -217,6 +289,10 @@ th[data-sort="desc"] .sort-icon {
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
+    min-width: 50px; /* Asegura que los botones tengan un ancho mínimo */
+    white-space: nowrap; /* Evita que el texto dentro del botón se divida */
+    text-overflow: ellipsis; /* Añade "..." si el texto es demasiado largo */
+
 }
 .image-modal {
     display: none; /* Oculto inicialmente */
@@ -363,7 +439,15 @@ th[data-sort="desc"] .sort-icon {
 }
 
 .navbar-logo i {
-    font-size: 2px;
+    font-size: 20px; /* Ajusta según la necesidad */
+    margin-right: 10px; /* Espaciado con el texto */
+    color: white;
+
+}
+.navbar-logo img {
+    width: 170px; /* Reduce el ancho de la imagen */
+    height: auto; /* Mantén la proporción de aspecto */
+    margin-right: 10px; /* Ajusta el espacio entre el logo y el texto si es necesario */
 }
 
 .navbar-menu {
@@ -406,6 +490,9 @@ th[data-sort="desc"] .sort-icon {
   border: 1px solid #cc0000;
   background-color: #e50000;
   overflow: hidden;
+  min-width: 20px; /* Asegura que los botones tengan un ancho mínimo */
+  white-space: nowrap; /* Evita que el texto dentro del botón se divida */
+
 }
 
 .delete-btn,
@@ -836,7 +923,11 @@ th[data-sort="desc"] .sort-icon {
         transform: translateY(0);
     }
 }
-
+.navbar-role {
+    margin-bottom: 9px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
 
     </style>
 

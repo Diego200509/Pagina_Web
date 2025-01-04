@@ -73,12 +73,12 @@ if (file_exists($configFile)) {
 </navbar>
 
     <div class="container">
-        <h2>Propuestas de los Partidos Políticos</h2>
+        <h2>Propuestas</h2>
 
+        <!-- Filtro por categoría -->
         <div class="filter-box">
             <label for="faculty">Filtrar por Facultad o Interés:</label>
             <select id="faculty" onchange="filterProposals()">
-                <!-- Facultades actualizadas -->
                 <option value="all">Mostrar Todas</option>
                 <option value="Ciencias Administrativas">Ciencias Administrativas</option>
                 <option value="Ciencia e Ingeniería en Alimentos">Ciencia e Ingeniería en Alimentos</option>
@@ -87,9 +87,7 @@ if (file_exists($configFile)) {
                 <option value="Ciencias Humanas y de la Educación">Ciencias Humanas y de la Educación</option>
                 <option value="Ciencias de la Salud">Ciencias de la Salud</option>
                 <option value="Ingeniería Civil y Mecánica">Ingeniería Civil y Mecánica</option>
-                <option value="Ingeniería en Sistemas, Electrónica e Industrial">Ingeniería en Sistemas, Electrónica e
-                    Industrial</option>
-                <!-- Intereses adicionales -->
+                <option value="Ingeniería en Sistemas, Electrónica e Industrial">Ingeniería en Sistemas, Electrónica e Industrial</option>
                 <option value="infraestructura">Infraestructura</option>
                 <option value="deportes">Deportes</option>
                 <option value="cultura">Cultura</option>
@@ -98,18 +96,9 @@ if (file_exists($configFile)) {
             </select>
         </div>
 
+        <!-- Contenedor para las propuestas -->
         <div class="proposals-grid" id="proposalsGrid">
-            <!-- Propuesta Partido 1 -->
-            <div class="proposal-card" id="proposalCandidato1">
-                <h3 id="partido1Nombre"></h3> <!-- Aquí se mostrará el nombre del partido 1 -->
-                <div id="candidato1Description"></div>
-            </div>
-
-            <!-- Propuesta Partido 2 -->
-            <div class="proposal-card" id="proposalCandidato2">
-                <h3 id="partido2Nombre"></h3> <!-- Aquí se mostrará el nombre del partido 2 -->
-                <div id="candidato2Description"></div>
-            </div>
+            <!-- Las propuestas se agregarán aquí dinámicamente -->
         </div>
     </div>
 

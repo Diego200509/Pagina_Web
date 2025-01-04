@@ -137,7 +137,20 @@
 }
 
 .navbar-logo i {
-    font-size: 24px;
+    font-size: 20px; /* Ajusta según la necesidad */
+    margin-right: 10px; /* Espaciado con el texto */
+    color: white;
+
+}
+.navbar-logo img {
+    width: 160px; /* Reduce el ancho de la imagen */
+    height: auto; /* Mantén la proporción de aspecto */
+    margin-right: 10px; /* Ajusta el espacio entre el logo y el texto si es necesario */
+}
+.navbar-role {
+    margin-bottom: 9px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .navbar-menu {
@@ -208,7 +221,12 @@
     font-family: sans-serif;
     letter-spacing: 1px;
 }
-
+.fa-user-shield {
+    font-size: 17px; /* Ajusta según tus necesidades */
+}
+        .navbar .fa-user-shield {
+    font-size: 1.9rem; /* Ajusta según lo necesario */
+}
         footer {
             text-align: center;
             padding: 20px;
