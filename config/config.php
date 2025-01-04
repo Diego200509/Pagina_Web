@@ -3,7 +3,7 @@
 $host = "localhost:3309";  
 $user = "root";  
 $password = "";  
-$database = "elecciones2025";  
+$database = "elecciones2024";  
 
 
 
