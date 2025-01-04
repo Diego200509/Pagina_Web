@@ -300,8 +300,8 @@ footer {
 <body>
     <header id="main-header">
         <div class="logo">
-            <img src="Img/logo.png" alt="UTA Logo"> 
-            <h1>Proceso de Elecciones UTA 2024</h1>
+        <img src="/Pagina_Web/Pagina_Web/Login/Img/logoMariCruz.png" width="200px" style="margin-right: 20px;">
+        <h1>Proceso de Elecciones UTA 2024</h1>
         </div>
         <nav>
             <a href="../Home/inicio.php"><i class="fas fa-home"></i> Inicio</a>

@@ -24,8 +24,7 @@ header {
 }
 
 .navbar {
-    background-color: #00bfff;
-    /* Azul vibrante */
+    background-color: var(--navbar-bg-color, #00bfff);
     display: flex;
     justify-content: space-between;
     /* Espacio entre logo y menú */

@@ -12,6 +12,31 @@ if (file_exists($navbarConfigPath)) {
     $navbarBgColor = '#00bfff'; // Azul por defecto si no existe el archivo
 }
 
+// Obtener la ruta de la imagen para la sección 'logoNavbar'
+$section_name = 'logoNavbar';
+$stmt = $connection->prepare("SELECT image_path FROM imagenes_Inicio_Logo WHERE section_name = ?");
+$stmt->bind_param("s", $section_name);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $logo_path = $row['image_path'];
+} else {
+    $logo_path = "/Pagina_Web/Pagina_Web/Login/Img/logoMariCruz.png"; // Imagen por defecto
+}
+
+
+
+$configFileCandidatos = "../Login/PaginaCandidatos.json";
+
+if (file_exists($configFileCandidatos)) {
+    $config = json_decode(file_get_contents($configFileCandidatos), true);
+    $paginaBgColor = $config['paginaBgColor'] ?? "#f4f4f4";
+} else {
+    $paginaBgColor = "#f4f4f4";
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -27,6 +52,12 @@ if (file_exists($navbarConfigPath)) {
     <style>
         :root {
             --navbar-bg-color: <?php echo $navbarBgColor; ?>;
+            --pagina-bg-color: <?php echo $paginaBgColor; ?>;
+            body {
+    background-color: var(--pagina-bg-color);
+}
+
+
         }
     </style>
 </head>
@@ -38,7 +69,7 @@ if (file_exists($navbarConfigPath)) {
             <div class="navbar-logo">
                 <div class="text-center">
                 </div>
-                <img src="../Login/Img/logoMariCruz.png" width="200px" style="margin-right: 20px;">
+                <img src="<?php echo htmlspecialchars($logo_path); ?>"  width="200px" style="margin-right: 20px;">
 
             </div>
 

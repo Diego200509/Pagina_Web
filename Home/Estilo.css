@@ -11,12 +11,14 @@ body {
     color: #333;
 }
 
-header {
+/* Navbar */
+.navbar {
+    background-color: var(--navbar-bg-color, #00bfff); /* Azul por defecto */
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
     padding: 20px 50px;
-    background-color: #b22222; 
     position: fixed;
     width: 100%;
     top: 0;
@@ -24,43 +26,43 @@ header {
     z-index: 1000;
 }
 
-header .logo {
-    display: flex;
-    align-items: center; 
-}
-
-header .logo img {
-    width: 50px; 
-    margin-right: 10px;
-}
-
-header .logo h1 {
-    color: #ffffff;
-    font-size: 1.5em;
-}
-
-header nav {
+.navbar-logo {
     display: flex;
     align-items: center;
+    gap: 10px;
+    color: #ffffff; /* Blanco */
 }
 
-header nav a {
-    color: white;
+.navbar-logo i {
+    font-size: 24px;
+}
+
+.navbar-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+}
+
+.navbar-menu li {
+    list-style: none;
+}
+
+.navbar-menu li a {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espacio entre icono y texto */
+    color: #ffffff; /* Blanco */
     text-decoration: none;
-    margin: 0 15px;
-    font-size: 1em;
-    transition: color 0.3s;
-    display: flex;
-    align-items: center;
+    font-size: 16px;
+    font-weight: bold;
 }
 
-header nav a i {
-    margin-right: 8px;
+.navbar-menu li a:hover {
+    color: #ff0050; /* Rosa brillante */
 }
 
-header nav a:hover {
-    color: #2f2929; 
-}
 
 .slider {
     position: relative;
@@ -97,18 +99,7 @@ header nav a:hover {
     opacity: 1; 
 }
 
-.slide1 {
-    background: url('Img/FONDOMARI.jpg') no-repeat center center/cover; 
-}
 
-.slide3 {
-    background: url('Img/F1.jpg') no-repeat center center/cover; 
-}
-
-
-.slide5 {
-    background: url('Img/FONDOSARA.jpg') no-repeat center center/cover; 
-}
 
 
 .slider .slide img {
@@ -180,7 +171,6 @@ section {
 }
 
 #candidatos {
-    background-image: url('Img/uta.jpg'); /* Ruta de la imagen generada */
     background-size: cover; 
     background-position: center; 
     background-repeat: no-repeat; 
@@ -224,7 +214,6 @@ section {
 
 #propuestas {
     
-    background-image: url('Img/imagendefondo.jpg'); /* Ruta a tu imagen */
     background-size: cover; /* Asegura que la imagen cubra todo el área */
     background-position: center; /* Centra la imagen en la sección */
     background-repeat: no-repeat; /* Evita que la imagen se repita */
@@ -233,18 +222,8 @@ section {
 
 }
 
-#eventos {
-    background-color: #FF9800; /* Naranja */
-}
 
-#sugerencias {
-    background-image: url('Img/imagendefondofinal.png'); /* Ruta a tu imagen */
-    background-size: cover; /* Asegura que la imagen cubra todo el área */
-    background-position: center; /* Centra la imagen en la sección */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
-    height: 100vh; /* Ajusta la altura según el contenido o diseño */
 
-}
 
 section h1 {
     font-size: 3em;
@@ -259,13 +238,12 @@ section p {
 footer {
     text-align: center;
     padding: 20px;
-    background-color: #b22222; 
     color: white;
     margin-top: 50px;
 }
 
 .footer-rights {
-    background-color: #b22222; 
+    background-color: #00bfff; 
     color: white; 
     text-align: center;
     padding: 10px;
@@ -280,16 +258,10 @@ footer {
     box-shadow: 0 8px 20px rgba(0,0,0,0.3);
 }
 
-@media (max-width: 768px) {
-    .candidatos-container, .propuestas-container, .eventos-container, .sugerencias-container {
-        flex-direction: column;
-        align-items: center;
-    }
-}
+
 
 .eventos-container {
     
-    background-image: url('Img/eventos.jpg'); /* Ruta a tu imagen */
     background-size: cover; /* Asegura que la imagen cubra todo el área */
     background-position: center; /* Centra la imagen en la sección */
     background-repeat: no-repeat; /* Evita que la imagen se repita */
@@ -440,103 +412,3 @@ footer {
     background-color: rgba(178, 34, 34, 1); /* Color de fondo al pasar el ratón */
 }
 
-    
-/* Estilos para la sección Sugerencias */
-#sugerencias {
-    background-color: #1a1a1a; /* Cambiar el color de fondo si es necesario */
-    color: white;
-}
-
-.sugerencias-title {
-    text-align: center;
-    font-size: 3em;
-    margin-bottom: 0;
-}
-
-.sugerencias-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 90vh;
-}
-
-.sugerencia-card {
-    display: flex;
-    align-items: center;
-    background-color: #ffffff;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    max-width: 90%;
-    height: 80%;
-    margin: auto;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.sugerencia-content {
-    flex: 1;
-    padding: 40px;
-    background-color: #f8f8f8;
-    border-right: 5px solid #b22222;
-}
-
-.sugerencia-subtitle {
-    color: #b22222;
-    font-size: 2.8em;
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-
-.sugerencia-highlight {
-    font-size: 1.5em;
-    color: #333;
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-
-.sugerencia-description {
-    font-size: 1.2em;
-    color: #555;
-    line-height: 1.6;
-}
-
-.sugerencia-button {
-    text-decoration: none;
-}
-
-.sugerencia-button button {
-    background-color: #b22222;
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    border-radius: 30px;
-    cursor: pointer;
-    font-size: 1.2em;
-    margin-top: 20px;
-    transition: background-color 0.3s ease;
-}
-
-.sugerencia-image-container {
-    flex: 1;
-    position: relative;
-}
-
-.sugerencia-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: brightness(0.9);
-    transition: filter 0.3s ease;
-}
-
-/* Efecto hover para el botón */
-.sugerencia-button button:hover {
-    background-color: #a21a1a; /* Cambia el color en hover si deseas */
-}
-
-/* Efecto hover para la tarjeta */
-.sugerencia-card:hover {
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
-    transform: translateY(-5px);
-}

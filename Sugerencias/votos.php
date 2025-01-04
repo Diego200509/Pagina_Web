@@ -37,6 +37,7 @@ if (isset($_COOKIE['ya_voto'])) {
 include('../config/config.php');
 
 
+
 $navbarConfigPath = "../Login/navbar_config.json"; // Ruta al archivo de configuración del Navbar
 
 // Verificar si el archivo existe y cargar el color del Navbar
@@ -44,8 +45,33 @@ if (file_exists($navbarConfigPath)) {
     $navbarConfig = json_decode(file_get_contents($navbarConfigPath), true);
     $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff'; // Azul por defecto
 } else {
-    $navbarBgColor = '#00bfff'; // Azul por defecto si no existe el archivo
+    $navbarBgColor = '#00bfff'; // Azul por defecto si no existe el archivo
 }
+
+// Obtener la ruta de la imagen para la sección 'logoNavbar'
+$section_name = 'logoNavbar';
+$stmt = $connection->prepare("SELECT image_path FROM imagenes_Inicio_Logo WHERE section_name = ?");
+$stmt->bind_param("s", $section_name);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $logo_path = $row['image_path'];
+} else {
+    $logo_path = "/Pagina_Web/Pagina_Web/Login/Img/logoMariCruz.png"; // Imagen por defecto
+}
+
+
+$configFileEventos = "../Login/PaginaEventos.json";
+
+if (file_exists($configFileEventos)) {
+    $config = json_decode(file_get_contents($configFileEventos), true);
+    $paginaBgColor = $config['paginaBgColor'] ?? "#f4f4f4";
+} else {
+    $paginaBgColor = "#f4f4f4";
+}
+
 
 
 // Obtener las imágenes desde la base de datos
@@ -407,7 +433,7 @@ $imagenFondo = isset($imagenesActuales[2]) ? $imagenesActuales[2] : '/Pagina_Web
 <div class="text-center">
 </div>
 <!-- Logo existente -->
-<img src="Img/logoMariCruz.png" width="200px" style="margin-right: 20px;">
+<img src="<?php echo htmlspecialchars($logo_path); ?>"  width="200px" style="margin-right: 20px;">
 
 </div>
 
