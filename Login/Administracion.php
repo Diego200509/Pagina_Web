@@ -69,9 +69,6 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
 
         }
 
-        :root {
-            --navbar-bg-color: <?php echo $navbarBgColor; ?>;
-        }
 
         /* Colores tomados de la imagen */
         .header-text {
