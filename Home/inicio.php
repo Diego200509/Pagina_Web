@@ -57,6 +57,9 @@ while ($row = $result->fetch_assoc()) {
     }
 }
 
+
+
+
 $stmt->close();
 ?>
 
@@ -88,7 +91,7 @@ $stmt->close();
     #candidatos {
         background-color: <?= $candidatosColor ?>;
     }
-    #propuestas {
+    #propuestas-section {
         background-color: <?= $propuestasColor ?>;
     }
     #eventos {
@@ -149,26 +152,40 @@ $stmt->close();
     <button class="next">&#10095;</button>
 </section>
 
+
 <section id="candidatos">
-    <h1>Conoce a nuestros candidatos</h1>
+<h1 class="propuestas-title-candidatos">Conoce a nuestros Candidatos</h1>
+<?php include('../src/candidatos_inicio_queries.php'); ?>
 </section>
 
-<section id="propuestas">
-    <h1> <span style="color: red; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;">
-        PROPUESTAS
-    </span>  </h1>
+
+
+
+<section id="propuestas-section">
+    <h1 class="propuestas-title">PROPUESTAS</h1>
+    <div id="propuestas">
+        <?php include('../src/propuestas_favoritas_queries.php'); ?>
+    </div>
 </section>
 
-<section id ="eventos">
-<h2>
-    <span style="color: red; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;">
-        Eventos y
-    </span>  
-    <span style="color: red; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;">
-        Noticias
-    </span>
-</h2>
+
+
+
+
+
+<section id="eventos">
+<h1 class="propuestas-title-eventos">Eventos y Noticias</h1>
+
+    <div class="botones-eventos">
+        <button class="btn-eventos" id="mostrarEventos">Mostrar Eventos</button>
+        <button class="btn-eventos" id="mostrarNoticias">Mostrar Noticias</button>
+    </div>
+    <div id="contenidoEventosNoticias" class="contenido-eventos">
+        <!-- Aquí se mostrarán los eventos o noticias -->
+    </div>
 </section>
+
+
 
 <footer class="footer-rights">
     <p>Todos los derechos reservados Team Sangre © 2024</p>
@@ -188,9 +205,46 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+document.getElementById('mostrarFavoritas').addEventListener('click', function () {
+    fetch('../src/propuestas_favoritas_queries.php', { method: 'POST' })
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('contenedorPropuestas').innerHTML = data;
+        })
+        .catch(error => console.error('Error:', error));
+});
+
+
+
 
 
 </script>
+
+
+<script>
+document.getElementById("mostrarEventos").addEventListener("click", function() {
+    cargarContenido("EVENTO");
+});
+
+document.getElementById("mostrarNoticias").addEventListener("click", function() {
+    cargarContenido("NOTICIA");
+});
+
+function cargarContenido(tipo) {
+    fetch('../src/eventos_noticias_inicio_queries.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'tipo=' + tipo
+    })
+    .then(response => response.text())
+    .then(data => {
+        document.getElementById("contenidoEventosNoticias").innerHTML = data;
+    })
+    .catch(error => console.error('Error:', error));
+}
+</script>
+
+
 
 </body>
 </html>
