@@ -82,11 +82,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Página Eventos y Noticias
     $configFileEventos = "../Login/PaginaEventos.json";
     if (!file_exists($configFileEventos)) {
-        file_put_contents($configFileEventos, json_encode(["paginaBgColor" => "#33FF58"], JSON_PRETTY_PRINT));
+        file_put_contents($configFileEventos, json_encode(["paginaEventosBgColor" => "#33FF58"], JSON_PRETTY_PRINT));
     }
 
     if (isset($_POST['reset-pagina-eventos-noticias']) && $_POST['reset-pagina-eventos-noticias'] == "1") {
-        $defaultConfig = ["paginaBgColor" => "#f4f4f4"];
+        $defaultConfig = ["paginaEventosBgColor" => "#f4f4f4"];
         guardarConfiguracion(
             $configFileEventos,
             $defaultConfig,
@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (isset($_POST['colorPagEventos'])) {
         $config = json_decode(file_get_contents($configFileEventos), true);
-        $config['paginaBgColor'] = $_POST['colorPagEventos'];
+        $config['paginaEventosBgColor'] = $_POST['colorPagEventos'];
         guardarConfiguracion(
             $configFileEventos,
             $config,
@@ -109,11 +109,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Página Candidatos
     $configFileCandidatos = "../Login/PaginaCandidatos.json";
     if (!file_exists($configFileCandidatos)) {
-        file_put_contents($configFileCandidatos, json_encode(["paginaBgColor" => "#33FF58"], JSON_PRETTY_PRINT));
+        file_put_contents($configFileCandidatos, json_encode(["paginaCandidatosBgColor" => "#33FF58"], JSON_PRETTY_PRINT));
     }
 
     if (isset($_POST['reset-pagina-candidatos']) && $_POST['reset-pagina-candidatos'] == "1") {
-        $defaultConfig = ["paginaBgColor" => "#f4f4f4"];
+        $defaultConfig = ["paginaCandidatosBgColor" => "#f4f4f4"];
         guardarConfiguracion(
             $configFileCandidatos,
             $defaultConfig,
@@ -124,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (isset($_POST['colorPagCandidatos'])) {
         $config = json_decode(file_get_contents($configFileCandidatos), true);
-        $config['paginaBgColor'] = $_POST['colorPagCandidatos'];
+        $config['paginaCandidatosBgColor'] = $_POST['colorPagCandidatos'];
         guardarConfiguracion(
             $configFileCandidatos,
             $config,
@@ -136,11 +136,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Página Propuestas
     $configFilePropuestas = "../Login/PaginaPropuestas.json";
     if (!file_exists($configFilePropuestas)) {
-        file_put_contents($configFilePropuestas, json_encode(["paginaBgColor" => "#337BFF"], JSON_PRETTY_PRINT));
+        file_put_contents($configFilePropuestas, json_encode(["paginaPropuestasBgColor" => "#337BFF"], JSON_PRETTY_PRINT));
     }
 
     if (isset($_POST['reset-pagina-propuestas']) && $_POST['reset-pagina-propuestas'] == "1") {
-        $defaultConfig = ["paginaBgColor" => "#f4f4f4"];
+        $defaultConfig = ["paginaPropuestasBgColor" => "#f4f4f4"];
         guardarConfiguracion(
             $configFilePropuestas,
             $defaultConfig,
@@ -151,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (isset($_POST['colorPagPropuestas'])) {
         $config = json_decode(file_get_contents($configFilePropuestas), true);
-        $config['paginaBgColor'] = $_POST['colorPagPropuestas'];
+        $config['paginaPropuestasBgColor'] = $_POST['colorPagPropuestas'];
         guardarConfiguracion(
             $configFilePropuestas,
             $config,
@@ -163,11 +163,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Página Sugerencias
     $configFileSugerencias = "../Login/PaginaSugerencias.json";
     if (!file_exists($configFileSugerencias)) {
-        file_put_contents($configFileSugerencias, json_encode(["paginaBgColor" => "#FF33A1"], JSON_PRETTY_PRINT));
+        file_put_contents($configFileSugerencias, json_encode(["paginaSugerenciasBgColor" => "#FF33A1"], JSON_PRETTY_PRINT));
     }
 
     if (isset($_POST['reset-pagina-sugerencias']) && $_POST['reset-pagina-sugerencias'] == "1") {
-        $defaultConfig = ["paginaBgColor" => "#f4f4f4"];
+        $defaultConfig = ["paginaSugerenciasBgColor" => "#f4f4f4"];
         guardarConfiguracion(
             $configFileSugerencias,
             $defaultConfig,
@@ -178,7 +178,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (isset($_POST['colorPagSugerencias'])) {
         $config = json_decode(file_get_contents($configFileSugerencias), true);
-        $config['paginaBgColor'] = $_POST['colorPagSugerencias'];
+        $config['paginaSugerenciasBgColor'] = $_POST['colorPagSugerencias'];
         guardarConfiguracion(
             $configFileSugerencias,
             $config,

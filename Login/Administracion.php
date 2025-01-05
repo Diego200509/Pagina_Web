@@ -9,10 +9,69 @@ if (!file_exists($navbarConfigPath)) {
     ];
     file_put_contents($navbarConfigPath, json_encode($defaultNavbarConfig, JSON_PRETTY_PRINT));
 }
+function cargarEstilo($archivo, $default)
+{
+    if (file_exists($archivo)) {
+        $config = json_decode(file_get_contents($archivo), true);
+        return $config['bgColor'] ?? $default;
+    }
+    return $default;
+}
+
+$candidatosColor = cargarEstilo('../Login/candidatos_config.json', '#000000');
+$propuestasColor = cargarEstilo('../Login/propuestas_config.json', '#4d0a0a');
+$eventosColor = cargarEstilo('../Login/eventos_config.json', '#FF9800');
 
 // Leer la configuración del Navbar
 $navbarConfig = json_decode(file_get_contents($navbarConfigPath), true);
 $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
+
+$config = json_decode(file_get_contents("styles_config.json"), true);
+$gradientStartLogin = $config['gradientStartLogin'] ?? "#FF007B";
+$gradientEndLogin = $config['gradientEndLogin'] ?? "#1C9FFF";
+
+
+
+
+$configFileEventos = "../Login/PaginaEventos.json";
+
+if (file_exists($configFileEventos)) {
+    $config = json_decode(file_get_contents($configFileEventos), true);
+    $paginaEventosBgColor = $config['paginaEventosBgColor'] ?? "#f4f4f4";
+} else {
+    $paginaEventosBgColor = "#f4f4f4";
+}
+
+$configFileCandidatos = "../Login/PaginaCandidatos.json";
+
+if (file_exists($configFileCandidatos)) {
+    $config = json_decode(file_get_contents($configFileCandidatos), true);
+    $paginaCandidatosBgColor = $config['paginaCandidatosBgColor'] ?? "#f4f4f4";
+} else {
+    $paginaCandidatosBgColor = "#f4f4f4";
+}
+
+
+// Ruta al archivo JSON de configuración de colores
+$configFile = "../Login/PaginaPropuestas.json";
+
+if (file_exists($configFile)) {
+    $config = json_decode(file_get_contents($configFile), true);
+    $paginaPropuestasBgColor = $config['paginaPropuestasBgColor'] ?? "#000000"; // Color blanco por defecto
+} else {
+    $paginaPropuestasBgColor = "#000000"; // Color blanco por defecto si no existe el archivo
+}
+
+
+$configFileSugerencias = "../Login/PaginaSugerencias.json";
+if (file_exists($configFileSugerencias)) {
+    $config = json_decode(file_get_contents($configFileSugerencias), true);
+    $paginaSugerenciasBgColor = $config['paginaSugerenciasBgColor'] ?? "#a1c4fd";
+} else {
+    $paginaSugerenciasBgColor = "#a1c4fd";
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -191,8 +250,8 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
                                         <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
                                         <form action="cambiar_colores.php" method="POST" id="formNavbar">
                                             <div class="d-flex align-items-center justify-content-between">
-                                                <input type="color" class="form-control form-control-color me-3" id="colorNavbar" name="colorNavbar" value="#00bfff">
-                                                <input type="text" class="form-control form-control-hex me-3" id="hexColorNavbar" name="hexColorNavbar" value="#00bfff" maxlength="7" style="width: 80px;">
+                                            <input type="color" class="form-control form-control-color me-3" id="colorNavbar" name="colorNavbar" value="<?php echo htmlspecialchars($navbarBgColor); ?>">
+                                                <input type="text" class="form-control form-control-hex me-3" id="hexColorNavbar" name="hexColorNavbar" value="<?php echo htmlspecialchars($navbarBgColor); ?>" maxlength="7" style="width: 80px;">
                                                 <div class="d-flex">
                                                     <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
                                                         Aceptar
@@ -205,21 +264,21 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
                                         </form>
                                     </div>
 
-<!-- Cambiar colores Candidatos -->
-<div class="color-section mb-4">
-    <h5 class="text-uppercase" style="color: #00BFFF;">Sección Candidatos</h5>
-    <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
-    <form action="cambiar_color_candidatos.php" method="POST" id="formInicioCandidatos">
-        <div class="d-flex align-items-center justify-content-between">
-            <input type="color" class="form-control form-control-color me-3" id="colorCandidatos" name="colorCandidatos" value="#000000">
-            <input type="text" class="form-control form-control-hex me-3" id="hexColorCandidatos" name="hexColorCandidatos" placeholder="#000000" maxlength="7" style="width: 80px;">
-            <div class="d-flex">
-                <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
-                    Aceptar
-                </button>
-                <button type="submit" name="resetCandidatos" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-left: 10px; transition: transform 0.3s;">
-                    Restablecer
-                </button>
+                                    <!-- Cambiar colores Candidatos -->
+                                    <div class="color-section mb-4">
+                                        <h5 class="text-uppercase" style="color: #00BFFF;">Sección Candidatos</h5>
+                                        <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
+                                        <form action="cambiar_color_candidatos.php" method="POST" id="formInicioCandidatos">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                            <input type="color" class="form-control form-control-color me-3" id="colorCandidatos" name="colorCandidatos" value="<?php echo htmlspecialchars($candidatosColor); ?>">
+                                                <input type="text" class="form-control form-control-hex me-3" id="hexColorCandidatos" name="hexColorCandidatos" value="<?php echo htmlspecialchars($candidatosColor); ?>" maxlength="7" style="width: 80px;">
+                                                <div class="d-flex">
+                                                    <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
+                                                        Aceptar
+                                                    </button>
+                                                    <button type="submit" name="resetCandidatos" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-left: 10px; transition: transform 0.3s;">
+                                                        Restablecer
+                                                    </button>
                                                 </div>
                                             </div>
                                         </form>
@@ -232,8 +291,8 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
                                         <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
                                         <form action="cambiar_color_propuestas.php" method="POST" id="formInicioPropuestas">
                                             <div class="d-flex align-items-center justify-content-between">
-                                                <input type="color" class="form-control form-control-color me-3" id="colorPropuestas" name="colorPropuestas" value="#4d0a0a">
-                                                <input type="text" class="form-control form-control-hex me-3" id="hexColorPropuestas" name="hexColorPropuestas" placeholder="#4d0a0a" maxlength="7" style="width: 80px;">
+                                            <input type="color" class="form-control form-control-color me-3" id="colorPropuestas" name="colorPropuestas" value="<?php echo htmlspecialchars($propuestasColor); ?>">
+                                                <input type="text" class="form-control form-control-hex me-3" id="hexColorPropuestas" name="hexColorPropuestas" value="<?php echo htmlspecialchars($propuestasColor); ?>" maxlength="7" style="width: 80px;">
                                                 <div class="d-flex">
                                                     <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
                                                         Aceptar
@@ -252,8 +311,8 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
                                         <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
                                         <form action="cambiar_color_eventos.php" method="POST" id="formInicioEventos">
                                             <div class="d-flex align-items-center justify-content-between">
-                                                <input type="color" class="form-control form-control-color me-3" id="colorEventosNoticias" name="colorEventosNoticias" value="#FF9800">
-                                                <input type="text" class="form-control form-control-hex me-3" id="hexColorEventosNoticias" name="hexColorEventosNoticias" placeholder="#FF9800" maxlength="7" style="width: 80px;">
+                                            <input type="color" class="form-control form-control-color me-3" id="colorEventosNoticias" name="colorEventosNoticias" value="<?php echo htmlspecialchars($eventosColor); ?>">
+                                                <input type="text" class="form-control form-control-hex me-3" id="hexColorEventosNoticias" name="hexColorEventosNoticias" value="<?php echo htmlspecialchars($eventosColor); ?>" maxlength="7" style="width: 80px;">
                                                 <div class="d-flex">
                                                     <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
                                                         Aceptar
@@ -275,13 +334,13 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
                                             <div class="d-flex align-items-center justify-content-between mb-3">
                                                 <div class="d-flex align-items-center me-4">
                                                     <label for="gradientStartLogin" class="form-label me-2" style="white-space: nowrap;">Color Inicial:</label>
-                                                    <input type="color" class="form-control form-control-color me-2" id="gradientStartLogin" name="gradientStartLogin" value="#FF007B" style="width: 50px; height: 40px;">
-                                                    <input type="text" class="form-control form-control-hex" id="hexGradientStartLogin" name="hexGradientStartLogin" placeholder="#FF007B" maxlength="7" style="width: 80px;">
+                                                    <input type="color" class="form-control form-control-color me-2" id="gradientStartLogin" name="gradientStartLogin" value="<?php echo htmlspecialchars($gradientStartLogin); ?>" style="width: 50px; height: 40px;">
+                                                    <input type="text" class="form-control form-control-hex" id="hexGradientStartLogin" name="hexGradientStartLogin" value="<?php echo htmlspecialchars($gradientStartLogin); ?>" maxlength="7" style="width: 80px;">
                                                 </div>
                                                 <div class="d-flex align-items-center">
                                                     <label for="gradientEndLogin" class="form-label me-2" style="white-space: nowrap;">Color Final:</label>
-                                                    <input type="color" class="form-control form-control-color me-2" id="gradientEndLogin" name="gradientEndLogin" value="#1C9FFF" style="width: 50px; height: 40px;">
-                                                    <input type="text" class="form-control form-control-hex" id="hexGradientEndLogin" name="hexGradientEndLogin" placeholder="#1C9FFF" maxlength="7" style="width: 80px;">
+                                                    <input type="color" class="form-control form-control-color me-2" id="gradientEndLogin" name="gradientEndLogin" value="<?php echo htmlspecialchars($gradientEndLogin); ?>" style="width: 50px; height: 40px;">
+                                                    <input type="text" class="form-control form-control-hex" id="hexGradientEndLogin" name="hexGradientEndLogin" value="<?php echo htmlspecialchars($gradientEndLogin); ?>" maxlength="7" style="width: 80px;">
                                                 </div>
                                             </div>
                                             <div class="d-flex justify-content-center mt-3">
@@ -306,8 +365,8 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
                                         <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
                                         <form action="cambiar_colores.php" method="POST" id="formInicioCandidatos">
                                             <div class="d-flex align-items-center justify-content-between">
-                                                <input type="color" class="form-control form-control-color me-3" id="colorPagCandidatos" name="colorPagCandidatos" value="#FF5733">
-                                                <input type="text" class="form-control form-control-hex me-3" id="hexColorPagCandidatos" name="hexColorCandidatos" placeholder="#FF5733" maxlength="7" style="width: 80px;">
+                                            <input type="color" class="form-control form-control-color me-3" id="colorPagCandidatos" name="colorPagCandidatos" value="<?php echo htmlspecialchars($paginaCandidatosBgColor); ?>">
+                                                <input type="text" class="form-control form-control-hex me-3" id="hexColorPagCandidatos" name="hexColorCandidatos" value="<?php echo htmlspecialchars($paginaCandidatosBgColor); ?>" maxlength="7" style="width: 80px;">
                                                 <div class="d-flex">
                                                     <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
                                                         Aceptar
@@ -330,8 +389,8 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
                                         <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
                                         <form action="cambiar_colores.php" method="POST" id="formInicioEventos">
                                             <div class="d-flex align-items-center justify-content-between">
-                                                <input type="color" class="form-control form-control-color me-3" id="colorPagEventos" name="colorPagEventos" value="#33FF58">
-                                                <input type="text" class="form-control form-control-hex me-3" id="hexColorPagEventos" name="hexColorPagEventos" placeholder="#33FF58" maxlength="7" style="width: 80px;">
+                                            <input type="color" class="form-control form-control-color me-3" id="colorPagEventos" name="colorPagEventos" value="<?php echo htmlspecialchars($paginaEventosBgColor); ?>">
+                                                <input type="text" class="form-control form-control-hex me-3" id="hexColorPagEventos" name="hexColorPagEventos" value="<?php echo htmlspecialchars($paginaEventosBgColor); ?>" maxlength="7" style="width: 80px;">
                                                 <div class="d-flex">
                                                     <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
                                                         Aceptar
@@ -353,8 +412,8 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
                                         <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
                                         <form action="cambiar_colores.php" method="POST" id="formInicioPropuestas">
                                             <div class="d-flex align-items-center justify-content-between">
-                                                <input type="color" class="form-control form-control-color me-3" id="colorPagPropuestas" name="colorPagPropuestas" value="#337BFF">
-                                                <input type="text" class="form-control form-control-hex me-3" id="hexColorPagPropuestas" name="hexColorPagPropuestas" placeholder="#337BFF" maxlength="7" style="width: 80px;">
+                                            <input type="color" class="form-control form-control-color me-3" id="colorPagPropuestas" name="colorPagPropuestas" value="<?php echo htmlspecialchars($paginaPropuestasBgColor); ?>">
+                                                <input type="text" class="form-control form-control-hex me-3" id="hexColorPagPropuestas" name="hexColorPagPropuestas" value="<?php echo htmlspecialchars($paginaPropuestasBgColor); ?>" maxlength="7" style="width: 80px;">
                                                 <div class="d-flex">
                                                     <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
                                                         Aceptar
@@ -374,8 +433,8 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
                                         <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
                                         <form action="cambiar_colores.php" method="POST" id="formInicioSugerencias">
                                             <div class="d-flex align-items-center justify-content-between">
-                                                <input type="color" class="form-control form-control-color me-3" id="colorPagSugerencias" name="colorPagSugerencias" value="#FF33A1">
-                                                <input type="text" class="form-control form-control-hex me-3" id="hexColorPagSugerencias" name="hexColorPagSugerencias" placeholder="#FF33A1" maxlength="7" style="width: 80px;">
+                                            <input type="color" class="form-control form-control-color me-3" id="colorPagSugerencias" name="colorPagSugerencias" value="<?php echo htmlspecialchars($paginaSugerenciasBgColor); ?>">
+                                                <input type="text" class="form-control form-control-hex me-3" id="hexColorPagSugerencias" name="hexColorPagSugerencias" value="<?php echo htmlspecialchars($paginaSugerenciasBgColor); ?>" maxlength="7" style="width: 80px;">
                                                 <div class="d-flex">
                                                     <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
                                                         Aceptar
@@ -799,90 +858,88 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
         });
 
 
-        document.addEventListener("DOMContentLoaded", function() { 
-    const colorInputPropuestas = document.getElementById("colorPropuestas");
-    const hexInputPropuestas = document.getElementById("hexColorPropuestas");
-    const defaultColorPropuestas = "#4d0a0a";
+        document.addEventListener("DOMContentLoaded", function() {
+            const colorInputPropuestas = document.getElementById("colorPropuestas");
+            const hexInputPropuestas = document.getElementById("hexColorPropuestas");
+            const defaultColorPropuestas = "#4d0a0a";
 
-    // Sincronizar el campo de texto hexadecimal con el selector de color
-    colorInputPropuestas.addEventListener("input", function() {
-        hexInputPropuestas.value = colorInputPropuestas.value;
-    });
+            // Sincronizar el campo de texto hexadecimal con el selector de color
+            colorInputPropuestas.addEventListener("input", function() {
+                hexInputPropuestas.value = colorInputPropuestas.value;
+            });
 
-    // Sincronizar el selector de color con el campo de texto hexadecimal
-    hexInputPropuestas.addEventListener("input", function() {
-        const value = hexInputPropuestas.value;
-        if (/^#[0-9A-Fa-f]{6}$/.test(value)) {
-            colorInputPropuestas.value = value;
-        }
-    });
+            // Sincronizar el selector de color con el campo de texto hexadecimal
+            hexInputPropuestas.addEventListener("input", function() {
+                const value = hexInputPropuestas.value;
+                if (/^#[0-9A-Fa-f]{6}$/.test(value)) {
+                    colorInputPropuestas.value = value;
+                }
+            });
 
-    // Manejar el evento del formulario
-    const formInicioPropuestas = document.getElementById("formInicioPropuestas");
-    formInicioPropuestas.addEventListener("submit", function(event) {
-        const submitter = event.submitter;
+            // Manejar el evento del formulario
+            const formInicioPropuestas = document.getElementById("formInicioPropuestas");
+            formInicioPropuestas.addEventListener("submit", function(event) {
+                const submitter = event.submitter;
 
-        if (submitter.name === "resetPropuestas" && submitter.value === "1") {
-            // Restablecer el color al valor por defecto
-            colorInputPropuestas.value = defaultColorPropuestas;
-            hexInputPropuestas.value = defaultColorPropuestas;
+                if (submitter.name === "resetPropuestas" && submitter.value === "1") {
+                    // Restablecer el color al valor por defecto
+                    colorInputPropuestas.value = defaultColorPropuestas;
+                    hexInputPropuestas.value = defaultColorPropuestas;
 
-            // Guardar en localStorage que se ha restablecido
-            localStorage.setItem("propuestasColorUpdated", "reset");
-        } else {
-            // Guardar que el color ha sido actualizado
-            localStorage.setItem("propuestasColorUpdated", "true");
-        }
+                    // Guardar en localStorage que se ha restablecido
+                    localStorage.setItem("propuestasColorUpdated", "reset");
+                } else {
+                    // Guardar que el color ha sido actualizado
+                    localStorage.setItem("propuestasColorUpdated", "true");
+                }
 
-        // Limpiar el estado en el localStorage después de 1 segundo
-        setTimeout(() => {
-            localStorage.removeItem("propuestasColorUpdated");
-        }, 1000);
-    });
-});
-document.addEventListener("DOMContentLoaded", function() { 
-    const colorInputCandidatos = document.getElementById("colorCandidatos");
-    const hexInputCandidatos = document.getElementById("hexColorCandidatos");
-    const defaultColorCandidatos = "#000000";
+                // Limpiar el estado en el localStorage después de 1 segundo
+                setTimeout(() => {
+                    localStorage.removeItem("propuestasColorUpdated");
+                }, 1000);
+            });
+        });
+        document.addEventListener("DOMContentLoaded", function() {
+            const colorInputCandidatos = document.getElementById("colorCandidatos");
+            const hexInputCandidatos = document.getElementById("hexColorCandidatos");
+            const defaultColorCandidatos = "#000000";
 
-    // Sincronizar el campo de texto hexadecimal con el selector de color
-    colorInputCandidatos.addEventListener("input", function() {
-        hexInputCandidatos.value = colorInputCandidatos.value;
-    });
+            // Sincronizar el campo de texto hexadecimal con el selector de color
+            colorInputCandidatos.addEventListener("input", function() {
+                hexInputCandidatos.value = colorInputCandidatos.value;
+            });
 
-    // Sincronizar el selector de color con el campo de texto hexadecimal
-    hexInputCandidatos.addEventListener("input", function() {
-        const value = hexInputCandidatos.value;
-        if (/^#[0-9A-Fa-f]{6}$/.test(value)) {
-            colorInputCandidatos.value = value;
-        }
-    });
+            // Sincronizar el selector de color con el campo de texto hexadecimal
+            hexInputCandidatos.addEventListener("input", function() {
+                const value = hexInputCandidatos.value;
+                if (/^#[0-9A-Fa-f]{6}$/.test(value)) {
+                    colorInputCandidatos.value = value;
+                }
+            });
 
-    // Manejar el evento del formulario
-    const formInicioCandidatos = document.getElementById("formInicioCandidatos");
-    formInicioCandidatos.addEventListener("submit", function(event) {
-        const submitter = event.submitter;
+            // Manejar el evento del formulario
+            const formInicioCandidatos = document.getElementById("formInicioCandidatos");
+            formInicioCandidatos.addEventListener("submit", function(event) {
+                const submitter = event.submitter;
 
-        if (submitter.name === "resetCandidatos" && submitter.value === "1") {
-            // Restablecer el color al valor por defecto
-            colorInputCandidatos.value = defaultColorCandidatos;
-            hexInputCandidatos.value = defaultColorCandidatos;
+                if (submitter.name === "resetCandidatos" && submitter.value === "1") {
+                    // Restablecer el color al valor por defecto
+                    colorInputCandidatos.value = defaultColorCandidatos;
+                    hexInputCandidatos.value = defaultColorCandidatos;
 
-            // Guardar en localStorage que se ha restablecido
-            localStorage.setItem("candidatosColorUpdated", "reset");
-        } else {
-            // Guardar que el color ha sido actualizado
-            localStorage.setItem("candidatosColorUpdated", "true");
-        }
+                    // Guardar en localStorage que se ha restablecido
+                    localStorage.setItem("candidatosColorUpdated", "reset");
+                } else {
+                    // Guardar que el color ha sido actualizado
+                    localStorage.setItem("candidatosColorUpdated", "true");
+                }
 
-        // Limpiar el estado en el localStorage después de 1 segundo
-        setTimeout(() => {
-            localStorage.removeItem("candidatosColorUpdated");
-        }, 1000);
-    });
-});
-
-
+                // Limpiar el estado en el localStorage después de 1 segundo
+                setTimeout(() => {
+                    localStorage.removeItem("candidatosColorUpdated");
+                }, 1000);
+            });
+        });
     </script>
 
 
