@@ -205,21 +205,21 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
                                         </form>
                                     </div>
 
-                                    <!-- Cambiar colores Candidatos -->
-                                    <div class="color-section mb-4">
-                                        <h5 class="text-uppercase" style="color: #00BFFF;">Sección Candidatos</h5>
-                                        <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
-                                        <form action="cambiar_color_candidatos.php" method="POST" id="formInicioCandidatos">
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <input type="color" class="form-control form-control-color me-3" id="colorCandidatos" name="colorCandidatos" value="#000000">
-                                                <input type="text" class="form-control form-control-hex me-3" id="hexColorCandidatos" name="hexColorCandidatos" placeholder="#000000" maxlength="7" style="width: 80px;">
-                                                <div class="d-flex">
-                                                    <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
-                                                        Aceptar
-                                                    </button>
-                                                    <button type="submit" name="resetCandidatos" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-left: 10px; transition: transform 0.3s;">
-                                                        Restablecer
-                                                    </button>
+<!-- Cambiar colores Candidatos -->
+<div class="color-section mb-4">
+    <h5 class="text-uppercase" style="color: #00BFFF;">Sección Candidatos</h5>
+    <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
+    <form action="cambiar_color_candidatos.php" method="POST" id="formInicioCandidatos">
+        <div class="d-flex align-items-center justify-content-between">
+            <input type="color" class="form-control form-control-color me-3" id="colorCandidatos" name="colorCandidatos" value="#000000">
+            <input type="text" class="form-control form-control-hex me-3" id="hexColorCandidatos" name="hexColorCandidatos" placeholder="#000000" maxlength="7" style="width: 80px;">
+            <div class="d-flex">
+                <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
+                    Aceptar
+                </button>
+                <button type="submit" name="resetCandidatos" value="1" class="btn" style="background-color: #FF69B4; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-left: 10px; transition: transform 0.3s;">
+                    Restablecer
+                </button>
                                                 </div>
                                             </div>
                                         </form>
@@ -797,7 +797,95 @@ $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff';
                 }, 1000);
             });
         });
+
+
+        document.addEventListener("DOMContentLoaded", function() { 
+    const colorInputPropuestas = document.getElementById("colorPropuestas");
+    const hexInputPropuestas = document.getElementById("hexColorPropuestas");
+    const defaultColorPropuestas = "#4d0a0a";
+
+    // Sincronizar el campo de texto hexadecimal con el selector de color
+    colorInputPropuestas.addEventListener("input", function() {
+        hexInputPropuestas.value = colorInputPropuestas.value;
+    });
+
+    // Sincronizar el selector de color con el campo de texto hexadecimal
+    hexInputPropuestas.addEventListener("input", function() {
+        const value = hexInputPropuestas.value;
+        if (/^#[0-9A-Fa-f]{6}$/.test(value)) {
+            colorInputPropuestas.value = value;
+        }
+    });
+
+    // Manejar el evento del formulario
+    const formInicioPropuestas = document.getElementById("formInicioPropuestas");
+    formInicioPropuestas.addEventListener("submit", function(event) {
+        const submitter = event.submitter;
+
+        if (submitter.name === "resetPropuestas" && submitter.value === "1") {
+            // Restablecer el color al valor por defecto
+            colorInputPropuestas.value = defaultColorPropuestas;
+            hexInputPropuestas.value = defaultColorPropuestas;
+
+            // Guardar en localStorage que se ha restablecido
+            localStorage.setItem("propuestasColorUpdated", "reset");
+        } else {
+            // Guardar que el color ha sido actualizado
+            localStorage.setItem("propuestasColorUpdated", "true");
+        }
+
+        // Limpiar el estado en el localStorage después de 1 segundo
+        setTimeout(() => {
+            localStorage.removeItem("propuestasColorUpdated");
+        }, 1000);
+    });
+});
+document.addEventListener("DOMContentLoaded", function() { 
+    const colorInputCandidatos = document.getElementById("colorCandidatos");
+    const hexInputCandidatos = document.getElementById("hexColorCandidatos");
+    const defaultColorCandidatos = "#000000";
+
+    // Sincronizar el campo de texto hexadecimal con el selector de color
+    colorInputCandidatos.addEventListener("input", function() {
+        hexInputCandidatos.value = colorInputCandidatos.value;
+    });
+
+    // Sincronizar el selector de color con el campo de texto hexadecimal
+    hexInputCandidatos.addEventListener("input", function() {
+        const value = hexInputCandidatos.value;
+        if (/^#[0-9A-Fa-f]{6}$/.test(value)) {
+            colorInputCandidatos.value = value;
+        }
+    });
+
+    // Manejar el evento del formulario
+    const formInicioCandidatos = document.getElementById("formInicioCandidatos");
+    formInicioCandidatos.addEventListener("submit", function(event) {
+        const submitter = event.submitter;
+
+        if (submitter.name === "resetCandidatos" && submitter.value === "1") {
+            // Restablecer el color al valor por defecto
+            colorInputCandidatos.value = defaultColorCandidatos;
+            hexInputCandidatos.value = defaultColorCandidatos;
+
+            // Guardar en localStorage que se ha restablecido
+            localStorage.setItem("candidatosColorUpdated", "reset");
+        } else {
+            // Guardar que el color ha sido actualizado
+            localStorage.setItem("candidatosColorUpdated", "true");
+        }
+
+        // Limpiar el estado en el localStorage después de 1 segundo
+        setTimeout(() => {
+            localStorage.removeItem("candidatosColorUpdated");
+        }, 1000);
+    });
+});
+
+
     </script>
+
+
 
 
 

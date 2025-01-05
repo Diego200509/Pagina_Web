@@ -1,7 +1,7 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $archivo = 'candidatos_config.json';
-    $defaultColor = '#000000';
+    $defaultColor = '#00bfff';
 
     function guardarConfiguracion($archivo, $datos, $mensajeExito, $mensajeError) {
         if (file_put_contents($archivo, json_encode($datos, JSON_PRETTY_PRINT))) {

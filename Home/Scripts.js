@@ -43,3 +43,7 @@
 
     // Cambia el slide cada 5 segundos
     setInterval(nextSlide, 5000);
+
+
+
+    
