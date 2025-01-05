@@ -1,5 +1,9 @@
 <?php
 session_start();
+if (!isset($_SESSION['user_role'])) {
+    header("Location: ../Login/Login.php");
+    exit;
+}
 // Obtener el rol del usuario
 $user_role = $_SESSION['user_role'];
 
@@ -623,9 +627,8 @@ input:checked + label .action span.option-2 {
     <nav class="navbar">
         <div class="navbar-logo">
         <div class="text-center">
-                <!-- Icono SuperAdmin existente -->
                 <i class="fa-solid fa-user-shield fa-2x"></i>
-                <h6 class="mt-2">SuperAdmin</h6>
+                <h6 class="mt-2"><?php echo $user_role === 'SUPERADMIN' ? 'SuperAdmin' : 'Admin'; ?></h6>
             </div>
         <img src="/Pagina_Web/Pagina_Web/Login/Img/logoMariCruz.png" width="200px" style="margin-right: 20px;">
         </div>
