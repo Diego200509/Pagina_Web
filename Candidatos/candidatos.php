@@ -88,7 +88,6 @@ if (file_exists($configFileCandidatos)) {
 
 
     </navbar>
-
     <main>
     <h2 class="title">Información del Candidato</h2>
 

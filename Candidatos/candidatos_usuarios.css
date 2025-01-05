@@ -173,15 +173,30 @@ body {
 .title {
     font-size: 2.5rem; /* Tamaño más grande */
     font-weight: 800; /* Negrilla más intensa */
-    color: #000; /* Color base, será sobrescrito */
+    color: #000; /* Color base */
+    margin-top: 20px; /* Espacio entre el título y el navbar */
     margin-bottom: 10px;
     display: flex;
-    justify-content: left; /* Centrar texto */
+    justify-content: left; /* Alineación a la izquierda */
     gap: 5px; /* Espaciado entre letras */
+    padding-left: 50px; /* Mueve el texto más a la derecha */
+    position: relative; /* Para posicionar la línea */
 }
 
 .title span {
     display: inline-block;
     font-size: inherit;
     font-weight: inherit;
+}
+
+.title::after {
+    content: "";
+    display: block;
+    width: 150px; /* Ancho de la línea */
+    height: 4px; /* Grosor de la línea */
+    background-color: #ff0080; /* Color rosa */
+    margin-top: 5px;
+    position: absolute;
+    left: 50px; /* Alinea la línea con el texto */
+    bottom: -10px; /* Posiciona la línea debajo del texto */
 }
