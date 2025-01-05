@@ -35,7 +35,6 @@ function displayProposals(proposals) {
     // Limpiar el contenido anterior
     proposalsGrid.innerHTML = '';
 
-    // Verificamos si hay propuestas
     if (proposals.length > 0) {
         proposals.forEach((proposal) => {
             const proposalCard = document.createElement("div");
@@ -44,7 +43,7 @@ function displayProposals(proposals) {
             proposalCard.innerHTML = `
                 <h3>${proposal.titulo}</h3>
                 <p><strong>Categoría:</strong> ${proposal.categoria}</p>
-                <p><strong>Descripción:</strong> ${truncateText(proposal.descripcion, 300)}</p>
+                <p><strong>Descripción:</strong> <span class="proposal-description">${proposal.descripcion}</span></p>
             `;
 
             proposalsGrid.appendChild(proposalCard);
@@ -55,6 +54,7 @@ function displayProposals(proposals) {
         proposalsGrid.appendChild(noProposalsMessage);
     }
 }
+
 
 // Inicializa con la primera opción
 filterProposals();

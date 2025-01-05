@@ -127,56 +127,89 @@ h2::after {
 .proposal-card {
     background: linear-gradient(145deg, #ffffff, #f7f7f7);
     border-radius: 15px;
-    padding: 20px;
+    padding: 10px; /* Reduce el padding general */
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    min-height: 300px;
+    min-height: 250px; /* Reduce la altura mínima */
+    max-width: 350px;
+    width: 100%;
     border-left: 10px solid #ff1493;
     display: flex;
     flex-direction: column;
+    align-items: flex-start; /* Evita espacios extra */
+    justify-content: flex-start; /* Acomoda los elementos al inicio */
     overflow: hidden;
+    word-wrap: break-word;
 }
+
+
+
+
 
 /* Título de la propuesta */
 .proposal-card h3 {
     font-size: 1.5em;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     color: #ff1493;
     font-weight: bold;
     text-align: center;
     border-bottom: 2px solid #ff1493;
-    padding-bottom: 10px;
+    padding-bottom: 5px;
     word-wrap: break-word; /* Ajusta el texto sin cortarlo */
     overflow-wrap: break-word;
-    white-space: normal; /* Permite varias líneas */
-    text-overflow: unset;
+    white-space: normal; /* Permite saltos de línea */
+    max-width: 100%; /* Se asegura de que el ancho no se exceda */
 }
+
+.proposal-card p {
+    font-size: 1em;
+    color: #444;
+    text-align: left;
+    margin: 5px 0; /* Reduce el espacio entre elementos */
+    padding: 0;
+}
+
+.proposal-card strong {
+    display: inline; /* Evita que los títulos se coloquen en una nueva línea */
+    font-weight: bold;
+    margin-right: 5px; /* Pequeño espacio entre el título y el contenido */
+}
+
 
 .proposal-card:hover {
     transform: scale(1.05);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
 }
 /* Descripción de la propuesta */
+
+/* Ajuste del texto de la descripción para que haga saltos de línea */
 .proposal-description {
     font-size: 1em;
     color: #444;
     text-align: justify;
-    line-height: 1.5;
-    margin-top: 10px;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    white-space: normal; /* Permite que el texto se ajuste */
+    line-height: 1.4;
+    margin-top: 5px;
+    width: 100%;
+    max-width: 100%;
+    overflow-wrap: break-word; /* Permite que las palabras largas se ajusten */
+    word-break: break-word; /* Rompe palabras largas */
+    white-space: pre-wrap; /* IMPORTANTE: Mantiene los saltos de línea */
+    display: block; /* Asegura que el párrafo se comporte correctamente */
 }
 
-.proposal-description {
-    font-size: 1em;
-    color: #444;
-    text-align: justify;
-    line-height: 1.6;
-    margin-top: 10px;
-    overflow-wrap: break-word;
-    white-space: normal;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* Estilo de los botones de la categoría */
 .card-category {
     background-color: #00bfff;
@@ -222,7 +255,14 @@ footer {
     }
 
     .proposals-grid {
-        grid-template-columns: 1fr;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Ajuste dinámico */
+        gap: 30px;
+        justify-content: center; /* Centra cuando hay una sola card */
+        align-items: stretch; /* Asegura que todas las tarjetas tengan la misma altura */
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
     }
 
     .navbar {
