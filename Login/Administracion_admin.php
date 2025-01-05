@@ -40,6 +40,7 @@ if (file_exists($configFileEventos)) {
     $paginaEventosBgColor = $config['paginaEventosBgColor'] ?? "#f4f4f4";
 } else {
     $paginaEventosBgColor = "#f4f4f4";
+    
 }
 
 $configFileCandidatos = "../Login/PaginaCandidatos.json";
@@ -178,12 +179,11 @@ if (file_exists($configFileSugerencias)) {
             <div class="text-center">
                 <!-- Icono SuperAdmin existente -->
                 <i class="fa-solid fa-user-shield fa-2x"></i>
-                <h6 class="mt-2">SuperAdmin</h6>
+                <h6 class="mt-2">Admin</h6>
             </div>
             <!-- Logo existente -->
             <img src="/Pagina_Web/Pagina_Web/Login/Img/logoMariCruz.png" width="200px" style="margin-right: 20px;">
         </div>
-
 
 
         </div>
@@ -193,7 +193,7 @@ if (file_exists($configFileSugerencias)) {
             <li><a href="../Propuestas/gestionarPropuestas.php"><i class="fa-solid fa-lightbulb"></i> <span>Propuestas</span></a></li>
             <li><a href="../Sugerencias/sugerencias_admin.php"><i class="fa-solid fa-comment-dots"></i> <span>Sugerencias</span></a></li>
             <li><a href="../Sugerencias/resultados_admin.php"><i class="fas fa-vote-yea"></i> Votos</a></li>
-            <li><a href="../Login/Administracion.php"><i class="fa-solid fa-cogs"></i> <span>Administración</span></a></li>
+            <li><a href="../Login/Administracion_admin.php"><i class="fa-solid fa-cogs"></i> <span>Administración</span></a></li>
             <li><a href="../Login/Login.php" class="logout"><i class="fa-solid fa-sign-out-alt"></i> <span>Cerrar Sesión</span></a></li>
         </ul>
     </nav>
@@ -203,30 +203,18 @@ if (file_exists($configFileSugerencias)) {
             <!-- Crear Admin -->
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingOne">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                        Crear Admin
-                    </button>
-                </h2>
-                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#adminAccordion">
-                    <div class="accordion-body">
-                        <form action="../src/crear_usuario_queries.php" method="POST">
+                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#adminAccordion">
+                        <div class="accordion-body">
                             <div class="mb-3">
-                                <label for="nombre" class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre del nuevo admin" required>
                             </div>
                             <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" placeholder="email@ejemplo.com" required>
                             </div>
                             <div class="mb-3">
-                                <label for="password" class="form-label">Contraseña</label>
-                                <input type="password" class="form-control" id="password" name="password" placeholder="********" required>
                             </div>
-                            <button type="submit" class="btn btn-dark">Crear Admin</button>
-                        </form>
+                            </form>
 
+                        </div>
                     </div>
-                </div>
 
             </div>
 
@@ -239,7 +227,7 @@ if (file_exists($configFileSugerencias)) {
                 </h2>
                 <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#adminAccordion">
                     <div class="accordion-body">
-                        <form action="cambiar_colores.php" method="POST">
+                        <form action="cambiar_colores_admin.php" method="POST">
                             <!-- Distribución en dos columnas -->
                             <div class="row">
                                 <!-- Columna izquierda -->
@@ -248,9 +236,9 @@ if (file_exists($configFileSugerencias)) {
                                     <div class="color-section mb-4">
                                         <h5 class="text-uppercase" style="color: #00BFFF;">Navbar General</h5>
                                         <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
-                                        <form action="cambiar_colores.php" method="POST" id="formNavbar">
+                                        <form action="cambiar_colores_admin.php" method="POST" id="formNavbar">
                                             <div class="d-flex align-items-center justify-content-between">
-                                            <input type="color" class="form-control form-control-color me-3" id="colorNavbar" name="colorNavbar" value="<?php echo htmlspecialchars($navbarBgColor); ?>">
+                                                <input type="color" class="form-control form-control-color me-3" id="colorNavbar" name="colorNavbar" value="<?php echo htmlspecialchars($navbarBgColor); ?>">
                                                 <input type="text" class="form-control form-control-hex me-3" id="hexColorNavbar" name="hexColorNavbar" value="<?php echo htmlspecialchars($navbarBgColor); ?>" maxlength="7" style="width: 80px;">
                                                 <div class="d-flex">
                                                     <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
@@ -268,9 +256,9 @@ if (file_exists($configFileSugerencias)) {
                                     <div class="color-section mb-4">
                                         <h5 class="text-uppercase" style="color: #00BFFF;">Sección Candidatos</h5>
                                         <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
-                                        <form action="cambiar_color_candidatos.php" method="POST" id="formInicioCandidatos">
+                                        <form action="cambiar_color_candidatos_admin.php" method="POST" id="formInicioCandidatos">
                                             <div class="d-flex align-items-center justify-content-between">
-                                            <input type="color" class="form-control form-control-color me-3" id="colorCandidatos" name="colorCandidatos" value="<?php echo htmlspecialchars($candidatosColor); ?>">
+                                                <input type="color" class="form-control form-control-color me-3" id="colorCandidatos" name="colorCandidatos" value="<?php echo htmlspecialchars($candidatosColor); ?>">
                                                 <input type="text" class="form-control form-control-hex me-3" id="hexColorCandidatos" name="hexColorCandidatos" value="<?php echo htmlspecialchars($candidatosColor); ?>" maxlength="7" style="width: 80px;">
                                                 <div class="d-flex">
                                                     <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
@@ -289,9 +277,9 @@ if (file_exists($configFileSugerencias)) {
                                     <div class="color-section mb-4">
                                         <h5 class="text-uppercase" style="color: #00BFFF;">Sección Propuestas</h5>
                                         <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
-                                        <form action="cambiar_color_propuestas.php" method="POST" id="formInicioPropuestas">
+                                        <form action="cambiar_color_propuestas_admin.php" method="POST" id="formInicioPropuestas">
                                             <div class="d-flex align-items-center justify-content-between">
-                                            <input type="color" class="form-control form-control-color me-3" id="colorPropuestas" name="colorPropuestas" value="<?php echo htmlspecialchars($propuestasColor); ?>">
+                                                <input type="color" class="form-control form-control-color me-3" id="colorPropuestas" name="colorPropuestas" value="<?php echo htmlspecialchars($propuestasColor); ?>">
                                                 <input type="text" class="form-control form-control-hex me-3" id="hexColorPropuestas" name="hexColorPropuestas" value="<?php echo htmlspecialchars($propuestasColor); ?>" maxlength="7" style="width: 80px;">
                                                 <div class="d-flex">
                                                     <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
@@ -309,9 +297,9 @@ if (file_exists($configFileSugerencias)) {
                                     <div class="color-section mb-4">
                                         <h5 class="text-uppercase" style="color: #00BFFF;">Sección Eventos y Noticias</h5>
                                         <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
-                                        <form action="cambiar_color_eventos.php" method="POST" id="formInicioEventos">
+                                        <form action="cambiar_color_eventos_admin.php" method="POST" id="formInicioEventos">
                                             <div class="d-flex align-items-center justify-content-between">
-                                            <input type="color" class="form-control form-control-color me-3" id="colorEventosNoticias" name="colorEventosNoticias" value="<?php echo htmlspecialchars($eventosColor); ?>">
+                                                <input type="color" class="form-control form-control-color me-3" id="colorEventosNoticias" name="colorEventosNoticias" value="<?php echo htmlspecialchars($eventosColor); ?>">
                                                 <input type="text" class="form-control form-control-hex me-3" id="hexColorEventosNoticias" name="hexColorEventosNoticias" value="<?php echo htmlspecialchars($eventosColor); ?>" maxlength="7" style="width: 80px;">
                                                 <div class="d-flex">
                                                     <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
@@ -330,7 +318,7 @@ if (file_exists($configFileSugerencias)) {
                                     <div class="color-section mb-4">
                                         <h5 class="text-uppercase" style="color: #00BFFF;">Login</h5>
                                         <p class="subtitle" style="color: #FF69B4;">Seleccionar degradado:</p>
-                                        <form action="cambiar_colores.php" method="POST" id="formLogin">
+                                        <form action="cambiar_colores_admin.php" method="POST" id="formLogin">
                                             <div class="d-flex align-items-center justify-content-between mb-3">
                                                 <div class="d-flex align-items-center me-4">
                                                     <label for="gradientStartLogin" class="form-label me-2" style="white-space: nowrap;">Color Inicial:</label>
@@ -363,9 +351,9 @@ if (file_exists($configFileSugerencias)) {
                                     <div class="color-section mb-4">
                                         <h5 class="text-uppercase" style="color: #00BFFF;">Página Candidatos</h5>
                                         <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
-                                        <form action="cambiar_colores.php" method="POST" id="formInicioCandidatos">
+                                        <form action="cambiar_colores_admin.php" method="POST" id="formInicioCandidatos">
                                             <div class="d-flex align-items-center justify-content-between">
-                                            <input type="color" class="form-control form-control-color me-3" id="colorPagCandidatos" name="colorPagCandidatos" value="<?php echo htmlspecialchars($paginaCandidatosBgColor); ?>">
+                                                <input type="color" class="form-control form-control-color me-3" id="colorPagCandidatos" name="colorPagCandidatos" value="<?php echo htmlspecialchars($paginaCandidatosBgColor); ?>">
                                                 <input type="text" class="form-control form-control-hex me-3" id="hexColorPagCandidatos" name="hexColorCandidatos" value="<?php echo htmlspecialchars($paginaCandidatosBgColor); ?>" maxlength="7" style="width: 80px;">
                                                 <div class="d-flex">
                                                     <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
@@ -387,9 +375,9 @@ if (file_exists($configFileSugerencias)) {
                                     <div class="color-section mb-4">
                                         <h5 class="text-uppercase" style="color: #00BFFF;">Página Eventos y Noticias</h5>
                                         <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
-                                        <form action="cambiar_colores.php" method="POST" id="formInicioEventos">
+                                        <form action="cambiar_colores_admin.php" method="POST" id="formInicioEventos">
                                             <div class="d-flex align-items-center justify-content-between">
-                                            <input type="color" class="form-control form-control-color me-3" id="colorPagEventos" name="colorPagEventos" value="<?php echo htmlspecialchars($paginaEventosBgColor); ?>">
+                                                <input type="color" class="form-control form-control-color me-3" id="colorPagEventos" name="colorPagEventos" value="<?php echo htmlspecialchars($paginaEventosBgColor); ?>">
                                                 <input type="text" class="form-control form-control-hex me-3" id="hexColorPagEventos" name="hexColorPagEventos" value="<?php echo htmlspecialchars($paginaEventosBgColor); ?>" maxlength="7" style="width: 80px;">
                                                 <div class="d-flex">
                                                     <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
@@ -410,9 +398,9 @@ if (file_exists($configFileSugerencias)) {
                                     <div class="color-section mb-4">
                                         <h5 class="text-uppercase" style="color: #00BFFF;">Página Propuestas</h5>
                                         <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
-                                        <form action="cambiar_colores.php" method="POST" id="formInicioPropuestas">
+                                        <form action="cambiar_colores_admin.php" method="POST" id="formInicioPropuestas">
                                             <div class="d-flex align-items-center justify-content-between">
-                                            <input type="color" class="form-control form-control-color me-3" id="colorPagPropuestas" name="colorPagPropuestas" value="<?php echo htmlspecialchars($paginaPropuestasBgColor); ?>">
+                                                <input type="color" class="form-control form-control-color me-3" id="colorPagPropuestas" name="colorPagPropuestas" value="<?php echo htmlspecialchars($paginaPropuestasBgColor); ?>">
                                                 <input type="text" class="form-control form-control-hex me-3" id="hexColorPagPropuestas" name="hexColorPagPropuestas" value="<?php echo htmlspecialchars($paginaPropuestasBgColor); ?>" maxlength="7" style="width: 80px;">
                                                 <div class="d-flex">
                                                     <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
@@ -431,9 +419,9 @@ if (file_exists($configFileSugerencias)) {
                                     <div class="color-section mb-4">
                                         <h5 class="text-uppercase" style="color: #00BFFF;">Página Sugerencias</h5>
                                         <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
-                                        <form action="cambiar_colores.php" method="POST" id="formInicioSugerencias">
+                                        <form action="cambiar_colores_admin.php" method="POST" id="formInicioSugerencias">
                                             <div class="d-flex align-items-center justify-content-between">
-                                            <input type="color" class="form-control form-control-color me-3" id="colorPagSugerencias" name="colorPagSugerencias" value="<?php echo htmlspecialchars($paginaSugerenciasBgColor); ?>">
+                                                <input type="color" class="form-control form-control-color me-3" id="colorPagSugerencias" name="colorPagSugerencias" value="<?php echo htmlspecialchars($paginaSugerenciasBgColor); ?>">
                                                 <input type="text" class="form-control form-control-hex me-3" id="hexColorPagSugerencias" name="hexColorPagSugerencias" value="<?php echo htmlspecialchars($paginaSugerenciasBgColor); ?>" maxlength="7" style="width: 80px;">
                                                 <div class="d-flex">
                                                     <button type="submit" class="btn" style="background-color: #00BFFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: transform 0.3s;">
@@ -465,7 +453,7 @@ if (file_exists($configFileSugerencias)) {
                 </h2>
                 <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#adminAccordion">
                     <div class="accordion-body">
-                        <form action="subir_imagen.php" method="POST" enctype="multipart/form-data">
+                        <form action="subir_imagen_admin.php" method="POST" enctype="multipart/form-data">
                             <!-- Logo Navbar -->
                             <div class="mb-3">
                                 <label for="logoNavbar" class="form-label header-text">Logo Navbar:</label>
@@ -938,6 +926,24 @@ if (file_exists($configFileSugerencias)) {
                 setTimeout(() => {
                     localStorage.removeItem("candidatosColorUpdated");
                 }, 1000);
+            });
+        });
+
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const colorInput = document.getElementById("colorNavbar");
+            const hexInput = document.getElementById("hexColorNavbar");
+
+            // Actualizar el input hexadecimal cuando cambie el cuadro de color
+            colorInput.addEventListener("input", function() {
+                hexInput.value = colorInput.value;
+            });
+
+            // Actualizar el cuadro de color cuando cambie el input hexadecimal
+            hexInput.addEventListener("input", function() {
+                if (/^#[0-9A-Fa-f]{6}$/.test(hexInput.value)) {
+                    colorInput.value = hexInput.value;
+                }
             });
         });
     </script>

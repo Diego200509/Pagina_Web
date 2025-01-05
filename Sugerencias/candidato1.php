@@ -43,9 +43,9 @@ if ($result->num_rows > 0) {
 $configFileSugerencias = "../Login/PaginaSugerencias.json";
 if (file_exists($configFileSugerencias)) {
     $config = json_decode(file_get_contents($configFileSugerencias), true);
-    $paginaBgColor = $config['paginaBgColor'] ?? "#a1c4fd";
+    $paginaSugerenciasBgColor = $config['paginaSugerenciasBgColor'] ?? "#a1c4fd";
 } else {
-    $paginaBgColor = "#a1c4fd";
+    $paginaSugerenciasBgColor = "#a1c4fd";
 }
 
 
@@ -74,7 +74,7 @@ $nombrePartido = obtenerNombrePartido(1);
     <style>
     :root {
         --navbar-bg-color: <?php echo $navbarBgColor; ?>;
-        --pagina-bg-color: <?php echo $paginaBgColor; ?>;
+        --pagina-bg-color: <?php echo $paginaSugerenciasBgColor; ?>;
     }
 
     body {

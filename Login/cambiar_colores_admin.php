@@ -5,9 +5,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Función para guardar configuración en un archivo JSON
     function guardarConfiguracion($archivo, $datos, $mensajeExito, $mensajeError) {
         if (file_put_contents($archivo, json_encode($datos, JSON_PRETTY_PRINT))) {
-            header("Location: ../Login/Administracion.php?success=1&message=" . urlencode($mensajeExito));
+            header("Location: ../Login/Administracion_admin.php?success=1&message=" . urlencode($mensajeExito));
         } else {
-            header("Location: ../Login/Administracion.php?success=0&message=" . urlencode($mensajeError));
+            header("Location: ../Login/Administracion_admin.php?success=0&message=" . urlencode($mensajeError));
         }
         exit;
     }
@@ -184,7 +184,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $config,
             "El color de fondo de la Página Sugerencias se ha actualizado correctamente.",
             "No se pudo actualizar el color de fondo de la Página Sugerencias."
-     );
- }
+        );
+    }
 }
 ?>

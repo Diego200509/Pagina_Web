@@ -32,9 +32,9 @@ $configFileCandidatos = "../Login/PaginaCandidatos.json";
 
 if (file_exists($configFileCandidatos)) {
     $config = json_decode(file_get_contents($configFileCandidatos), true);
-    $paginaBgColor = $config['paginaBgColor'] ?? "#f4f4f4";
+    $paginaCandidatosBgColor = $config['paginaCandidatosBgColor'] ?? "#f4f4f4";
 } else {
-    $paginaBgColor = "#f4f4f4";
+    $paginaCandidatosBgColor = "#f4f4f4";
 }
 
 ?>
@@ -52,7 +52,7 @@ if (file_exists($configFileCandidatos)) {
     <style>
         :root {
             --navbar-bg-color: <?php echo $navbarBgColor; ?>;
-            --pagina-bg-color: <?php echo $paginaBgColor; ?>;
+            --pagina-bg-color: <?php echo $paginaCandidatosBgColor; ?>;
             body {
     background-color: var(--pagina-bg-color);
 }

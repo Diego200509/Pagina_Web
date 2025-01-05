@@ -38,7 +38,7 @@ if ($result->num_rows > 0) {
         if ($user['ROL_USU'] === 'SUPERADMIN') {
             header("Location: ../Login/administracion.php");
         } elseif ($user['ROL_USU'] === 'ADMIN') {
-            header("Location:  ../Login/admin_dashboard.php");
+            header("Location:  ../Login/administracion_admin.php");
         } else {
             $_SESSION['error'] = 'Rol no reconocido.';
             header("Location: ../Login/Login.php");
