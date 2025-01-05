@@ -1,7 +1,7 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $archivo = 'propuestas_config.json';
-    $defaultColor = '#4d0a0a';
+    $defaultColor = '#ffffff';
 
     function guardarConfiguracion($archivo, $datos, $mensajeExito, $mensajeError) {
         if (file_put_contents($archivo, json_encode($datos, JSON_PRETTY_PRINT))) {
@@ -14,12 +14,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (isset($_POST['resetPropuestas']) && $_POST['resetPropuestas'] === "1") {
         $datos = ["bgColor" => $defaultColor];
-        guardarConfiguracion($archivo, $datos, "El color de Propuestas ha sido restablecido.", "Error al restablecer el color de Propuestas.");
+        guardarConfiguracion($archivo, $datos, "El color de la sección Propuestas ha sido restablecido.", "Error al restablecer el color de Propuestas.");
     }
 
     if (isset($_POST['colorPropuestas'])) {
         $datos = ["bgColor" => $_POST['colorPropuestas']];
-        guardarConfiguracion($archivo, $datos, "El color de Propuestas ha sido actualizado.", "Error al actualizar el color de Propuestas.");
+        guardarConfiguracion($archivo, $datos, "El color de la sección Propuestas ha sido actualizado.", "Error al actualizar el color de Propuestas.");
     }
 }
 ?>
