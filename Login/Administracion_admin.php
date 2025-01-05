@@ -466,7 +466,7 @@ if (file_exists($configFileSugerencias)) {
                         </form>
 
                         <!-- Formulario para actualizar Slide 1 -->
-                        <form action="imagenes_slides.php" method="POST" enctype="multipart/form-data">
+                        <form action="imagenes_slides_admin.php" method="POST" enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label for="slide1" class="form-label header-text">Actualizar Imagen Slide 1:</label>
                                 <input type="file" class="form-control" id="slide1" name="slideImage">
@@ -481,7 +481,7 @@ if (file_exists($configFileSugerencias)) {
                         <hr>
 
                         <!-- Formulario para actualizar Slide 5 -->
-                        <form action="imagenes_slides.php" method="POST" enctype="multipart/form-data">
+                        <form action="imagenes_slides_admin.php" method="POST" enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label for="slide5" class="form-label header-text">Actualizar Imagen Slide 2:</label>
                                 <input type="file" class="form-control" id="slide5" name="slideImage">
