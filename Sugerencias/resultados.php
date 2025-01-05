@@ -1,5 +1,10 @@
 <?php
-
+// Verificar si el usuario ha votado
+if (!isset($_COOKIE['ya_voto'])) {
+    // Redirigir a votos.php si no ha votado
+    header("Location: votos.php");
+    exit;
+}
 include('../config/config.php');
 $eventos_noticias = include('../src/resultado_queries.php');
 
