@@ -17,9 +17,9 @@ $configFile = "../Login/PaginaPropuestas.json";
 
 if (file_exists($configFile)) {
     $config = json_decode(file_get_contents($configFile), true);
-    $paginaBgColor = $config['paginaBgColor'] ?? "#000000"; // Color blanco por defecto
+    $paginaPropuestasBgColor = $config['paginaPropuestasBgColor'] ?? "#000000"; // Color blanco por defecto
 } else {
-    $paginaBgColor = "#000000"; // Color blanco por defecto si no existe el archivo
+    $paginaPropuestasBgColor = "#000000"; // Color blanco por defecto si no existe el archivo
 }
 
 
@@ -51,7 +51,7 @@ if ($result->num_rows > 0) {
     <style>
         :root {
             --navbar-bg-color: <?php echo $navbarBgColor; ?>;
-            --pagina-bg-color: <?php echo $paginaBgColor; ?>;
+            --pagina-bg-color: <?php echo $paginaPropuestasBgColor; ?>;
 
         }
         </style>

@@ -30,9 +30,9 @@ $configFileEventos = "../Login/PaginaEventos.json";
 
 if (file_exists($configFileEventos)) {
     $config = json_decode(file_get_contents($configFileEventos), true);
-    $paginaBgColor = $config['paginaBgColor'] ?? "#f4f4f4";
+    $paginaEventosBgColor = $config['paginaEventosBgColor'] ?? "#f4f4f4";
 } else {
-    $paginaBgColor = "#f4f4f4";
+    $paginaEventosBgColor = "#f4f4f4";
     
 }
 ?>
@@ -48,7 +48,7 @@ if (file_exists($configFileEventos)) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         :root {
-            --pagina-bg-color: <?php echo $paginaBgColor; ?>;
+            --pagina-bg-color: <?php echo $paginaEventosBgColor; ?>;
             --navbar-bg-color: <?php echo $navbarBgColor; ?>;
     
         }
