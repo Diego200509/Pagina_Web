@@ -133,7 +133,11 @@ if (isset($_GET['delete'])) {
             <li><a href="../Propuestas/gestionarPropuestas.php"><i class="fa-solid fa-lightbulb"></i> <span>Propuestas</span></a></li>
             <li><a href="../Sugerencias/sugerencias_admin.php"><i class="fa-solid fa-comment-dots"></i> <span>Sugerencias</span></a></li>
             <li><a href="../Sugerencias/resultados_admin.php"><i class="fas fa-vote-yea"></i> Votos</a></li>
-            <li><a href="../Login/Administracion.php"><i class="fa-solid fa-cogs"></i> <span>Administración</span></a></li>
+            <li>
+                <a href="<?php echo ($user_role === 'SUPERADMIN') ? '../Login/Administracion.php' : '../Login/Administracion_admin.php'; ?>">
+                    <i class="fa-solid fa-cogs"></i> <span>Administración</span>
+                </a>
+            </li>
             <li><a href="../Login/Login.php" class="logout"><i class="fa-solid fa-sign-out-alt"></i> <span>Cerrar Sesión</span></a></li>
                 
         </ul>
@@ -256,7 +260,7 @@ if (isset($_GET['delete'])) {
                 </ul>
             </nav>
         </div>
-        
+
         <!-- Ventana emergente -->
         <div class="toast-container position-fixed bottom-0 end-0 p-3">
             <div id="toastNotificacion" class="toast align-items-center text-bg-success border-0" role="alert"
