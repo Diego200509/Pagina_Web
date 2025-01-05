@@ -184,7 +184,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $config,
             "El color de fondo de la Página Sugerencias se ha actualizado correctamente.",
             "No se pudo actualizar el color de fondo de la Página Sugerencias."
-        );
-    }
+     );
+ }
 }
 ?>
