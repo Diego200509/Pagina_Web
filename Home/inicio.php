@@ -28,8 +28,10 @@ include('../config/config.php');
         <a href="#candidatos"><i class="fas fa-user"></i> Candidatos</a>
         <a href="#propuestas"><i class="fas fa-bullhorn"></i> Propuestas</a>
         <a href="#eventos_noticias"><i class="fas fa-calendar-alt"></i> Eventos y Noticias</a>
-        <a href="#sugerencias"><i class="fas fa-comment-dots"></i> Sugerencias</a>
-    </nav>
+        <a href="../Sugerencias/candidato1.php"><i class="fas fa-comment-dots"></i> Sugerencias</a>
+        <a href="../Sugerencias/votos.php"><i class="fas fa-vote-yea"></i> Votos</a> <!-- Nuevo campo -->
+
+        </nav>
 </header>
 
 <section class="slider">
