@@ -7,6 +7,16 @@ ini_set('display_errors', 1);
 include('../config/config.php');
 include('../src/gestionarPropuestas_queries.php');
 
+// Obtener el nombre del partido con ID 1
+$consultaPartido = "SELECT NOM_PAR FROM PARTIDOS_POLITICOS WHERE ID_PAR = 1";
+$resultadoPartido = $connection->query($consultaPartido);
+
+$nombrePartido = "Partido Desconocido"; // Valor por defecto en caso de error
+if ($resultadoPartido && $resultadoPartido->num_rows > 0) {
+    $filaPartido = $resultadoPartido->fetch_assoc();
+    $nombrePartido = $filaPartido['NOM_PAR'];
+}
+
 // Configuración de sesión y redirección según el rol
 if (!isset($_SESSION['user_role']) || !in_array($_SESSION['user_role'], ['ADMIN', 'SUPERADMIN'])) {
     $_SESSION['error'] = 'Acceso denegado. Por favor inicia sesión.';
@@ -268,12 +278,15 @@ function mostrarDescripcionConFormato($descripcion)
 <body>
 
     <!-- Navbar -->
+    <!-- Navbar -->
     <nav class="navbar">
         <div class="navbar-logo">
             <div class="text-center">
-                <!-- Icono SuperAdmin existente -->
+                <!-- Icono según el rol -->
                 <i class="fa-solid fa-user-shield fa-2x"></i>
-                <h6 class="mt-2">SuperAdmin</h6>
+                <h6 class="mt-2 navbar-role">
+                    <?php echo $_SESSION['user_role'] === 'SUPERADMIN' ? 'SuperAdmin' : 'Admin'; ?>
+                </h6>
             </div>
             <!-- Logo existente -->
             <img src="/Pagina_Web/Pagina_Web/Login/Img/logoMariCruz.png" width="200px" style="margin-right: 20px;">
@@ -287,11 +300,16 @@ function mostrarDescripcionConFormato($descripcion)
                 <li><a href="../Propuestas/gestionarPropuestas.php"><i class="fa-solid fa-lightbulb"></i> <span>Propuestas</span></a></li>
                 <li><a href="../Sugerencias/sugerencias_admin.php"><i class="fa-solid fa-comment-dots"></i> <span>Sugerencias</span></a></li>
                 <li><a href="../Sugerencias/resultados_admin.php"><i class="fas fa-vote-yea"></i> Votos</a></li>
-                <li><a href="../Login/Administracion.php"><i class="fa-solid fa-cogs"></i> <span>Administración</span></a></li>
+                <li>
+                    <a href="<?php echo ($_SESSION['user_role'] === 'SUPERADMIN') ? '../Login/Administracion.php' : '../Login/Administracion_admin.php'; ?>">
+                        <i class="fa-solid fa-cogs"></i> <span>Administración</span>
+                    </a>
+                </li>
                 <li><a href="../Login/Login.php" class="logout"><i class="fa-solid fa-sign-out-alt"></i> <span>Cerrar Sesión</span></a></li>
             </ul>
         </div>
     </nav>
+
 
 
     <div class="container">
@@ -465,15 +483,12 @@ function mostrarDescripcionConFormato($descripcion)
                     <option value="Vinculación con la Sociedad">Vinculación con la Sociedad</option>
                 </select>
 
+                <!-- Campo Partido Político: Siempre con ID 1 -->
                 <label for="partido">Partido Político:</label>
-                <select name="partido" id="partido" class="form-select" required>
-                    <option value="" disabled selected>Seleccione el Partido Político</option>
-                    <?php while ($partido = $partidos->fetch_assoc()): ?>
-                        <option value="<?= htmlspecialchars($partido['ID_PAR']) ?>">
-                            <?= htmlspecialchars($partido['NOM_PAR']) ?>
-                        </option>
-                    <?php endwhile; ?>
+                <select name="partido" id="partido" class="form-select" required disabled>
+                    <option value="1" selected><?= htmlspecialchars($nombrePartido) ?></option>
                 </select>
+                <input type="hidden" name="partido" value="1">
 
                 <label for="estado">Estado:</label>
                 <select name="estado" id="estado" class="form-select" required>
@@ -489,14 +504,11 @@ function mostrarDescripcionConFormato($descripcion)
                     <?php endif; ?>
                 </select>
 
-
-
-
-
                 <button type="submit" class="btn btn-danger">Guardar Propuesta</button>
             </form>
         </div>
     </div>
+
 
     <div id="modalEditarPropuesta" class="modal">
         <div class="modal-content">
@@ -544,19 +556,25 @@ function mostrarDescripcionConFormato($descripcion)
 
                 <!-- Partido Político -->
                 <label for="partidoEditar">Partido Político:</label>
-                <select id="partidoEditar" name="partido" class="form-select" required>
-                    <?php mysqli_data_seek($partidos, 0); ?>
-                    <?php while ($partido = $partidos->fetch_assoc()): ?>
-                        <?php
+                <select id="partidoEditar" name="partido" class="form-select" required disabled>
+                    <?php
+                    // Restablecemos el puntero para recorrer nuevamente la consulta
+                    mysqli_data_seek($partidos, 0);
+
+                    while ($partido = $partidos->fetch_assoc()):
                         $idPar = isset($partido['ID_PAR']) ? $partido['ID_PAR'] : '';
                         $nomPar = isset($partido['NOM_PAR']) ? $partido['NOM_PAR'] : '';
-                        ?>
+                    ?>
                         <option value="<?= htmlspecialchars($idPar, ENT_QUOTES, 'UTF-8') ?>"
                             <?= isset($row['ID_PAR']) && $row['ID_PAR'] === $idPar ? 'selected' : '' ?>>
                             <?= htmlspecialchars($nomPar, ENT_QUOTES, 'UTF-8') ?>
                         </option>
                     <?php endwhile; ?>
                 </select>
+
+                <!-- Input oculto para enviar el ID del partido seleccionado -->
+                <input type="hidden" name="partido" id="partidoEditarHidden">
+
 
                 <!-- Estado -->
                 <label for="estadoEditar">Estado:</label>
@@ -600,29 +618,38 @@ function mostrarDescripcionConFormato($descripcion)
 
         // Función para abrir el modal de editar propuesta
         function abrirModalEditar(id, titulo, descripcion, categoria, partido, estado) {
-            document.getElementById('idEditarPropuesta').value = id;
-            document.getElementById('tituloEditar').value = titulo;
-            document.getElementById('descripcionEditar').value = descripcion;
-            document.getElementById('categoriaEditar').value = categoria;
+    document.getElementById('idEditarPropuesta').value = id;
+    document.getElementById('tituloEditar').value = titulo;
+    document.getElementById('descripcionEditar').value = descripcion;
+    document.getElementById('categoriaEditar').value = categoria;
 
-            // Asignar el ID del partido político
-            const partidoSelect = document.getElementById('partidoEditar');
-            if (partidoSelect) {
-                partidoSelect.value = partido;
-            } else {
-                console.error("No se encontró el select para partidos.");
-            }
+    // Asignar el ID del partido político en el select (deshabilitado) y en el input hidden
+    const partidoSelect = document.getElementById('partidoEditar');
+    const partidoHidden = document.getElementById('partidoEditarHidden');
 
-            // Asignar el estado de la propuesta
-            const estadoSelect = document.getElementById('estadoEditar');
-            if (estadoSelect) {
-                estadoSelect.value = estado;
-            } else {
-                console.error("No se encontró el select para estado.");
-            }
+    if (partidoSelect) {
+        partidoSelect.value = partido;
+    } else {
+        console.error("No se encontró el select para partidos.");
+    }
 
-            document.getElementById("modalEditarPropuesta").style.display = 'flex';
-        }
+    if (partidoHidden) {
+        partidoHidden.value = partido; // Asegura que el ID se envíe en el formulario
+    } else {
+        console.error("No se encontró el input hidden para partidos.");
+    }
+
+    // Asignar el estado de la propuesta
+    const estadoSelect = document.getElementById('estadoEditar');
+    if (estadoSelect) {
+        estadoSelect.value = estado;
+    } else {
+        console.error("No se encontró el select para estado.");
+    }
+
+    document.getElementById("modalEditarPropuesta").style.display = 'flex';
+}
+
 
 
         function mostrarMensajeActualizado() {
