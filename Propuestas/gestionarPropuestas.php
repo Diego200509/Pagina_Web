@@ -453,61 +453,61 @@ function mostrarDescripcionConFormato($descripcion)
     </div>
 
     <div id="modalPropuesta" class="modal">
-    <div class="modal-content">
-        <span class="close-button" onclick="cerrarModal()">&times;</span>
-        <h2>Agregar Nueva Propuesta</h2>
-        <form method="POST" action="gestionarPropuestas.php">
-            <input type="hidden" name="accion" value="agregar">
+        <div class="modal-content">
+            <span class="close-button" onclick="cerrarModal()">&times;</span>
+            <h2>Agregar Nueva Propuesta</h2>
+            <form method="POST" action="gestionarPropuestas.php">
+                <input type="hidden" name="accion" value="agregar">
 
-            <label for="titulo">Título:</label>
-            <input type="text" name="titulo" id="titulo" class="form-control" required>
+                <label for="titulo">Título:</label>
+                <input type="text" name="titulo" id="titulo" class="form-control" required>
 
-            <label for="descripcion">Descripción:</label>
-            <textarea name="descripcion" id="descripcion" class="form-control" required></textarea>
+                <label for="descripcion">Descripción:</label>
+                <textarea name="descripcion" id="descripcion" class="form-control" required></textarea>
 
-            <label for="categoria">Categoría:</label>
-            <select name="categoria" id="categoria" class="form-select" required>
-                <option value="">Seleccionar Facultad o Interés</option>
-                <option value="Ciencias Administrativas">Ciencias Administrativas</option>
-                <option value="Ciencia e Ingeniería en Alimentos">Ciencia e Ingeniería en Alimentos</option>
-                <option value="Jurisprudencia y Ciencias Sociales">Jurisprudencia y Ciencias Sociales</option>
-                <option value="Contabilidad y Auditoría">Contabilidad y Auditoría</option>
-                <option value="Ciencias Humanas y de la Educación">Ciencias Humanas y de la Educación</option>
-                <option value="Ciencias de la Salud">Ciencias de la Salud</option>
-                <option value="Ingeniería Civil y Mecánica">Ingeniería Civil y Mecánica</option>
-                <option value="Ingeniería en Sistemas, Electrónica e Industrial">Ingeniería en Sistemas, Electrónica e Industrial</option>
-                <option value="Infraestructura">Infraestructura</option>
-                <option value="Deportes">Deportes</option>
-                <option value="Cultura">Cultura</option>
-                <option value="Investigación">Investigación</option>
-                <option value="Vinculación con la Sociedad">Vinculación con la Sociedad</option>
-            </select>
+                <label for="categoria">Categoría:</label>
+                <select name="categoria" id="categoria" class="form-select" required>
+                    <option value="">Seleccionar Facultad o Interés</option>
+                    <option value="Ciencias Administrativas">Ciencias Administrativas</option>
+                    <option value="Ciencia e Ingeniería en Alimentos">Ciencia e Ingeniería en Alimentos</option>
+                    <option value="Jurisprudencia y Ciencias Sociales">Jurisprudencia y Ciencias Sociales</option>
+                    <option value="Contabilidad y Auditoría">Contabilidad y Auditoría</option>
+                    <option value="Ciencias Humanas y de la Educación">Ciencias Humanas y de la Educación</option>
+                    <option value="Ciencias de la Salud">Ciencias de la Salud</option>
+                    <option value="Ingeniería Civil y Mecánica">Ingeniería Civil y Mecánica</option>
+                    <option value="Ingeniería en Sistemas, Electrónica e Industrial">Ingeniería en Sistemas, Electrónica e Industrial</option>
+                    <option value="Infraestructura">Infraestructura</option>
+                    <option value="Deportes">Deportes</option>
+                    <option value="Cultura">Cultura</option>
+                    <option value="Investigación">Investigación</option>
+                    <option value="Vinculación con la Sociedad">Vinculación con la Sociedad</option>
+                </select>
 
-            <!-- Campo Partido Político: Siempre con ID 1 -->
-            <label for="partido">Partido Político:</label>
-            <select name="partido" id="partido" class="form-select" required disabled>
-                <option value="1" selected><?= htmlspecialchars($nombrePartido) ?></option>
-            </select>
-            <input type="hidden" name="partido" value="1">
+                <!-- Campo Partido Político: Siempre con ID 1 -->
+                <label for="partido">Partido Político:</label>
+                <select name="partido" id="partido" class="form-select" required disabled>
+                    <option value="1" selected><?= htmlspecialchars($nombrePartido) ?></option>
+                </select>
+                <input type="hidden" name="partido" value="1">
 
-            <label for="estado">Estado:</label>
-            <select name="estado" id="estado" class="form-select" required>
-                <option value="" disabled selected>Seleccione el Estado</option>
-                <?php if ($estadosResult->num_rows > 0): ?>
-                    <?php while ($estado = $estadosResult->fetch_assoc()): ?>
-                        <option value="<?= htmlspecialchars($estado['ESTADO']) ?>">
-                            <?= htmlspecialchars($estado['ESTADO']) ?>
-                        </option>
-                    <?php endwhile; ?>
-                <?php else: ?>
-                    <option value="">No hay estados disponibles</option>
-                <?php endif; ?>
-            </select>
+                <label for="estado">Estado:</label>
+                <select name="estado" id="estado" class="form-select" required>
+                    <option value="" disabled selected>Seleccione el Estado</option>
+                    <?php if ($estadosResult->num_rows > 0): ?>
+                        <?php while ($estado = $estadosResult->fetch_assoc()): ?>
+                            <option value="<?= htmlspecialchars($estado['ESTADO']) ?>">
+                                <?= htmlspecialchars($estado['ESTADO']) ?>
+                            </option>
+                        <?php endwhile; ?>
+                    <?php else: ?>
+                        <option value="">No hay estados disponibles</option>
+                    <?php endif; ?>
+                </select>
 
-            <button type="submit" class="btn btn-danger">Guardar Propuesta</button>
-        </form>
+                <button type="submit" class="btn btn-danger">Guardar Propuesta</button>
+            </form>
+        </div>
     </div>
-</div>
 
 
     <div id="modalEditarPropuesta" class="modal">
@@ -556,19 +556,25 @@ function mostrarDescripcionConFormato($descripcion)
 
                 <!-- Partido Político -->
                 <label for="partidoEditar">Partido Político:</label>
-                <select id="partidoEditar" name="partido" class="form-select" required>
-                    <?php mysqli_data_seek($partidos, 0); ?>
-                    <?php while ($partido = $partidos->fetch_assoc()): ?>
-                        <?php
+                <select id="partidoEditar" name="partido" class="form-select" required disabled>
+                    <?php
+                    // Restablecemos el puntero para recorrer nuevamente la consulta
+                    mysqli_data_seek($partidos, 0);
+
+                    while ($partido = $partidos->fetch_assoc()):
                         $idPar = isset($partido['ID_PAR']) ? $partido['ID_PAR'] : '';
                         $nomPar = isset($partido['NOM_PAR']) ? $partido['NOM_PAR'] : '';
-                        ?>
+                    ?>
                         <option value="<?= htmlspecialchars($idPar, ENT_QUOTES, 'UTF-8') ?>"
                             <?= isset($row['ID_PAR']) && $row['ID_PAR'] === $idPar ? 'selected' : '' ?>>
                             <?= htmlspecialchars($nomPar, ENT_QUOTES, 'UTF-8') ?>
                         </option>
                     <?php endwhile; ?>
                 </select>
+
+                <!-- Input oculto para enviar el ID del partido seleccionado -->
+                <input type="hidden" name="partido" id="partidoEditarHidden">
+
 
                 <!-- Estado -->
                 <label for="estadoEditar">Estado:</label>
@@ -612,29 +618,38 @@ function mostrarDescripcionConFormato($descripcion)
 
         // Función para abrir el modal de editar propuesta
         function abrirModalEditar(id, titulo, descripcion, categoria, partido, estado) {
-            document.getElementById('idEditarPropuesta').value = id;
-            document.getElementById('tituloEditar').value = titulo;
-            document.getElementById('descripcionEditar').value = descripcion;
-            document.getElementById('categoriaEditar').value = categoria;
+    document.getElementById('idEditarPropuesta').value = id;
+    document.getElementById('tituloEditar').value = titulo;
+    document.getElementById('descripcionEditar').value = descripcion;
+    document.getElementById('categoriaEditar').value = categoria;
 
-            // Asignar el ID del partido político
-            const partidoSelect = document.getElementById('partidoEditar');
-            if (partidoSelect) {
-                partidoSelect.value = partido;
-            } else {
-                console.error("No se encontró el select para partidos.");
-            }
+    // Asignar el ID del partido político en el select (deshabilitado) y en el input hidden
+    const partidoSelect = document.getElementById('partidoEditar');
+    const partidoHidden = document.getElementById('partidoEditarHidden');
 
-            // Asignar el estado de la propuesta
-            const estadoSelect = document.getElementById('estadoEditar');
-            if (estadoSelect) {
-                estadoSelect.value = estado;
-            } else {
-                console.error("No se encontró el select para estado.");
-            }
+    if (partidoSelect) {
+        partidoSelect.value = partido;
+    } else {
+        console.error("No se encontró el select para partidos.");
+    }
 
-            document.getElementById("modalEditarPropuesta").style.display = 'flex';
-        }
+    if (partidoHidden) {
+        partidoHidden.value = partido; // Asegura que el ID se envíe en el formulario
+    } else {
+        console.error("No se encontró el input hidden para partidos.");
+    }
+
+    // Asignar el estado de la propuesta
+    const estadoSelect = document.getElementById('estadoEditar');
+    if (estadoSelect) {
+        estadoSelect.value = estado;
+    } else {
+        console.error("No se encontró el select para estado.");
+    }
+
+    document.getElementById("modalEditarPropuesta").style.display = 'flex';
+}
+
 
 
         function mostrarMensajeActualizado() {
