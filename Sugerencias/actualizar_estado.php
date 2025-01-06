@@ -27,3 +27,4 @@ if (isset($data['id_sugerencia']) && isset($data['estado'])) {
 
 $connection->close();
 ?>
+

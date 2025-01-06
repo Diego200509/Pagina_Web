@@ -48,6 +48,7 @@ try {
                     exit;
                 }
 
+                
                 $image_url = "Candidatos/Img/" . $imageName;
             }
 
@@ -83,7 +84,7 @@ try {
         case 'GET': // Obtener datos
             if (isset($_GET['id'])) {
                 $id = intval($_GET['id']);
-                $query = "SELECT ID_CAN, NOM_CAN, APE_CAN, FECHA_NAC_CAN, CARGO_CAN, EDUCACION_CAN, EXPERIENCIA_CAN, PARTIDO_CAN, IMG_CAN, ESTADO_CAN 
+                $query = "SELECT ID_CAN, NOM_CAN, APE_CAN, FECHA_NAC_CAN, CARGO_CAN, EDUCACION_CAN, EXPERIENCIA_CAN, ID_PAR_CAN, IMG_CAN, ESTADO_CAN 
                           FROM CANDIDATOS WHERE ID_CAN = $id";
                 $result = mysqli_query($connection, $query);
 

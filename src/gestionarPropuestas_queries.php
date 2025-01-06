@@ -6,7 +6,9 @@ function obtenerPropuestasConPartidos($connection, $propuestasPorPagina, $offset
     $query = "
     SELECT 
         PROPUESTAS.ID_PRO, PROPUESTAS.TIT_PRO, PROPUESTAS.DESC_PRO, PROPUESTAS.CAT_PRO,
-        GROUP_CONCAT(PARTIDOS_POLITICOS.NOM_PAR SEPARATOR ', ') AS PARTIDOS
+        PROPUESTAS.ESTADO, 
+        GROUP_CONCAT(PARTIDOS_POLITICOS.NOM_PAR SEPARATOR ', ') AS PARTIDOS,
+        GROUP_CONCAT(PARTIDOS_POLITICOS.ID_PAR SEPARATOR ', ') AS ID_PARTIDOS
     FROM PROPUESTAS
     INNER JOIN COLABORACIONES ON PROPUESTAS.ID_PRO = COLABORACIONES.ID_PRO_COL
     INNER JOIN PARTIDOS_POLITICOS ON COLABORACIONES.ID_PAR_COL = PARTIDOS_POLITICOS.ID_PAR
@@ -14,23 +16,23 @@ function obtenerPropuestasConPartidos($connection, $propuestasPorPagina, $offset
     ORDER BY PROPUESTAS.ID_PRO ASC
     LIMIT ? OFFSET ?";
 
-echo "Consulta: " . $query . "<br>";  // Ver la consulta para asegurarte de que es correcta
+    echo "Consulta: " . $query . "<br>";  // Ver la consulta para asegurarte de que es correcta
 
-$stmt = $connection->prepare($query);
-if (!$stmt) {
-    echo "<script>console.error('Error al preparar consulta: " . $connection->error . "');</script>";
-    die("Error al preparar consulta.");
+    $stmt = $connection->prepare($query);
+    if (!$stmt) {
+        echo "<script>console.error('Error al preparar consulta: " . $connection->error . "');</script>";
+        die("Error al preparar consulta.");
+    }
+
+    $stmt->bind_param("ii", $propuestasPorPagina, $offset);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    echo "Número de filas en el resultado: " . $result->num_rows . "<br>";  // Verifica cuántos resultados trae
+
+    return $result;
 }
 
-$stmt->bind_param("ii", $propuestasPorPagina, $offset);
-$stmt->execute();
-$result = $stmt->get_result();
-
-echo "Número de filas en el resultado: " . $result->num_rows . "<br>";  // Verifica cuántos resultados trae
-
-return $result;
-
-}
 
 // Función para obtener todos los partidos
 function obtenerPartidos($connection) {
@@ -44,17 +46,17 @@ function obtenerPartidos($connection) {
 
 
 // Función para actualizar una propuesta
-function actualizarPropuesta($connection, $id, $titulo, $descripcion, $categoria, $partido) {
-    // Actualizar los datos de la propuesta en la tabla PROPUESTAS
-    $query = "UPDATE PROPUESTAS SET TIT_PRO = ?, DESC_PRO = ?, CAT_PRO = ? WHERE ID_PRO = ?";
+function actualizarPropuesta($connection, $id, $titulo, $descripcion, $categoria, $partido, $estado) {
+    // Actualizar los datos de la propuesta en la tabla PROPUESTAS, incluyendo el estado
+    $query = "UPDATE PROPUESTAS SET TIT_PRO = ?, DESC_PRO = ?, CAT_PRO = ?, ESTADO = ? WHERE ID_PRO = ?";
     $stmt = $connection->prepare($query);
     if (!$stmt) {
         die("Error al preparar la consulta de actualización: " . $connection->error);
     }
-    $stmt->bind_param("sssi", $titulo, $descripcion, $categoria, $id);
+    $stmt->bind_param("ssssi", $titulo, $descripcion, $categoria, $estado, $id);
     $stmt->execute();
 
-    // Verificar si se actualizó alguna fila
+    // Verificar si se actualizó alguna fila en la tabla PROPUESTAS
     $propuestaActualizada = $stmt->affected_rows > 0;
 
     // Actualizar la colaboración entre la propuesta y el partido político
@@ -78,20 +80,20 @@ function actualizarPropuesta($connection, $id, $titulo, $descripcion, $categoria
 
 
 
+
 // Función para agregar propuesta y colaboración
-function agregarPropuestaYColaboracion($connection, $titulo, $descripcion, $categoria, $idPartido) {
+function agregarPropuestaYColaboracion($connection, $titulo, $descripcion, $categoria, $idPartido, $estado) {
     // Insertar en la tabla PROPUESTAS
-    $queryPropuesta = "INSERT INTO PROPUESTAS (TIT_PRO, DESC_PRO, CAT_PRO) VALUES (?, ?, ?)";
+    $queryPropuesta = "INSERT INTO PROPUESTAS (TIT_PRO, DESC_PRO, CAT_PRO, ESTADO) VALUES (?, ?, ?, ?)";
     $stmtPropuesta = $connection->prepare($queryPropuesta);
     if (!$stmtPropuesta) {
         die("Error al preparar consulta propuesta: " . $connection->error);
     }
-    $stmtPropuesta->bind_param("sss", $titulo, $descripcion, $categoria);
+    $stmtPropuesta->bind_param("ssss", $titulo, $descripcion, $categoria, $estado);
     $stmtPropuesta->execute();
 
-    if ($stmtPropuesta->affected_rows > 0) {
-        echo "Propuesta insertada con éxito.";
-    } else {
+    // Verificar si la propuesta fue insertada correctamente
+    if ($stmtPropuesta->affected_rows <= 0) {
         die("No se insertó ninguna fila en PROPUESTAS.");
     }
 
@@ -107,21 +109,24 @@ function agregarPropuestaYColaboracion($connection, $titulo, $descripcion, $cate
     $stmtColaboracion->bind_param("ii", $idPartido, $idPropuesta);
     $stmtColaboracion->execute();
 
-    if ($stmtColaboracion->affected_rows > 0) {
-        echo "Colaboración insertada con éxito.";
-    } else {
+    // Verificar si la colaboración fue insertada correctamente
+    if ($stmtColaboracion->affected_rows <= 0) {
         die("No se insertó ninguna fila en COLABORACIONES.");
     }
 
     $stmtPropuesta->close();
     $stmtColaboracion->close();
+
+    return true; // Todo ha ido bien
 }
+
+
 
 // Función para eliminar propuesta
 // Función para eliminar propuesta
 // Función para eliminar propuesta
 function eliminarPropuesta($connection, $id) {
-    // Primero, eliminar las colaboraciones asociadas a la propuesta
+    // Eliminar las colaboraciones asociadas a la propuesta
     $queryColaboraciones = "DELETE FROM COLABORACIONES WHERE ID_PRO_COL = ?";
     $stmtColaboraciones = $connection->prepare($queryColaboraciones);
     if (!$stmtColaboraciones) {
@@ -129,16 +134,9 @@ function eliminarPropuesta($connection, $id) {
     }
     $stmtColaboraciones->bind_param("i", $id);
     $stmtColaboraciones->execute();
-
-    // Verificar si se eliminaron las colaboraciones correctamente
-    if ($stmtColaboraciones->affected_rows > 0) {
-        echo "Colaboraciones eliminadas con éxito.<br>";
-    } else {
-        echo "No se encontraron colaboraciones para eliminar.<br>";
-    }
     $stmtColaboraciones->close();
 
-    // Ahora eliminar la propuesta
+    // Eliminar la propuesta
     $queryPropuesta = "DELETE FROM PROPUESTAS WHERE ID_PRO = ?";
     $stmtPropuesta = $connection->prepare($queryPropuesta);
     if (!$stmtPropuesta) {
@@ -146,8 +144,7 @@ function eliminarPropuesta($connection, $id) {
     }
     $stmtPropuesta->bind_param("i", $id);
     $stmtPropuesta->execute();
-
-    // Verificar si se eliminó la propuesta correctamente
+    
     if ($stmtPropuesta->affected_rows > 0) {
         echo "Propuesta eliminada con éxito.";
     } else {

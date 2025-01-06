@@ -1,10 +1,68 @@
 <?php
 include('../config/config.php');
 
-$eventos_noticias = include('../src/inicio_queries.php');
-include('../config/config.php');
 
+
+$navbarConfigPath = "../Login/navbar_config.json"; // Ruta al archivo de configuración del Navbar
+
+// Verificar si el archivo existe y cargar el color del Navbar
+if (file_exists($navbarConfigPath)) {
+    $navbarConfig = json_decode(file_get_contents($navbarConfigPath), true);
+    $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff'; // Azul por defecto
+} else {
+    $navbarBgColor = '#00bfff'; // Azul por defecto si no existe el archivo
+}
+
+// Obtener la ruta de la imagen para la sección 'logoNavbar'
+$section_name = 'logoNavbar';
+$stmt = $connection->prepare("SELECT image_path FROM imagenes_Inicio_Logo WHERE section_name = ?");
+$stmt->bind_param("s", $section_name);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $logo_path = $row['image_path'];
+} else {
+    $logo_path = "../Login/Img/logoMariCruz.png"; // Imagen por defecto
+}
+
+
+function cargarEstilo($archivo, $default) {
+    if (file_exists($archivo)) {
+        $config = json_decode(file_get_contents($archivo), true);
+        return $config['bgColor'] ?? $default;
+    }
+    return $default;
+}
+
+$candidatosColor = cargarEstilo('../Login/candidatos_config.json', '#000000');
+$propuestasColor = cargarEstilo('../Login/propuestas_config.json', '#4d0a0a');
+$eventosColor = cargarEstilo('../Login/eventos_config.json', '#FF9800');
+
+// Definir rutas por defecto
+$slide1_path = "../Home/Img/FONDOMARI.jpg";
+$slide5_path = "../Home/Img/FONDOMARI2.jpg";
+
+// Consultar las rutas desde la base de datos
+$stmt = $connection->prepare("SELECT section_name, image_path FROM imagenes_Inicio_Logo WHERE section_name IN ('slide1', 'slide5')");
+$stmt->execute();
+$result = $stmt->get_result();
+
+while ($row = $result->fetch_assoc()) {
+    if ($row['section_name'] === 'slide1' && file_exists($row['image_path'])) {
+        $slide1_path = $row['image_path'];
+    } elseif ($row['section_name'] === 'slide5' && file_exists($row['image_path'])) {
+        $slide5_path = $row['image_path'];
+    }
+}
+
+
+
+
+$stmt->close();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -13,24 +71,68 @@ include('../config/config.php');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Candidatos a Rector</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha384-jLKHWM3FAa+UP7B7aXQFJ59Y3RF53p50eA88LvNCwD5zZoOMMDzBtF1UeJ0cEtCU" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="Estilos.css">
+    <link rel="stylesheet" href="Estilo.css">
+    <style>
+    :root {
+        --navbar-bg-color: <?php echo $navbarBgColor; ?>;
+    }
+    .slide1 {
+            background: url('<?php echo $slide1_path; ?>') no-repeat center center/cover;
+            height: 300px;
+        }
+
+        .slide5 {
+            background: url('<?php echo $slide5_path; ?>') no-repeat center center/cover;
+            height: 300px;
+        }
+    #candidatos {
+        background-color: <?= $candidatosColor ?>;
+    }
+    #propuestas-section {
+        background-color: <?= $propuestasColor ?>;
+    }
+    #eventos {
+        background-color: <?= $eventosColor ?>;
+    }
+
+
+    
+</style>
+
 </head>
 
+
+
 <body>
-<header>
-    <div class="logo">
-        <img src="Img\logo.png" alt="UTA Logo"> 
-        <h1>Proceso de Elecciones UTA  2024</h1>
+<navbar>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+    <div class="navbar-logo">
+    <div class="text-center">
     </div>
-    <nav>
-        <a href="../Home/inicio.php"><i class="fas fa-home"></i> Inicio</a>
-        <a href="#candidatos"><i class="fas fa-user"></i> Candidatos</a>
-        <a href="#propuestas"><i class="fas fa-bullhorn"></i> Propuestas</a>
-        <a href="#eventos_noticias"><i class="fas fa-calendar-alt"></i> Eventos y Noticias</a>
-        <a href="#sugerencias"><i class="fas fa-comment-dots"></i> Sugerencias</a>
+    <!-- Logo existente -->
+    <img src="<?php echo htmlspecialchars($logo_path); ?>" width="200px" style="margin-right: 20px;">
+
+</div>
+
+
+
+        </div>
+        <ul class="navbar-menu"> 
+            <li><a href="../Candidatos/candidatos.php"><i class="fa-solid fa-users"></i> <span>Candidatos</span></a></li>
+            <li><a href="../Eventos_Noticias/eventos_noticias.php"><i class="fa-solid fa-calendar-alt"></i> <span>Eventos y Noticias</span></a></li>
+            <li><a href="../Propuestas/Propuestas.php"><i class="fa-solid fa-lightbulb"></i> <span>Propuestas</span></a></li>
+            <li><a href="../Sugerencias/index.php"><i class="fa-solid fa-comment-dots"></i> <span>Sugerencias</span></a></li>
+            <li><a href="../Sugerencias/resultados.php"><i class="fas fa-vote-yea"></i> Votos</a></li>
+        </ul>
     </nav>
-</header>
+
+
+</navbar>
 
 <section class="slider">
     <div class="fade"></div>
@@ -50,79 +152,99 @@ include('../config/config.php');
     <button class="next">&#10095;</button>
 </section>
 
+
 <section id="candidatos">
-    <div class="candidatos-container">
-        <div class="candidatos-text">
-            <h1>Conoce a nuestros candidatos</h1>
-            <a href="../Candidatos/candidatos.php" class="btn">Ver más información de los candidatos</a>
-        </div>
+<h1 class="propuestas-title-candidatos">Conoce a nuestros Candidatos</h1>
+<?php include('../src/candidatos_inicio_queries.php'); ?>
+</section>
+
+
+
+
+<section id="propuestas-section">
+    <h1 class="propuestas-title">PROPUESTAS</h1>
+    <div id="propuestas">
+        <?php include('../src/propuestas_favoritas_queries.php'); ?>
     </div>
 </section>
 
-<section id="propuestas">
-    <h1> <span style="color: red; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;">
-        PROPUESTAS
-    </span>  </h1>
-    <div class="background">
-        <div class="text">
-            Tú <br> Nueva manera. <br> Nuevo comienzo.
-            <p><a href="../Propuestas/Propuestas.php" class="button-link">Conoce más sobre las propuestas</a></p>
-        </div>
+
+
+
+
+
+<section id="eventos">
+<h1 class="propuestas-title-eventos">Eventos y Noticias</h1>
+
+    <div class="botones-eventos">
+        <button class="btn-eventos" id="mostrarEventos">Mostrar Eventos</button>
+        <button class="btn-eventos" id="mostrarNoticias">Mostrar Noticias</button>
     </div>
-</section>
-<section id ="eventos_noticias" class="eventos-container">
-<h2>
-    <span style="color: red; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;">
-        Eventos y
-    </span>  
-    <span style="color: red; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;">
-        Noticias
-    </span>
-</h2>
-    <div class="eventos-grid">
-        <?php foreach ($eventos_noticias as $evento_noticia): ?>
-        <div class="evento-card">
-            <img src="Img\eventosynoticias.jpg" alt="Evento Imagen">
-            <div class="evento-info">
-                <h3><?php echo htmlspecialchars($evento_noticia['titulo']); ?></h3>
-                <p><?php echo htmlspecialchars($evento_noticia['descripcion']); ?></p>
-            </div>
-            <div class="overlay">
-                <a href="../Eventos_Noticias/eventos_noticias.php">Más información</a> <!-- Cambia la URL según sea necesario -->
-                </div>
-        </div>
-        
-        <?php endforeach; ?>
-
-
-</section>
-
-<section id="sugerencias">
-    <h1 class="sugerencias-title"> <span style="color: red; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;">
-        SUGERENCIAS
-    </span>  </h1>
-    <div class="sugerencias-container">
-        <div class="sugerencia-card">
-            <div class="sugerencia-content">
-                <h2 class="sugerencia-subtitle"><?php echo htmlspecialchars($sugerencia_titulo); ?></h2>
-                <p class="sugerencia-highlight">Partido: <?php echo htmlspecialchars($nombre_partido); ?></p>
-                <p class="sugerencia-description"><?php echo htmlspecialchars($sugerencia_descripcion); ?></p>
-                <a href="../Sugerencias/index.php" class="sugerencia-button">
-                    <button>ver más</button>
-                </a>
-            </div>
-            <div class="sugerencia-image-container">
-                <img src="Img\anuncio.jpg" alt="Concierto" class="sugerencia-image">
-            </div>
-        </div>
+    <div id="contenidoEventosNoticias" class="contenido-eventos">
+        <!-- Aquí se mostrarán los eventos o noticias -->
     </div>
 </section>
 
-<script src="Scripts.js"></script> <!-- Enlace al archivo JavaScript -->
+
 
 <footer class="footer-rights">
     <p>Todos los derechos reservados Team Sangre © 2024</p>
 </footer>
+
+
+<script src="Scripts.js"></script> <!-- Enlace al archivo JavaScript -->
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    // Escuchar cambios en el almacenamiento local
+    window.addEventListener("storage", function (event) {
+        if (event.key === "navbarColorUpdated" && (event.newValue === "true" || event.newValue === "reset")) {
+            // Recargar la página cuando se detecte un cambio o restablecimiento
+            window.location.reload();
+        }
+    });
+});
+
+document.getElementById('mostrarFavoritas').addEventListener('click', function () {
+    fetch('../src/propuestas_favoritas_queries.php', { method: 'POST' })
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('contenedorPropuestas').innerHTML = data;
+        })
+        .catch(error => console.error('Error:', error));
+});
+
+
+
+
+
+</script>
+
+
+<script>
+document.getElementById("mostrarEventos").addEventListener("click", function() {
+    cargarContenido("EVENTO");
+});
+
+document.getElementById("mostrarNoticias").addEventListener("click", function() {
+    cargarContenido("NOTICIA");
+});
+
+function cargarContenido(tipo) {
+    fetch('../src/eventos_noticias_inicio_queries.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'tipo=' + tipo
+    })
+    .then(response => response.text())
+    .then(data => {
+        document.getElementById("contenidoEventosNoticias").innerHTML = data;
+    })
+    .catch(error => console.error('Error:', error));
+}
+</script>
+
+
 
 </body>
 </html>
