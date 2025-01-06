@@ -268,12 +268,15 @@ function mostrarDescripcionConFormato($descripcion)
 <body>
 
     <!-- Navbar -->
+    <!-- Navbar -->
     <nav class="navbar">
         <div class="navbar-logo">
             <div class="text-center">
-                <!-- Icono SuperAdmin existente -->
+                <!-- Icono según el rol -->
                 <i class="fa-solid fa-user-shield fa-2x"></i>
-                <h6 class="mt-2">SuperAdmin</h6>
+                <h6 class="mt-2 navbar-role">
+                    <?php echo $_SESSION['user_role'] === 'SUPERADMIN' ? 'SuperAdmin' : 'Admin'; ?>
+                </h6>
             </div>
             <!-- Logo existente -->
             <img src="/Pagina_Web/Pagina_Web/Login/Img/logoMariCruz.png" width="200px" style="margin-right: 20px;">
@@ -287,11 +290,16 @@ function mostrarDescripcionConFormato($descripcion)
                 <li><a href="../Propuestas/gestionarPropuestas.php"><i class="fa-solid fa-lightbulb"></i> <span>Propuestas</span></a></li>
                 <li><a href="../Sugerencias/sugerencias_admin.php"><i class="fa-solid fa-comment-dots"></i> <span>Sugerencias</span></a></li>
                 <li><a href="../Sugerencias/resultados_admin.php"><i class="fas fa-vote-yea"></i> Votos</a></li>
-                <li><a href="../Login/Administracion.php"><i class="fa-solid fa-cogs"></i> <span>Administración</span></a></li>
+                <li>
+                    <a href="<?php echo ($_SESSION['user_role'] === 'SUPERADMIN') ? '../Login/Administracion.php' : '../Login/Administracion_admin.php'; ?>">
+                        <i class="fa-solid fa-cogs"></i> <span>Administración</span>
+                    </a>
+                </li>
                 <li><a href="../Login/Login.php" class="logout"><i class="fa-solid fa-sign-out-alt"></i> <span>Cerrar Sesión</span></a></li>
             </ul>
         </div>
     </nav>
+
 
 
     <div class="container">
