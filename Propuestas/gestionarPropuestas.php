@@ -7,6 +7,16 @@ ini_set('display_errors', 1);
 include('../config/config.php');
 include('../src/gestionarPropuestas_queries.php');
 
+// Obtener el nombre del partido con ID 1
+$consultaPartido = "SELECT NOM_PAR FROM PARTIDOS_POLITICOS WHERE ID_PAR = 1";
+$resultadoPartido = $connection->query($consultaPartido);
+
+$nombrePartido = "Partido Desconocido"; // Valor por defecto en caso de error
+if ($resultadoPartido && $resultadoPartido->num_rows > 0) {
+    $filaPartido = $resultadoPartido->fetch_assoc();
+    $nombrePartido = $filaPartido['NOM_PAR'];
+}
+
 // Configuración de sesión y redirección según el rol
 if (!isset($_SESSION['user_role']) || !in_array($_SESSION['user_role'], ['ADMIN', 'SUPERADMIN'])) {
     $_SESSION['error'] = 'Acceso denegado. Por favor inicia sesión.';
@@ -443,68 +453,62 @@ function mostrarDescripcionConFormato($descripcion)
     </div>
 
     <div id="modalPropuesta" class="modal">
-        <div class="modal-content">
-            <span class="close-button" onclick="cerrarModal()">&times;</span>
-            <h2>Agregar Nueva Propuesta</h2>
-            <form method="POST" action="gestionarPropuestas.php">
-                <input type="hidden" name="accion" value="agregar">
+    <div class="modal-content">
+        <span class="close-button" onclick="cerrarModal()">&times;</span>
+        <h2>Agregar Nueva Propuesta</h2>
+        <form method="POST" action="gestionarPropuestas.php">
+            <input type="hidden" name="accion" value="agregar">
 
-                <label for="titulo">Título:</label>
-                <input type="text" name="titulo" id="titulo" class="form-control" required>
+            <label for="titulo">Título:</label>
+            <input type="text" name="titulo" id="titulo" class="form-control" required>
 
-                <label for="descripcion">Descripción:</label>
-                <textarea name="descripcion" id="descripcion" class="form-control" required></textarea>
+            <label for="descripcion">Descripción:</label>
+            <textarea name="descripcion" id="descripcion" class="form-control" required></textarea>
 
-                <label for="categoria">Categoría:</label>
-                <select name="categoria" id="categoria" class="form-select" required>
-                    <option value="">Seleccionar Facultad o Interés</option>
-                    <option value="Ciencias Administrativas">Ciencias Administrativas</option>
-                    <option value="Ciencia e Ingeniería en Alimentos">Ciencia e Ingeniería en Alimentos</option>
-                    <option value="Jurisprudencia y Ciencias Sociales">Jurisprudencia y Ciencias Sociales</option>
-                    <option value="Contabilidad y Auditoría">Contabilidad y Auditoría</option>
-                    <option value="Ciencias Humanas y de la Educación">Ciencias Humanas y de la Educación</option>
-                    <option value="Ciencias de la Salud">Ciencias de la Salud</option>
-                    <option value="Ingeniería Civil y Mecánica">Ingeniería Civil y Mecánica</option>
-                    <option value="Ingeniería en Sistemas, Electrónica e Industrial">Ingeniería en Sistemas, Electrónica e Industrial</option>
-                    <option value="Infraestructura">Infraestructura</option>
-                    <option value="Deportes">Deportes</option>
-                    <option value="Cultura">Cultura</option>
-                    <option value="Investigación">Investigación</option>
-                    <option value="Vinculación con la Sociedad">Vinculación con la Sociedad</option>
-                </select>
+            <label for="categoria">Categoría:</label>
+            <select name="categoria" id="categoria" class="form-select" required>
+                <option value="">Seleccionar Facultad o Interés</option>
+                <option value="Ciencias Administrativas">Ciencias Administrativas</option>
+                <option value="Ciencia e Ingeniería en Alimentos">Ciencia e Ingeniería en Alimentos</option>
+                <option value="Jurisprudencia y Ciencias Sociales">Jurisprudencia y Ciencias Sociales</option>
+                <option value="Contabilidad y Auditoría">Contabilidad y Auditoría</option>
+                <option value="Ciencias Humanas y de la Educación">Ciencias Humanas y de la Educación</option>
+                <option value="Ciencias de la Salud">Ciencias de la Salud</option>
+                <option value="Ingeniería Civil y Mecánica">Ingeniería Civil y Mecánica</option>
+                <option value="Ingeniería en Sistemas, Electrónica e Industrial">Ingeniería en Sistemas, Electrónica e Industrial</option>
+                <option value="Infraestructura">Infraestructura</option>
+                <option value="Deportes">Deportes</option>
+                <option value="Cultura">Cultura</option>
+                <option value="Investigación">Investigación</option>
+                <option value="Vinculación con la Sociedad">Vinculación con la Sociedad</option>
+            </select>
 
-                <label for="partido">Partido Político:</label>
-                <select name="partido" id="partido" class="form-select" required>
-                    <option value="" disabled selected>Seleccione el Partido Político</option>
-                    <?php while ($partido = $partidos->fetch_assoc()): ?>
-                        <option value="<?= htmlspecialchars($partido['ID_PAR']) ?>">
-                            <?= htmlspecialchars($partido['NOM_PAR']) ?>
+            <!-- Campo Partido Político: Siempre con ID 1 -->
+            <label for="partido">Partido Político:</label>
+            <select name="partido" id="partido" class="form-select" required disabled>
+                <option value="1" selected><?= htmlspecialchars($nombrePartido) ?></option>
+            </select>
+            <input type="hidden" name="partido" value="1">
+
+            <label for="estado">Estado:</label>
+            <select name="estado" id="estado" class="form-select" required>
+                <option value="" disabled selected>Seleccione el Estado</option>
+                <?php if ($estadosResult->num_rows > 0): ?>
+                    <?php while ($estado = $estadosResult->fetch_assoc()): ?>
+                        <option value="<?= htmlspecialchars($estado['ESTADO']) ?>">
+                            <?= htmlspecialchars($estado['ESTADO']) ?>
                         </option>
                     <?php endwhile; ?>
-                </select>
+                <?php else: ?>
+                    <option value="">No hay estados disponibles</option>
+                <?php endif; ?>
+            </select>
 
-                <label for="estado">Estado:</label>
-                <select name="estado" id="estado" class="form-select" required>
-                    <option value="" disabled selected>Seleccione el Estado</option>
-                    <?php if ($estadosResult->num_rows > 0): ?>
-                        <?php while ($estado = $estadosResult->fetch_assoc()): ?>
-                            <option value="<?= htmlspecialchars($estado['ESTADO']) ?>">
-                                <?= htmlspecialchars($estado['ESTADO']) ?>
-                            </option>
-                        <?php endwhile; ?>
-                    <?php else: ?>
-                        <option value="">No hay estados disponibles</option>
-                    <?php endif; ?>
-                </select>
-
-
-
-
-
-                <button type="submit" class="btn btn-danger">Guardar Propuesta</button>
-            </form>
-        </div>
+            <button type="submit" class="btn btn-danger">Guardar Propuesta</button>
+        </form>
     </div>
+</div>
+
 
     <div id="modalEditarPropuesta" class="modal">
         <div class="modal-content">
