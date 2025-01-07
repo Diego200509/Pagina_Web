@@ -107,7 +107,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $categoria = $_POST['categoria'];
         $partido = $_POST['partido'];
         $estado = $_POST['estado'];
-        $imagenUrl = manejarSubidaImagen(); // ✅ Aquí se maneja la imagen correctamente
+        $imagenUrl = manejarSubidaImagen();
+
+        if (!$imagenUrl) {
+            die("Error: Debe seleccionar una imagen antes de guardar la propuesta.");
+        }
+        // ✅ Aquí se maneja la imagen correctamente
 
         if (empty($titulo) || empty($descripcion) || empty($categoria) || empty($partido) || empty($estado)) {
             die("Error: Faltan datos en el formulario. Verifique los campos.");
@@ -459,12 +464,12 @@ function mostrarDescripcionConFormato($descripcion)
 
 
                             <td>
-    <?php if (!empty(trim($row['IMAGEN_URL']))) : ?>
-        <img src="<?= 'http://localhost' . trim($row['IMAGEN_URL']) ?>" alt="Imagen de la propuesta" width="50">
-    <?php else : ?>
-        <span>Sin imagen</span>
-    <?php endif; ?>
-</td>
+                                <?php if (!empty(trim($row['IMAGEN_URL']))) : ?>
+                                    <img src="<?= 'http://localhost' . trim($row['IMAGEN_URL']) ?>" alt="Imagen de la propuesta" width="50">
+                                <?php else : ?>
+                                    <span>Sin imagen</span>
+                                <?php endif; ?>
+                            </td>
 
 
 
@@ -588,7 +593,8 @@ function mostrarDescripcionConFormato($descripcion)
                 <input type="text" name="titulo" id="titulo" class="form-control" required>
 
                 <label for="descripcion">Descripción:</label>
-                <textarea name="descripcion" id="descripcion" class="form-control" required></textarea>
+                <textarea name="descripcion" id="descripcion" class="form-control" maxlength="430" required oninput="contarCaracteres('descripcion', 'contadorDescripcion')"></textarea>
+                <small id="contadorDescripcion">0/430 caracteres</small>
 
                 <label for="categoria">Categoría:</label>
                 <select name="categoria" id="categoria" class="form-select" required>
@@ -654,7 +660,9 @@ function mostrarDescripcionConFormato($descripcion)
 
                 <!-- Descripción -->
                 <label for="descripcionEditar">Descripción:</label>
-                <textarea id="descripcionEditar" name="descripcion" class="form-control" required></textarea>
+                <textarea id="descripcionEditar" name="descripcion" class="form-control" maxlength="430" required oninput="contarCaracteres('descripcionEditar', 'contadorDescripcionEditar')"></textarea>
+                <small id="contadorDescripcionEditar">0/430 caracteres</small>
+
 
                 <!-- Categoría -->
                 <label for="categoriaEditar">Categoría:</label>
@@ -816,6 +824,11 @@ function mostrarDescripcionConFormato($descripcion)
 
 
 
+        function contarCaracteres(textareaId, contadorId) {
+            var textarea = document.getElementById(textareaId);
+            var contador = document.getElementById(contadorId);
+            contador.textContent = textarea.value.length + "/430 caracteres";
+        }
 
 
         function mostrarMensajeActualizado() {
@@ -1169,6 +1182,31 @@ function mostrarDescripcionConFormato($descripcion)
                     });
             }
         }
+
+
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const formAgregar = document.querySelector("#modalPropuesta form");
+
+            if (formAgregar) {
+                formAgregar.addEventListener("submit", function(event) {
+                    const inputImagen = document.getElementById("imagen");
+
+                    if (!inputImagen.files || inputImagen.files.length === 0) {
+                        event.preventDefault(); // Detiene el envío del formulario
+
+                        Swal.fire({
+                            title: "Error",
+                            text: "Debe seleccionar una imagen antes de guardar la propuesta.",
+                            icon: "error",
+                            confirmButtonText: "OK"
+                        });
+
+                        return false;
+                    }
+                });
+            }
+        });
     </script>
 
 

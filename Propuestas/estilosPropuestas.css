@@ -193,6 +193,11 @@ h2::after {
     max-width: 300px;
 }
 
+.proposal-card p strong:first-child {
+    color: var(--navbar-bg-color, #00bfff);  /* 🎨 Color rosado solo para "Categoría:" y "Descripción:" */
+}
+
+
 .proposal-card p {
     font-size: 1em;
     color: #444;
@@ -233,17 +238,26 @@ h2::after {
 
 /* Ajuste del texto de la descripción para que haga saltos de línea */
 .proposal-description {
-    font-size: 1em;
-    color: #555;
-    text-align: left;
-    line-height: 1.5;
-    margin-top: 5px;
-    width: 100%;  /* Ajusta el tamaño del contenedor */
-    white-space: pre-wrap; /* Mantiene los saltos de línea */
-    word-wrap: break-word; /* Permite que las palabras largas se ajusten correctamente */
-    overflow-wrap: break-word;
-    display: inline-block; /* Mantiene el texto en la misma línea */
-    margin-left: 0; /* Asegura que no haya margen a la izquierda */
+    height: auto; /* Permite que crezca dinámicamente sin espacios en blanco */
+    max-height: 100px; /* Ajusta el límite según lo necesario */
+    overflow: hidden; /* Evita que el texto sobresalga */
+    text-align: justify; /* Justifica el texto para mejorar la apariencia */
+    word-wrap: break-word; /* Permite que las palabras largas se dividan */
+    overflow-wrap: anywhere; /* Asegura que las palabras largas se ajusten correctamente */
+    white-space: normal; /* Permite saltos de línea naturales */
+    hyphens: auto; /* Agrega guiones si una palabra larga no cabe en una línea */
+    display: block; /* Se asegura que el elemento respete el contenedor */
+    line-height: 1.5; /* Espaciado entre líneas para mejorar legibilidad */
+}
+
+/* Alternativa para navegadores que soportan -webkit-line-clamp */
+@supports (-webkit-line-clamp: 4) {
+    .proposal-description {
+        display: -webkit-box;
+        -webkit-line-clamp: 4; /* Limita el texto a 4 líneas antes de truncar */
+        -webkit-box-orient: vertical;
+        overflow: hidden; /* Asegura que no se muestre contenido extra */
+    }
 }
 
 
@@ -252,6 +266,164 @@ h2::after {
 
 
 
+
+
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%; /* Centrado vertical */
+    left: 50%; /* Centrado horizontal */
+    transform: translate(-50%, -50%); /* Centra el modal perfectamente */
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.5); /* Fondo oscuro semi-transparente */
+    width: 100%; 
+    height: 100%; 
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    overflow: auto; 
+    padding: 20px;
+}
+
+/* Contenido del Modal */
+.modal-content {
+    background: rgba(255, 255, 255, 0.95); /* Efecto Glassmorphism */
+    backdrop-filter: blur(10px); /* Desenfoque de fondo */
+    padding: 25px;
+    border-radius: 15px; 
+    width: 90%;
+    max-width: 700px; /* Aumentamos el tamaño */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border: 2px solid var(--navbar-bg-color, #00bfff); /* Borde en tono rosado */
+}
+
+/* Título */
+.modal-content h3 {
+    font-size: 1.8rem;
+    color: var(--navbar-bg-color, #00bfff); 
+    text-align: center;
+    margin: 0;
+    border-bottom: 2px solid var(--navbar-bg-color, #00bfff); 
+    padding-bottom: 12px;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* Contenedor principal: Imagen a la izquierda y contenido a la derecha */
+.modal-body {
+    display: flex;
+    flex-direction: column; /* Apila la imagen y el texto verticalmente */
+    align-items: center; /* Centra la imagen y el contenido */
+    justify-content: center; /* Asegura que todo esté alineado */
+    text-align: center; /* Centra el texto */
+    gap: 20px; /* Espaciado entre elementos */
+}
+
+/* Imagen */
+.modal-body img {
+    max-width: 50%; /* Ajusta el tamaño para que se vea bien */
+    height: auto;
+    border-radius: 12px; /* Bordes redondeados */
+    border: 3px solid var(--navbar-bg-color, #00bfff); /* Borde con color rosa */
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    display: block; /* Asegura que se comporte como un bloque */
+    margin: 0 auto; /* Centra la imagen horizontalmente */
+}
+
+.modal-body img:hover {
+    transform: scale(1.05); /* Efecto zoom al pasar el mouse */
+}
+
+/* Información */
+.modal-body .modal-info {
+    max-height: 300px; /* Limita la altura */
+    overflow-y: auto; /* Permite desplazamiento si el contenido es largo */
+    padding-right: 10px; /* Espacio para el scroll */
+    width: 90%; /* Asegura que ocupe el ancho correcto */
+    text-align: justify; /* Justifica el texto */
+}
+
+/* Texto */
+.modal-body .modal-info p {
+    font-size: 1rem; /* Tamaño de fuente */
+    color: #555; /* Color del texto */
+    line-height: 1.6; /* Espaciado entre líneas */
+    margin: 0;
+    text-align: justify; /* Justificar el texto */
+    white-space: normal; /* Permite saltos de línea */
+    word-wrap: break-word; /* Rompe palabras largas automáticamente */
+    overflow-wrap: break-word; /* Evita que palabras largas se desborden */
+    max-width: 100%; /* Asegura que el contenido no se expanda más allá del modal */
+}
+
+.modal-body .modal-info p strong {
+    color: var(--navbar-bg-color, #00bfff) ;
+    font-weight: bold;
+}
+
+/* Botón de Cierre */
+.close {
+    color: white;
+    background: linear-gradient(to right, var(--navbar-bg-color, #00bfff), var(--navbar-bg-color, #00bfff)); /* Gradiente rosa */
+    padding: 7px 12px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 50%;
+    cursor: pointer;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.close:hover {
+    background: linear-gradient(to right, #d1137c, #ff3385);
+    transform: scale(1.1);
+}
+
+
+
+
+
+
+
+
+
+.btn-view-more {
+    display: inline-block; /* Asegura que sea un botón alineado */
+    background-color: var(--navbar-bg-color, #00bfff); /* Fondo rosa vibrante */
+    color: #fff; /* Texto blanco */
+    font-size: 1rem; /* Tamaño de fuente */
+    font-weight: bold; /* Texto en negrita */
+    text-align: center; /* Centra el texto */
+    text-decoration: none; /* Sin subrayado */
+    padding: 8px 15px; /* Espaciado interno */
+    border-radius: 8px; /* Bordes redondeados */
+    border: none; /* Sin borde */
+    cursor: pointer; /* Icono de puntero al pasar sobre el botón */
+    transition: all 0.3s ease; /* Animación suave en hover */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+}
+
+.btn-view-more:hover {
+    background-color: #d1137c; /* Fondo más oscuro al pasar el ratón */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Sombra más intensa */
+    transform: translateY(-2px); /* Efecto de elevación */
+}
+
+.btn-view-more:active {
+    background-color: #c0126f; /* Fondo aún más oscuro al hacer clic */
+    transform: translateY(1px); /* Efecto de presión */
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Reduce la sombra */
+}
 
 
 

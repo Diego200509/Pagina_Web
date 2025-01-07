@@ -22,10 +22,14 @@ function filterProposals() {
         .catch(error => console.error('Error:', error));
 }
 
-function truncateText(text, maxLength) {
+function truncateText(text, maxLength = 150) {
+    text = text.trim(); // Elimina espacios al inicio y final
+
     if (text.length > maxLength) {
-        return text.substring(0, maxLength) + "...";
+        let truncated = text.substring(0, maxLength).trim(); // Trunca y elimina espacios finales
+        return truncated.replace(/\s+$/, "") + "..."; // Evita agregar espacios innecesarios antes de los puntos suspensivos
     }
+
     return text;
 }
 
@@ -45,34 +49,63 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function displayProposals(proposals) {
     const proposalsGrid = document.getElementById("proposalsGrid");
+    proposalsGrid.innerHTML = ''; // Limpiar contenido previo
 
-    // Limpiar el contenido anterior
-    proposalsGrid.innerHTML = '';
+    const maxLength = 150; // Longitud exacta de caracteres para todas las tarjetas
 
-    if (proposals.length > 0) {
-        proposals.forEach((proposal) => {
-            const proposalCard = document.createElement("div");
-            proposalCard.classList.add("proposal-card");
+    proposals.forEach((proposal) => {
+        const proposalCard = document.createElement("div");
+        proposalCard.classList.add("proposal-card");
 
-            const imageUrl = proposal.imagen_url.trim() !== ""
-                ? proposal.imagen_url
-                : "https://via.placeholder.com/300x200?text=Sin+Imagen"; // Imagen predeterminada
+        const imageUrl = proposal.imagen_url.trim() !== ""
+            ? proposal.imagen_url
+            : "https://via.placeholder.com/300x200?text=Sin+Imagen";
 
-            proposalCard.innerHTML = `
-                <img src="${imageUrl}" class="proposal-image" alt="Imagen de la propuesta">
-                <h3>${proposal.titulo}</h3>
-                <p><strong>Categoría:</strong> ${proposal.categoria}</p>
-                <p><strong>Descripción:</strong> <span class="proposal-description">${truncateText(proposal.descripcion, 100)}</span></p>
-            `;
+        const truncatedText = truncateText(proposal.descripcion, maxLength);
+        const isTruncated = proposal.descripcion.length > maxLength; // Verifica si el texto fue truncado
 
+        proposalCard.innerHTML = `
+        <h3>${proposal.titulo}</h3>
+            <img src="${imageUrl}" class="proposal-image" alt="Imagen de la propuesta">
+            
+            <p><strong>Categoría:</strong> ${proposal.categoria}</p>
+            <p>
+                <strong>Descripción:</strong> 
+                <span class="proposal-description">${truncatedText}</span>
+            </p>
+            ${isTruncated ? `<button class="btn-view-more" onclick='openModal(${JSON.stringify(proposal)})'>Ver más</button>` : ''}
+        `;
 
-            proposalsGrid.appendChild(proposalCard);
-        });
-    } else {
-        const noProposalsMessage = document.createElement("p");
-        noProposalsMessage.innerText = "No hay propuestas disponibles para este filtro.";
-        proposalsGrid.appendChild(noProposalsMessage);
+        proposalsGrid.appendChild(proposalCard);
+    });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const modal = document.getElementById("proposalModal");
+    if (modal) {
+        modal.style.display = "none"; // Ocultar modal al cargar la página
     }
+});
+
+function openModal(proposal) {
+    const modal = document.getElementById("proposalModal");
+    document.getElementById("modalTitle").textContent = proposal.titulo;
+    document.getElementById("modalImage").src = proposal.imagen_url || "https://via.placeholder.com/150";
+    document.getElementById("modalCategory").textContent = proposal.categoria;
+    document.getElementById("modalDescription").textContent = proposal.descripcion;
+
+    modal.style.display = "flex"; // Mostrar el modal
+}
+
+function closeModal() {
+    const modal = document.getElementById("proposalModal");
+    modal.style.display = "none"; // Ocultar el modal
+}
+
+
+function closeModal() {
+    const modal = document.getElementById("proposalModal");
+    modal.style.display = "none";
 }
 
 
