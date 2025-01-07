@@ -230,13 +230,13 @@
         footer {
             text-align: center;
             padding: 20px;
-            background-color: #00bfff;
+            background-color: var(--navbar-bg-color, #00bfff);
             color: white;
             margin-top: 50px;
         }
 
         .footer-rights {
-            background-color: #00bfff;
+            background-color: var(--navbar-bg-color, #00bfff);
             color: white;
             text-align: center;
             padding: 10px;

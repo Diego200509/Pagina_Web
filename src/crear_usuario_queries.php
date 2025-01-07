@@ -6,17 +6,44 @@ include('../config/config.php');
 $nombre = trim($_POST['nombre']);
 $email = trim($_POST['email']);
 $password = trim($_POST['password']);
-$rol = trim($_POST['rol']);
 
 // Validar campos vacíos
-if (!$nombre || !$email || !$password || !$rol) {
+if (!$nombre || !$email || !$password) {
     $_SESSION['message'] = 'Por favor, completa todos los campos.';
-    header("Location: ../Login/superadmin_dasboard.php");
+    $_SESSION['message_type'] = 'error';
+    header("Location: ../Login/Administracion.php");
+    exit;
+}
+
+// Validar contraseña
+if (strlen($password) < 6) {
+    $_SESSION['message'] = 'La contraseña debe tener al menos 6 caracteres.';
+    $_SESSION['message_type'] = 'error';
+    header("Location: ../Login/Administracion.php");
+    exit;
+}
+
+// Validar si el correo ya existe
+$sql_check_email = "SELECT EMAIL_USU FROM USUARIOS WHERE EMAIL_USU = ?";
+$stmt_check = $connection->prepare($sql_check_email);
+$stmt_check->bind_param('s', $email);
+$stmt_check->execute();
+$result = $stmt_check->get_result();
+
+if ($result->num_rows > 0) {
+    $_SESSION['message'] = 'El correo electrónico ya está registrado. Usa uno diferente.';
+    $_SESSION['message_type'] = 'error';
+    $stmt_check->close();
+    $connection->close();
+    header("Location: ../Login/Administracion.php");
     exit;
 }
 
 // Crear hash de la contraseña
 $password_hashed = hash('sha256', $password);
+
+// Establecer el rol directamente como ADMIN
+$rol = 'ADMIN';
 
 try {
     // Preparar e insertar en la base de datos
@@ -26,20 +53,11 @@ try {
 
     if ($stmt->execute()) {
         $_SESSION['message'] = 'Usuario creado con éxito.';
+        $_SESSION['message_type'] = 'success';
     }
 } catch (mysqli_sql_exception $e) {
-    // Manejar errores específicos de MySQL
-    if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
-        if (strpos($e->getMessage(), 'NOM_USU') !== false) {
-            $_SESSION['message'] = 'El nombre de usuario ya existe. Por favor, elige otro.';
-        } elseif (strpos($e->getMessage(), 'EMAIL_USU') !== false) {
-            $_SESSION['message'] = 'El correo electrónico ya está registrado. Usa uno diferente.';
-        } else {
-            $_SESSION['message'] = 'Error: Dato duplicado.';
-        }
-    } else {
-        $_SESSION['message'] = 'Error al crear el usuario: ' . $e->getMessage();
-    }
+    $_SESSION['message'] = 'Error al crear el usuario: ' . $e->getMessage();
+    $_SESSION['message_type'] = 'error';
 }
 
 // Cerrar la conexión
@@ -47,6 +65,6 @@ $stmt->close();
 $connection->close();
 
 // Redirigir al dashboard
-header("Location: ../Login/superadmin_dasboard.php");
+header("Location: ../Login/Administracion.php");
 exit;
 ?>

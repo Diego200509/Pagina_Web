@@ -1,6 +1,6 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f4f4;
+    background-color: var(--pagina-bg-color, #f4f4f4); /* Color dinámico */
     margin: 0;
     padding: 0;
 }
@@ -28,7 +28,7 @@ h2::after {
     display: block;
     width: 50px;
     height: 5.5px;
-    background-color: #ff1493;
+    background-color: var(--navbar-bg-color, #00bfff);
     /* Color rosa */
     margin: 10px auto 0;
     border-radius: 2px;
@@ -60,7 +60,7 @@ h2::after {
     position: relative;
     margin: 10px;
     border: 6px solid;
-    border-image: linear-gradient(45deg, #ff1493, #00bfff) 1;
+    border-image: linear-gradient(45deg, var(--navbar-bg-color, #00bfff), var(--navbar-secondary-color, #ff1493)) 1;
 }
 
 .event:hover,
@@ -122,7 +122,7 @@ h2::after {
 /* Fecha específica */
 .event-date,
 .news-date {
-    color: #00bfff;
+    color:var(--navbar-bg-color, #00bfff);
     margin-right: 10px;
 }
 
@@ -175,7 +175,7 @@ h2::after {
 .pagination button {
     padding: 10px;
     margin: 0 5px;
-    background-color: #00bfff;
+    background-color: var(--navbar-bg-color, #00bfff);
     color: white;
     border: none;
     border-radius: 5px;
@@ -192,7 +192,6 @@ h2::after {
 
 .navbar {
     background-color: var(--navbar-bg-color, #00bfff);
-    /* Azul vibrante como color por defecto */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -245,7 +244,7 @@ h2::after {
 
 /* Estilos del footer */
 .footer-rights {
-    background-color: #00bfff;
+    background-color: var(--navbar-bg-color, #00bfff);
     color: white;
     text-align: center;
     padding: 10px;
@@ -292,7 +291,7 @@ h2::after {
 
 /* Botón Ver más */
 .view-more {
-    background-color: #ff1493;
+    background-color: var(--navbar-bg-color, #00bfff);
     color: white;
     border: none;
     border-radius: 5px;

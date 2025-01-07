@@ -1,6 +1,6 @@
     // Código para manejar el scroll y ocultar/mostrar el header
     let lastScrollTop = 0;
-    const header = document.querySelector('header');
+    const navbar = document.querySelector('navbar');
 
     window.addEventListener('scroll', function() {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -43,3 +43,7 @@
 
     // Cambia el slide cada 5 segundos
     setInterval(nextSlide, 5000);
+
+
+
+    

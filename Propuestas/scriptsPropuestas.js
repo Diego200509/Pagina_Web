@@ -34,6 +34,17 @@ function truncateText(text, maxLength = 150) {
 }
 
 
+document.addEventListener("DOMContentLoaded", function () {
+    // Escuchar cambios en el almacenamiento local
+    window.addEventListener("storage", function (event) {
+        if (event.key === "navbarColorUpdated" && (event.newValue === "true" || event.newValue === "reset")) {
+            // Recargar la página cuando se detecte un cambio o restablecimiento
+            window.location.reload();
+        }
+    });
+});
+
+
 
 
 function displayProposals(proposals) {
