@@ -464,6 +464,11 @@ section {
     line-height: 1.4; /* Espaciado entre líneas */
     width: 100%;
     flex-grow: 1; /* Permitir que el cuerpo se adapte */
+        position: relative;
+        height: 150px; /* Altura máxima para el texto visible */
+        overflow: hidden; /* Oculta el texto sobrante */
+    
+    
 }
 
 .propuesta-body p {
@@ -537,6 +542,138 @@ section {
 }
 
 
+.propuesta-text {
+    font-size: 1rem;
+    line-height: 1.4;
+}
+
+/* Botón "Ver más" oculto por defecto */
+.ver-mas-btn {
+    display: none;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: #00bfff;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+}
+
+/* Mostrar botón al pasar el mouse sobre la tarjeta */
+.propuesta:hover .ver-mas-btn {
+    display: block;
+}
+
+.ver-mas-btn:hover {
+    background-color: #007acc;
+}
+
+
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro con transparencia */
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #ffffff; /* Fondo blanco */
+    border-radius: 10px; /* Bordes redondeados */
+    width: 600px;
+    max-width: 90%;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.modal-header {
+    background: #00bfff; /* Fondo azul */
+    color: #ffffff; /* Texto blanco */
+    padding: 20px;
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    width: 100%; /* Ocupa toda la fila */
+    box-sizing: border-box;
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 17%;
+    right: 1px;
+    transform: translateY(-50%); /* Centra la "X" verticalmente */
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffffff; /* Blanco */
+    background: #ff007f; /* Fondo rosado fuerte */
+    border: none;
+    border-radius: 50%; /* Botón circular */
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+    background: #ff0000; /* Rojo al pasar el mouse */
+    transform: translateY(-50%) scale(1.1); /* Efecto de agrandamiento */
+    color: #ffffff; /* Blanco */
+}   
+
+.modal-body {
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    background: #ffffff; /* Fondo blanco */
+    color: #333; /* Texto oscuro */
+    text-align: justify;
+    font-size: 1rem;
+    line-height: 1.4;
+}
+
+.modal-category {
+    background: #ffe6f2; /* Fondo rosado claro */
+    padding: 10px;
+    font-family: 'Arial', sans-serif;
+    color: #ff007f; /* Texto rosado fuerte */
+    font-weight: bold;
+    font-size: 1.1rem;
+    border-top: 3px solid #ffffff; /* Separador */
+    text-align: center;
+    width: 100%; /* Ocupa toda la fila */
+    box-sizing: border-box;
+}
+.modal-footer {
+    background: #ff007f; /* Fondo rosado fuerte */
+    color: #ffffff; /* Texto blanco */
+    padding: 10px 20px;
+    font-family: 'Arial', sans-serif;
+    font-size: 1rem;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between; /* Alinea los logos a los extremos */
+    align-items: center;
+    width: 100%; /* Ocupa toda la fila */
+    box-sizing: border-box;
+}
+
+.modal-footer img {
+    height: 40px; /* Tamaño ajustado para los logos */
+}
 
 
 

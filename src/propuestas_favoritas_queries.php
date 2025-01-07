@@ -8,10 +8,22 @@ $result = mysqli_query($connection, $sql);
 // Mostrar las propuestas favoritas
 echo "<div id='propuestas'>";
 while ($row = mysqli_fetch_assoc($result)) {
+    $desc = $row['DESC_PRO'];
+    $isLongText = strlen($desc) > 277; // Verifica si el texto es largo
+    $shortDesc = $isLongText ? substr($desc, 0, 277) . '...' : $desc; // Texto truncado si es necesario
+    $imageURL = $row['IMAGEN_URL'] ?? ''; // URL de la imagen, maneja el caso de que sea NULL
+
     echo "<div class='propuesta'>";
     echo "<div class='propuesta-header'>{$row['TIT_PRO']}</div>"; // Título
     echo "<div class='propuesta-body'>";
-    echo "<p><strong></strong> {$row['DESC_PRO']}</p>"; // Descripción
+    echo "<p class='propuesta-text'>{$shortDesc}</p>"; // Mostrar descripción truncada
+    if ($isLongText) { // Mostrar botón "Ver más" solo si el texto es largo
+        echo "<button class='ver-mas-btn' 
+                  data-title='{$row['TIT_PRO']}'
+                  data-description='{$row['DESC_PRO']}'
+                  data-category='{$row['CAT_PRO']}'
+                  data-image='{$imageURL}'>Ver más</button>";
+    }
     echo "</div>";
     echo "<div class='propuesta-categoria'><span>Categoría:</span> {$row['CAT_PRO']}</div>"; // Categoría
     echo "<div class='propuesta-footer'>";
