@@ -22,49 +22,52 @@ function filterProposals() {
         .catch(error => console.error('Error:', error));
 }
 
-function truncateText(text, maxLength) {
+function truncateText(text, maxLength = 150) {
+    text = text.trim(); // Elimina espacios al inicio y final
+
     if (text.length > maxLength) {
-        return text.substring(0, maxLength) + "...";
+        let truncated = text.substring(0, maxLength).trim(); // Trunca y elimina espacios finales
+        return truncated.replace(/\s+$/, "") + "..."; // Evita agregar espacios innecesarios antes de los puntos suspensivos
     }
+
     return text;
 }
+
+
+
 
 function displayProposals(proposals) {
     const proposalsGrid = document.getElementById("proposalsGrid");
     proposalsGrid.innerHTML = ''; // Limpiar contenido previo
 
-    if (proposals.length > 0) {
-        proposals.forEach((proposal) => {
-            const proposalCard = document.createElement("div");
-            proposalCard.classList.add("proposal-card");
+    const maxLength = 150; // Longitud exacta de caracteres para todas las tarjetas
 
-            const imageUrl = proposal.imagen_url.trim() !== ""
-                ? proposal.imagen_url
-                : "https://via.placeholder.com/300x200?text=Sin+Imagen";
+    proposals.forEach((proposal) => {
+        const proposalCard = document.createElement("div");
+        proposalCard.classList.add("proposal-card");
 
-            const truncatedText = truncateText(proposal.descripcion, 100);
-            const isTruncated = truncatedText.endsWith('...');
+        const imageUrl = proposal.imagen_url.trim() !== ""
+            ? proposal.imagen_url
+            : "https://via.placeholder.com/300x200?text=Sin+Imagen";
 
-            proposalCard.innerHTML = `
-                <img src="${imageUrl}" class="proposal-image" alt="Imagen de la propuesta">
-                <h3>${proposal.titulo}</h3>
-                <p><strong>Categoría:</strong> ${proposal.categoria}</p>
-                <p>
-                    <strong>Descripción:</strong> 
-                    <span class="proposal-description">${truncatedText}</span>
-                </p>
-                ${isTruncated ? `<button class="btn-view-more" onclick='openModal(${JSON.stringify(proposal)})'>Ver más</button>` : ''}
-            `;
+        const truncatedText = truncateText(proposal.descripcion, maxLength);
+        const isTruncated = proposal.descripcion.length > maxLength; // Verifica si el texto fue truncado
 
-            proposalsGrid.appendChild(proposalCard);
-        });
-    } else {
-        const noProposalsMessage = document.createElement("p");
-        noProposalsMessage.innerText = "No hay propuestas disponibles para este filtro.";
-        proposalsGrid.appendChild(noProposalsMessage);
-    }
+        proposalCard.innerHTML = `
+        <h3>${proposal.titulo}</h3>
+            <img src="${imageUrl}" class="proposal-image" alt="Imagen de la propuesta">
+            
+            <p><strong>Categoría:</strong> ${proposal.categoria}</p>
+            <p>
+                <strong>Descripción:</strong> 
+                <span class="proposal-description">${truncatedText}</span>
+            </p>
+            ${isTruncated ? `<button class="btn-view-more" onclick='openModal(${JSON.stringify(proposal)})'>Ver más</button>` : ''}
+        `;
+
+        proposalsGrid.appendChild(proposalCard);
+    });
 }
-
 
 document.addEventListener("DOMContentLoaded", () => {
     const modal = document.getElementById("proposalModal");

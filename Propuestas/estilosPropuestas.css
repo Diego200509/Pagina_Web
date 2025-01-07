@@ -213,18 +213,29 @@ h2::after {
 
 /* Ajuste del texto de la descripción para que haga saltos de línea */
 .proposal-description {
-    font-size: 1em;
-    color: #555;
-    text-align: left;
-    line-height: 1.5;
-    margin-top: 5px;
-    width: 100%;  /* Ajusta el tamaño del contenedor */
-    white-space: pre-wrap; /* Mantiene los saltos de línea */
-    word-wrap: break-word; /* Permite que las palabras largas se ajusten correctamente */
-    overflow-wrap: break-word;
-    display: inline-block; /* Mantiene el texto en la misma línea */
-    margin-left: 0; /* Asegura que no haya margen a la izquierda */
+    height: auto; /* Permite que crezca dinámicamente sin espacios en blanco */
+    max-height: 100px; /* Ajusta el límite según lo necesario */
+    overflow: hidden; /* Evita que el texto sobresalga */
+    text-align: justify; /* Justifica el texto para mejorar la apariencia */
+    word-wrap: break-word; /* Permite que las palabras largas se dividan */
+    overflow-wrap: anywhere; /* Asegura que las palabras largas se ajusten correctamente */
+    white-space: normal; /* Permite saltos de línea naturales */
+    hyphens: auto; /* Agrega guiones si una palabra larga no cabe en una línea */
+    display: block; /* Se asegura que el elemento respete el contenedor */
+    line-height: 1.5; /* Espaciado entre líneas para mejorar legibilidad */
 }
+
+/* Alternativa para navegadores que soportan -webkit-line-clamp */
+@supports (-webkit-line-clamp: 4) {
+    .proposal-description {
+        display: -webkit-box;
+        -webkit-line-clamp: 4; /* Limita el texto a 4 líneas antes de truncar */
+        -webkit-box-orient: vertical;
+        overflow: hidden; /* Asegura que no se muestre contenido extra */
+    }
+}
+
+
 
 
 
@@ -282,20 +293,23 @@ h2::after {
 /* Contenedor principal: Imagen a la izquierda y contenido a la derecha */
 .modal-body {
     display: flex;
-    flex-direction: row; 
-    gap: 25px; 
-    align-items: flex-start; 
-    flex-wrap: wrap;
+    flex-direction: column; /* Apila la imagen y el texto verticalmente */
+    align-items: center; /* Centra la imagen y el contenido */
+    justify-content: center; /* Asegura que todo esté alineado */
+    text-align: center; /* Centra el texto */
+    gap: 20px; /* Espaciado entre elementos */
 }
 
 /* Imagen */
 .modal-body img {
-    max-width: 35%;
+    max-width: 50%; /* Ajusta el tamaño para que se vea bien */
     height: auto;
-    border-radius: 12px;
+    border-radius: 12px; /* Bordes redondeados */
     border: 3px solid #ff1493; /* Borde con color rosa */
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease;
+    display: block; /* Asegura que se comporte como un bloque */
+    margin: 0 auto; /* Centra la imagen horizontalmente */
 }
 
 .modal-body img:hover {
@@ -304,9 +318,11 @@ h2::after {
 
 /* Información */
 .modal-body .modal-info {
-    max-height: 300px; /* Define una altura máxima para evitar que el modal crezca demasiado */
-    overflow-y: auto; /* Agrega desplazamiento si el contenido es demasiado grande */
-    padding-right: 10px; /* Espacio para evitar que el scroll tape el texto */
+    max-height: 300px; /* Limita la altura */
+    overflow-y: auto; /* Permite desplazamiento si el contenido es largo */
+    padding-right: 10px; /* Espacio para el scroll */
+    width: 90%; /* Asegura que ocupe el ancho correcto */
+    text-align: justify; /* Justifica el texto */
 }
 
 /* Texto */
