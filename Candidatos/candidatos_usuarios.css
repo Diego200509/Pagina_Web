@@ -61,7 +61,7 @@ body {
 
 /* Estilos del footer */
 .footer-rights {
-    background-color: #00bfff;
+    background-color: var(--navbar-bg-color, #00bfff);
     color: white;
     text-align: center;
     padding: 10px;
@@ -129,7 +129,7 @@ body {
     display: block;
     width: 50px; /* Ancho de la línea */
     height: 5px; /* Altura de la línea */
-    background-color: #ff1493; /* Color rosa */
+    background-color: var(--navbar-bg-color, #00bfff);
     margin-top: 5px; /* Espacio entre el texto y la línea */
     border-radius: 3px; /* Bordes redondeados */
 }
@@ -195,7 +195,7 @@ body {
     display: block;
     width: 150px; /* Ancho de la línea */
     height: 4px; /* Grosor de la línea */
-    background-color: #ff0080; /* Color rosa */
+    background-color: var(--navbar-bg-color, #00bfff);
     margin-top: 5px;
     position: absolute;
     left: 50px; /* Alinea la línea con el texto */

@@ -374,7 +374,6 @@ textarea {
     transform: translateY(-2px); /* Efecto de elevación */
 }
 .h2 {
-    margin-bottom: 120px; /* Más espacio debajo del encabezado */
-    position: relative; /* Establece la posición relativa al contenedor */
-    right: -100px; /* Ajusta el valor negativo para moverlo más hacia la derecha */
+    margin-bottom: 120px;
+    margin-left: 100px; /* Empuja el título hacia la derecha */
 }
