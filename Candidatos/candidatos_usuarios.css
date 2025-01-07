@@ -1,12 +1,13 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f4f4;
+
+
     margin: 0;
     padding: 0;
 }
+
 .navbar {
     background-color: var(--navbar-bg-color, #00bfff);
-    /* Azul vibrante como color por defecto */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -34,6 +35,7 @@ body {
     padding: 0;
     display: flex;
     gap: 20px;
+    box-sizing: border-box;
 }
 
 .navbar-menu li {
@@ -173,7 +175,7 @@ body {
     font-size: 2.5rem; /* Tamaño más grande */
     font-weight: 800; /* Negrilla más intensa */
     color: #000; /* Color base */
-    margin-top: 20px; /* Espacio entre el título y el navbar */
+    margin-top: 30px; /* Espacio entre el título y el navbar */
     margin-bottom: 10px;
     display: flex;
     justify-content: left; /* Alineación a la izquierda */

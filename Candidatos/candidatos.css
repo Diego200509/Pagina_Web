@@ -16,25 +16,40 @@ header {
     padding: 20px 50px;
     background-color: #b22222; /* Fondo rojo */
 }
-/* Navbar */
+
+.navbar-role {
+    margin-bottom: 9px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
 .navbar {
-    background-color: #00bfff; /* Azul vibrante inspirado en la imagen */
+    background-color: var(--navbar-bg-color, #00bfff);
     display: flex;
     justify-content: space-between;
+    /* Espacio entre logo y menú */
     align-items: center;
     padding: 10px 20px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    /* Sombra ligera */
+    flex-wrap: wrap;
+    /* Permitir que los elementos se ajusten en pantallas pequeñas */
 }
 
 .navbar-logo {
     display: flex;
     align-items: center;
-    gap: 10px;
-    color: #ffffff; /* Blanco */
+    gap: 15px;
+    color: #ffffff;
+    /* Blanco */
+    flex: 1;
+    /* Toma el espacio necesario */
 }
 
-.navbar-logo i {
-    font-size: 24px;
+.navbar-logo img {
+    max-width: 150px;
+    /* Ajusta el tamaño del logo */
+    height: auto;
 }
 
 .navbar-menu {
@@ -43,6 +58,8 @@ header {
     padding: 0;
     display: flex;
     gap: 20px;
+    flex-wrap: wrap;
+    /* Ajustar elementos en pantallas pequeñas */
 }
 
 .navbar-menu li {
@@ -52,16 +69,21 @@ header {
 .navbar-menu li a {
     display: flex;
     align-items: center;
-    gap: 8px; /* Espacio entre icono y texto */
-    color: #ffffff; /* Blanco */
+    gap: 8px;
+    /* Espacio entre ícono y texto */
+    color: #ffffff;
+    /* Blanco */
     text-decoration: none;
     font-size: 16px;
     font-weight: bold;
+    transition: color 0.3s;
 }
 
 .navbar-menu li a:hover {
-    color: #ff0050; /* Rosa brillante */
+    color: #ff0050;
+    /* Rosa brillante */
 }
+
 #addCandidateBtn {
     background: #ff1493; /* Degradado rosa a azul */
     color: white;
@@ -116,8 +138,6 @@ header {
     transform: translateY(0); /* Restablecer al hacer clic */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
-
-/* Tabla */
 .styled-table {
     width: 95%; /* Reduce el ancho al 95% para dar más espacio */
     border-collapse: collapse;

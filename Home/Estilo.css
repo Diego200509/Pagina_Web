@@ -1,0 +1,652 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #ffffff; 
+    color: #333;
+}
+
+/* Navbar */
+.navbar {
+    background-color: var(--navbar-bg-color, #00bfff); /* Azul por defecto */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    padding: 20px 50px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    transition: top 0.5s;
+    z-index: 1000;
+}
+
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #ffffff; /* Blanco */
+}
+
+.navbar-logo i {
+    font-size: 24px;
+}
+
+.navbar-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+}
+
+.navbar-menu li {
+    list-style: none;
+}
+
+.navbar-menu li a {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espacio entre icono y texto */
+    color: #ffffff; /* Blanco */
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.navbar-menu li a:hover {
+    color: #ff0050; /* Rosa brillante */
+}
+
+
+.slider {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 95vh; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #d21818;
+    margin-top: 60px;
+}
+
+.slider .slides {
+    display: flex;
+    transition: transform 0.9s ease;
+}
+
+.slider .slide {
+    min-width: 100%;
+    height: 100vh; 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10%;
+    position: absolute; 
+    top: 0;
+    left: 0;
+    opacity: 0; 
+    transition: opacity 0.5s ease; 
+}
+
+.slider .slide.active {
+    opacity: 1; 
+}
+
+
+
+
+.slider .slide img {
+    max-height: 60%; 
+    max-width: 60%;  
+    object-fit: cover; 
+    border-radius: 15px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); 
+    border: 2px solid #fff; 
+}
+
+.slider .content {
+    color: #ffffff; 
+    text-align: left;
+}
+
+.slider .content h1 {
+    font-size: 3em;
+    margin-bottom: 10px;
+}
+
+.slider .content p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+.slider .content .btn {
+    background-color: #b22222; 
+    padding: 15px 30px;
+    color: #ffffff; 
+    text-transform: uppercase;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background 1s;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.slider .content .btn:hover {
+    background-color: #ffcccb; 
+}
+
+.slider .prev, .slider .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2em;
+    color: #ff0000; 
+    cursor: pointer;
+    background: none;
+    border: none;
+    z-index: 2; 
+}
+
+.slider .prev {
+    left: 20px;
+}
+
+.slider .next {
+    right: 20px;
+}
+
+section {
+    height: 100vh; 
+    padding: 50px;
+    text-align: center;
+    color: white;
+}
+
+
+#candidatos {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh; /* Ocupa toda la altura de la pantalla */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.candidatos-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 columnas */
+    gap: 30px; /* Espaciado entre tarjetas */
+    width: 90%; /* Ajusta el ancho del contenedor */
+    height: 70%; /* Ajusta la altura de las imágenes */
+}
+
+.candidato {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff; /* Fondo blanco */
+    border-radius: 15px; /* Bordes más redondeados */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra elegante */
+    overflow: hidden; /* Evita que el contenido sobresalga */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 3px solid #ff1493; /* Borde rosa fuerte */
+}
+
+.candidato:hover {
+    transform: scale(1.05); /* Aumenta ligeramente al pasar el mouse */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); /* Sombra más intensa */
+}
+
+.candidato img {
+    width: 100%; /* Ocupa todo el ancho */
+    height: 65%; /* Ocupa el 65% del contenedor */
+    object-fit: cover; /* Ajusta la imagen dentro del cuadro */
+    border-bottom: 5px solid #ff1493; /* Separador rosa fuerte */
+}
+
+.candidato p {
+    margin: 10px 0 5px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #00bfff; /* Texto azul claro */
+    text-align: center;
+    text-transform: uppercase; /* Todo en mayúsculas */
+}
+
+.candidato strong {
+    font-size: 1rem;
+    color: #ff1493; /* Texto rosa fuerte */
+    text-align: center;
+    font-weight: bold;
+}
+
+
+
+
+
+
+.botones-eventos {
+    display: flex;
+    justify-content: center; /* Centra los botones horizontalmente */
+    gap: 20px; /* Espaciado entre los botones */
+    margin: 20px 0; /* Espaciado superior e inferior */
+}
+
+.btn-eventos {
+    background-color: #00bfff; /* Fondo azul claro */
+    color: #ffffff; /* Texto blanco */
+    font-size: 1.2rem; /* Tamaño de texto */
+    font-weight: bold; /* Texto en negrita */
+    padding: 10px 20px; /* Espaciado interno */
+    border: none; /* Sin borde */
+    border-radius: 25px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para el botón */
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animaciones */
+}
+
+.btn-eventos:hover {
+    transform: scale(1.1); /* Aumenta ligeramente el tamaño al pasar el mouse */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Sombra más intensa */
+}
+
+.btn-eventos:active {
+    transform: scale(1); /* Reduce ligeramente el tamaño al hacer clic */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra menos intensa */
+}
+
+#mostrarEventos {
+    background-color: #00bfff; /* Azul claro */
+}
+
+#mostrarNoticias {
+    background-color: #ff1493; /* Rosa fuerte */
+}
+
+
+
+
+
+#propuestas-eventos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 columnas */
+    gap: 30px; /* Espaciado entre tarjetas */
+    padding: 20px 100px; /* Espaciado ajustado */
+    justify-content: center; /* Centra horizontalmente las tarjetas */
+    margin: 0 auto; /* Centra el contenedor en el espacio disponible */
+}
+
+.propuesta-eventos {
+    background: linear-gradient(to bottom, #cce7ff, #ffffff); /* Fondo degradado */
+    border-radius: 20px; /* Bordes redondeados */
+    width: 400px; /* Reduce el ancho */
+    height: 700px; /* Reduce la altura */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra elegante */
+    overflow: hidden; /* Evita que el contenido sobresalga */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrar contenido horizontalmente */
+    text-align: center; /* Centrar texto */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animación */
+}
+
+
+.propuesta-eventos:hover {
+    transform: scale(1.05); /* Aumenta ligeramente al pasar el mouse */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Sombra más intensa */
+}
+
+.propuesta-header-eventos {
+    background: #00bfff; /* Fondo azul fuerte */
+    color: #ffffff; /* Texto blanco */
+    width: 100%;
+    padding: 15px;
+    font-size: 1.1  rem; /* Tamaño de texto más grande */
+    font-weight: bold;
+    text-transform: uppercase;
+    border-bottom: 5px solid #ffffff; /* Separación visual con borde blanco */
+}
+
+.propuesta-body-eventos {
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    background: #ffffff; /* Fondo gris claro */
+    color: #333; /* Texto oscuro */
+    text-align: justify; /* Justificar texto */
+    font-size: 1rem; /* Ajustar tamaño de texto */
+    line-height: 1.4; /* Espaciado entre líneas */
+    width: 100%;
+    flex-grow: 1; /* Permitir que el cuerpo se adapte */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.propuesta-body-eventos img {
+    width: 60%; /* Reduce aún más el tamaño de la imagen */
+    height: auto;
+    object-fit: cover; /* Ajusta la imagen dentro del cuadro */
+    border-radius: 10px; /* Bordes redondeados */
+    margin-bottom: 20px;
+}
+
+.propuesta-categoria-eventos {
+    background: #ffe6f2; /* Fondo rosado claro */
+    padding: 15px;
+    width: 100%;
+    font-family: 'Arial', sans-serif;
+    color: #ff007f; /* Texto rosado fuerte */
+    font-weight: bold;
+    font-size: 1.1rem; /* Tamaño de texto ligeramente mayor */
+    border-top: 3px solid #ffffff; /* Separador */
+    text-align: left;
+}
+
+.propuesta-footer-eventos {
+    background: #ff007f; /* Fondo rosado fuerte */
+    color: #ffffff; /* Texto blanco */
+    padding: 15px;
+    font-family: 'Arial', sans-serif;
+    font-size: 1rem; /* Tamaño de texto más grande */
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between; /* Espaciado entre logos */
+    align-items: center;
+    width: 100%;
+}
+
+.propuesta-footer-eventos img {
+    height: 40px; /* Tamaño ajustado para los logos */
+    margin: 0 5px; /* Espaciado entre los logos */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+#propuestas-section-eventos {
+    width: 100%;
+    text-align: center; /* Centra el contenido horizontalmente */
+}
+
+.propuestas-title-eventos {
+    font-size: 3rem;
+    margin-bottom: 10px; /* Espaciado entre el título y las tarjetas */
+    color: #ffffff; /* Color rojo */
+    text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff; /* Sombra para el texto */
+    font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#propuestas {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 5 columnas */
+    gap: 30px; /* Espaciado entre tarjetas */
+    padding: 10px 80px; /* Espaciado arriba/abajo y a los lados */
+    justify-content: center; /* Centra horizontalmente las tarjetas */
+    margin: 0 auto; /* Centra el contenedor en el espacio disponible */
+}
+
+.propuesta {
+    background: linear-gradient(to bottom, #cce7ff, #ffffff); /* Fondo degradado */
+    border-radius: 20px; /* Bordes redondeados */
+    width: 400px; /* Ancho ajustado */
+    height: 380px; /* Altura ajustada */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra elegante */
+    overflow: hidden; /* Evita que el contenido sobresalga */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrar contenido horizontalmente */
+    text-align: center; /* Centrar texto */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animación */
+}
+
+.propuesta:hover {
+    transform: scale(1.05); /* Aumenta ligeramente al pasar el mouse */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Sombra más intensa */
+}
+
+.propuesta-header {
+    background: #00bfff;; /* Fondo azul fuerte */
+    color: #ffffff; /* Texto blanco */
+    width: 100%;
+    padding: 15px;
+    font-size: 1.5rem; /* Tamaño de texto más grande */
+    font-weight: bold;
+    text-transform: uppercase;
+    border-bottom: 5px solid #ffffff; /* Separación visual con borde blanco */
+}
+
+.propuesta-body {
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    background: #ffffff; /* Fondo gris claro */
+    color: #333; /* Texto oscuro */
+    text-align: justify; /* Justificar texto */
+    font-size: 1rem; /* Ajustar tamaño de texto */
+    line-height: 1.4; /* Espaciado entre líneas */
+    width: 100%;
+    flex-grow: 1; /* Permitir que el cuerpo se adapte */
+}
+
+.propuesta-body p {
+    margin: 10px 0;
+}
+
+.propuesta-categoria {
+    background: #ffe6f2; /* Fondo rosado claro */
+    padding: 10px;
+    width: 100%;
+    font-family: 'Arial', sans-serif;
+    color: #ff007f; /* Texto rosado fuerte */
+    font-weight: bold;
+    font-size: 1.1rem; /* Tamaño de texto ligeramente mayor */
+    border-top: 3px solid #ffffff; /* Separador */
+}
+
+.propuesta-categoria-eventos {
+    background: #ffe6f2; /* Fondo rosado claro */
+    padding: 10px;
+    width: 100%;
+    font-family: 'Arial', sans-serif;
+    color: #ff007f; /* Texto rosado fuerte */
+    font-weight: bold;
+    font-size: 1.1rem; /* Tamaño de texto ligeramente mayor */
+    border-top: 3px solid #ffffff; /* Separador */
+    text-align: left;
+}
+
+
+.propuesta-footer {
+    background: #ff007f; /* Fondo rosado fuerte */
+    color: #ffffff; /* Texto blanco */
+    padding: 10px;
+    font-family: 'Arial', sans-serif;
+    font-size: 1rem; /* Tamaño de texto más grande */
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between; /* Espaciado entre logos */
+    align-items: center;
+    width: 100%;
+}
+
+.propuesta-footer img {
+    height: 40px; /* Tamaño ajustado para los logos */
+    margin: 0 5px; /* Espaciado entre los logos */
+}
+
+
+
+
+#propuestas-section {
+    width: 100%;
+    text-align: center; /* Centra el contenido horizontalmente */
+}
+
+.propuestas-title {
+    font-size: 3rem;
+    margin-bottom: 10px; /* Espaciado entre el título y las tarjetas */
+    color: #ff007f; /* Color rojo */
+    text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff; /* Sombra para el texto */
+    font-weight: bold;
+}
+
+.propuestas-title-candidatos {
+    font-size: 4rem;
+    margin-bottom: 100px; /* Espaciado entre el título y las tarjetas */
+    color: #ff007f; /* Color rojo */
+    text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff; /* Sombra para el texto */
+    font-weight: bold;
+}
+
+
+
+
+
+section h1 {
+    font-size: 3em;
+    margin-bottom: 108px;
+}
+
+section p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    color: white;
+    margin-top: 50px;
+}
+
+.footer-rights {
+    background-color: #00bfff; 
+    color: white; 
+    text-align: center;
+    padding: 10px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    margin-top: 0px; 
+}
+
+
+
+
+#eventos-noticias-section {
+    text-align: center;
+    padding: 20px;
+    background-color: #f5f5f5; /* Fondo claro */
+}
+
+
+
+
+
+
+.overlay a {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 10px 20px;
+    background-color: #b22222; /* Color de fondo del botón */
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.overlay a:hover {
+    background-color: #ffcccb; /* Color del botón al pasar el ratón */
+}
+
+
+.evento-card:hover .overlay {
+    opacity: 1;
+}
+
+.overlay p {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+.background {
+    background-image: url('Img/imagendefondo.jpg'); /* Cambia la ruta según sea necesario */
+    background-size: cover;
+    background-position: center;
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    color: white;
+    text-align: center;
+}
+
+.text {
+    font-size: 3rem;
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 20px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    position: relative; /* Asegúrate de que el contenedor tenga una posición relativa */
+}
+
+.button-link {
+    display: none; /* Ocultar el enlace por defecto */
+    margin-top: 15px; /* Espaciado por encima del enlace */
+    font-size: 1.2rem; /* Tamaño de fuente */
+    font-weight: normal; /* Peso de fuente */
+    color: white; /* Color del texto */
+    background-color: rgba(178, 34, 34, 0.8); /* Color de fondo */
+    padding: 10px 20px; /* Relleno alrededor del texto */
+    border-radius: 5px; /* Esquinas redondeadas */
+    text-decoration: none; /* Sin subrayado */
+    transition: background-color 0.3s ease; /* Transición suave */
+}
+
+.text:hover .button-link {
+    display: inline-block; /* Mostrar el enlace al pasar el ratón sobre .text */
+}
+
+.button-link:hover {
+    background-color: rgba(178, 34, 34, 1); /* Color de fondo al pasar el ratón */
+}
+

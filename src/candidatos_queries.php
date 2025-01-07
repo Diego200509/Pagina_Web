@@ -48,6 +48,7 @@ try {
                     exit;
                 }
 
+                
                 $image_url = "Candidatos/Img/" . $imageName;
             }
 

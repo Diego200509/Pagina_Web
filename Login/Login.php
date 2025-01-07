@@ -1,5 +1,9 @@
 <?php
 session_start();
+// Cargar los colores desde el archivo JSON
+$config = json_decode(file_get_contents("styles_config.json"), true);
+$gradientStartLogin = $config['gradientStartLogin'] ?? "#FF007B";
+$gradientEndLogin = $config['gradientEndLogin'] ?? "#1C9FFF";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +18,7 @@ session_start();
       margin: 0;
       padding: 0;
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(120deg,rgb(211, 30, 30),rgb(38, 37, 39));
+      background: linear-gradient(120deg, <?php echo $gradientStartLogin; ?>, <?php echo $gradientEndLogin; ?>);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -22,7 +26,6 @@ session_start();
       height: 100vh;
       color: white;
     }
-
 
     /* Encabezado del sistema */
     .header-container {
@@ -42,10 +45,6 @@ session_start();
       margin: 5px 0;
     }
 
-    .header-container p {
-      font-size: 18px;
-      margin: 0;
-    }
     /* Contenedor principal */
     .login-container {
       background: white;
@@ -60,7 +59,7 @@ session_start();
     .login-container h2 {
       font-size: 28px;
       margin-bottom: 20px;
-      color: #b22222;
+      color: #FF007B;
       font-weight: 600;
     }
 
@@ -76,7 +75,7 @@ session_start();
       width: 70px;
       height: 70px;
       border-radius: 50%;
-      border: 3px solid black;
+      border: 3px solid #1C9FFF;
       box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
       object-fit: cover;
       transition: transform 0.3s ease, border-color 0.3s ease;
@@ -84,7 +83,7 @@ session_start();
 
     .avatars img:hover {
       transform: scale(1.1);
-      border-color:#b22222;
+      border-color: #FF007B;
     }
 
     /* Inputs */
@@ -100,7 +99,7 @@ session_start();
     }
 
     .input-group i {
-      color: #4A90E2;
+      color: #1C9FFF;
       margin-right: 10px;
       font-size: 20px;
     }
@@ -126,13 +125,13 @@ session_start();
     }
 
     .input-group input:focus {
-      border: 2px solidrgb(0, 0, 0);
+      border: 2px solid #FF007B;
     }
 
     /* Botón de inicio */
     .login-button {
       width: 100%;
-      background: #b22222;
+      background: #FF007B;
       color: white;
       border: none;
       border-radius: 25px;
@@ -144,7 +143,7 @@ session_start();
     }
 
     .login-button:hover {
-      background:rgba(0, 0, 0, 0.8);
+      background: #1C9FFF;
       transform: translateY(-3px);
     }
 
@@ -153,16 +152,17 @@ session_start();
       display: block;
       margin-top: 20px;
       font-size: 14px;
-      color: #4A90E2;
+      color: #1C9FFF;
       text-decoration: none;
       transition: color 0.3s ease;
     }
 
     .register-link:hover {
-      color: #9013FE;
+      color: #FF007B;
       text-decoration: underline;
     }
-    /* Agrega estilos para mensajes de error */
+
+    /* Mensajes de error */
     .error-message {
       color: red;
       text-align: center;
@@ -211,6 +211,17 @@ session_start();
   </div>
 
   <script>
+document.addEventListener("DOMContentLoaded", function () {
+    // Escuchar cambios en el almacenamiento local
+    window.addEventListener("storage", function (event) {
+        if (event.key === "loginColorUpdated" && (event.newValue === "true" || event.newValue === "reset")) {
+            // Recargar la página cuando se detecte un cambio o restablecimiento
+            window.location.reload();
+        }
+    });
+});
+
+
     function validateForm() {
       const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value.trim();
@@ -230,6 +241,7 @@ session_start();
 
       return true;
     }
+    
   </script>
 </body>
 </html>

@@ -1,197 +1,296 @@
+/* Reset de márgenes y rellenos */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-html,
-body {
+/* Estilo general del body */
+html, body {
     height: 100%;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1;
 }
 
 body {
     display: flex;
     flex-direction: column;
 }
-
-header {
+.navbar {
+    background-color: var(--navbar-bg-color, #00bfff); /* Azul vibrante como color por defecto */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 50px;
-    background-color: #b22222;
+    padding: 10px 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
 }
 
-header .logo {
+
+.navbar-logo {
     display: flex;
     align-items: center;
+    gap: 10px;
+    color: #ffffff; /* Blanco */
 }
 
-header .logo img {
-    width: 50px;
-    margin-right: 10px;
+.navbar-logo i {
+    font-size: 24px;
 }
 
-header .logo h1 {
-    color: #ffffff;
-    font-size: 1.5em;
+.navbar-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
 }
 
-header nav {
+.navbar-menu li {
+    list-style: none;
+}
+
+.navbar-menu li a {
     display: flex;
     align-items: center;
-}
-
-header nav a {
-    color: white;
+    gap: 8px; /* Espacio entre icono y texto */
+    color: #ffffff; /* Blanco */
     text-decoration: none;
-    margin: 0 15px;
-    font-size: 1em;
-    transition: color 0.3s;
-    display: flex;
-    align-items: center;
+    font-size: 16px;
+    font-weight: bold;
 }
 
-header nav a i {
-    margin-right: 8px;
+.navbar-menu li a:hover {
+    color: #ff0050; /* Rosa brillante */
 }
 
-header nav a:hover {
-    color: #f0f0f0;
-}
 
+/* Contenedor de la página */
 .container {
-    flex-grow: 1;
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 30px;
 }
 
+.title-container {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente si es necesario */
+    width: 100%;
+    margin-top: 20px;
+}
+/* Estilo del título con subrayado rosado */
 h2 {
+    font-size: 2.5em;
+    color: #000;
+    font-weight: bold;
+    position: relative;
+    display: block;
     text-align: center;
-    margin-bottom: 20px;
-    font-size: 2.2em;
-    color: #333;
-    letter-spacing: 1px;
+    width: 100%;
+    margin: 20px 0 15px 0; /* Ajuste de margen para mejorar la alineación */
 }
 
+/* Línea decorativa debajo del título */
+h2::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 5px;
+    background-color: #ff1493;
+    margin: 8px auto 0;
+    border-radius: 5px;
+}
+
+
+/* Estilo del filtro */
 .filter-box {
     text-align: center;
     margin-bottom: 40px;
 }
 
 .filter-box select {
-    padding: 10px 15px;
-    font-size: 1em;
-    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 1.1em;
+    border-radius: 10px;
     border: 1px solid #ccc;
     width: 100%;
     max-width: 400px;
     margin-bottom: 20px;
     background-color: #fff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease;
 }
 
-.filter-box select:hover {
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
-}
-
-.proposals-grid {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-
-.proposal-card {
-    background-color: #fff;
+/* Contenedor para las tarjetas */
+.proposals-container {
+    background-color: #ffffff;
     padding: 20px;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: calc(50% - 10px);
-    margin-bottom: 20px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    min-height: 250px;
-    border-left: 6px solid #b22222;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
 }
+
+/* Estilos de la grid de propuestas */
+.proposals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Ajuste dinámico */
+    gap: 30px;
+    justify-content: center; /* Centra cuando hay una sola card */
+    align-items: stretch;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Estilo para cada tarjeta de propuesta */
+.proposal-card {
+    background: linear-gradient(145deg, #ffffff, #f7f7f7);
+    border-radius: 15px;
+    padding: 10px; /* Reduce el padding general */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    min-height: 250px; /* Reduce la altura mínima */
+    max-width: 350px;
+    width: 100%;
+    border-left: 10px solid #ff1493;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Evita espacios extra */
+    justify-content: flex-start; /* Acomoda los elementos al inicio */
+    overflow: hidden;
+    word-wrap: break-word;
+}
+
+
+
+
+
+/* Título de la propuesta */
+.proposal-card h3 {
+    font-size: 1.5em;
+    margin-bottom: 5px;
+    color: #ff1493;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 2px solid #ff1493;
+    padding-bottom: 5px;
+    word-wrap: break-word; /* Ajusta el texto sin cortarlo */
+    overflow-wrap: break-word;
+    white-space: normal; /* Permite saltos de línea */
+    max-width: 100%; /* Se asegura de que el ancho no se exceda */
+}
+
+.proposal-card p {
+    font-size: 1em;
+    color: #444;
+    text-align: left;
+    margin: 5px 0; /* Reduce el espacio entre elementos */
+    padding: 0;
+}
+
+.proposal-card strong {
+    display: inline; /* Evita que los títulos se coloquen en una nueva línea */
+    font-weight: bold;
+    margin-right: 5px; /* Pequeño espacio entre el título y el contenido */
+}
+
 
 .proposal-card:hover {
     transform: scale(1.05);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
 }
+/* Descripción de la propuesta */
 
-.proposal-card h3 {
-    font-size: 1.8em;
-    margin-bottom: 15px;
-    color: #b22222;
-    text-align: center;
-    border-bottom: 2px solid #f0f0f0;
-    padding-bottom: 10px;
-}
-
-.proposal-card .proposal-title {
-    font-size: 1.3em;
-    font-weight: bold;
+/* Ajuste del texto de la descripción para que haga saltos de línea */
+.proposal-description {
+    font-size: 1em;
     color: #444;
-    margin-bottom: 8px;
-    text-align: left;
-}
-
-.proposal-card .proposal-description {
-    white-space: normal;       /* Asegura que el texto se ajuste al ancho del contenedor */
-    word-wrap: break-word;     /* Rompe palabras largas */
-    overflow-wrap: break-word; /* Rompe palabras si exceden el ancho del contenedor */
-    overflow: hidden;          /* Evita que el contenido se desborde */
-    text-align: justify;       /* Alinea el texto para un aspecto más limpio */
-    max-height: 200px;         /* Establece una altura máxima para evitar que el texto sea demasiado largo */
-    overflow-y: auto;          /* Añade un scroll si el texto excede el espacio disponible */
-    padding: 10px;             /* Añade un espacio interno para que el texto no toque los bordes */
+    text-align: justify;
+    line-height: 1.4;
+    margin-top: 5px;
+    width: 100%;
+    max-width: 100%;
+    overflow-wrap: break-word; /* Permite que las palabras largas se ajusten */
+    word-break: break-word; /* Rompe palabras largas */
+    white-space: pre-wrap; /* IMPORTANTE: Mantiene los saltos de línea */
+    display: block; /* Asegura que el párrafo se comporte correctamente */
 }
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+/* Estilo de los botones de la categoría */
+.card-category {
+    background-color: #00bfff;
+    color: white;
+    padding: 10px 25px;
+    border-radius: 50px;
+    font-size: 1em;
+    font-weight: bold;
+    display: inline-block;
+    text-align: center;
+    margin-top: 20px;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.card-category:hover {
+    background-color: #008b8b;
+    transform: scale(1.1);
+}
+
+/* Footer */
 footer {
-    background-color: #b22222;
+    background-color: #00bfff;
     color: white;
     text-align: center;
-    padding: 10px;
+    padding: 15px;
     position: relative;
     bottom: 0;
     width: 100%;
 }
 
-.proposal-item {
-    margin-bottom: 15px;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-    font-size: 1.1em;
-    background-color: #fafafa;
-    border-radius: 8px;
-    padding: 12px 15px;
-}
 
-.proposal-item p {
-    white-space: normal;       /* Asegura que el texto se ajuste al ancho del contenedor */
-    word-wrap: break-word;     /* Rompe palabras largas si es necesario */
-    overflow-wrap: break-word; /* Rompe palabras largas automáticamente */
-    text-align: justify;       /* Alinea el texto para un mejor diseño */
-    overflow: hidden;          /* Evita que el texto sobresalga del contenedor */
-    margin: 5px 0;             /* Añade espacio entre líneas */
-}
+/* Responsive */
+@media (max-width: 768px) {
+    .navbar-menu {
+        display: none;
+    }
 
-.proposal-item:last-child {
-    border-bottom: none;
-}
+    .header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
 
-.proposal-item {
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
+    .proposals-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Ajuste dinámico */
+        gap: 30px;
+        justify-content: center; /* Centra cuando hay una sola card */
+        align-items: stretch; /* Asegura que todas las tarjetas tengan la misma altura */
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
 
-.proposal-item.visible {
-    opacity: 1;
-    transform: translateY(0);
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar-logo {
+        margin-bottom: 15px;
+    }
 }
