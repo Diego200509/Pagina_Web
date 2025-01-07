@@ -145,22 +145,36 @@ h2::after {
 
 /* Estilo para cada tarjeta de propuesta */
 .proposal-card {
-    background: linear-gradient(145deg, #ffffff, #f7f7f7);
+    background: #fff;
     border-radius: 15px;
-    padding: 10px; /* Reduce el padding general */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    min-height: 250px; /* Reduce la altura mínima */
-    max-width: 350px;
+    min-height: 350px;
+    max-width: 380px;
     width: 100%;
     border-left: 10px solid var(--navbar-bg-color, #00bfff);
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Evita espacios extra */
-    justify-content: flex-start; /* Acomoda los elementos al inicio */
+    align-items: center;
+    justify-content: flex-start;
     overflow: hidden;
     word-wrap: break-word;
+    text-align: center;
+    position: relative;
+    padding-bottom: 20px;
 }
+
+/* Ajuste de la imagen */
+.proposal-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover; /* Asegura que la imagen no se distorsione */
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    margin-bottom: 15px; /* Separación entre imagen y contenido */
+}
+
 
 
 
@@ -168,53 +182,68 @@ h2::after {
 
 /* Título de la propuesta */
 .proposal-card h3 {
-    font-size: 1.5em;
-    margin-bottom: 5px;
+    font-size: 1.3em;
+    margin-bottom: 8px;
     color: var(--navbar-bg-color, #00bfff);
     font-weight: bold;
-    text-align: center;
+    text-align: center; /* Se mantiene centrado solo el título */
     border-bottom: 2px solid var(--navbar-bg-color, #00bfff);
     padding-bottom: 5px;
-    word-wrap: break-word; /* Ajusta el texto sin cortarlo */
-    overflow-wrap: break-word;
-    white-space: normal; /* Permite saltos de línea */
-    max-width: 100%; /* Se asegura de que el ancho no se exceda */
+    width: 90%;
+    max-width: 300px;
 }
 
 .proposal-card p {
     font-size: 1em;
     color: #444;
+    margin: 0; /* Elimina cualquier margen innecesario */
+    padding: 0; /* Elimina cualquier relleno */
     text-align: left;
-    margin: 5px 0; /* Reduce el espacio entre elementos */
-    padding: 0;
+    width: 100%;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
-.proposal-card strong {
-    display: inline; /* Evita que los títulos se coloquen en una nueva línea */
+/* Título (strong) dentro de cada párrafo, para los valores de categoría y descripción */
+.proposal-card p strong {
     font-weight: bold;
-    margin-right: 5px; /* Pequeño espacio entre el título y el contenido */
+    margin-right: 10px; /* Espacio entre "Categoría:" o "Descripción:" y su texto */
+}
+
+.proposal-card p span {
+    display: inline;  /* Mantiene el texto de la descripción al lado de la etiqueta */
+    white-space: normal;  /* Permite que se rompa el texto cuando sea necesario */
+    word-wrap: break-word; /* Rompe las palabras largas */
+    overflow-wrap: break-word; /* Asegura que el texto largo se ajuste correctamente */
+    margin-left: 5px; /* Pequeña separación entre el texto y la etiqueta */
+}
+
+.proposal-card p, .proposal-description {
+    margin-left: 10px;
+    width: 90%;  /* Para que se ajuste bien a la tarjeta */
 }
 
 
 .proposal-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    transform: translateY(-5px); /* Elevación suave */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Sombra más destacada */
 }
 /* Descripción de la propuesta */
 
 /* Ajuste del texto de la descripción para que haga saltos de línea */
 .proposal-description {
     font-size: 1em;
-    color: #444;
-    text-align: justify;
-    line-height: 1.4;
+    color: #555;
+    text-align: left;
+    line-height: 1.5;
     margin-top: 5px;
-    width: 100%;
-    max-width: 100%;
-    overflow-wrap: break-word; /* Permite que las palabras largas se ajusten */
-    word-break: break-word; /* Rompe palabras largas */
-    white-space: pre-wrap; /* IMPORTANTE: Mantiene los saltos de línea */
-    display: block; /* Asegura que el párrafo se comporte correctamente */
+    width: 100%;  /* Ajusta el tamaño del contenedor */
+    white-space: pre-wrap; /* Mantiene los saltos de línea */
+    word-wrap: break-word; /* Permite que las palabras largas se ajusten correctamente */
+    overflow-wrap: break-word;
+    display: inline-block; /* Mantiene el texto en la misma línea */
+    margin-left: 0; /* Asegura que no haya margen a la izquierda */
 }
 
 
@@ -234,19 +263,19 @@ h2::after {
 .card-category {
     background-color: var(--navbar-bg-color, #00bfff);
     color: white;
-    padding: 10px 25px;
+    padding: 8px 20px;
     border-radius: 50px;
     font-size: 1em;
     font-weight: bold;
     display: inline-block;
     text-align: center;
-    margin-top: 20px;
+    margin-top: 15px;
     text-transform: uppercase;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .card-category:hover {
-    background-color: #008b8b;
+    background-color: #d1137c;
     transform: scale(1.1);
 }
 

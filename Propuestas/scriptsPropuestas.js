@@ -14,12 +14,12 @@ function filterProposals() {
         },
         body: `category=${encodeURIComponent(selectedFaculty)}`
     })
-    .then(response => response.json())
-    .then(data => {
-        console.log("Datos recibidos del servidor:", data);
-        displayProposals(data);
-    })
-    .catch(error => console.error('Error:', error));
+        .then(response => response.json())
+        .then(data => {
+            console.log("Datos recibidos del servidor:", data);
+            displayProposals(data);
+        })
+        .catch(error => console.error('Error:', error));
 }
 
 function truncateText(text, maxLength) {
@@ -54,11 +54,17 @@ function displayProposals(proposals) {
             const proposalCard = document.createElement("div");
             proposalCard.classList.add("proposal-card");
 
+            const imageUrl = proposal.imagen_url.trim() !== ""
+                ? proposal.imagen_url
+                : "https://via.placeholder.com/300x200?text=Sin+Imagen"; // Imagen predeterminada
+
             proposalCard.innerHTML = `
+                <img src="${imageUrl}" class="proposal-image" alt="Imagen de la propuesta">
                 <h3>${proposal.titulo}</h3>
                 <p><strong>Categoría:</strong> ${proposal.categoria}</p>
-                <p><strong>Descripción:</strong> <span class="proposal-description">${proposal.descripcion}</span></p>
+                <p><strong>Descripción:</strong> <span class="proposal-description">${truncateText(proposal.descripcion, 100)}</span></p>
             `;
+
 
             proposalsGrid.appendChild(proposalCard);
         });
@@ -68,6 +74,8 @@ function displayProposals(proposals) {
         proposalsGrid.appendChild(noProposalsMessage);
     }
 }
+
+
 
 
 // Inicializa con la primera opción
