@@ -232,7 +232,7 @@ h2::after {
 
 /* Estilo de los botones de la categoría */
 .card-category {
-    background-color: #00bfff;
+    background-color: var(--navbar-bg-color, #00bfff);
     color: white;
     padding: 10px 25px;
     border-radius: 50px;
