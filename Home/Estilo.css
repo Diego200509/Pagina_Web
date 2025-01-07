@@ -273,6 +273,14 @@ section {
 #mostrarNoticias {
     background-color: #ff1493; /* Rosa fuerte */
 }
+#modal-image {
+    width: 100%; /* La imagen ocupa todo el ancho del contenedor */
+    max-height: 400px; /* Altura máxima para mantener proporciones */
+    object-fit: cover; /* Ajusta la imagen sin deformarla */
+    border-radius: 10px; /* Bordes redondeados para una apariencia más elegante */
+    margin-bottom: 20px; /* Espaciado debajo de la imagen */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra elegante */
+}
 
 
 
@@ -285,6 +293,8 @@ section {
     padding: 20px 100px; /* Espaciado ajustado */
     justify-content: center; /* Centra horizontalmente las tarjetas */
     margin: 0 auto; /* Centra el contenedor en el espacio disponible */
+
+    
 }
 
 .propuesta-eventos {
@@ -299,6 +309,9 @@ section {
     align-items: center; /* Centrar contenido horizontalmente */
     text-align: center; /* Centrar texto */
     transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animación */
+    position: relative; /* Necesario para el botón */
+
+    
 }
 
 
@@ -317,7 +330,6 @@ section {
     text-transform: uppercase;
     border-bottom: 5px solid #ffffff; /* Separación visual con borde blanco */
 }
-
 .propuesta-body-eventos {
     padding: 20px;
     font-family: 'Arial', sans-serif;
@@ -330,9 +342,45 @@ section {
     flex-grow: 1; /* Permitir que el cuerpo se adapte */
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start; /* Asegura que el contenido empiece desde arriba */
+    align-items: center; /* Mantener las imágenes centradas */
+    overflow: hidden; /* Ocultar contenido que se desborde */
+    position: relative; /* Necesario para el botón */
+    height: 300px; /* Limitar la altura del contenido */
 }
+
+.propuesta-body-eventos p {
+    max-height: 150px; /* Altura máxima para la descripción */
+    text-overflow: ellipsis; /* Añadir "..." al final si el texto es demasiado largo */
+    display: -webkit-box; /* Compatibilidad con múltiples líneas */
+    -webkit-box-orient: vertical; /* Orientación vertical */
+    word-break: break-word; /* Evitar que palabras largas rompan el diseño */
+}
+
+
+.ver-mas-btn-eventos {
+    display: none;
+    background-color: #00bfff;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 2px 15px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    position: absolute;
+    right: 20px;
+    bottom: 1px;
+  }
+
+/* Mostrar el botón cuando se pasa el mouse sobre el contenedor */
+.propuesta-body-eventos:hover .ver-mas-btn-eventos {
+    display: block; /* Mostrar el botón */
+}
+
+.ver-mas-btn-eventos:hover {
+    background-color: #007acc;
+}
+
 
 .propuesta-body-eventos img {
     width: 60%; /* Reduce aún más el tamaño de la imagen */
@@ -464,6 +512,11 @@ section {
     line-height: 1.4; /* Espaciado entre líneas */
     width: 100%;
     flex-grow: 1; /* Permitir que el cuerpo se adapte */
+        position: relative;
+        height: 150px; /* Altura máxima para el texto visible */
+        overflow: hidden; /* Oculta el texto sobrante */
+    
+    
 }
 
 .propuesta-body p {
@@ -514,7 +567,6 @@ section {
 
 
 
-
 #propuestas-section {
     width: 100%;
     text-align: center; /* Centra el contenido horizontalmente */
@@ -537,6 +589,164 @@ section {
 }
 
 
+.propuesta-text {
+    font-size: 1rem;
+    line-height: 1.4;
+}
+
+/* Botón "Ver más" oculto por defecto */
+.ver-mas-btn {
+    display: none;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: #00bfff;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+}
+
+/* Mostrar botón al pasar el mouse sobre la tarjeta */
+.propuesta:hover .ver-mas-btn {
+    display: block;
+}
+
+.ver-mas-btn:hover {
+    background-color: #007acc;
+}
+
+
+.ver-mas-inicio-propuestas {
+    background-color: #00bfff; /* Fondo azul */
+    color: #ffffff; /* Texto blanco */
+    font-family: 'Arial', sans-serif; /* Fuente */
+    font-size: 1rem; /* Tamaño de fuente */
+    font-weight: bold; /* Texto en negrita */
+    padding: 10px 20px; /* Espaciado interno */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cursor de mano */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Efecto de transición */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para resaltar */
+}
+
+.ver-mas-inicio-propuestas:hover {
+    background-color: #ff007f; /* Cambia a rosado fuerte al pasar el cursor */
+    transform: scale(1.05); /* Aumenta ligeramente el tamaño */
+}
+
+.ver-mas-inicio-propuestas:active {
+    background-color: #0080ff; /* Azul más oscuro al hacer clic */
+    transform: scale(0.95); /* Reduce ligeramente el tamaño */
+}
+
+
+
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro con transparencia */
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #ffffff; /* Fondo blanco */
+    border-radius: 10px; /* Bordes redondeados */
+    width: 600px;
+    max-width: 90%;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.modal-header {
+    background: #00bfff; /* Fondo azul */
+    color: #ffffff; /* Texto blanco */
+    padding: 20px;
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    width: 100%; /* Ocupa toda la fila */
+    box-sizing: border-box;
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 17%;
+    right: 1px;
+    transform: translateY(-50%); /* Centra la "X" verticalmente */
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffffff; /* Blanco */
+    background: #ff007f; /* Fondo rosado fuerte */
+    border: none;
+    border-radius: 50%; /* Botón circular */
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+    background: #ff0000; /* Rojo al pasar el mouse */
+    transform: translateY(-50%) scale(1.1); /* Efecto de agrandamiento */
+    color: #ffffff; /* Blanco */
+}   
+
+.modal-body {
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    background: #ffffff; /* Fondo blanco */
+    color: #333; /* Texto oscuro */
+    text-align: justify;
+    font-size: 1rem;
+    line-height: 1.4;
+}
+
+.modal-category {
+    background: #ffe6f2; /* Fondo rosado claro */
+    padding: 10px;
+    font-family: 'Arial', sans-serif;
+    color: #ff007f; /* Texto rosado fuerte */
+    font-weight: bold;
+    font-size: 1.1rem;
+    border-top: 3px solid #ffffff; /* Separador */
+    text-align: center;
+    width: 100%; /* Ocupa toda la fila */
+    box-sizing: border-box;
+}
+.modal-footer {
+    background: #ff007f; /* Fondo rosado fuerte */
+    color: #ffffff; /* Texto blanco */
+    padding: 10px 20px;
+    font-family: 'Arial', sans-serif;
+    font-size: 1rem;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between; /* Alinea los logos a los extremos */
+    align-items: center;
+    width: 100%; /* Ocupa toda la fila */
+    box-sizing: border-box;
+}
+
+.modal-footer img {
+    height: 40px; /* Tamaño ajustado para los logos */
+}
 
 
 
@@ -545,10 +755,16 @@ section h1 {
     margin-bottom: 108px;
 }
 
-section p {
-    font-size: 1.2em;
+#eventos p {
+    font-size: 1.1em; /* Reducir el tamaño de la letra solo en la sección de eventos */
+    margin-bottom: 20px; /* Mantener el espaciado existente */
+  }
+  
+section-eventos p {
+    font-size: 1.1em;
     margin-bottom: 20px;
 }
+
 
 footer {
     text-align: center;

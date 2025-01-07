@@ -1,6 +1,7 @@
 <?php
 session_start();
 $navbarConfigPath = "navbar_config.json";
+include('../config/config.php');
 
 // Crear el archivo si no existe
 if (!file_exists($navbarConfigPath)) {
@@ -72,6 +73,19 @@ if (file_exists($configFileSugerencias)) {
     $paginaSugerenciasBgColor = "#a1c4fd";
 }
 
+// Obtener la ruta de la imagen para la sección 'logoNavbar'
+$section_name = 'logoNavbar';
+$stmt = $connection->prepare("SELECT image_path FROM imagenes_Inicio_Logo WHERE section_name = ?");
+$stmt->bind_param("s", $section_name);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $logo_path = $row['image_path'];
+} else {
+    $logo_path = "../Login/Img/logoMariCruz.png"; // Imagen por defecto
+}
 
 ?>
 <!DOCTYPE html>
@@ -97,6 +111,9 @@ if (file_exists($configFileSugerencias)) {
             background-size: cover;
             transition: background 0.5s ease-in-out;
         }
+        :root {
+        --navbar-bg-color: <?php echo $navbarBgColor; ?>;
+    }
 
         .accordion-button {
             background-color: #FF66CC;
@@ -182,8 +199,8 @@ if (file_exists($configFileSugerencias)) {
                 <h6 class="mt-2">Admin</h6>
             </div>
             <!-- Logo existente -->
-            <img src="/Pagina_Web/Pagina_Web/Login/Img/logoMariCruz.png" width="200px" style="margin-right: 20px;">
-        </div>
+            <img src="<?php echo htmlspecialchars($logo_path); ?>"  width="200px" style="margin-right: 20px;">
+
 
 
         </div>
@@ -234,7 +251,7 @@ if (file_exists($configFileSugerencias)) {
                                 <div class="col-md-6">
                                     <!-- Cambiar colores Navbar -->
                                     <div class="color-section mb-4">
-                                        <h5 class="text-uppercase" style="color: #00BFFF;">Navbar General</h5>
+                                        <h5 class="text-uppercase" style="color: #00BFFF;">Colores Generales</h5>
                                         <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
                                         <form action="cambiar_colores_admin.php" method="POST" id="formNavbar">
                                             <div class="d-flex align-items-center justify-content-between">

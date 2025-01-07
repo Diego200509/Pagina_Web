@@ -50,7 +50,6 @@ if (file_exists($configFileEventos)) {
         :root {
             --pagina-bg-color: <?php echo $paginaEventosBgColor; ?>;
             --navbar-bg-color: <?php echo $navbarBgColor; ?>;
-    
         }
     </style>
 </head>

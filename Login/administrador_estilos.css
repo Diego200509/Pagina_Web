@@ -11,7 +11,7 @@ body {
 
 /* Navbar */
 .navbar {
-    background-color: var(--navbar-bg-color, #00bfff); /* Azul vibrante como color por defecto */
+    background-color: var(--navbar-bg-color, #00bfff); /* Azul por defecto */
     display: flex;
     justify-content: space-between;
     align-items: center;
