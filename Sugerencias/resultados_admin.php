@@ -4,6 +4,17 @@ if (!isset($_SESSION['user_role'])) {
     header("Location: ../Login/Login.php");
     exit;
 }
+
+$navbarConfigPath = "../Login/navbar_config.json"; // Ruta al archivo de configuración del Navbar
+
+// Verificar si el archivo existe y cargar el color del Navbar
+if (file_exists($navbarConfigPath)) {
+    $navbarConfig = json_decode(file_get_contents($navbarConfigPath), true);
+    $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff'; // Azul por defecto
+} else {
+    $navbarBgColor = '#00bfff'; // Azul por defecto si no existe el archivo
+}
+
 // Obtener el rol del usuario
 $user_role = $_SESSION['user_role'];
 
@@ -29,6 +40,20 @@ function calcularPorcentaje($votos, $total)
 }
 
 include('../config/config.php');
+// Obtener la ruta de la imagen para la sección 'logoNavbar'
+$section_name = 'logoNavbar';
+$stmt = $connection->prepare("SELECT image_path FROM imagenes_Inicio_Logo WHERE section_name = ?");
+$stmt->bind_param("s", $section_name);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $logo_path = $row['image_path'];
+} else {
+    $logo_path = "/Pagina_Web/Pagina_Web/Login/Img/logoMariCruz.png"; // Imagen por defecto
+}
+
 
 
 
@@ -97,6 +122,14 @@ $imagenesActuales = obtenerImagenesResultados();
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
+        :root {
+        --navbar-bg-color: <?php echo $navbarBgColor; ?>;
+        
+
+        body {
+    background-color: var(--pagina-bg-color);
+}
+    }
 
 .logout {
             color: #ffc107;
@@ -630,8 +663,8 @@ input:checked + label .action span.option-2 {
                 <i class="fa-solid fa-user-shield fa-2x"></i>
                 <h6 class="mt-2"><?php echo $user_role === 'SUPERADMIN' ? 'SuperAdmin' : 'Admin'; ?></h6>
             </div>
-        <img src="/Pagina_Web/Pagina_Web/Login/Img/logoMariCruz.png" width="200px" style="margin-right: 20px;">
-        </div>
+            <img src="<?php echo htmlspecialchars($logo_path); ?>"  width="200px" style="margin-right: 20px;">
+
         <ul class="navbar-menu">
             <li><a href="../Candidatos/candidatos_admin.php"><i class="fa-solid fa-users"></i> <span>Candidatos</span></a></li>
             <li><a href="../Eventos_Noticias/eventos_noticias_admin.php"><i class="fa-solid fa-calendar-alt"></i> <span>Eventos y Noticias</span></a></li>

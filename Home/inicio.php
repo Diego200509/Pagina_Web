@@ -192,9 +192,6 @@ $stmt->close();
 
 
 
-
-
-
 <section id="eventos">
 <h1 class="propuestas-title-eventos">Eventos y Noticias</h1>
 
@@ -265,6 +262,7 @@ function cargarContenido(tipo) {
     .catch(error => console.error('Error:', error));
 }
 </script>
+
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         const modal = document.getElementById('modal');
@@ -312,8 +310,6 @@ function cargarContenido(tipo) {
         });
     });
 </script>
-
-
 
 
 

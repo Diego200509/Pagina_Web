@@ -620,6 +620,32 @@ section {
 }
 
 
+.ver-mas-inicio-propuestas {
+    background-color: #00bfff; /* Fondo azul */
+    color: #ffffff; /* Texto blanco */
+    font-family: 'Arial', sans-serif; /* Fuente */
+    font-size: 1rem; /* Tamaño de fuente */
+    font-weight: bold; /* Texto en negrita */
+    padding: 10px 20px; /* Espaciado interno */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cursor de mano */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Efecto de transición */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para resaltar */
+}
+
+.ver-mas-inicio-propuestas:hover {
+    background-color: #ff007f; /* Cambia a rosado fuerte al pasar el cursor */
+    transform: scale(1.05); /* Aumenta ligeramente el tamaño */
+}
+
+.ver-mas-inicio-propuestas:active {
+    background-color: #0080ff; /* Azul más oscuro al hacer clic */
+    transform: scale(0.95); /* Reduce ligeramente el tamaño */
+}
+
+
+
 .modal {
     display: none; /* Oculto por defecto */
     position: fixed;

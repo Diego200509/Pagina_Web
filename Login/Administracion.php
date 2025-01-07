@@ -72,6 +72,62 @@ if (file_exists($configFileSugerencias)) {
 }
 
 
+include('../config/config.php');
+
+
+
+$navbarConfigPath = "../Login/navbar_config.json"; // Ruta al archivo de configuración del Navbar
+
+// Verificar si el archivo existe y cargar el color del Navbar
+if (file_exists($navbarConfigPath)) {
+    $navbarConfig = json_decode(file_get_contents($navbarConfigPath), true);
+    $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff'; // Azul por defecto
+} else {
+    $navbarBgColor = '#00bfff'; // Azul por defecto si no existe el archivo
+}
+
+// Obtener la ruta de la imagen para la sección 'logoNavbar'
+$section_name = 'logoNavbar';
+$stmt = $connection->prepare("SELECT image_path FROM imagenes_Inicio_Logo WHERE section_name = ?");
+$stmt->bind_param("s", $section_name);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $logo_path = $row['image_path'];
+} else {
+    $logo_path = "../Login/Img/logoMariCruz.png"; // Imagen por defecto
+}
+
+
+
+$candidatosColor = cargarEstilo('../Login/candidatos_config.json', '#000000');
+$propuestasColor = cargarEstilo('../Login/propuestas_config.json', '#4d0a0a');
+$eventosColor = cargarEstilo('../Login/eventos_config.json', '#FF9800');
+
+// Definir rutas por defecto
+$slide1_path = "../Home/Img/FONDOMARI.jpg";
+$slide5_path = "../Home/Img/FONDOMARI2.jpg";
+
+// Consultar las rutas desde la base de datos
+$stmt = $connection->prepare("SELECT section_name, image_path FROM imagenes_Inicio_Logo WHERE section_name IN ('slide1', 'slide5')");
+$stmt->execute();
+$result = $stmt->get_result();
+
+while ($row = $result->fetch_assoc()) {
+    if ($row['section_name'] === 'slide1' && file_exists($row['image_path'])) {
+        $slide1_path = $row['image_path'];
+    } elseif ($row['section_name'] === 'slide5' && file_exists($row['image_path'])) {
+        $slide5_path = $row['image_path'];
+    }
+}
+
+
+
+
+$stmt->close();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -168,6 +224,9 @@ if (file_exists($configFileSugerencias)) {
             /* Tonalidad más oscura de celeste */
             color: white;
         }
+        :root {
+        --navbar-bg-color: <?php echo $navbarBgColor; ?>;
+    }
     </style>
 </head>
 
@@ -181,8 +240,8 @@ if (file_exists($configFileSugerencias)) {
                 <h6 class="mt-2">SuperAdmin</h6>
             </div>
             <!-- Logo existente -->
-            <img src="/Pagina_Web/Pagina_Web/Login/Img/logoMariCruz.png" width="200px" style="margin-right: 20px;">
-        </div>
+            <img src="<?php echo htmlspecialchars($logo_path); ?>"  width="200px" style="margin-right: 20px;">
+
 
 
 
@@ -246,7 +305,7 @@ if (file_exists($configFileSugerencias)) {
                                 <div class="col-md-6">
                                     <!-- Cambiar colores Navbar -->
                                     <div class="color-section mb-4">
-                                        <h5 class="text-uppercase" style="color: #00BFFF;">Navbar General</h5>
+                                        <h5 class="text-uppercase" style="color: #00BFFF;">Colores Generales</h5>
                                         <p class="subtitle" style="color: #FF69B4;">Seleccionar color:</p>
                                         <form action="cambiar_colores.php" method="POST" id="formNavbar">
                                             <div class="d-flex align-items-center justify-content-between">
