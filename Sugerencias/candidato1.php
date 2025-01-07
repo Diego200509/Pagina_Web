@@ -240,13 +240,13 @@ textarea {
 footer {
     text-align: center;
     padding: 20px;
-    background-color: #00bfff;
+    background-color: var(--navbar-bg-color, #00bfff);
     color: white;
     margin-top: 50px;
 }
 
 .footer-rights {
-    background-color: #00bfff; 
+    background-color: var(--navbar-bg-color, #00bfff);
     color: white; 
     text-align: center;
     padding: 10px;
@@ -382,7 +382,7 @@ button {
     justify-content: center;
     align-items: center;
     border-radius: 5px;
-    background: #00bfff;
+    background-color: var(--navbar-bg-color, #00bfff);
     font-family: "Montserrat", sans-serif;
     box-shadow: 0px 6px 24px 0px rgba(0, 0, 0, 0.2);
     overflow: hidden;

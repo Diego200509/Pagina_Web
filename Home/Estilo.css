@@ -558,7 +558,7 @@ footer {
 }
 
 .footer-rights {
-    background-color: #00bfff; 
+    background-color: var(--navbar-bg-color, #00bfff);
     color: white; 
     text-align: center;
     padding: 10px;

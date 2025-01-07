@@ -153,7 +153,7 @@ $imagenFondo = isset($imagenesActuales[2]) ? $imagenesActuales[2] : '/Pagina_Web
 
         h1 {
             text-align: center;
-            color: #ff0050;
+            color:var(--navbar-bg-color, #00bfff);
             /* Cambiado al color del header */
             margin-bottom: 20px;
         }
@@ -231,11 +231,11 @@ $imagenFondo = isset($imagenesActuales[2]) ? $imagenesActuales[2] : '/Pagina_Web
 
         button {
             padding: 10px 15px;
-            border: 2px solid #ff0050;
+            
             /* Cambiado al color del header */
             border-radius: 5px;
             cursor: pointer;
-            background-color: #ff0050;
+            background-color:var(--navbar-bg-color, #00bfff);
             /* Fondo rojo similar al header */
             color: white;
             font-weight: bold;
@@ -363,7 +363,7 @@ footer {
 
     text-align: center;
     padding: 20px;
-    background-color: #00bfff;
+    background-color:var(--navbar-bg-color, #00bfff);
     color: white;
     margin-top: auto;
     width: 100%;
@@ -371,7 +371,7 @@ footer {
 }
 
 .footer-rights {
-    background-color: #00bfff; 
+    background-color:var(--navbar-bg-color, #00bfff);
     color: white; 
     text-align: center;
     padding: 0px;
