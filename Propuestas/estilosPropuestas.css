@@ -100,7 +100,7 @@ h2::after {
     display: block;
     width: 60px;
     height: 5px;
-    background-color: #ff1493;
+    background-color: var(--navbar-bg-color, #00bfff);
     margin: 8px auto 0;
     border-radius: 5px;
 }
@@ -153,7 +153,7 @@ h2::after {
     min-height: 250px; /* Reduce la altura mínima */
     max-width: 350px;
     width: 100%;
-    border-left: 10px solid #ff1493;
+    border-left: 10px solid var(--navbar-bg-color, #00bfff);
     display: flex;
     flex-direction: column;
     align-items: flex-start; /* Evita espacios extra */
@@ -170,10 +170,10 @@ h2::after {
 .proposal-card h3 {
     font-size: 1.5em;
     margin-bottom: 5px;
-    color: #ff1493;
+    color: var(--navbar-bg-color, #00bfff);
     font-weight: bold;
     text-align: center;
-    border-bottom: 2px solid #ff1493;
+    border-bottom: 2px solid var(--navbar-bg-color, #00bfff);
     padding-bottom: 5px;
     word-wrap: break-word; /* Ajusta el texto sin cortarlo */
     overflow-wrap: break-word;
@@ -252,7 +252,7 @@ h2::after {
 
 /* Footer */
 footer {
-    background-color: #00bfff;
+    background-color: var(--navbar-bg-color, #00bfff);
     color: white;
     text-align: center;
     padding: 15px;
