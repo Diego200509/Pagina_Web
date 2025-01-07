@@ -79,45 +79,54 @@ try {
                 echo json_encode(["message" => "Candidato agregado exitosamente."]);
             }
             break;
+case 'GET': // Obtener datos
+    if (isset($_GET['id'])) {
+        $id = intval($_GET['id']);
+        $query = "SELECT ID_CAN, NOM_CAN, APE_CAN, 
+                         FECHA_NAC_CAN, 
+                         TIMESTAMPDIFF(YEAR, FECHA_NAC_CAN, CURDATE()) AS EDAD_CAN, 
+                         CARGO_CAN, EDUCACION_CAN, EXPERIENCIA_CAN, PARTIDO_CAN, 
+                         IMG_CAN, ESTADO_CAN 
+                  FROM CANDIDATOS 
+                  WHERE ID_CAN = $id";
+        $result = mysqli_query($connection, $query);
 
-        case 'GET': // Obtener datos
-            if (isset($_GET['id'])) {
-                $id = intval($_GET['id']);
-                $query = "SELECT ID_CAN, NOM_CAN, APE_CAN, FECHA_NAC_CAN, CARGO_CAN, EDUCACION_CAN, EXPERIENCIA_CAN, PARTIDO_CAN, IMG_CAN, ESTADO_CAN 
-                          FROM CANDIDATOS WHERE ID_CAN = $id";
-                $result = mysqli_query($connection, $query);
-
-                if ($result) {
-                    $candidate = mysqli_fetch_assoc($result);
-                    if ($candidate) {
-                        echo json_encode($candidate);
-                    } else {
-                        http_response_code(404);
-                        echo json_encode(["error" => "Candidato no encontrado."]);
-                    }
-                } else {
-                    http_response_code(500);
-                    echo json_encode(["error" => "Error al obtener el candidato: " . mysqli_error($connection)]);
-                }
-                break;
-            }
-
-            $query = "SELECT ID_CAN, NOM_CAN, APE_CAN, FECHA_NAC_CAN, CARGO_CAN, EDUCACION_CAN, EXPERIENCIA_CAN, ID_PAR_CAN, IMG_CAN, ESTADO_CAN 
-                      FROM CANDIDATOS";
-
-            $result = mysqli_query($connection, $query);
-
-            if ($result) {
-                $candidates = [];
-                while ($row = mysqli_fetch_assoc($result)) {
-                    $candidates[] = $row;
-                }
-                echo json_encode($candidates);
+        if ($result) {
+            $candidate = mysqli_fetch_assoc($result);
+            if ($candidate) {
+                echo json_encode($candidate);
             } else {
-                http_response_code(500);
-                echo json_encode(["error" => "Error al obtener los candidatos: " . mysqli_error($connection)]);
+                http_response_code(404);
+                echo json_encode(["error" => "Candidato no encontrado."]);
             }
-            break;
+        } else {
+            http_response_code(500);
+            echo json_encode(["error" => "Error al obtener el candidato: " . mysqli_error($connection)]);
+        }
+        break;
+    }
+
+    $query = "SELECT ID_CAN, NOM_CAN, APE_CAN, 
+                     FECHA_NAC_CAN, 
+                     TIMESTAMPDIFF(YEAR, FECHA_NAC_CAN, CURDATE()) AS EDAD_CAN, 
+                     CARGO_CAN, EDUCACION_CAN, EXPERIENCIA_CAN, ID_PAR_CAN, 
+                     IMG_CAN, ESTADO_CAN 
+              FROM CANDIDATOS";
+
+    $result = mysqli_query($connection, $query);
+
+    if ($result) {
+        $candidates = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $candidates[] = $row;
+        }
+        echo json_encode($candidates);
+    } else {
+        http_response_code(500);
+        echo json_encode(["error" => "Error al obtener los candidatos: " . mysqli_error($connection)]);
+    }
+    break;
+
 
         case 'PATCH': // Cambiar estado del candidato
             $input = json_decode(file_get_contents("php://input"), true);
