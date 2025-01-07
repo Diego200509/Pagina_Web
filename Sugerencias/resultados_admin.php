@@ -1,5 +1,9 @@
 <?php
 session_start();
+if (!isset($_SESSION['user_role'])) {
+    header("Location: ../Login/Login.php");
+    exit;
+}
 // Obtener el rol del usuario
 $user_role = $_SESSION['user_role'];
 
@@ -27,15 +31,6 @@ function calcularPorcentaje($votos, $total)
 include('../config/config.php');
 
 
-$navbarConfigPath = "../Login/navbar_config.json"; // Ruta al archivo de configuración del Navbar
-
-// Verificar si el archivo existe y cargar el color del Navbar
-if (file_exists($navbarConfigPath)) {
-    $navbarConfig = json_decode(file_get_contents($navbarConfigPath), true);
-    $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff'; // Azul por defecto
-} else {
-    $navbarBgColor = '#00bfff'; // Azul por defecto si no existe el archivo
-}
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['imagen']) && isset($_POST['posicion'])) {
@@ -95,15 +90,6 @@ $imagenesActuales = obtenerImagenesResultados();
     <link rel="stylesheet" href="EstilosResultados.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        :root {
-            --navbar-bg-color: <?php echo $navbarBgColor; ?>;
-        }
-</style>
     <style>
         
         @keyframes animatedBackground {
@@ -640,11 +626,11 @@ input:checked + label .action span.option-2 {
     <!-- Navbar -->
     <nav class="navbar">
         <div class="navbar-logo">
-            <div class="text-center">
+        <div class="text-center">
                 <i class="fa-solid fa-user-shield fa-2x"></i>
-                <h6 class="mt-2 navbar-role"><?php echo $user_role === 'SUPERADMIN' ? 'SuperAdmin' : 'Admin'; ?></h6>
+                <h6 class="mt-2"><?php echo $user_role === 'SUPERADMIN' ? 'SuperAdmin' : 'Admin'; ?></h6>
             </div>
-            <img src="../Login/Img/logoMariCruz.png" width="200px" margin-right="20px">
+        <img src="/Pagina_Web/Pagina_Web/Login/Img/logoMariCruz.png" width="200px" style="margin-right: 20px;">
         </div>
         <ul class="navbar-menu">
             <li><a href="../Candidatos/candidatos_admin.php"><i class="fa-solid fa-users"></i> <span>Candidatos</span></a></li>

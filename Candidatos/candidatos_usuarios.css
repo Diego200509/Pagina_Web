@@ -1,12 +1,13 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f4f4;
+
+
     margin: 0;
     padding: 0;
 }
+
 .navbar {
     background-color: var(--navbar-bg-color, #00bfff);
-    /* Azul vibrante como color por defecto */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -34,6 +35,7 @@ body {
     padding: 0;
     display: flex;
     gap: 20px;
+    box-sizing: border-box;
 }
 
 .navbar-menu li {
@@ -59,7 +61,7 @@ body {
 
 /* Estilos del footer */
 .footer-rights {
-    background-color: #00bfff;
+    background-color: var(--navbar-bg-color, #00bfff);
     color: white;
     text-align: center;
     padding: 10px;
@@ -96,8 +98,9 @@ body {
 
 .candidate-content:hover {
     border: 5px solid; /* Borde visible al pasar el mouse */
-    border-image-source: linear-gradient(90deg, #ff1493, #00bfff); /* Gradiente rosa y azul */
-    border-image-slice: 1; /* Usar todo el gradiente como borde */
+    border-image-source: linear-gradient(90deg, var(--navbar-secondary-color, #ff1493), var(--navbar-bg-color, #00bfff));
+    border-image-slice: 1; /* Necesario para aplicar el gradiente al borde */
+    
 }
 
 /* Imagen del candidato */
@@ -127,7 +130,7 @@ body {
     display: block;
     width: 50px; /* Ancho de la línea */
     height: 5px; /* Altura de la línea */
-    background-color: #ff1493; /* Color rosa */
+    background-color: var(--navbar-bg-color, #00bfff);
     margin-top: 5px; /* Espacio entre el texto y la línea */
     border-radius: 3px; /* Bordes redondeados */
 }
@@ -172,15 +175,30 @@ body {
 .title {
     font-size: 2.5rem; /* Tamaño más grande */
     font-weight: 800; /* Negrilla más intensa */
-    color: #000; /* Color base, será sobrescrito */
+    color: #000; /* Color base */
+    margin-top: 30px; /* Espacio entre el título y el navbar */
     margin-bottom: 10px;
     display: flex;
-    justify-content: left; /* Centrar texto */
+    justify-content: left; /* Alineación a la izquierda */
     gap: 5px; /* Espaciado entre letras */
+    padding-left: 50px; /* Mueve el texto más a la derecha */
+    position: relative; /* Para posicionar la línea */
 }
 
 .title span {
     display: inline-block;
     font-size: inherit;
     font-weight: inherit;
+}
+
+.title::after {
+    content: "";
+    display: block;
+    width: 150px; /* Ancho de la línea */
+    height: 4px; /* Grosor de la línea */
+    background-color: var(--navbar-bg-color, #00bfff);
+    margin-top: 5px;
+    position: absolute;
+    left: 50px; /* Alinea la línea con el texto */
+    bottom: -10px; /* Posiciona la línea debajo del texto */
 }

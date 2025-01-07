@@ -20,17 +20,20 @@ unset($_SESSION['message']); // Limpiar mensaje después de mostrarlo
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard SuperAdmin</title>
     <!-- Font Awesome actualizado -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha384-jLKHWM3FAa+UP7B7aXQFJ59Y3RF53p50eA88LvNCwD5zZoOMMDzBtF1UeJ0cEtCU" crossorigin="anonymous">
-    <link rel="stylesheet" href="superadmin_styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="superadmin_estilo.css">
 </head>
 
 <body>
     <!-- Navbar -->
     <nav class="navbar">
         <div class="navbar-logo">
-            <i class="fa-solid fa-user-shield"></i>
-            <img src="../Home/Img/logo.png" width="50px" margin-right="10px">
-            <h2>SuperAdmin</h2>
+            <div class="text-center">
+                <i class="fa-solid fa-user-shield fa-2x"></i>
+                <h6 class="mt-2">SuperAdmin</h6>
+            </div>
+            <img src="/Pagina_Web/Pagina_Web/Login/Img/logoMariCruz.png" width="200px" style="margin-right: 20px;">
         </div>
         <ul class="navbar-menu">
             <li><a href="../Candidatos/candidatos_admin.php"><i class="fa-solid fa-users"></i> <span>Candidatos</span></a></li>
@@ -38,78 +41,59 @@ unset($_SESSION['message']); // Limpiar mensaje después de mostrarlo
             <li><a href="../Propuestas/gestionarPropuestas.php"><i class="fa-solid fa-lightbulb"></i> <span>Propuestas</span></a></li>
             <li><a href="../Sugerencias/sugerencias_admin.php"><i class="fa-solid fa-comment-dots"></i> <span>Sugerencias</span></a></li>
             <li><a href="../Sugerencias/resultados_admin.php"><i class="fas fa-vote-yea"></i> Votos</a></li>
-            <li><a href="#" id="btn-crear-usuario"><i class="fa-solid fa-user-plus"></i> <span>Crear Admin</span></a></li>
+            <li><a href="../Login/Administracion.php"><i class="fa-solid fa-cogs"></i> <span>Administración</span></a></li>
             <li><a href="../Login/Login.php" class="logout"><i class="fa-solid fa-sign-out-alt"></i> <span>Cerrar Sesión</span></a></li>
         </ul>
     </nav>
 
-
     <!-- Contenido principal -->
-    <div class="container">
-        <h1>Bienvenido, SuperAdmin</h1>
-        <p class="subtitle">Gestiona usuarios y navega por las secciones principales desde aquí.</p>
+    <div class="container mt-5">
+        <h1 class="text-center">Bienvenido, SuperAdmin</h1>
+        <p class="text-center">Gestiona usuarios y navega por las secciones principales desde aquí.</p>
 
-        <!-- Mostrar mensaje de éxito o error -->
-        <?php if ($message): ?>
-            <div class="message <?= strpos($message, 'éxito') !== false ? 'success' : 'error' ?>">
-                <?= htmlspecialchars($message) ?>
+        <!-- Tabla para mostrar usuarios (ADMIN y USUARIO) -->
+        <div class="row justify-content-center mt-4">
+            <div class="col-md-10">
+                <h3 class="text-center">Administradores creados </h3>
+                <table class="table table-bordered table-striped">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Correo Electrónico</th>
+                            <th>Rol</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        include('../config/config.php');
+                        // Seleccionar usuarios con rol ADMIN o USUARIO
+                        $sql = "SELECT NOM_USU AS nombre, EMAIL_USU AS correo, ROL_USU AS rol 
+                                FROM USUARIOS 
+                                WHERE ROL_USU IN ('ADMIN')";
+                        $result = $connection->query($sql);
+
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                echo "<tr>";
+                                echo "<td>" . htmlspecialchars($row['nombre']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['correo']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['rol']) . "</td>";
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='3' class='text-center'>No hay usuarios registrados con rol ADMIN o USUARIO.</td></tr>";
+                        }
+
+                        $connection->close();
+                        ?>
+                    </tbody>
+                </table>
             </div>
-        <?php endif; ?>
-    </div>
-
-    <!-- Modal para crear usuario -->
-    <div id="modal-crear-usuario" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" id="close-modal">&times;</span>
-            <h2>Crear Nuevo Admin</h2>
-            <form id="user-form" action="../src/crear_usuario_queries.php" method="POST">
-                <div class="form-group">
-                    <label for="nombre">Nombre:</label>
-                    <input type="text" id="nombre" name="nombre" placeholder="Ingresa el nombre" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Correo Electrónico:</label>
-                    <input type="email" id="email" name="email" placeholder="ejemplo@correo.com" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Contraseña:</label>
-                    <input type="password" id="password" name="password" placeholder="Ingrese una contraseña" minlength="6" required>
-                    <small id="password-error" class="error-message"></small>
-                </div>
-                <div class="form-group">
-                    <label for="rol">Rol:</label>
-                    <select id="rol" name="rol" required>
-                        <option value="ADMIN">ADMIN</option>
-                    </select>
-                </div>
-                </br>
-                <button type="submit" class="btn-submit">Crear Admin</button>
-            </form>
         </div>
     </div>
 
-    <script>
-        // Mostrar el modal
-        const modal = document.getElementById('modal-crear-usuario');
-        const btnAbrirModal = document.getElementById('btn-crear-usuario');
-        const btnCerrarModal = document.getElementById('close-modal');
-
-        btnAbrirModal.addEventListener('click', function(e) {
-            e.preventDefault();
-            modal.style.display = 'flex';
-        });
-
-        btnCerrarModal.addEventListener('click', function() {
-            modal.style.display = 'none';
-        });
-
-        // Cerrar modal si se hace clic fuera de él
-        window.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                modal.style.display = 'none';
-            }
-        });
-    </script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

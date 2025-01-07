@@ -20,25 +20,36 @@ unset($_SESSION['message']); // Limpiar mensaje después de mostrarlo
     <title>Dashboard Admin</title>
     <!-- Font Awesome actualizado -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha384-jLKHWM3FAa+UP7B7aXQFJ59Y3RF53p50eA88LvNCwD5zZoOMMDzBtF1UeJ0cEtCU" crossorigin="anonymous">
-    <link rel="stylesheet" href="admin_styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="admin_estilos.css">
 </head>
 <body>
     <!-- Navbar -->
     <nav class="navbar">
     <div class="navbar-logo">
-        <i class="fa-solid fa-user-shield"></i>
-        <img src = "../Home/Img/logo.png" width="50px"  margin-right= "10px">
-        <h2>Admin</h2>
+    <div class="text-center">
+        <!-- Icono SuperAdmin existente -->
+        <i class="fa-solid fa-user-shield fa-2x"></i>
+        <h6 class="mt-2">Admin</h6>
     </div>
-    <ul class="navbar-menu">
-        <li><a href="../Candidatos/candidatos_admin.php"><i class="fa-solid fa-users"></i> <span>Candidatos</span></a></li>
-        <li><a href="../Eventos_Noticias/eventos_noticias_admin.php"><i class="fa-solid fa-calendar-alt"></i> <span>Eventos y Noticias</span></a></li>
-        <li><a href="../Propuestas/gestionarPropuestas.php"><i class="fa-solid fa-lightbulb"></i> <span>Propuestas</span></a></li>
-        <li><a href="../Sugerencias/sugerencias_admin.php"><i class="fa-solid fa-comment-dots"></i> <span>Sugerencias</span></a></li>
-        <li><a href="../Sugerencias/resultados_admin.php"><i class="fas fa-vote-yea"></i> Votos</a></li>
-        <li><a href="../Login/Login.php" class="logout"><i class="fa-solid fa-sign-out-alt"></i> <span>Cerrar Sesión</span></a></li>
-    </ul>
-</nav>
+    <!-- Logo existente -->
+    <img src="../Pagina_Web/Login/Img/logoMariCruz.png" width="200px" style="margin-right: 20px;">
+
+</div>
+
+
+
+        </div>
+        <ul class="navbar-menu"> 
+            <li><a href="../Candidatos/candidatos_admin.php"><i class="fa-solid fa-users"></i> <span>Candidatos</span></a></li>
+            <li><a href="../Eventos_Noticias/eventos_noticias_admin.php"><i class="fa-solid fa-calendar-alt"></i> <span>Eventos y Noticias</span></a></li>
+            <li><a href="../Propuestas/gestionarPropuestas.php"><i class="fa-solid fa-lightbulb"></i> <span>Propuestas</span></a></li>
+            <li><a href="../Sugerencias/sugerencias_admin.php"><i class="fa-solid fa-comment-dots"></i> <span>Sugerencias</span></a></li>
+            <li><a href="../Sugerencias/resultados_admin.php"><i class="fas fa-vote-yea"></i> Votos</a></li>
+            <li><a href="../Login/Login.php" class="logout"><i class="fa-solid fa-sign-out-alt"></i> <span>Cerrar Sesión</span></a></li>
+        </ul>
+    </nav>
 
 
     <!-- Contenido principal -->

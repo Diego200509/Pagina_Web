@@ -37,6 +37,7 @@ if (isset($_COOKIE['ya_voto'])) {
 include('../config/config.php');
 
 
+
 $navbarConfigPath = "../Login/navbar_config.json"; // Ruta al archivo de configuración del Navbar
 
 // Verificar si el archivo existe y cargar el color del Navbar
@@ -44,8 +45,33 @@ if (file_exists($navbarConfigPath)) {
     $navbarConfig = json_decode(file_get_contents($navbarConfigPath), true);
     $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff'; // Azul por defecto
 } else {
-    $navbarBgColor = '#00bfff'; // Azul por defecto si no existe el archivo
+    $navbarBgColor = '#00bfff'; // Azul por defecto si no existe el archivo
 }
+
+// Obtener la ruta de la imagen para la sección 'logoNavbar'
+$section_name = 'logoNavbar';
+$stmt = $connection->prepare("SELECT image_path FROM imagenes_Inicio_Logo WHERE section_name = ?");
+$stmt->bind_param("s", $section_name);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $logo_path = $row['image_path'];
+} else {
+    $logo_path = "/Pagina_Web/Pagina_Web/Login/Img/logoMariCruz.png"; // Imagen por defecto
+}
+
+
+$configFileEventos = "../Login/PaginaEventos.json";
+
+if (file_exists($configFileEventos)) {
+    $config = json_decode(file_get_contents($configFileEventos), true);
+    $paginaBgColor = $config['paginaBgColor'] ?? "#f4f4f4";
+} else {
+    $paginaBgColor = "#f4f4f4";
+}
+
 
 
 // Obtener las imágenes desde la base de datos
@@ -81,21 +107,25 @@ $imagenFondo = isset($imagenesActuales[2]) ? $imagenesActuales[2] : '/Pagina_Web
     </style>
     <title>Votación</title>
     <style>
-        body {
+        html, body {
             font-family: 'Arial', sans-serif;
             background-image: url('<?php echo htmlspecialchars($imagenFondo); ?>');
             background-size: cover;
             background-position: center;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            height: 100vh;
+            height: 100%;
+            min-height: 100%;
+
         }
 
         .container {
+            flex: 1; /* Esto asegura que el contenido principal ocupe todo el espacio disponible */
+
             max-width: 800px;
             background: #ffffff;
             padding: 20px;
@@ -104,6 +134,8 @@ $imagenFondo = isset($imagenesActuales[2]) ? $imagenesActuales[2] : '/Pagina_Web
             transition: transform 0.3s;
             animation: slideIn 0.5s ease;
             margin-top: 100px;
+            width: 100%;
+
             /* Mover el formulario más abajo */
         }
 
@@ -121,7 +153,7 @@ $imagenFondo = isset($imagenesActuales[2]) ? $imagenesActuales[2] : '/Pagina_Web
 
         h1 {
             text-align: center;
-            color: #b22222;
+            color:var(--navbar-bg-color, #00bfff);
             /* Cambiado al color del header */
             margin-bottom: 20px;
         }
@@ -154,7 +186,7 @@ $imagenFondo = isset($imagenesActuales[2]) ? $imagenesActuales[2] : '/Pagina_Web
         }
 
         .candidato {
-            border: 2px solid #b22222;
+            border: 2px solid #00bfff;
             /* Cambiado al color del header */
             border-radius: 10px;
             overflow: hidden;
@@ -172,7 +204,7 @@ $imagenFondo = isset($imagenesActuales[2]) ? $imagenesActuales[2] : '/Pagina_Web
             height: 174px;
             object-fit: contain;
             transition: transform 0.3s;
-            border-bottom: 2px solid #b22222;
+            border-bottom: 2px solid #00bfff;
             /* Cambiado al color del header */
         }
 
@@ -188,7 +220,7 @@ $imagenFondo = isset($imagenesActuales[2]) ? $imagenesActuales[2] : '/Pagina_Web
 
         .candidato h2 {
             margin: 10px 0;
-            color: #343a40;
+            color: #ff0050;
         }
 
         .botones {
@@ -199,11 +231,11 @@ $imagenFondo = isset($imagenesActuales[2]) ? $imagenesActuales[2] : '/Pagina_Web
 
         button {
             padding: 10px 15px;
-            border: 2px solid #b22222;
+            
             /* Cambiado al color del header */
             border-radius: 5px;
             cursor: pointer;
-            background-color: #b22222;
+            background-color:var(--navbar-bg-color, #00bfff);
             /* Fondo rojo similar al header */
             color: white;
             font-weight: bold;
@@ -213,7 +245,7 @@ $imagenFondo = isset($imagenesActuales[2]) ? $imagenesActuales[2] : '/Pagina_Web
         }
 
         button:hover {
-            background-color: #d62828;
+            background-color: #ff0050;
             /* Rojo más oscuro al pasar el mouse */
             transform: translateY(-3px);
         }
@@ -245,7 +277,7 @@ $imagenFondo = isset($imagenesActuales[2]) ? $imagenesActuales[2] : '/Pagina_Web
             display: flex;
             align-items: center;
             margin-bottom: 15px;
-            border: 2px solid #b22222;
+            border: 2px solid #ff0050;
             /* Cambiado al color del header */
             border-radius: 10px;
             overflow: hidden;
@@ -260,7 +292,7 @@ $imagenFondo = isset($imagenesActuales[2]) ? $imagenesActuales[2] : '/Pagina_Web
             border-radius: 50%;
             margin-right: 10px;
             object-fit: cover;
-            border: 2px solid #b22222;
+            border: 2px solid #ff0050;
             /* Cambiado al color del header */
         }
 
@@ -324,26 +356,30 @@ $imagenFondo = isset($imagenesActuales[2]) ? $imagenesActuales[2] : '/Pagina_Web
     color: #ff0050;
 }
 
-        footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #b22222;
-            color: white;
-            margin-top: 50px;
-        }
 
-        .footer-rights {
-            background-color: #b22222;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            width: 100%;
-            box-sizing: border-box;
-            position: fixed; /* Lo fija en la parte inferior */
-            bottom: 0;
-            left: 0;
-            z-index: 10; /* Asegura que quede sobre otros elementos */
-        }
+footer {
+    position: fixed; /* Para mantenerlo fijo al final de la página */
+    z-index: 10;
+
+    text-align: center;
+    padding: 20px;
+    background-color:var(--navbar-bg-color, #00bfff);
+    color: white;
+    margin-top: auto;
+    width: 100%;
+
+}
+
+.footer-rights {
+    background-color:var(--navbar-bg-color, #00bfff);
+    color: white; 
+    text-align: center;
+    padding: 0px;
+    position: relative;
+    bottom: 0;
+    width: calc(105% + 101%); /* Ajusta el ancho para ignorar el padding del contenedor */
+    margin-top: auto; 
+}
         
         
         .modal {
@@ -407,7 +443,7 @@ $imagenFondo = isset($imagenesActuales[2]) ? $imagenesActuales[2] : '/Pagina_Web
 <div class="text-center">
 </div>
 <!-- Logo existente -->
-<img src="Img/logoMariCruz.png" width="200px" style="margin-right: 20px;">
+<img src="<?php echo htmlspecialchars($logo_path); ?>"  width="200px" style="margin-right: 20px;">
 
 </div>
 
@@ -420,7 +456,7 @@ $imagenFondo = isset($imagenesActuales[2]) ? $imagenesActuales[2] : '/Pagina_Web
         <li><a href="../Eventos_Noticias/eventos_noticias.php"><i class="fa-solid fa-calendar-alt"></i> <span>Eventos y Noticias</span></a></li>
         <li><a href="../Propuestas/Propuestas.php"><i class="fa-solid fa-lightbulb"></i> <span>Propuestas</span></a></li>
         <li><a href="../Sugerencias/index.php"><i class="fa-solid fa-comment-dots"></i> <span>Sugerencias</span></a></li>
-        <li><a href="../Sugerencias/resultados.php"><i class="fas fa-vote-yea"></i> Votos</a></li>
+        <li><a href="../Sugerencias/votos.php"><i class="fas fa-vote-yea"></i> Votos</a></li>
     </ul>
 </nav>
 
@@ -477,7 +513,9 @@ $imagenFondo = isset($imagenesActuales[2]) ? $imagenesActuales[2] : '/Pagina_Web
             </div>
         </div>
     </div>
-
+    <footer class="footer-rights">
+    <p>Todos los derechos reservados Team Sangre © 2024</p>
+</footer>
     
     <script>
 
@@ -521,6 +559,12 @@ $imagenFondo = isset($imagenesActuales[2]) ? $imagenesActuales[2] : '/Pagina_Web
             }
         });
     </script>
+
+
+
+
 </body>
 
+
 </html>
+

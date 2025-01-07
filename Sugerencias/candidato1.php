@@ -4,6 +4,17 @@ include_once('../config/config.php');
 include_once('../src/sugerencias_queries.php'); // Cambia esta línea si la ruta es diferente
 
 
+$imagenConfiguracion = obtenerImagenConfiguracion();
+
+if ($imagenConfiguracion && file_exists($_SERVER['DOCUMENT_ROOT'] . $imagenConfiguracion)) {
+    $imagenRuta = $imagenConfiguracion;
+} else {
+    $imagenRuta = '../Sugerencias/Img/default.jpg'; // Ruta completa para la imagen por defecto
+}
+
+
+
+
 $navbarConfigPath = "../Login/navbar_config.json"; // Ruta al archivo de configuración del Navbar
 
 // Verificar si el archivo existe y cargar el color del Navbar
@@ -11,16 +22,35 @@ if (file_exists($navbarConfigPath)) {
     $navbarConfig = json_decode(file_get_contents($navbarConfigPath), true);
     $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff'; // Azul por defecto
 } else {
-    $navbarBgColor = '#00bfff'; // Azul por defecto si no existe el archivo
+    $navbarBgColor = '#00bfff'; // Azul por defecto si no existe el archivo
 }
 
-$imagenConfiguracion = obtenerImagenConfiguracion();
+// Obtener la ruta de la imagen para la sección 'logoNavbar'
+$section_name = 'logoNavbar';
+$stmt = $connection->prepare("SELECT image_path FROM imagenes_Inicio_Logo WHERE section_name = ?");
+$stmt->bind_param("s", $section_name);
+$stmt->execute();
+$result = $stmt->get_result();
 
-if ($imagenConfiguracion && file_exists($_SERVER['DOCUMENT_ROOT'] . $imagenConfiguracion)) {
-    $imagenRuta = $imagenConfiguracion;
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $logo_path = $row['image_path'];
 } else {
-    $imagenRuta = '/Pagina_Web/Pagina_Web/Sugerencias/Img/default.jpg'; // Ruta completa para la imagen por defecto
+    $logo_path = "/Pagina_Web/Pagina_Web/Login/Img/logoMariCruz.png"; // Imagen por defecto
 }
+
+
+$configFileSugerencias = "../Login/PaginaSugerencias.json";
+if (file_exists($configFileSugerencias)) {
+    $config = json_decode(file_get_contents($configFileSugerencias), true);
+    $paginaSugerenciasBgColor = $config['paginaSugerenciasBgColor'] ?? "#a1c4fd";
+} else {
+    $paginaSugerenciasBgColor = "#a1c4fd";
+}
+
+
+
+
 
 $eventos_noticias = include('../src/partido1_sugerencias_queries.php');
 include('../Config/config.php');
@@ -42,10 +72,19 @@ $nombrePartido = obtenerNombrePartido(1);
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
-        :root {
-            --navbar-bg-color: <?php echo $navbarBgColor; ?>;
-        }
-    </style>
+    :root {
+        --navbar-bg-color: <?php echo $navbarBgColor; ?>;
+        --pagina-bg-color: <?php echo $paginaSugerenciasBgColor; ?>;
+    }
+
+    body {
+        background-color: var(--pagina-bg-color);
+        background-size: 400% 400%;
+        animation: animatedBackground 12s ease infinite; /* Animación suave */
+        overflow-x: hidden;
+    }
+</style>
+
     <title>Sobre nuestros estudiantes</title>
     <style>
         
@@ -59,10 +98,6 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 50%, #f5a5e0 100%); /* Degradado pastel suave entre azul, lila y rosa */
-    background-size: 400% 400%;
-    animation: animatedBackground 12s ease infinite; /* Animación suave */
-    overflow-x: hidden;
 }
 
 /* Mantener los demás estilos intactos */
@@ -205,21 +240,22 @@ textarea {
 footer {
     text-align: center;
     padding: 20px;
-    background-color: #00bfff;
+    background-color: var(--navbar-bg-color, #00bfff);
     color: white;
     margin-top: 50px;
 }
 
 .footer-rights {
-    background-color: #00bfff;
-    color: white;
+    background-color: var(--navbar-bg-color, #00bfff);
+    color: white; 
     text-align: center;
     padding: 10px;
     position: relative;
     bottom: 0;
     width: 100%;
-    margin-top: 0px;
+    margin-top: 0px; 
 }
+
 
 /* Contenedor del formulario */
 .form-container {
@@ -346,7 +382,7 @@ button {
     justify-content: center;
     align-items: center;
     border-radius: 5px;
-    background: #00bfff;
+    background-color: var(--navbar-bg-color, #00bfff);
     font-family: "Montserrat", sans-serif;
     box-shadow: 0px 6px 24px 0px rgba(0, 0, 0, 0.2);
     overflow: hidden;
@@ -488,7 +524,7 @@ button:hover span {
 <div class="text-center">
 </div>
 <!-- Logo existente -->
-<img src="Img/logoMariCruz.png" width="200px" style="margin-right: 20px;">
+<img src="<?php echo htmlspecialchars($logo_path); ?>"  width="200px" style="margin-right: 20px;">
 
 </div>
 
@@ -586,4 +622,9 @@ $(document).ready(function() {
 </script>
 
 </body>
+
+
+<footer class="footer-rights">
+    <p>Todos los derechos reservados Team Sangre © 2024</p>
+</footer>
 </html>
