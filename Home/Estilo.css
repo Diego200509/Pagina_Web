@@ -148,7 +148,7 @@ body {
     top: 50%;
     transform: translateY(-50%);
     font-size: 2em;
-    color: var(--navbar-bg-color, #00bfff);
+    color: #ff0000; 
     cursor: pointer;
     background: none;
     border: none;
@@ -200,8 +200,7 @@ section {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra elegante */
     overflow: hidden; /* Evita que el contenido sobresalga */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 3px solid var(--navbar-bg-color, #00bfff);
-
+    border: 3px solid #ff1493; /* Borde rosa fuerte */
 }
 
 .candidato:hover {
@@ -213,7 +212,7 @@ section {
     width: 100%; /* Ocupa todo el ancho */
     height: 65%; /* Ocupa el 65% del contenedor */
     object-fit: cover; /* Ajusta la imagen dentro del cuadro */
-    border-bottom: 5px solid var(--navbar-bg-color, #00bfff); /* Separador rosa fuerte */
+    border-bottom: 5px solid #ff1493; /* Separador rosa fuerte */
 }
 
 .candidato p {
