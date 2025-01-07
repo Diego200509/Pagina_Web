@@ -13,9 +13,28 @@ if (isset($_POST['tipo'])) {
     $stmt->execute();
     $result = $stmt->get_result();
 
+    // Límites para la descripción
+    $limiteEventos = 158; // Límite de caracteres para eventos
+    $limiteNoticias = 230; // Límite de caracteres para noticias
+
     // Generar el HTML para mostrar los resultados
     echo "<div id='propuestas-eventos'>"; // Clase principal
     while ($row = $result->fetch_assoc()) {
+        $descripcion = htmlspecialchars($row['DESC_EVT_NOT']);
+
+        // Verificar el tipo y aplicar el límite correspondiente
+        if ($tipo === 'EVENTO') {
+            $descripcionCorta = strlen($descripcion) > $limiteEventos 
+                                ? substr($descripcion, 0, $limiteEventos) . '...' 
+                                : $descripcion;
+        } elseif ($tipo === 'NOTICIA') {
+            $descripcionCorta = strlen($descripcion) > $limiteNoticias 
+                                ? substr($descripcion, 0, $limiteNoticias) . '...' 
+                                : $descripcion;
+        } else {
+            $descripcionCorta = $descripcion; // Sin límite si no coincide con EVENTO o NOTICIA
+        }
+
         echo "<div class='propuesta-eventos'>"; // Tarjeta de propuesta
 
         // Título del evento/noticia
@@ -23,8 +42,10 @@ if (isset($_POST['tipo'])) {
 
         // Imagen y descripción en el cuerpo
         echo "<div class='propuesta-body-eventos'>";
-        echo "<img src='" . htmlspecialchars($row['IMAGEN_EVT_NOT']) . "' alt='" . htmlspecialchars($row['TIT_EVT_NOT']) . "' style='width: 250px; height: 300px;'>"; // Imagen más pequeña
-        echo "<p>" . htmlspecialchars($row['DESC_EVT_NOT']) . "</p>"; // Descripción
+        echo "<img src='" . htmlspecialchars($row['IMAGEN_EVT_NOT']) . "' alt='" . htmlspecialchars($row['TIT_EVT_NOT']) . "' style='width: 250px; height: 300px;'>"; // Imagen
+        echo "<p>" . $descripcionCorta . "</p>"; // Descripción restringida
+        // Botón "Ver más" dentro de la descripción
+        echo "<a href='../Eventos_Noticias/eventos_noticias.php?id=" . $row['ID_EVT_NOT'] . "' class='ver-mas-btn-eventos'>Ver más</a>";
         echo "</div>";
 
         // Fecha y ubicación en la categoría

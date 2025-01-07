@@ -17,13 +17,12 @@ while ($row = mysqli_fetch_assoc($result)) {
     echo "<div class='propuesta-header'>{$row['TIT_PRO']}</div>"; // Título
     echo "<div class='propuesta-body'>";
     echo "<p class='propuesta-text'>{$shortDesc}</p>"; // Mostrar descripción truncada
-    if ($isLongText) { // Mostrar botón "Ver más" solo si el texto es largo
         echo "<button class='ver-mas-btn' 
                   data-title='{$row['TIT_PRO']}'
                   data-description='{$row['DESC_PRO']}'
                   data-category='{$row['CAT_PRO']}'
                   data-image='{$imageURL}'>Ver más</button>";
-    }
+
     echo "</div>";
     echo "<div class='propuesta-categoria'><span>Categoría:</span> {$row['CAT_PRO']}</div>"; // Categoría
     echo "<div class='propuesta-footer'>";

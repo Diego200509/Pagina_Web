@@ -174,7 +174,9 @@ $stmt->close();
             <button class="close-btn">&times;</button>
         </div>
         <div class="modal-body">
-            <img id="modal-image" src="" alt="Imagen de la propuesta" style="width: 100%; max-height: 300px; object-fit: cover; margin-bottom: 20px;">
+            <!-- Imagen de la propuesta -->
+            <img id="modal-image" src="" alt="Imagen de la propuesta">
+            <!-- Descripción de la propuesta -->
             <p id="modal-description"></p>
         </div>
         <div class="modal-category" id="modal-category"></div>
@@ -184,6 +186,7 @@ $stmt->close();
         </div>
     </div>
 </div>
+
 
 
 
