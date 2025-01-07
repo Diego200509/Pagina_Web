@@ -546,7 +546,8 @@ function mostrarDescripcionConFormato($descripcion)
                 <input type="text" name="titulo" id="titulo" class="form-control" required>
 
                 <label for="descripcion">Descripción:</label>
-                <textarea name="descripcion" id="descripcion" class="form-control" required></textarea>
+                <textarea name="descripcion" id="descripcion" class="form-control" maxlength="430" required oninput="contarCaracteres('descripcion', 'contadorDescripcion')"></textarea>
+                <small id="contadorDescripcion">0/430 caracteres</small>
 
                 <label for="categoria">Categoría:</label>
                 <select name="categoria" id="categoria" class="form-select" required>
@@ -612,7 +613,9 @@ function mostrarDescripcionConFormato($descripcion)
 
                 <!-- Descripción -->
                 <label for="descripcionEditar">Descripción:</label>
-                <textarea id="descripcionEditar" name="descripcion" class="form-control" required></textarea>
+                <textarea id="descripcionEditar" name="descripcion" class="form-control" maxlength="430" required oninput="contarCaracteres('descripcionEditar', 'contadorDescripcionEditar')"></textarea>
+                <small id="contadorDescripcionEditar">0/430 caracteres</small>
+
 
                 <!-- Categoría -->
                 <label for="categoriaEditar">Categoría:</label>
@@ -774,6 +777,11 @@ function mostrarDescripcionConFormato($descripcion)
 
 
 
+        function contarCaracteres(textareaId, contadorId) {
+            var textarea = document.getElementById(textareaId);
+            var contador = document.getElementById(contadorId);
+            contador.textContent = textarea.value.length + "/430 caracteres";
+        }
 
 
         function mostrarMensajeActualizado() {
