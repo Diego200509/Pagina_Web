@@ -119,7 +119,7 @@ $imagenFondo = isset($imagenesActuales[2]) ? $imagenesActuales[2] : '/Pagina_Web
             align-items: center;
             flex-direction: column;
             height: 100%;
-            min-height: 100%;
+            min-height: 100vh;
 
         }
 
@@ -135,6 +135,7 @@ $imagenFondo = isset($imagenesActuales[2]) ? $imagenesActuales[2] : '/Pagina_Web
             animation: slideIn 0.5s ease;
             margin-top: 100px;
             width: 100%;
+            padding-bottom: 20px; /* Espacio adicional para evitar el solapamiento */
 
             /* Mover el formulario más abajo */
         }
@@ -362,7 +363,7 @@ footer {
     z-index: 10;
 
     text-align: center;
-    padding: 20px;
+    padding: 100px;
     background-color:var(--navbar-bg-color, #00bfff);
     color: white;
     margin-top: auto;
@@ -370,16 +371,21 @@ footer {
 
 }
 
-.footer-rights {
-    background-color:var(--navbar-bg-color, #00bfff);
-    color: white; 
+footer.footer-rights {
+    position: relative; /* Mantener fijo al final */
+    bottom: 0; /* Asegura que esté siempre abajo */
+    left: 0; /* Alineado al borde izquierdo */
+    width: 100vw; /* Ocupa todo el ancho de la ventana */
+    background-color: var(--navbar-bg-color, #00bfff);
+    color: white;
     text-align: center;
-    padding: 0px;
-    position: relative;
-    bottom: 0;
-    width: calc(105% + 101%); /* Ajusta el ancho para ignorar el padding del contenedor */
-    margin-top: auto; 
+    padding: 2px 0; /* Espaciado interno uniforme */
+    z-index: 20; /* Por encima de otros elementos */
+    box-sizing: border-box; /* Incluye padding en el ancho total */
+    margin-top: 20px; /* Espaciado entre el footer y el contenido */
+
 }
+     
         
         
         .modal {

@@ -1,9 +1,9 @@
 <?php
 
-$host = "localhost:3309";  
+$host = "localhost";  
 $user = "root";  
 $password = "";  
-$database = "elecciones2025";  
+$database = "elecciones2024";  
 
 
 
