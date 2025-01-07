@@ -246,15 +246,16 @@ footer {
 }
 
 .footer-rights {
-    background-color: #00bfff;
-    color: white;
+    background-color: #00bfff; 
+    color: white; 
     text-align: center;
     padding: 10px;
     position: relative;
     bottom: 0;
     width: 100%;
-    margin-top: 0px;
+    margin-top: 0px; 
 }
+
 
 /* Contenedor del formulario */
 .form-container {
@@ -621,4 +622,9 @@ $(document).ready(function() {
 </script>
 
 </body>
+
+
+<footer class="footer-rights">
+    <p>Todos los derechos reservados Team Sangre © 2024</p>
+</footer>
 </html>
