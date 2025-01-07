@@ -1,6 +1,7 @@
 <?php
 session_start();
 $navbarConfigPath = "navbar_config.json";
+include('../config/config.php');
 
 // Crear el archivo si no existe
 if (!file_exists($navbarConfigPath)) {
@@ -72,6 +73,19 @@ if (file_exists($configFileSugerencias)) {
     $paginaSugerenciasBgColor = "#a1c4fd";
 }
 
+// Obtener la ruta de la imagen para la sección 'logoNavbar'
+$section_name = 'logoNavbar';
+$stmt = $connection->prepare("SELECT image_path FROM imagenes_Inicio_Logo WHERE section_name = ?");
+$stmt->bind_param("s", $section_name);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $logo_path = $row['image_path'];
+} else {
+    $logo_path = "../Login/Img/logoMariCruz.png"; // Imagen por defecto
+}
 
 ?>
 <!DOCTYPE html>

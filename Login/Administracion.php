@@ -1,6 +1,7 @@
 <?php
 session_start();
 $navbarConfigPath = "navbar_config.json";
+include('../config/config.php');
 
 // Crear el archivo si no existe
 if (!file_exists($navbarConfigPath)) {
@@ -99,7 +100,6 @@ if ($result->num_rows > 0) {
 } else {
     $logo_path = "../Login/Img/logoMariCruz.png"; // Imagen por defecto
 }
-
 
 
 $candidatosColor = cargarEstilo('../Login/candidatos_config.json', '#000000');
