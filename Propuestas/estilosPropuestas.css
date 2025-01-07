@@ -194,7 +194,7 @@ h2::after {
 }
 
 .proposal-card p strong:first-child {
-    color: #ff1493; /* 🎨 Color rosado solo para "Categoría:" y "Descripción:" */
+    color: var(--navbar-bg-color, #00bfff);  /* 🎨 Color rosado solo para "Categoría:" y "Descripción:" */
 }
 
 
@@ -299,16 +299,16 @@ h2::after {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    border: 2px solid #ff1493; /* Borde en tono rosado */
+    border: 2px solid var(--navbar-bg-color, #00bfff); /* Borde en tono rosado */
 }
 
 /* Título */
 .modal-content h3 {
     font-size: 1.8rem;
-    color: #ff1493;
+    color: var(--navbar-bg-color, #00bfff); 
     text-align: center;
     margin: 0;
-    border-bottom: 2px solid #ff1493;
+    border-bottom: 2px solid var(--navbar-bg-color, #00bfff); 
     padding-bottom: 12px;
     text-transform: uppercase;
     font-weight: bold;
@@ -330,7 +330,7 @@ h2::after {
     max-width: 50%; /* Ajusta el tamaño para que se vea bien */
     height: auto;
     border-radius: 12px; /* Bordes redondeados */
-    border: 3px solid #ff1493; /* Borde con color rosa */
+    border: 3px solid var(--navbar-bg-color, #00bfff); /* Borde con color rosa */
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease;
     display: block; /* Asegura que se comporte como un bloque */
@@ -364,14 +364,14 @@ h2::after {
 }
 
 .modal-body .modal-info p strong {
-    color: #ff1493;
+    color: var(--navbar-bg-color, #00bfff) ;
     font-weight: bold;
 }
 
 /* Botón de Cierre */
 .close {
     color: white;
-    background: linear-gradient(to right, #ff1493, #ff66b2); /* Gradiente rosa */
+    background: linear-gradient(to right, var(--navbar-bg-color, #00bfff), var(--navbar-bg-color, #00bfff)); /* Gradiente rosa */
     padding: 7px 12px;
     font-size: 18px;
     font-weight: bold;
@@ -399,7 +399,7 @@ h2::after {
 
 .btn-view-more {
     display: inline-block; /* Asegura que sea un botón alineado */
-    background-color: #ff1493; /* Fondo rosa vibrante */
+    background-color: var(--navbar-bg-color, #00bfff); /* Fondo rosa vibrante */
     color: #fff; /* Texto blanco */
     font-size: 1rem; /* Tamaño de fuente */
     font-weight: bold; /* Texto en negrita */
