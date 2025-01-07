@@ -98,8 +98,9 @@ body {
 
 .candidate-content:hover {
     border: 5px solid; /* Borde visible al pasar el mouse */
-    border-image-source: linear-gradient(90deg, #ff1493, #00bfff); /* Gradiente rosa y azul */
-    border-image-slice: 1; /* Usar todo el gradiente como borde */
+    border-image-source: linear-gradient(90deg, var(--navbar-secondary-color, #ff1493), var(--navbar-bg-color, #00bfff));
+    border-image-slice: 1; /* Necesario para aplicar el gradiente al borde */
+    
 }
 
 /* Imagen del candidato */
