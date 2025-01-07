@@ -173,6 +173,11 @@ h2::after {
     max-width: 300px;
 }
 
+.proposal-card p strong:first-child {
+    color: #ff1493; /* 🎨 Color rosado solo para "Categoría:" y "Descripción:" */
+}
+
+
 .proposal-card p {
     font-size: 1em;
     color: #444;
@@ -280,7 +285,7 @@ h2::after {
 /* Título */
 .modal-content h3 {
     font-size: 1.8rem;
-    color: #222;
+    color: #ff1493;
     text-align: center;
     margin: 0;
     border-bottom: 2px solid #ff1493;
