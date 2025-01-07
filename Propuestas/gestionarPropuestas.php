@@ -72,7 +72,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $categoria = $_POST['categoria'];
         $partido = $_POST['partido'];
         $estado = $_POST['estado'];
-        $imagenUrl = manejarSubidaImagen(); // ✅ Aquí se maneja la imagen correctamente
+        $imagenUrl = manejarSubidaImagen();
+
+        if (!$imagenUrl) {
+            die("Error: Debe seleccionar una imagen antes de guardar la propuesta.");
+        }
+        // ✅ Aquí se maneja la imagen correctamente
 
         if (empty($titulo) || empty($descripcion) || empty($categoria) || empty($partido) || empty($estado)) {
             die("Error: Faltan datos en el formulario. Verifique los campos.");
@@ -412,12 +417,12 @@ function mostrarDescripcionConFormato($descripcion)
 
 
                             <td>
-    <?php if (!empty(trim($row['IMAGEN_URL']))) : ?>
-        <img src="<?= 'http://localhost' . trim($row['IMAGEN_URL']) ?>" alt="Imagen de la propuesta" width="50">
-    <?php else : ?>
-        <span>Sin imagen</span>
-    <?php endif; ?>
-</td>
+                                <?php if (!empty(trim($row['IMAGEN_URL']))) : ?>
+                                    <img src="<?= 'http://localhost' . trim($row['IMAGEN_URL']) ?>" alt="Imagen de la propuesta" width="50">
+                                <?php else : ?>
+                                    <span>Sin imagen</span>
+                                <?php endif; ?>
+                            </td>
 
 
 
@@ -1122,6 +1127,31 @@ function mostrarDescripcionConFormato($descripcion)
                     });
             }
         }
+
+
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const formAgregar = document.querySelector("#modalPropuesta form");
+
+            if (formAgregar) {
+                formAgregar.addEventListener("submit", function(event) {
+                    const inputImagen = document.getElementById("imagen");
+
+                    if (!inputImagen.files || inputImagen.files.length === 0) {
+                        event.preventDefault(); // Detiene el envío del formulario
+
+                        Swal.fire({
+                            title: "Error",
+                            text: "Debe seleccionar una imagen antes de guardar la propuesta.",
+                            icon: "error",
+                            confirmButtonText: "OK"
+                        });
+
+                        return false;
+                    }
+                });
+            }
+        });
     </script>
 
 
