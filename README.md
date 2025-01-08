@@ -115,6 +115,25 @@ En la sección "Conoce a nuestros Candidatos", los usuarios pueden ver una vista
 
 ![alt text](img/image.png)
 
+### **Vista Previa de las Propuestas**
+En la sección "Propuestas", los usuarios pueden conocer las iniciativas que plantea la lista electoral para la universidad. Esta sección se estructura de la siguiente manera:
+
+1. **Tarjetas con Propuestas Destacadas**  
+   - Se presentan tarjetas con el título, descripción y categoría de cada propuesta.
+   - Las categorías pueden estar orientadas a distintos ámbitos como "Investigación" o "Vinculación con la Sociedad", etc.
+
+2. **Detalles de cada Propuesta**  
+   - Cada tarjeta contiene un breve resumen que explica el objetivo de la propuesta.
+
+3. **Acceso a más Información**  
+   - Si el usuario desea conocer más detalles sobre cada propuesta, puede presionar en "ver mas" para que le aparezca la información completa.
+
+   ![alt text](img/Propuestas.png)
+   ![alt text](img/ModalPropuestas.png)
+
+
+
+
 ## Despliegue 📦
 
 _Para desplegar este sistema en un servidor en producción:_
