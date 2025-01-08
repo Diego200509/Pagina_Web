@@ -236,6 +236,27 @@ En la sección "Sugerencias", los usuarios pueden enviar sus recomendaciones sob
    ![alt text](img/{F48C2D8F-0E2A-46DE-BE03-631602324C8B}.png)
    ![alt text](img/{BF5A69D9-0C64-406B-AB42-DFFF560FC609}.png)
 
+### **Sección de Votaciones**
+En la sección "Votos", los usuarios pueden participar activamente en la elección seleccionando a su candidato preferido.
+
+1. **Interfaz de Selección de Candidato**  
+   - Se presentan los candidatos disponibles con sus imágenes, nombres y lemas de campaña.
+   - Los usuarios pueden marcar su candidato preferido seleccionando una opción de radio.
+   - Se incluye un botón "Votar" para confirmar la elección.
+
+2. **Proceso de Votación**  
+   - Una vez que el usuario selecciona su candidato y presiona "Votar", el sistema registra el voto en la base de datos.
+
+3. **Visualización de Resultados en Tiempo Real**  
+   - Después de emitir el voto, los usuarios pueden ver los resultados actualizados de la elección.
+   - Se presentan las estadísticas con el porcentaje de votos obtenidos por cada candidato.
+   - Se muestra el número total de votos registrados hasta el momento.
+   - Los resultados se actualizan dinámicamente conforme más usuarios emiten su voto.
+   
+   ![alt text](img/{7770085C-CECF-44B7-9E78-1F9380000BA5}.png)
+   ![alt text](img/{6FD5CB1E-ECA9-4946-B015-028E33A41077}.png)
+
+
 
 
 
