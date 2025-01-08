@@ -22,12 +22,11 @@ _Este proyecto es un sistema de gestión de elecciones desarrollado para un solo
 1. [Comenzando 🚀](#comenzando-)
 2. [Pre-requisitos 📋](#pre-requisitos-)
 3. [Construido con 🛠️](#construido-con-)
-4. [Instalación 🔧](#instalación-)
-5. [Funcionamiento de la pagina ⚙️](#funcionamiento)
+4. [Instalación 🔧](#instalación)
+5. [Funcionamiento de la página ⚙️](#funcionamiento-de-la-página-️)
 6. [Despliegue 📦](#despliegue-)
 7. [Autores ✒️](#autores-)
 8. [Expresiones de Gratitud 🎁](#expresiones-de-gratitud-)
-
 
 ## Comenzando 🚀
 
@@ -378,6 +377,7 @@ Esta sección permite a los administradores gestionar los candidatos que forman 
      - Formación académica
      - Experiencia laboral
      - Imagen representativa
+
    ![alt text](img/{F3AD1984-5C63-4899-B05B-7C4C7A48B087}.png)
 
    ![alt text](img/{8F56D9F1-B2F9-4476-ADEB-979FFF6D5D06}.png)
@@ -517,31 +517,6 @@ Esta función permite a los administradores modificar las imágenes que se muest
 
    ![alt text](img/{E46ACF9E-BD58-4AD5-B90C-DA9A841AA0A6}.png)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## Despliegue 📦
 
 _Para desplegar este sistema en un servidor en producción:_
@@ -558,8 +533,6 @@ _Para desplegar este sistema en un servidor en producción:_
 * **Elkin López** - *Desarrollo* - [Elkinnn](https://github.com/Elkinnn)
 * **Leonel Barros** - *Desarrollo* - [Leo538](https://github.com/Leo538)
 * **T1Angel4220** - *Desarrollo* - [T1Angel4220](https://github.com/T1Angel4220)
-
-
 
 ## Expresiones de Gratitud 🎁
 
