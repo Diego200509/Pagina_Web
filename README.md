@@ -43,7 +43,7 @@ _Que cosas necesitas para instalar el software y cómo instalarlas_
 - Navegador web para pruebas.
 - Editor de texto o IDE (por ejemplo, Visual Studio Code).
 
-### Construido con 🛠️
+## Construido con 🛠️
 
 _Herramientas utilizadas para desarrollar el proyecto:_
 
@@ -52,7 +52,7 @@ _Herramientas utilizadas para desarrollar el proyecto:_
 * [Apache](https://httpd.apache.org/) - Servidor web.
 * [Bootstrap](https://getbootstrap.com/) - Framework CSS para el diseño.
 
-### Instalación 🔧
+## Instalación 🔧
 
 _Sigue estos pasos para tener el proyecto funcionando en tu entorno local:_
 
@@ -84,7 +84,7 @@ _Sigue estos pasos para tener el proyecto funcionando en tu entorno local:_
 - Verificar que la sugerencia se muestre en la sección correspondiente.
 
 
-### Funcionamiento de la pagina ⚙️
+## Funcionamiento de la página ⚙️
 ### **Inicio - Vista del Usuario**
 Al ingresar a la página web, los usuarios son recibidos con una interfaz visual atractiva y organizada. En la imagen proporcionada, se observa la página principal de la plataforma de elecciones, con las siguientes características:
 
