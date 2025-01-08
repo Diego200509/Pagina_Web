@@ -309,3 +309,34 @@ function generarPaginacion(totalPaginas, paginaActual) {
 
     paginationContainer.innerHTML = paginacionHTML;
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    const tipoSelect = document.getElementById("tipo");
+    const fechaInput = document.getElementById("fecha");
+
+    function actualizarRestriccionesFecha() {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0'); // Formato 2 dígitos
+        const day = String(today.getDate()).padStart(2, '0');
+        const todayFormatted = `${year}-${month}-${day}`;
+
+        // Limpiar el campo de fecha cuando se cambia el tipo
+        fechaInput.value = "";
+
+        if (tipoSelect.value === "EVENTO") {
+            fechaInput.min = todayFormatted; // Solo permite la fecha actual o superior
+            fechaInput.max = ""; // Sin límite superior
+        } else if (tipoSelect.value === "NOTICIA") {
+            fechaInput.max = todayFormatted; // Solo permite la fecha actual o anterior
+            fechaInput.min = ""; // Sin límite inferior
+        }
+    }
+
+    // Ejecutar al cargar la página para validar si ya hay un valor seleccionado
+    actualizarRestriccionesFecha();
+
+    // Detectar cambios en el select de tipo
+    tipoSelect.addEventListener("change", actualizarRestriccionesFecha);
+});
+

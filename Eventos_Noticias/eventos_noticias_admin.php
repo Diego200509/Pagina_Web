@@ -212,14 +212,16 @@ if (isset($_GET['delete'])) {
                     <label for="descripcion">Descripción:</label>
                     <textarea name="descripcion" id="descripcion" required></textarea>
 
-                    <label for="fecha">Fecha:</label>
-                    <input type="date" name="fecha" id="fecha" required>
+                    
 
                     <label for="tipo">Tipo:</label>
                     <select name="tipo" id="tipo" required onchange="habilitarUbicacion()">
                         <option value="EVENTO">Evento</option>
                         <option value="NOTICIA">Noticia</option>
                     </select>
+
+                    <label for="fecha">Fecha:</label>
+                    <input type="date" name="fecha" id="fecha" required>
 
                     <label for="ubicacion">Ubicación:</label>
                     <input type="text" name="ubicacion" id="ubicacion">
