@@ -350,7 +350,7 @@ El sistema permite modificar imágenes clave dentro de la plataforma, tanto en l
 
    ![alt text](img/{21AB48A9-C478-4C37-A462-BD8BA53A5618}.png)
 
-### **Gestión de Candidatos - Vista del Administración**
+### **Gestión de Candidatos - Vista de Administración**
 Esta sección permite a los administradores gestionar los candidatos que forman parte del proceso electoral.
 
 1. **Listado de Candidatos**  
@@ -381,6 +381,48 @@ Esta sección permite a los administradores gestionar los candidatos que forman 
    ![alt text](img/{F3AD1984-5C63-4899-B05B-7C4C7A48B087}.png)
 
    ![alt text](img/{8F56D9F1-B2F9-4476-ADEB-979FFF6D5D06}.png)
+
+### **Gestión de Eventos y Noticias - Vista de Administración**
+Esta sección permite a los administradores gestionar los eventos y noticias publicadas en el sistema.
+
+1. **Listado de Eventos y Noticias**  
+   - Se muestra una tabla con información clave de cada evento o noticia, incluyendo:
+     - **ID:** Número de identificación en la base de datos.
+     - **Título:** Nombre del evento o noticia.
+     - **Descripción:** Resumen del contenido.
+     - **Fecha:** Día en que se llevará a cabo o se publicó.
+     - **Tipo:** Define si es un **evento** o una **noticia**.
+     - **Ubicación:** Lugar donde se realizará el evento (solo aplicable a eventos, no a noticias).
+     - **Partido:** Asociación con la lista electoral.
+     - **Estado:** Indica si está **activo** o en estado **oculto**.
+     - **Imagen:** Representación visual del evento o noticia.
+     - **Acciones:** Opciones de gestión.
+
+2. **Acciones Disponibles**  
+   - **Editar:** Permite modificar la información del evento o noticia.
+   - **Eliminar:** Opción para remover un evento o noticia del sistema.
+   - **Ocultar/Activar:** Cambia el estado de visibilidad del evento o noticia en la vista de usuario.
+
+3. **Restricciones y Validaciones**  
+   - **Fechas Controladas:** No se permite ingresar una noticia con una fecha posterior a la actual. Las noticias deben corresponder a hechos ya ocurridos.
+   - **Eventos Posteriores:** Solo se pueden registrar eventos con fechas futuras, asegurando que no se creen eventos con fechas pasadas.
+   - **Ubicación para Eventos:** Es obligatorio que los eventos tengan una ubicación definida, mientras que las noticias no requieren este campo.
+
+4. **Agregar un Nuevo Evento o Noticia**  
+   - Se incluye un botón **"Agregar Evento/Noticia"** que permite registrar nuevas publicaciones.
+   - El formulario de creación solicita información relevante como:
+     - Título del evento o noticia.
+     - Tipo (Evento o Noticia).
+     - Fecha del evento o publicación.
+     - Ubicación (para eventos, obligatorio).
+     - Descripción detallada.
+     - Imagen representativa.
+     - Estado (activo u oculto).
+   
+   ![alt text](img/{4288F022-32F8-4C6C-8BF0-5A456FD6A0AC}.png)
+
+   ![alt text](img/{22467AF9-AEB1-4486-BE15-11D676F262F9}.png)
+
 
 
 
