@@ -60,12 +60,14 @@ body {
 }
 
 /* Estilos del footer */
-.footer-rights {
+footer {
     background-color: var(--navbar-bg-color, #00bfff);
     color: white;
     text-align: center;
-    padding: 10px;
-    margin-top: 50px;
+    padding: 15px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
 }
 /* Contenedor general */
 .candidate-container {

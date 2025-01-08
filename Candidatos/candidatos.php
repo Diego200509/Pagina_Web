@@ -102,14 +102,15 @@ if (file_exists($configFileCandidatos)) {
             <i class="fas fa-chevron-right"></i> <!-- Ícono de flecha derecha -->
         </button>
     </div>
-</main>
-
-<div class="footer-rights">
-        Derechos reservados Team Sangre © 2024
-    </div>
-
-
-
+    </body>
     <script src="candidatos_usuarios.js"></script>
-</body>
+</main>
+<footer>
+Derechos reservados UTA 2024
+    </footer>
+
+    
+
+
+
 </html>
