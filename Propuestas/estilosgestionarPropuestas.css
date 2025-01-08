@@ -28,10 +28,10 @@ body {
 }
 
 .table thead th {
-    padding: 20px 15px; /* Más espacio entre los títulos */
-    font-size: 18px; /* Tamaño de texto más grande para títulos */
-    text-align: left;
-    border-bottom: 2px solid white;
+    padding: 15px;
+    font-size: 18px;
+    text-align: center; /* Centrar los títulos */
+    vertical-align: middle; /* Asegurar que estén alineados en el centro vertical */
 }
 
 /* Para la descripción larga, ajustamos el texto */
