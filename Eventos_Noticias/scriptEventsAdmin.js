@@ -313,35 +313,47 @@ function generarPaginacion(totalPaginas, paginaActual) {
 document.addEventListener("DOMContentLoaded", function () {
     const tipoSelect = document.getElementById("tipo");
     const fechaInput = document.getElementById("fecha");
+    const imagenInput = document.getElementById("imagen");
+    const formEventos = document.getElementById("form-eventos");
 
     function actualizarRestriccionesFecha() {
         const today = new Date();
         const year = today.getFullYear();
-        const month = String(today.getMonth() + 1).padStart(2, '0'); // Formato "YYYY-MM"
+        const month = String(today.getMonth() + 1).padStart(2, '0');
         const day = String(today.getDate()).padStart(2, '0');
         const todayFormatted = `${year}-${month}-${day}`;
 
-        // Limpiar el campo de fecha cuando se cambia el tipo
         fechaInput.value = "";
 
         if (tipoSelect.value === "EVENTO") {
-            fechaInput.min = todayFormatted; // Permite la fecha actual o futura
-            fechaInput.max = ""; // Sin límite superior
+            fechaInput.min = todayFormatted;
+            fechaInput.max = "";
         } else if (tipoSelect.value === "NOTICIA") {
             const yesterday = new Date();
-            yesterday.setDate(today.getDate() - 1); // Un día antes de hoy
+            yesterday.setDate(today.getDate() - 1);
             const yesterdayFormatted = `${yesterday.getFullYear()}-${String(yesterday.getMonth() + 1).padStart(2, '0')}-${String(yesterday.getDate()).padStart(2, '0')}`;
 
-            fechaInput.max = yesterdayFormatted; // Solo permite fechas anteriores a hoy
-            fechaInput.min = ""; // Sin límite inferior
+            fechaInput.max = yesterdayFormatted;
+            fechaInput.min = "";
         }
     }
 
-    // Ejecutar al cargar la página para validar si ya hay un valor seleccionado
+    tipoSelect.addEventListener("change", actualizarRestriccionesFecha);
     actualizarRestriccionesFecha();
 
-    // Detectar cambios en el select de tipo
-    tipoSelect.addEventListener("change", actualizarRestriccionesFecha);
+    formEventos.addEventListener("submit", function (event) {
+        const imagenSeleccionada = imagenInput.files.length > 0; // Verifica si hay una imagen seleccionada
+
+        if (!imagenSeleccionada) {
+            event.preventDefault(); // Evita que el formulario se envíe
+            Swal.fire({
+                title: "Imagen requerida",
+                text: "Por favor, selecciona una imagen antes de guardar.",
+                icon: "warning"
+            });
+        }
+    });
 });
+
 
 
