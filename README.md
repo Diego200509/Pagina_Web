@@ -457,7 +457,7 @@ Esta sección permite a los administradores gestionar las propuestas presentadas
 
    ![alt text](img/{82F7174C-D60F-43F0-9FDF-3281EF72282E}.png)
 
-### **Gestión de Sugerencias - Panel de Administración**
+### **Gestión de Sugerencias - Vista de Administración**
 Esta sección permite a los administradores gestionar las sugerencias enviadas por los usuarios.
 
 1. **Listado de Sugerencias**  
@@ -477,10 +477,52 @@ Esta sección permite a los administradores gestionar las sugerencias enviadas p
 3. **Acciones Disponibles**  
    - **Marcar como Revisado:** Permite cambiar el estado de la sugerencia de **Pendiente** a **Revisado**.
    - **Eliminar:** Remueve la sugerencia de la vista de administración, pero se mantiene en la base de datos para auditoría y seguimiento histórico.
+   - **Actualizar Imagen:** Opción que permite modificar la imagen de la sugerencia en la vista de usuario, asegurando que la presentación sea adecuada y actualizada.
 
    ![alt text](img/{0DCD4F60-BE03-4F42-B402-964691E140DD}.png)
 
    ![alt text](img/{4710F9FF-9023-4E0A-A55A-6E2EBB3CAAC4}.png)
+
+   ![alt text](img/{B7FE745E-D99A-4A4C-91B9-4011F7702DB5}.png)
+
+
+### **Gestión de Votos - Panel de Administración**
+Esta sección permite a los administradores visualizar y gestionar los resultados de las elecciones en tiempo real.
+
+1. **Visualización de los Votos**  
+   - Se presentan los resultados de la votación en dos formatos:
+     - **Vista Individual:** Se muestra el porcentaje y número de votos obtenidos por cada candidato con su respectiva imagen.
+     - **Gráfico de Distribución:** Representación visual en forma de gráfico de pastel para analizar la proporción de votos entre los candidatos.
+
+2. **Persistencia de los Votos**  
+   - El sistema de votación utiliza **cookies del navegador** para restringir el voto único por usuario.  
+   - Sin embargo, si un usuario elimina las cookies de su navegador, podrá votar nuevamente.
+   - A pesar de ello, los votos **siempre quedan registrados en la base de datos**, garantizando la integridad de los resultados finales.
+
+   ![alt text](img/{791CEF6D-6E58-454B-938A-34069D0640E1}.png)
+
+### **Administración de Imágenes en Votos**
+Esta función permite a los administradores modificar las imágenes que se muestran en la sección de votaciones y resultados.
+
+1. **Actualización de Imágenes**
+   - Los administradores pueden cambiar las imágenes de los candidatos en la vista de votación y resultados.
+   - Se permite la modificación del fondo de la sección de votación para una mejor personalización.
+
+2. **Interfaz de Administración**
+   - La sección muestra las imágenes actuales de los candidatos y el fondo.
+   - Los administradores pueden seleccionar un nuevo archivo de imagen y elegir la posición a reemplazar (**Candidato 1, Candidato 2 o Fondo , etc.**).
+   - Se proporciona un botón de actualización para aplicar los cambios.
+
+   ![alt text](img/{2E8018BB-8B80-414C-BED4-B8D96ABAEFA1}.png)
+
+   ![alt text](img/{E46ACF9E-BD58-4AD5-B90C-DA9A841AA0A6}.png)
+
+
+
+
+
+
+
 
 
 
