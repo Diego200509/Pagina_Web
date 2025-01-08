@@ -128,6 +128,10 @@ while ($row = $result->fetch_assoc()) {
 
 $stmt->close();
 
+// Obtener el rol del usuario
+$user_role = $_SESSION['user_role'];
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -234,10 +238,9 @@ $stmt->close();
     <!-- Navbar -->
     <nav class="navbar">
         <div class="navbar-logo">
-            <div class="text-center">
-                <!-- Icono SuperAdmin existente -->
+           <div class="text-center">
                 <i class="fa-solid fa-user-shield fa-2x"></i>
-                <h6 class="mt-2">SuperAdmin</h6>
+                <h6 class="mt-2 navbar-role"><?php echo $user_role === 'SUPERADMIN' ? 'SuperAdmin' : 'Admin'; ?></h6>
             </div>
             <!-- Logo existente -->
             <img src="<?php echo htmlspecialchars($logo_path); ?>"  width="200px" style="margin-right: 20px;">

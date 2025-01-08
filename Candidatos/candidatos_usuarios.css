@@ -181,7 +181,7 @@ body {
     display: flex;
     justify-content: left; /* Alineación a la izquierda */
     gap: 5px; /* Espaciado entre letras */
-    padding-left: 50px; /* Mueve el texto más a la derecha */
+    padding-left: 200px; /* Mueve el texto más a la derecha */
     position: relative; /* Para posicionar la línea */
 }
 
@@ -199,6 +199,6 @@ body {
     background-color: var(--navbar-bg-color, #00bfff);
     margin-top: 5px;
     position: absolute;
-    left: 50px; /* Alinea la línea con el texto */
+    left: 200px; /* Alinea la línea con el texto */
     bottom: -10px; /* Posiciona la línea debajo del texto */
 }

@@ -82,7 +82,7 @@ header {
 }
 
 #addCandidateBtn {
-    background: #ff1493; /* Degradado rosa a azul */
+    background: #ff1493; /* Rosa brillante */
     color: white;
     border: none;
     padding: 12px 20px;
@@ -95,9 +95,10 @@ header {
     gap: 8px; /* Espacio entre ícono y texto */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra */
     transition: all 0.3s ease;
-    position: relative; /* O posición absoluta si es necesario */
-    right: -35px; /* Ajusta según el espacio deseado */
+    position: relative; /* Se mantiene para el ajuste de posición */
+    right: -1px; /* Ajusta según el espacio deseado */
 }
+
 
 
 #addCandidateBtn:hover {
@@ -369,8 +370,4 @@ textarea {
 .action-container .toggle-actions-btn:hover {
     background-color: #e01183; /* Fondo más oscuro al pasar el mouse */
     transform: translateY(-2px); /* Efecto de elevación */
-}
-.h2 {
-    margin-bottom: 120px;
-    margin-left: 100px; /* Empuja el título hacia la derecha */
 }

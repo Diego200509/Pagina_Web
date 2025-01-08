@@ -100,72 +100,72 @@ $dashboard_url = $user_role === 'SUPERADMIN' ? '../Login/superadmin_dasboard.php
                 
         </ul>
     </nav>
+    <div class="container">
+    <h1>Candidatos</h1>
     
-        <main>
-            <h2>Lista de Candidatos</h2>
-            <button id="addCandidateBtn" class="btn">
-    <i class="fa fa-plus"></i> Agregar Candidato
-</button>
+    <button id="addCandidateBtn" class="btn">
+        <i class="fa fa-plus"></i> Agregar Candidato
+    </button>
 
     <table id="candidatesTable" class="styled-table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Fecha de Nacimiento</th>
-                        <th>Cargo</th>
-                        <th>Educación</th>
-                        <th>Experiencia</th>
-                        <th>Estado</th>
-                        <th>Imagen</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="candidateList">
-                    <!-- Se llenará dinámicamente -->
-                </tbody>
-            </table>
-        </main>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Fecha de Nacimiento</th>
+                <th>Cargo</th>
+                <th>Educación</th>
+                <th>Experiencia</th>
+                <th>Estado</th>
+                <th>Imagen</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="candidateList">
+            <!-- Se llenará dinámicamente -->
+        </tbody>
+    </table>
 
-      <div id="addCandidateModal" class="modal" style="display: none;">
-            <div class="modal-content">
-                <h2 id="modalTitle">Agregar Candidato</h2>
-                <form id="candidateForm">
-                    <input type="hidden" id="candidateId" name="candidateId">
-                    <label for="name">Nombre:</label>
-                    <input type="text" id="name" name="name" required>
+    <div id="addCandidateModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h2 id="modalTitle">Agregar Candidato</h2>
+            <form id="candidateForm">
+                <input type="hidden" id="candidateId" name="candidateId">
+                
+                <label for="name">Nombre:</label>
+                <input type="text" id="name" name="name" required>
 
-                    <label for="surname">Apellido:</label>
-                    <input type="text" id="surname" name="surname" required>
+                <label for="surname">Apellido:</label>
+                <input type="text" id="surname" name="surname" required>
 
-                    <label for="birth_date">Fecha de Nacimiento:</label>
-                    <input type="date" id="birth_date" name="birth_date" required>
+                <label for="birth_date">Fecha de Nacimiento:</label>
+                <input type="date" id="birth_date" name="birth_date" required>
 
-                    <label for="position">Cargo:</label>
-                    <select id="position" name="position" required>
-                        <option value="Rectora">Rectora</option>
-                        <option value="Vicerrector de Investigación, Innovación Vinculación con la Sociedad">Vicerrector de Investigación, Innovación Vinculación con la Sociedad</option>
-                        <option value="Vicerrectora Administrativa">Vicerrectora Administrativa</option>
-                        <option value="Vicerrector Académico">Vicerrector Académico</option>
-                    </select>
+                <label for="position">Cargo:</label>
+                <select id="position" name="position" required>
+                    <option value="Rectora">Rectora</option>
+                    <option value="Vicerrector de Investigación, Innovación Vinculación con la Sociedad">Vicerrector de Investigación, Innovación Vinculación con la Sociedad</option>
+                    <option value="Vicerrectora Administrativa">Vicerrectora Administrativa</option>
+                    <option value="Vicerrector Académico">Vicerrector Académico</option>
+                </select>
 
-                    <label for="education">Educación:</label>
-                    <textarea id="education" name="education" required></textarea>
+                <label for="education">Educación:</label>
+                <textarea id="education" name="education" required></textarea>
 
-                    <label for="experience">Experiencia:</label>
-                    <textarea id="experience" name="experience" required></textarea>
+                <label for="experience">Experiencia:</label>
+                <textarea id="experience" name="experience" required></textarea>
 
-                    <label for="image">Imagen:</label>
-                    <input type="file" id="image" name="image" accept="image/*" required>
+                <label for="image">Imagen:</label>
+                <input type="file" id="image" name="image" accept="image/*" required>
 
-                    <button type="submit">Guardar</button>
-                    <button type="button" id="closeModal" class="btn">Cancelar</button>
-                </form>
-
-               
-            </div>
+                <button type="submit">Guardar</button>
+                <button type="button" id="closeModal" class="btn">Cancelar</button>
+            </form>
         </div>
-    <script src="candidatos_admin.js"></script>
+    </div>
+</div>
+
+<script src="candidatos_admin.js"></script>
 </body>
 </html>
