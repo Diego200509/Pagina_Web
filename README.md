@@ -423,6 +423,41 @@ Esta sección permite a los administradores gestionar los eventos y noticias pub
 
    ![alt text](img/{22467AF9-AEB1-4486-BE15-11D676F262F9}.png)
 
+### **Gestión de Propuestas - Vista de Administración**
+Esta sección permite a los administradores gestionar las propuestas presentadas por la lista electoral.
+
+1. **Listado de Propuestas**  
+   - Se muestra una tabla con información clave de cada propuesta, incluyendo:
+     - **ID:** Número de identificación en la base de datos.
+     - **Partido Político:** Nombre de la lista electoral asociada a la propuesta.
+     - **Título:** Nombre de la propuesta.
+     - **Descripción:** Resumen del contenido de la propuesta.
+     - **Categorías:** Clasificación de la propuesta (por ejemplo, investigación, vinculación con la sociedad, etc.).
+     - **Estado:** Indica si está **visible** u **oculta** en la vista de usuario.
+     - **Imagen:** Representación visual de la propuesta.
+     - **Favorito:** Opción para marcar propuestas destacadas con un icono de estrella.
+     - **Acciones:** Opciones de gestión.
+
+2. **Acciones Disponibles**  
+   - **Editar:** Permite modificar la información de la propuesta.
+   - **Eliminar:** Opción para remover una propuesta del sistema.
+   - **Ocultar/Activar:** Permite cambiar la visibilidad de la propuesta en la vista de usuario.
+   - **Marcar como Favorita:** Posibilidad de destacar una propuesta importante mediante un icono de estrella.
+
+3. **Agregar una Nueva Propuesta**  
+   - Se incluye un botón **"Agregar Propuesta"** que permite registrar nuevas iniciativas.
+   - El formulario de creación solicita información relevante como:
+     - Título de la propuesta.
+     - Descripción detallada.
+     - Categoría de la propuesta.
+     - Imagen representativa.
+     - Estado (visible u oculto).
+
+   ![alt text](img/PropuestasAdmin.png)
+
+   [alt text](img/{82F7174C-D60F-43F0-9FDF-3281EF72282E}.png)
+
+
 
 
 
