@@ -503,7 +503,7 @@ section {
 }
 
 .propuesta-body {
-    padding: 20px;
+    padding: 10px;
     font-family: 'Arial', sans-serif;
     background: #ffffff; /* Fondo gris claro */
     color: #333; /* Texto oscuro */
@@ -520,7 +520,7 @@ section {
 }
 
 .propuesta-body p {
-    margin: 10px 0;
+    margin: -1px 0;
 }
 
 .propuesta-categoria {

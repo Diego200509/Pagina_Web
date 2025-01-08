@@ -595,6 +595,9 @@ $user_role = $_SESSION['user_role'];
 
     <!-- JavaScript para cambiar fondo -->
     <script>
+
+
+
         document.addEventListener("DOMContentLoaded", function() {
             const sessionMessage = "<?php echo isset($_SESSION['message']) ? $_SESSION['message'] : ''; ?>";
             const sessionMessageType = "<?php echo isset($_SESSION['message_type']) ? $_SESSION['message_type'] : ''; ?>";

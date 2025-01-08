@@ -14,7 +14,7 @@
 
                 } else if (button.innerText.includes("Cambiar Colores")) {
                     body.style.background = "linear-gradient(160deg, #FF66CC, #FF1493)";
-                } else if (button.innerText.includes("Subir Imágenes")) {
+                } else if (button.innerText.includes("Cambiar Imágenes Inicio")) {
                     body.style.background = "linear-gradient(355deg, #FF66CC,rgb(255, 255, 255))";
                 }
 
