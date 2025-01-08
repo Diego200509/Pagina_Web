@@ -199,12 +199,28 @@ En la sección "Eventos y Noticias", los usuarios pueden mantenerse informados s
      - **Descripción breve**.
      - **Fecha de publicación**.
      - Un botón "Ver más" para acceder a la descripción completa.
-    ![alt text](img/NoticiasUsuario.png)
+     
+   ![alt text](img/NoticiasUsuario.png)
 
 2. **Propósito de la Sección**  
    - Brinda a los usuarios acceso a las noticias más importantes sobre la lista electoral.
    - Mantiene informada a la comunidad sobre propuestas, avances y actividades de la campaña.
 
+### **Sección de Propuestas**
+En la sección "Propuestas", los usuarios pueden conocer y explorar las iniciativas planteadas por la lista electoral.
+
+1. **Interfaz de Filtrado**  
+   - Se incluye un menú desplegable que permite a los usuarios filtrar las propuestas por facultad o interés.
+   - Esto facilita la búsqueda de propuestas relevantes según las necesidades individuales.
+
+2. **Tarjetas de Propuestas**  
+   - Se presentan en un formato de tarjetas que muestran:
+     - **Título de la propuesta**.
+     - **Categoría** a la que pertenece (Investigación, Vinculación con la Sociedad, etc.).
+     - **Breve descripción** del contenido y objetivo de la propuesta.
+     - Un botón "Ver más" para acceder a la información completa de cada propuesta.
+     
+   ![alt text](img/PropuestasUsuario.png)
 
 
 
