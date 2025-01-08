@@ -5,18 +5,35 @@ _Este proyecto es un sistema de gestión de elecciones desarrollado para un solo
 ## Funcionalidades
 
 ### Para los usuarios
-- Ver la lista de candidatos junto con su información personal y académica.
-- Conocer las propuestas planteadas por la lista de candidatos.
-- Acceder a eventos y noticias relacionadas con el proceso electoral.
-- Votar por un candidato de su elección.
-- Enviar sugerencias sobre el proceso electoral.
+1. Visualización de candidatos:
+  - Los usuarios pueden acceder a información completa de los candidatos, incluyendo su perfil personal, logros académicos y experiencia profesional.
+  - La interfaz está diseñada para ofrecer un acceso fácil e intuitivo a los perfiles de los candidatos, fomentando una elección informada.
+2. Exploración de propuestas:
+  - Conocer una lista de propuestas detalladas, categorizadas según áreas de interés como educación, infraestructura, investigación, entre otras.
+3. Acceso a eventos y noticias:
+  - Una sección interactiva permite a los usuarios estar al tanto de las actividades relacionadas con el proceso electoral, como mítines, debates, o anuncios clave.
+4. Sistema de votación:
+  - Los usuarios pueden emitir su voto de manera digital, garantizando un proceso rápido y seguro.
+  - La plataforma asegura que cada usuario pueda votar solo una vez, utilizando cookies como medida de control.
+5. Envío de sugerencias:
+   - Un formulario integrado permite a los usuarios expresar opiniones y sugerencias relacionadas con el proceso electoral.
+   - Estas sugerencias son enviadas directamente a los administradores para su revisión.
 
 ### Para los administradores
-- Crear y gestionar candidatos.
-- Publicar y administrar propuestas electorales.
-- Gestionar eventos y noticias.
-- Administrar las sugerencias enviadas por los usuarios.
-- Supervisar los resultados de las elecciones en tiempo real.
+1. Gestión de candidatos:
+   - La funcionalidad incluye campos específicos para capturar información académica, experiencia profesional y subir imágenes.
+   - Los administradores tienen herramientas para crear candidatos. También pueden desactivar temporalmente perfiles según las necesidades del proceso electoral.
+2. Publicación y administración de propuestas:
+   - Se pueden agregar y administrar propuestas asociadas a los candidatos.
+   - Cada propuesta se clasifica en categorías para facilitar su consulta por los usuarios.
+3. Control de eventos y noticias:
+   - Los administradores pueden crear y gestionar eventos y noticias que mantengan a la comunidad electoral informada.
+   - Se pueden establecer fechas, ubicaciones y descripciones completas, además de asociar imágenes representativas.
+4. Revisión de sugerencias:
+   - Las sugerencias enviadas por los usuarios pueden ser marcadas como revisadas, y los administradores tienen la opción eliminarlas según su relevancia.
+5. Supervisión de resultados electorales:
+   - Un panel de administración muestra estadísticas detalladas sobre los resultados de las votaciones en tiempo real.
+   - Los datos incluyen el número de votos por candidato y su porcentaje correspondiente.
 
 ## Tabla de Contenidos 📑
 1. [Comenzando 🚀](#comenzando-)
@@ -47,10 +64,10 @@ _Que cosas necesitas para instalar el software y cómo instalarlas_
 
 _Herramientas utilizadas para desarrollar el proyecto:_
 
-* [PHP](https://www.php.net/) - Lenguaje de programación principal.
-* [MySQL](https://www.mysql.com/) - Base de datos.
-* [Apache](https://httpd.apache.org/) - Servidor web.
-* [Bootstrap](https://getbootstrap.com/) - Framework CSS para el diseño.
+* [PHP](https://www.php.net/) - Lenguaje de programación del lado del servidor que gestiona la lógica de la aplicación, las operaciones de base de datos y las solicitudes de los usuarios.
+* [MySQL](https://www.mysql.com/) - Base de datos relacional para almacenar de manera estructurada los datos relacionados con los candidatos, propuestas, usuarios, sugerencias, votos, eventos y noticias.
+* [Apache](https://httpd.apache.org/) - Servidor web responsable de manejar las solicitudes HTTP y servir las páginas web del sistema.
+* [Bootstrap](https://getbootstrap.com/) - Framework CSS que asegura un diseño responsivo y una experiencia de usuario atractiva y consistente en múltiples dispositivos.
 
 ## Instalación 🔧
 
@@ -82,6 +99,7 @@ _Sigue estos pasos para tener el proyecto funcionando en tu entorno local:_
 - Crear una sugerencia como usuario.
 - Revisar y aprobar la sugerencia como administrador.
 - Verificar que la sugerencia se muestre en la sección correspondiente.
+- Prueba la navegación entre las diferentes secciones.
 
 
 ## Funcionamiento de la página ⚙️
@@ -519,11 +537,23 @@ Esta función permite a los administradores modificar las imágenes que se muest
 
 ## Despliegue 📦
 
-_Para desplegar este sistema en un servidor en producción:_
+_Dado que este proyecto está diseñado para ejecutarse de manera local utilizando herramientas como XAMPP, los pasos para su despliegue en un entorno local son sencillos pero deben seguirse cuidadosamente para garantizar un funcionamiento correcto._
+**Pasos detallados para el despliegue local:**
 
-1. Sube los archivos del proyecto al servidor mediante FTP o herramientas de implementación.
-2. Configura la base de datos en el entorno de producción.
-3. Ajusta las rutas y configuraciones en los archivos PHP según el entorno.
+1. Instalación de XAMPP:
+   - Descarga e instala XAMPP desde su sitio oficial: https://www.apachefriends.org/.
+   - Durante la instalación, asegúrate de habilitar los módulos de Apache y MySQL, ya que son esenciales para el funcionamiento del sistema.
+2. Configuración del entorno local:
+   - Abre el Panel de Control de XAMPP y activa los servicios de Apache y MySQL.
+   - Verifica que ambos servicios estén funcionando correctamente accediendo a http://localhost desde tu navegador. Si ves la página de bienvenida de XAMPP, el entorno está listo.
+
+4. Ajusta las rutas y configuraciones en los archivos PHP según el entorno.
+**Ejecución del sistema:**
+Acceso al sistema desde el navegador:
+
+Una vez configurado, abre tu navegador y utiliza las siguientes URL para acceder a las vistas del sistema:
+Vista de Usuario: http://localhost/Pagina_Web/Home/inicio.php
+Vista de Administrador: http://localhost/Pagina_Web/Login/Login.php
 
 
 ## Autores 👥
