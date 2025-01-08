@@ -25,7 +25,7 @@ _Este proyecto es un sistema de gestión de elecciones desarrollado para un solo
 4. [Instalación 🔧](#instalación-)
 5. [Funcionamiento de la página ⚙️](#funcionamiento-de-la-página-️)
 6. [Despliegue 📦](#despliegue-)
-7. [Autores ✒️](#autores-)
+7. [Autores 👥](#autores-)
 8. [Expresiones de Gratitud 🎁](#expresiones-de-gratitud-)
 
 ## Comenzando 🚀
@@ -526,7 +526,7 @@ _Para desplegar este sistema en un servidor en producción:_
 3. Ajusta las rutas y configuraciones en los archivos PHP según el entorno.
 
 
-## Autores ✒️
+## Autores 👥
 
 * **Sebastián Ortiz** - *Desarrollo* - [SebastianOrtiz2004](https://github.com/SebastianOrtiz2004/SebastianOrtiz)
 * **Diego Jijón** - *Desarrollo y Documentación* - [Diego200509](https://github.com/Diego200509)
