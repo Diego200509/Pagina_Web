@@ -105,10 +105,9 @@ if (file_exists($configFileCandidatos)) {
     </body>
     <script src="candidatos_usuarios.js"></script>
 </main>
-<footer>
-Derechos reservados UTA 2024
-    </footer>
-
+<footer class="footer-rights">
+    <p>Derechos reservados UTA 2024-2025</p>
+</footer>
     
 
 

@@ -356,7 +356,7 @@ footer {
 
 
 <div class="footer-rights">
-    Derechos reservados Team Sangre 2024
+Derechos reservados UTA 2024-2025
 </div>
 
 </body>

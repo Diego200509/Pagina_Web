@@ -117,7 +117,7 @@ if ($result->num_rows > 0) {
     </div>
 
     <footer>
-        Derechos reservados UTA 2024
+    Derechos reservados UTA 2024-2025
     </footer>
 
     <script src="scriptsPropuestas.js"></script>

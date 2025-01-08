@@ -59,15 +59,19 @@ body {
     /* Rosa brillante */
 }
 
-/* Estilos del footer */
-footer {
+.footer-rights {
+    position: relative; /* Mantener fijo al final */
+    bottom: 0; /* Asegura que esté siempre abajo */
+    left: 0; /* Alineado al borde izquierdo */
+    width: 100vw; /* Ocupa todo el ancho de la ventana */
     background-color: var(--navbar-bg-color, #00bfff);
     color: white;
     text-align: center;
-    padding: 15px;
-    position: relative;
-    bottom: 0;
-    width: 100%;
+    padding: 2px 0; /* Espaciado interno uniforme */
+    z-index: 20; /* Por encima de otros elementos */
+    box-sizing: border-box; /* Incluye padding en el ancho total */
+    margin-top: 20px; /* Espaciado entre el footer y el contenido */
+
 }
 /* Contenedor general */
 .candidate-container {
