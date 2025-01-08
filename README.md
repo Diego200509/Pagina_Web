@@ -43,7 +43,7 @@ _Que cosas necesitas para instalar el software y cómo instalarlas_
 - Navegador web para pruebas.
 - Editor de texto o IDE (por ejemplo, Visual Studio Code).
 
-## Construido con 🛠️
+## Construido con
 
 _Herramientas utilizadas para desarrollar el proyecto:_
 
