@@ -131,6 +131,27 @@ En la sección "Propuestas", los usuarios pueden conocer las iniciativas que pla
    ![alt text](img/Propuestas.png)
    ![alt text](img/ModalPropuestas.png)
 
+### **Vista Previa de Eventos y Noticias**
+Dentro de la página de inicio, los usuarios pueden interactuar con la sección "Eventos y Noticias" para visualizar información relevante de manera dinámica.
+
+1. **Interacción con Botones**  
+   - La sección cuenta con dos botones principales: "Mostrar Eventos" y "Mostrar Noticias".  
+   - Al hacer clic en "Mostrar Eventos", se despliega una lista con los eventos más recientes relacionados con la campaña.  
+   - Al hacer clic en "Mostrar Noticias", se muestran las noticias más recientes sobre el proceso electoral.
+
+2. **Visualización de Eventos y Noticias Recientes**  
+   - Se presentan tarjetas con información detallada de los cuatro eventos y noticias más recientes.
+   - Cada tarjeta incluye:
+     - Título del evento o noticia.
+     - Breve descripción.
+     - Fecha y ubicación (en caso de eventos).
+
+3. **Diseño Interactivo**  
+   - La interfaz permite a los usuarios alternar entre eventos y noticias fácilmente, mejorando la experiencia de navegación.
+
+   ![alt text](img/Eventos.png)
+   ![alt text](img/Noticias.png)
+
 
 
 
