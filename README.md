@@ -86,6 +86,20 @@ _Sigue estos pasos para tener el proyecto funcionando en tu entorno local:_
 
 
 ### Funcionamiento de la pagina ⚙️
+### **Inicio - Vista del Usuario**
+Al ingresar a la página web, los usuarios son recibidos con una interfaz visual atractiva y organizada. En la imagen proporcionada, se observa la página principal de la plataforma de elecciones, con las siguientes características:
+
+1. **Encabezado y Menú de Navegación**  
+   - En la parte superior, se encuentra una barra azul con el logotipo de la lista "MARY CRUZ".
+   - También se muestran iconos y enlaces de acceso rápido a las principales secciones del sistema, incluyendo:  
+     - **Candidatos:** Información detallada sobre cada candidato, incluyendo su perfil académico y personal.  
+     - **Eventos y Noticias:** Publicaciones sobre actividades y novedades relacionadas con la elección.  
+     - **Propuestas:** Iniciativas presentadas por la lista electoral para mejorar la institución universitaria.  
+     - **Sugerencias:** Sección donde los usuarios pueden enviar sus sugerencias.  
+     - **Votos:** Espacio donde los usuarios pueden emitir su voto de manera digital por su candidato favorito.
+2. **Sección de Presentación de la Lista Electoral**  
+   - Justo debajo del encabezado, se muestra una imagen destacada con los principales miembros de la lista electoral.  
+   - En los laterales de la imagen hay flechas de navegación, lo que indica que es un carrusel que puede mostrar más imágenes con información relevante.
 
 ![alt text]({C0FA1F3C-525D-4A67-92DC-BC4788CDDA9A}.png)
 
