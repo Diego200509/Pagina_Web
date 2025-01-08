@@ -143,7 +143,7 @@ if (file_exists($configFileEventos)) {
 
 
     <div class="footer-rights">
-        Derechos reservados UTA 2024
+    Derechos reservados UTA 2024-2025
     </div>
 
     <div id="modal" class="modal">

@@ -625,6 +625,6 @@ $(document).ready(function() {
 
 
 <footer class="footer-rights">
-    <p>Todos los derechos reservados Team Sangre © 2024</p>
+    <p>Derechos reservados UTA 2024-2025</p>
 </footer>
 </html>

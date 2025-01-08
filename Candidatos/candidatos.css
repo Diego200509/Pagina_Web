@@ -16,7 +16,6 @@ header {
     padding: 20px 50px;
     background-color: #b22222; /* Fondo rojo */
 }
-
 .navbar-role {
     margin-bottom: 9px;
     padding-left: 5px;
@@ -42,6 +41,7 @@ header {
 
 .navbar-logo i {
     font-size: 24px;
+
 }
 .navbar-logo img {
     width: 170px; /* Reduce el ancho de la imagen */
@@ -77,6 +77,7 @@ header {
 .navbar-menu li a:hover {
     color: #ff0050;
 }
+
 
 #addCandidateBtn {
     background: #ff1493; /* Rosa brillante */
