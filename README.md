@@ -150,6 +150,7 @@ Dentro de la página de inicio, los usuarios pueden interactuar con la sección 
    - La interfaz permite a los usuarios alternar entre eventos y noticias fácilmente, mejorando la experiencia de navegación.
 
    ![alt text](img/Eventos.png)
+
    ![alt text](img/Noticias.png)
 
 ### **Sección de Candidatos - Vista del Usuario**
@@ -171,7 +172,7 @@ En la sección "Candidatos", los usuarios pueden ver información detallada sobr
 
    ![alt text](img/CandidatosUsuario.png)
 
-### **Sección de Eventos y Noticias**
+### **Sección de Eventos y Noticias - Vista del Usuario**
 En la sección "Eventos y Noticias", los usuarios pueden mantenerse informados sobre las actividades más relevantes de la comunidad electoral.
 
 #### **Eventos**
@@ -206,7 +207,7 @@ En la sección "Eventos y Noticias", los usuarios pueden mantenerse informados s
    - Brinda a los usuarios acceso a las noticias más importantes sobre la lista electoral.
    - Mantiene informada a la comunidad sobre propuestas, avances y actividades de la campaña.
 
-### **Sección de Propuestas**
+### **Sección de Propuestas - Vista del Usuario**
 En la sección "Propuestas", los usuarios pueden conocer y explorar las iniciativas planteadas por la lista electoral.
 
 1. **Interfaz de Filtrado**  
@@ -222,7 +223,7 @@ En la sección "Propuestas", los usuarios pueden conocer y explorar las iniciati
      
    ![alt text](img/PropuestasUsuario.png)
 
-### **Sección de Sugerencias**
+### **Sección de Sugerencias - Vista del Usuario**
 En la sección "Sugerencias", los usuarios pueden enviar sus recomendaciones sobre la gestión de la lista electoral.
 
 1. **Formulario de Sugerencias**  
@@ -234,9 +235,10 @@ En la sección "Sugerencias", los usuarios pueden enviar sus recomendaciones sob
    - Se muestra un mensaje de agradecimiento por la colaboración.
    
    ![alt text](img/{F48C2D8F-0E2A-46DE-BE03-631602324C8B}.png)
+
    ![alt text](img/{BF5A69D9-0C64-406B-AB42-DFFF560FC609}.png)
 
-### **Sección de Votaciones**
+### **Sección de Votaciones - Vista del Usuario**
 En la sección "Votos", los usuarios pueden participar activamente en la elección seleccionando a su candidato preferido.
 
 1. **Interfaz de Selección de Candidato**  
@@ -254,8 +256,26 @@ En la sección "Votos", los usuarios pueden participar activamente en la elecci�
    - Los resultados se actualizan dinámicamente conforme más usuarios emiten su voto.
    
    ![alt text](img/{7770085C-CECF-44B7-9E78-1F9380000BA5}.png)
+
    ![alt text](img/{6FD5CB1E-ECA9-4946-B015-028E33A41077}.png)
 
+### **Login - Vista de Administración**
+Para acceder a la vista de administración, el sistema cuenta con un proceso de autenticación.
+
+1. **Acceso Restringido**  
+   - Solo los administradores y el superadmin pueden acceder al panel de administración.
+   - El sistema ya tiene un superadmin predefinido en la base de datos, quien es el primer usuario en iniciar sesión.
+
+2. **Interfaz de Inicio de Sesión**  
+   - Se muestra un formulario donde los administradores deben ingresar su correo electrónico y contraseña.
+   - Un botón "Iniciar sesión" permite acceder al sistema tras la validación de credenciales.
+
+3. **Validación de Credenciales**  
+   - El sistema verifica las credenciales ingresadas con las almacenadas en la base de datos.
+   - Si las credenciales son correctas, el usuario es redirigido al panel de administración.
+   - En caso de error, se muestra un mensaje indicando que los datos son incorrectos.
+
+   ![alt text](img/{7E6E6370-27DA-4AD5-B09F-E8A72710F595}.png)
 
 
 
