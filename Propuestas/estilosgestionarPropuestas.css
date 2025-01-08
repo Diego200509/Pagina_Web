@@ -388,28 +388,34 @@ body {
 }
 
 
+/* Navbar */
 .navbar {
     background-color: var(--navbar-bg-color, #00bfff);
-    /* Azul vibrante como color por defecto */
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    padding: 10px 20px; 
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    /* Sombra ligera */
+    gap: 20px; /* Espacio entre logo y menú */
 }
-
 
 .navbar-logo {
     display: flex;
     align-items: center;
     gap: 10px;
     color: #ffffff;
-    /* Blanco */
+    flex-shrink: 0; /* Mantener el tamaño fijo del logo */
 }
 
 .navbar-logo i {
-    font-size: 24px;
+    font-size: 20px; /* Ajusta según la necesidad */
+    margin-right: 10px; /* Espaciado con el texto */
+    color: white;
+
+}
+.navbar-logo img {
+    width: 170px; /* Reduce el ancho de la imagen */
+    height: auto; /* Mantén la proporción de aspecto */
+    margin-right: 10px; /* Ajusta el espacio entre el logo y el texto si es necesario */
 }
 
 .navbar-menu {
@@ -417,7 +423,10 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
-    gap: 20px;
+    gap: 20px; /* Espacio entre elementos del menú */
+    flex-grow: 1; /* Ocupa todo el espacio disponible */
+    justify-content: flex-end; /* Alinear los botones a la derecha */
+    padding-right: 20px; /* Asegura espacio entre el último botón y el borde derecho */
 }
 
 .navbar-menu li {
@@ -428,9 +437,7 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-    /* Espacio entre icono y texto */
     color: #ffffff;
-    /* Blanco */
     text-decoration: none;
     font-size: 16px;
     font-weight: bold;
@@ -438,8 +445,5 @@ body {
 
 .navbar-menu li a:hover {
     color: #ff0050;
-    /* Rosa brillante */
 }
-
-
 
