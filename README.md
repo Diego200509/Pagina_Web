@@ -300,7 +300,7 @@ La sección de administración está diseñada para que el superadmin tenga el c
 
    ![alt text](img/{FADD8B5F-AB21-465A-9E59-BC565816A5FB}.png)
 
-### **Personalización del Sistema - Cambio de Colores**
+### **Personalización del Sistema - Cambio de Colores - Vista del Administración**
 El sistema permite personalizar la apariencia tanto de la vista de usuario como de la vista de administración mediante una herramienta de configuración de colores.
 
 1. **Opciones de Configuración**  
@@ -328,7 +328,7 @@ El sistema permite personalizar la apariencia tanto de la vista de usuario como 
 
    ![alt text](img/{BBB1816A-5735-4CA3-BD5A-7026B7577659}.png)
 
-### **Personalización del Sistema - Cambio de Imágenes**
+### **Personalización del Sistema - Cambio de Imágenes - Vista del Administración**
 El sistema permite modificar imágenes clave dentro de la plataforma, tanto en la vista de usuario como en la administración.
 
 1. **Cambio del Logo en el Navbar**  
@@ -349,6 +349,37 @@ El sistema permite modificar imágenes clave dentro de la plataforma, tanto en l
    ![alt text](img/{17986878-FF6F-4CDE-B3BB-B7CEB37318EE}.png)
 
    ![alt text](img/{21AB48A9-C478-4C37-A462-BD8BA53A5618}.png)
+
+### **Gestión de Candidatos - Vista del Administración**
+Esta sección permite a los administradores gestionar los candidatos que forman parte del proceso electoral.
+
+1. **Listado de Candidatos**  
+   - Se muestra una tabla con información clave de cada candidato, incluyendo:
+     - **ID:** Número de identificación en la base de datos.
+     - **Nombre y Apellido:** Información personal del candidato.
+     - **Fecha de Nacimiento:** Datos de identificación.
+     - **Cargo:** Posición que ocupa en la elección.
+     - **Educación:** Información académica del candidato.
+     - **Experiencia:** Trayectoria profesional y experiencia relevante.
+     - **Estado:** Indica si el candidato está **activo** o **inactivo** en la elección.
+     - **Imagen:** Fotografía representativa del candidato.
+     - **Acciones:** Opciones para administrar la información del candidato.
+
+2. **Acciones Disponibles**  
+   - **Editar:** Permite modificar los datos del candidato, como nombre, cargo, educación y experiencia.
+   - **Eliminar:** Opción para remover un candidato del sistema.
+   - **Activar/Inactivar:** Permite cambiar el estado del candidato, haciendo que aparezca o desaparezca de la lista pública en la vista de usuario.
+
+3. **Agregar un Nuevo Candidato**  
+   - Se incluye un botón **"Agregar Candidato"** que permite registrar nuevos participantes en la elección.
+   - El formulario de creación solicita información relevante como:
+     - Nombre completo
+     - Cargo al que postula
+     - Formación académica
+     - Experiencia laboral
+     - Imagen representativa
+   ![alt text](img/{F3AD1984-5C63-4899-B05B-7C4C7A48B087}.png)
+
 
 
 
