@@ -408,7 +408,7 @@ function mostrarDescripcionConFormato($descripcion)
 
 
     <div class="container">
-        <h2>Propuestas</h2>
+        <h1>Propuestas</h1>
 
         <?php if (isset($_GET['status'])): ?>
             <?php if ($_GET['status'] == 'success'): ?>
