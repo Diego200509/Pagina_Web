@@ -22,7 +22,7 @@ _Este proyecto es un sistema de gestión de elecciones desarrollado para un solo
 1. [Comenzando 🚀](#comenzando-)
 2. [Pre-requisitos 📋](#pre-requisitos-)
 3. [Construido con 🛠️](#construido-con-)
-4. [Instalación 🔧](#instalación)
+4. [Instalación 🔧](#instalación-)
 5. [Funcionamiento de la página ⚙️](#funcionamiento-de-la-página-️)
 6. [Despliegue 📦](#despliegue-)
 7. [Autores ✒️](#autores-)
