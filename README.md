@@ -455,7 +455,36 @@ Esta sección permite a los administradores gestionar las propuestas presentadas
 
    ![alt text](img/PropuestasAdmin.png)
 
-   [alt text](img/{82F7174C-D60F-43F0-9FDF-3281EF72282E}.png)
+   ![alt text](img/{82F7174C-D60F-43F0-9FDF-3281EF72282E}.png)
+
+### **Gestión de Sugerencias - Panel de Administración**
+Esta sección permite a los administradores gestionar las sugerencias enviadas por los usuarios.
+
+1. **Listado de Sugerencias**  
+   - Se muestra una tabla con información clave de cada sugerencia, incluyendo:
+     - **Usuario:** Nombre de quien envió la sugerencia.
+     - **Correo:** Dirección de correo electrónico del usuario (opcional).
+     - **Candidato:** Si la sugerencia está dirigida a un candidato específico.
+     - **Sugerencia:** Contenido de la recomendación.
+     - **Estado:** Puede ser **Pendiente** o **Revisado**.
+     - **Fecha:** Momento en que se envió la sugerencia.
+     - **Acciones:** Opciones de gestión.
+
+2. **Estados de las Sugerencias**  
+   - **Pendiente:** Estado inicial de una sugerencia cuando es enviada por un usuario.
+   - **Revisado:** Una vez que el administrador la revisa, cambia a este estado. **No es posible volver al estado Pendiente una vez revisada**.
+
+3. **Acciones Disponibles**  
+   - **Marcar como Revisado:** Permite cambiar el estado de la sugerencia de **Pendiente** a **Revisado**.
+   - **Eliminar:** Remueve la sugerencia de la vista de administración, pero se mantiene en la base de datos para auditoría y seguimiento histórico.
+
+   ![alt text](img/{0DCD4F60-BE03-4F42-B402-964691E140DD}.png)
+
+   ![alt text](img/{4710F9FF-9023-4E0A-A55A-6E2EBB3CAAC4}.png)
+
+
+
+
 
 
 
