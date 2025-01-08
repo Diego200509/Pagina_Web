@@ -167,6 +167,25 @@ $stmt->close();
         <?php include('../src/propuestas_favoritas_queries.php'); ?>
     </div>
 </section>
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="modal-title"></h2>
+            <button class="close-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+            <!-- Imagen de la propuesta -->
+            <img id="modal-image" src="" alt="Imagen de la propuesta">
+            <!-- Descripción de la propuesta -->
+            <p id="modal-description"></p>
+        </div>
+        <div class="modal-category" id="modal-category"></div>
+        <div class="modal-footer">
+            <img src="../Login/Img/logoMariCruz.png" alt="Logo 1">
+            <img src="../Home/Img/logoMano.png" alt="Logo 2">
+        </div>
+    </div>
+</div>
 
 
 
@@ -242,6 +261,54 @@ function cargarContenido(tipo) {
     })
     .catch(error => console.error('Error:', error));
 }
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const modal = document.getElementById('modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalDescription = document.getElementById('modal-description');
+        const modalCategory = document.getElementById('modal-category');
+        const modalImage = document.getElementById('modal-image');
+        const closeModalBtn = document.querySelector('.close-btn');
+
+        // Agregar evento a los botones "Ver más"
+        document.querySelectorAll('.ver-mas-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Extraer datos del botón
+                const title = button.getAttribute('data-title');
+                const description = button.getAttribute('data-description');
+                const category = button.getAttribute('data-category');
+                const imageURL = button.getAttribute('data-image');
+
+                // Pasar datos al modal
+                modalTitle.textContent = title;
+                modalDescription.textContent = description;
+                modalCategory.textContent = `Categoría: ${category}`;
+                if (imageURL) {
+                    modalImage.src = imageURL;
+                    modalImage.style.display = 'block'; // Mostrar la imagen si existe
+                } else {
+                    modalImage.style.display = 'none'; // Ocultar la imagen si no hay URL
+                }
+
+                // Mostrar el modal
+                modal.style.display = 'flex';
+            });
+        });
+
+        // Cerrar el modal al hacer clic en la "X"
+        closeModalBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        // Cerrar el modal al hacer clic fuera del contenido
+        window.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    });
 </script>
 
 

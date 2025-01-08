@@ -54,37 +54,37 @@ if ($result->num_rows > 0) {
             --pagina-bg-color: <?php echo $paginaPropuestasBgColor; ?>;
 
         }
-        </style>
+    </style>
 </head>
 
 <body>
-<navbar>
+    <navbar>
 
-    <!-- Navbar -->
-    <nav class="navbar">
-    <div class="navbar-logo">
-    <div class="text-center">
-    </div>
-    <!-- Logo existente -->
-    <img src="<?php echo htmlspecialchars($logo_path); ?>"  width="200px" style="margin-right: 20px;">
+        <!-- Navbar -->
+        <nav class="navbar">
+            <div class="navbar-logo">
+                <div class="text-center">
+                </div>
+                <!-- Logo existente -->
+                <img src="<?php echo htmlspecialchars($logo_path); ?>" width="200px" style="margin-right: 20px;">
 
-</div>
-
-
-
-        </div>
-        <ul class="navbar-menu"> 
-        <li><a href="../Home/inicio.php"><i class="fa-solid fa-house"></i> <span>Inicio</span></a></li>
-            <li><a href="../Candidatos/candidatos.php"><i class="fa-solid fa-users"></i> <span>Candidatos</span></a></li>
-            <li><a href="../Eventos_Noticias/eventos_noticias.php"><i class="fa-solid fa-calendar-alt"></i> <span>Eventos y Noticias</span></a></li>
-            <li><a href="../Propuestas/Propuestas.php"><i class="fa-solid fa-lightbulb"></i> <span>Propuestas</span></a></li>
-            <li><a href="../Sugerencias/index.php"><i class="fa-solid fa-comment-dots"></i> <span>Sugerencias</span></a></li>
-            <li><a href="../Sugerencias/resultados.php"><i class="fas fa-vote-yea"></i> Votos</a></li>
-        </ul>
-    </nav>
+            </div>
 
 
-</navbar>
+
+            </div>
+            <ul class="navbar-menu">
+                <li><a href="../Home/inicio.php"><i class="fa-solid fa-house"></i> <span>Inicio</span></a></li>
+                <li><a href="../Candidatos/candidatos.php"><i class="fa-solid fa-users"></i> <span>Candidatos</span></a></li>
+                <li><a href="../Eventos_Noticias/eventos_noticias.php"><i class="fa-solid fa-calendar-alt"></i> <span>Eventos y Noticias</span></a></li>
+                <li><a href="../Propuestas/Propuestas.php"><i class="fa-solid fa-lightbulb"></i> <span>Propuestas</span></a></li>
+                <li><a href="../Sugerencias/index.php"><i class="fa-solid fa-comment-dots"></i> <span>Sugerencias</span></a></li>
+                <li><a href="../Sugerencias/resultados.php"><i class="fas fa-vote-yea"></i> Votos</a></li>
+            </ul>
+        </nav>
+
+
+    </navbar>
 
     <div class="container">
         <h2>Propuestas</h2>
@@ -123,19 +123,33 @@ if ($result->num_rows > 0) {
     <script src="scriptsPropuestas.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-document.addEventListener("DOMContentLoaded", function () {
-    // Escuchar cambios en el almacenamiento local
-    window.addEventListener("storage", function (event) {
-        if (event.key === "navbarColorUpdated" && (event.newValue === "true" || event.newValue === "reset")) {
-            // Recargar la página cuando se detecte un cambio o restablecimiento
-            window.location.reload();
-        }
-    });
-});
+        document.addEventListener("DOMContentLoaded", function() {
+            // Escuchar cambios en el almacenamiento local
+            window.addEventListener("storage", function(event) {
+                if (event.key === "navbarColorUpdated" && (event.newValue === "true" || event.newValue === "reset")) {
+                    // Recargar la página cuando se detecte un cambio o restablecimiento
+                    window.location.reload();
+                }
+            });
+        });
+    </script>
+
+<div class="modal" id="proposalModal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h3 id="modalTitle">Título de la propuesta</h3>
+        <div class="modal-body">
+            <img id="modalImage" src="https://via.placeholder.com/150" alt="Imagen de la propuesta">
+            <div class="modal-info">
+                <p><strong>Categoría:</strong> <span id="modalCategory">Cultura</span></p>
+                <p><strong>Descripción:</strong> <span id="modalDescription">Esta es una descripción de ejemplo que es más larga de lo habitual para probar cómo el texto se ajusta dentro del modal.</span></p>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
-</script>
 
 </body>
 

@@ -5,6 +5,41 @@ if (!isset($_SESSION['user_role'])) {
     exit;
 }
 
+include_once('../config/config.php');
+
+$navbarConfigPath = "../Login/navbar_config.json"; // Ruta al archivo de configuración del Navbar
+
+// Verificar si el archivo existe y cargar el color del Navbar
+if (file_exists($navbarConfigPath)) {
+    $navbarConfig = json_decode(file_get_contents($navbarConfigPath), true);
+    $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff'; // Azul por defecto
+} else {
+    $navbarBgColor = '#00bfff'; // Azul por defecto si no existe el archivo
+}
+
+// Obtener la ruta de la imagen para la sección 'logoNavbar'
+$section_name = 'logoNavbar';
+$stmt = $connection->prepare("SELECT image_path FROM imagenes_Inicio_Logo WHERE section_name = ?");
+$stmt->bind_param("s", $section_name);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $logo_path = $row['image_path'];
+} else {
+    $logo_path = "/Pagina_Web/Pagina_Web/Login/Img/logoMariCruz.png"; // Imagen por defecto
+}
+
+
+$configFileSugerencias = "../Login/PaginaSugerencias.json";
+if (file_exists($configFileSugerencias)) {
+    $config = json_decode(file_get_contents($configFileSugerencias), true);
+    $paginaSugerenciasBgColor = $config['paginaSugerenciasBgColor'] ?? "#a1c4fd";
+} else {
+    $paginaSugerenciasBgColor = "#a1c4fd";
+}
+
 // Obtener el rol del usuario
 $user_role = $_SESSION['user_role'];
 
@@ -90,13 +125,22 @@ $sugerencias = obtenerTodasSugerencias();
         .navbar .fa-user-shield {
     font-size: 1.9rem; /* Ajusta según lo necesario */
 }
+        :root {
+  
+        --navbar-bg-color: <?php echo $navbarBgColor; ?>;
+        --pagina-bg-color: <?php echo $paginaSugerenciasBgColor; ?>;
+    
+        body {
+    background-color: var(--pagina-bg-color);
+}
+
+    }
 
 /* General */
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(to bottom, #ffffff, #f0f0f0);
 }
 
 /* Header */
@@ -995,13 +1039,13 @@ const showModal = () => {
                 <h6 class="mt-2"><?php echo $user_role === 'SUPERADMIN' ? 'SuperAdmin' : 'Admin'; ?></h6>
             </div>
             <!-- Logo existente -->
-            <img src="/Pagina_Web/Pagina_Web/Login/Img/logoMariCruz.png" width="200px" style="margin-right: 20px;">
-            </div>
+            <img src="<?php echo htmlspecialchars($logo_path); ?>"  width="200px" style="margin-right: 20px;">
+
     </div>
     <ul class="navbar-menu">
-        <li><a href="../Candidatos/candidatos.php"><i class="fa-solid fa-users"></i> <span>Candidatos</span></a></li>
-        <li><a href="../Eventos_Noticias/eventos_noticias.php"><i class="fa-solid fa-calendar-alt"></i> <span>Eventos y Noticias</span></a></li>
-        <li><a href="../Propuestas/Propuestas.php"><i class="fa-solid fa-lightbulb"></i> <span>Propuestas</span></a></li>
+        <li><a href="../Candidatos/candidatos_admin.php"><i class="fa-solid fa-users"></i> <span>Candidatos</span></a></li>
+        <li><a href="../Eventos_Noticias/eventos_noticias_admin.php"><i class="fa-solid fa-calendar-alt"></i> <span>Eventos y Noticias</span></a></li>
+        <li><a href="../Propuestas/gestionarPropuestas.php"><i class="fa-solid fa-lightbulb"></i> <span>Propuestas</span></a></li>
         <li><a href="../Sugerencias/sugerencias_admin.php"><i class="fa-solid fa-comment-dots"></i> <span>Sugerencias</span></a></li>
         <li><a href="../Sugerencias/resultados_admin.php"><i class="fas fa-vote-yea"></i> Votos</a></li>
         <li><a href="../Login/Administracion.php"><i class="fa-solid fa-cogs"></i> <span>Administración</span></a></li>

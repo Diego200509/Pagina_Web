@@ -4,6 +4,17 @@ if (!isset($_SESSION['user_role'])) {
     header("Location: ../Login/Login.php");
     exit;
 }
+
+$navbarConfigPath = "../Login/navbar_config.json"; // Ruta al archivo de configuración del Navbar
+
+// Verificar si el archivo existe y cargar el color del Navbar
+if (file_exists($navbarConfigPath)) {
+    $navbarConfig = json_decode(file_get_contents($navbarConfigPath), true);
+    $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff'; // Azul por defecto
+} else {
+    $navbarBgColor = '#00bfff'; // Azul por defecto si no existe el archivo
+}
+
 // Obtener el rol del usuario
 $user_role = $_SESSION['user_role'];
 
@@ -29,6 +40,20 @@ function calcularPorcentaje($votos, $total)
 }
 
 include('../config/config.php');
+// Obtener la ruta de la imagen para la sección 'logoNavbar'
+$section_name = 'logoNavbar';
+$stmt = $connection->prepare("SELECT image_path FROM imagenes_Inicio_Logo WHERE section_name = ?");
+$stmt->bind_param("s", $section_name);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $logo_path = $row['image_path'];
+} else {
+    $logo_path = "/Pagina_Web/Pagina_Web/Login/Img/logoMariCruz.png"; // Imagen por defecto
+}
+
 
 
 
@@ -87,16 +112,89 @@ $imagenesActuales = obtenerImagenesResultados();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="EstilosResultados.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+
+        /* Navbar */
+        .navbar {
+    background-color: var(--navbar-bg-color, #00bfff);
+    display: flex;
+    align-items: center;
+    padding: 10px 20px; 
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    gap: 20px; /* Espacio entre logo y menú */
+}
+
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #ffffff;
+    flex-shrink: 0; /* Mantener el tamaño fijo del logo */
+}
+
+.navbar-logo i {
+    font-size: 20px; /* Ajusta según la necesidad */
+    margin-right: 10px; /* Espaciado con el texto */
+    color: white;
+
+}
+.navbar-logo img {
+    width: 170px; /* Reduce el ancho de la imagen */
+    height: auto; /* Mantén la proporción de aspecto */
+    margin-right: 10px; /* Ajusta el espacio entre el logo y el texto si es necesario */
+}
+
+.navbar-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px; /* Espacio entre elementos del menú */
+    flex-grow: 1; /* Ocupa todo el espacio disponible */
+    justify-content: flex-end; /* Alinear los botones a la derecha */
+    padding-right: 20px; /* Asegura espacio entre el último botón y el borde derecho */
+}
+
+.navbar-menu li {
+    list-style: none;
+}
+
+.navbar-menu li a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.navbar-menu li a:hover {
+    color: #ff0050;
+}
+.text-center {
+    display: flex;
+    flex-direction: column; /* Coloca el ícono y texto uno debajo del otro */
+    align-items: center; /* Centra el contenido */
+    justify-content: center; /* Asegura el centrado vertical */
+    text-align: center;
+}
         
         @keyframes animatedBackground {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
+        :root {
+        --navbar-bg-color: <?php echo $navbarBgColor; ?>;
+        
+
+        body {
+    background-color: var(--pagina-bg-color);
+}
+    }
 
 .logout {
             color: #ffc107;
@@ -625,24 +723,27 @@ input:checked + label .action span.option-2 {
 <body>
     <!-- Navbar -->
     <nav class="navbar">
-        <div class="navbar-logo">
+    <div class="navbar-logo">
         <div class="text-center">
+                <!-- Icono SuperAdmin existente -->
                 <i class="fa-solid fa-user-shield fa-2x"></i>
                 <h6 class="mt-2"><?php echo $user_role === 'SUPERADMIN' ? 'SuperAdmin' : 'Admin'; ?></h6>
             </div>
-        <img src="/Pagina_Web/Pagina_Web/Login/Img/logoMariCruz.png" width="200px" style="margin-right: 20px;">
-        </div>
-        <ul class="navbar-menu">
-            <li><a href="../Candidatos/candidatos_admin.php"><i class="fa-solid fa-users"></i> <span>Candidatos</span></a></li>
-            <li><a href="../Eventos_Noticias/eventos_noticias_admin.php"><i class="fa-solid fa-calendar-alt"></i> <span>Eventos y Noticias</span></a></li>
-            <li><a href="../Propuestas/gestionarPropuestas.php"><i class="fa-solid fa-lightbulb"></i> <span>Propuestas</span></a></li>
-            <li><a href="../Sugerencias/sugerencias_admin.php"><i class="fa-solid fa-comment-dots"></i> <span>Sugerencias</span></a></li>
-            <li><a href="../Sugerencias/resultados_admin.php"><i class="fas fa-vote-yea"></i> Votos</a></li>
-            <li><a href="../Login/Administracion.php"><i class="fa-solid fa-cogs"></i> <span>Administración</span></a></li>
-            <li><a href="../Login/Login.php" class="logout"><i class="fa-solid fa-sign-out-alt"></i> <span>Cerrar Sesión</span></a></li>
-            
-        </ul>
-    </nav>
+            <!-- Logo existente -->
+            <img src="<?php echo htmlspecialchars($logo_path); ?>"  width="200px" style="margin-right: 20px;">
+
+    </div>
+    <ul class="navbar-menu">
+    <li><a href="../Candidatos/candidatos_admin.php"><i class="fa-solid fa-users"></i> <span>Candidatos</span></a></li>
+        <li><a href="../Eventos_Noticias/eventos_noticias_admin.php"><i class="fa-solid fa-calendar-alt"></i> <span>Eventos y Noticias</span></a></li>
+        <li><a href="../Propuestas/gestionarPropuestas.php"><i class="fa-solid fa-lightbulb"></i> <span>Propuestas</span></a></li>
+        <li><a href="../Sugerencias/sugerencias_admin.php"><i class="fa-solid fa-comment-dots"></i> <span>Sugerencias</span></a></li>
+        <li><a href="../Sugerencias/resultados_admin.php"><i class="fas fa-vote-yea"></i> Votos</a></li>
+        <li><a href="../Login/Administracion.php"><i class="fa-solid fa-cogs"></i> <span>Administración</span></a></li>
+            <li><a href="../Login/Login.php" class="logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
+    </ul>
+</nav>
+
 
     <!-- Modal para Crear Admin -->
     <?php if ($_SESSION['user_role'] === 'SUPERADMIN'): ?>

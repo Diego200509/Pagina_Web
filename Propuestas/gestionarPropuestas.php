@@ -34,6 +34,67 @@ if ($propuestasPorPagina <= 0) {
     die("Error: El número de propuestas por página debe ser mayor que 0.");
 }
 
+$navbarConfigPath = "../Login/navbar_config.json"; // Ruta al archivo de configuración del Navbar
+
+// Verificar si el archivo existe y cargar el color del Navbar
+if (file_exists($navbarConfigPath)) {
+    $navbarConfig = json_decode(file_get_contents($navbarConfigPath), true);
+    $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff'; // Azul por defecto
+} else {
+    $navbarBgColor = '#00bfff'; // Azul por defecto si no existe el archivo
+}
+
+// Ruta al archivo JSON de configuración de colores
+$configFile = "../Login/PaginaPropuestas.json";
+
+if (file_exists($configFile)) {
+    $config = json_decode(file_get_contents($configFile), true);
+    $paginaPropuestasBgColor = $config['paginaPropuestasBgColor'] ?? "#000000"; // Color blanco por defecto
+} else {
+    $paginaPropuestasBgColor = "#000000"; // Color blanco por defecto si no existe el archivo
+}
+
+
+// Obtener la ruta de la imagen para la sección 'logoNavbar'
+$section_name = 'logoNavbar';
+$stmt = $connection->prepare("SELECT image_path FROM imagenes_Inicio_Logo WHERE section_name = ?");
+$stmt->bind_param("s", $section_name);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $logo_path = $row['image_path'];
+} else {
+    $logo_path = "../Login/Img/logoMariCruz.png"; // Imagen por defecto
+}
+
+
+function manejarSubidaImagen()
+{
+    if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+        $extensionesPermitidas = ['jpg', 'jpeg', 'png', 'gif'];
+        $nombreImagen = basename($_FILES['imagen']['name']);
+        $extension = pathinfo($nombreImagen, PATHINFO_EXTENSION);
+
+        if (!in_array(strtolower($extension), $extensionesPermitidas)) {
+            die("Error: Solo se permiten archivos JPG, JPEG, PNG o GIF.");
+        }
+
+        $nombreUnico = time() . "_" . uniqid() . "." . $extension;
+        $rutaCarpeta = "../Propuestas/img/"; // Ruta donde se guardará la imagen
+        $rutaDestino = $rutaCarpeta . $nombreUnico;
+
+        if (move_uploaded_file($_FILES['imagen']['tmp_name'], $rutaDestino)) {
+            // ✅ Guardamos la ruta correcta en la base de datos (sin '../')
+            return "/Pagina_Web/Pagina_Web/Propuestas/img/" . $nombreUnico;
+        } else {
+            die("Error al mover la imagen al directorio.");
+        }
+    }
+    return null;
+}
+
 
 
 
@@ -46,19 +107,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $categoria = $_POST['categoria'];
         $partido = $_POST['partido'];
         $estado = $_POST['estado'];
+        $imagenUrl = manejarSubidaImagen();
+
+        if (!$imagenUrl) {
+            die("Error: Debe seleccionar una imagen antes de guardar la propuesta.");
+        }
+        // ✅ Aquí se maneja la imagen correctamente
 
         if (empty($titulo) || empty($descripcion) || empty($categoria) || empty($partido) || empty($estado)) {
             die("Error: Faltan datos en el formulario. Verifique los campos.");
         }
 
         try {
-            agregarPropuestaYColaboracion($connection, $titulo, $descripcion, $categoria, $partido, $estado);
+            agregarPropuestaYColaboracion($connection, $titulo, $descripcion, $categoria, $partido, $estado, $imagenUrl);
             header('Location: gestionarPropuestas.php?status=added');
             exit();
         } catch (Exception $e) {
             die("Error al agregar propuesta: " . $e->getMessage());
         }
     }
+
+
 
     if ($accion === 'eliminar') {
         $id = $_POST['id'];
@@ -82,22 +151,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $descripcion = $_POST['descripcion'] ?? '';
         $categoria = $_POST['categoria'] ?? '';
         $partido = $_POST['partido'] ?? '';
-        $estado = $_POST['estado'] ?? ''; // Corregido
+        $estado = $_POST['estado'] ?? '';
+        $imagenUrl = manejarSubidaImagen(); // ✅ Primero intentamos subir la nueva imagen
 
-        if (empty($titulo) || empty($descripcion) || empty($categoria) || empty($partido)) {
+        if (empty($titulo) || empty($descripcion) || empty($categoria) || empty($partido) || empty($estado)) {
             die("Error: Faltan datos en el formulario. Verifique los campos.");
         }
 
+        // **Si no se subió una nueva imagen, obtenemos la imagen actual de la BD**
+        if (!$imagenUrl) {
+            $queryImagenActual = "SELECT IMAGEN_URL FROM PROPUESTAS WHERE ID_PRO = ?";
+            $stmtImagen = $connection->prepare($queryImagenActual);
+            $stmtImagen->bind_param("i", $id);
+            $stmtImagen->execute();
+            $resultado = $stmtImagen->get_result();
+            $propuesta = $resultado->fetch_assoc();
+            $stmtImagen->close();
+
+            $imagenUrl = !empty($propuesta['IMAGEN_URL']) ? $propuesta['IMAGEN_URL'] : ""; // Evita que sea null
+        }
+
         try {
-            actualizarPropuesta($connection, $id, $titulo, $descripcion, $categoria, $partido, $estado);
+            actualizarPropuesta($connection, $id, $titulo, $descripcion, $categoria, $partido, $estado, $imagenUrl);
             header('Location: gestionarPropuestas.php?status=edited');
             exit();
         } catch (Exception $e) {
             die("Error al editar propuesta: " . $e->getMessage());
         }
     }
-
-
 
 
 
@@ -220,6 +301,7 @@ $query = "
         PROPUESTAS.CAT_PRO, 
         PROPUESTAS.ESTADO, 
         PROPUESTAS.ES_FAVORITA, 
+        PROPUESTAS.IMAGEN_URL,  -- 🔹 Asegura que esta columna está incluida
         GROUP_CONCAT(PARTIDOS_POLITICOS.NOM_PAR SEPARATOR ', ') AS PARTIDOS,
         PARTIDOS_POLITICOS.ID_PAR AS ID_PAR
     FROM PROPUESTAS
@@ -228,6 +310,7 @@ $query = "
     GROUP BY PROPUESTAS.ID_PRO
     ORDER BY PROPUESTAS.ID_PRO ASC
     LIMIT ? OFFSET ?";
+
 
 // Prepara la consulta
 $stmt = $connection->prepare($query);
@@ -256,6 +339,8 @@ function mostrarDescripcionConFormato($descripcion)
 {
     return nl2br(htmlspecialchars($descripcion));
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -272,6 +357,16 @@ function mostrarDescripcionConFormato($descripcion)
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="estilosGestionarPropuestas.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        :root {
+            --navbar-bg-color: <?php echo $navbarBgColor; ?>;
+            --pagina-bg-color: <?php echo $paginaPropuestasBgColor; ?>;
+            body {
+    background-color: var(--pagina-bg-color);
+}
+
+        }
+        </style>
 </head>
 
 
@@ -289,8 +384,8 @@ function mostrarDescripcionConFormato($descripcion)
                 </h6>
             </div>
             <!-- Logo existente -->
-            <img src="/Pagina_Web/Pagina_Web/Login/Img/logoMariCruz.png" width="200px" style="margin-right: 20px;">
-        </div>
+            <img src="<?php echo htmlspecialchars($logo_path); ?>"  width="200px" style="margin-right: 20px;">
+
 
         <!-- Menú principal -->
         <div class="navbar-menu-container">
@@ -351,6 +446,7 @@ function mostrarDescripcionConFormato($descripcion)
                     <th>Descripción</th>
                     <th>Categorías</th>
                     <th>Estado</th>
+                    <th>Imagen</th> <!-- 🔹 Nueva columna para la imagen -->
                     <th>Favorito</th>
                     <th>Acciones</th>
                 </tr>
@@ -359,12 +455,44 @@ function mostrarDescripcionConFormato($descripcion)
                 <?php if ($result->num_rows > 0): ?>
                     <?php while ($row = $result->fetch_assoc()): ?>
                         <tr>
-                            <td><?= htmlspecialchars($row['ID_PRO']) ?></td>
-                            <td><?= htmlspecialchars($row['PARTIDOS']) ?></td>
-                            <td><?= htmlspecialchars($row['TIT_PRO']) ?></td>
-                            <td><?= htmlspecialchars($row['DESC_PRO']) ?></td>
-                            <td><?= htmlspecialchars($row['CAT_PRO']) ?></td>
-                            <td id="estado-<?= $row['ID_PRO'] ?>"><?= htmlspecialchars($row['ESTADO']) ?></td>
+                            <td><?= htmlspecialchars($row['ID_PRO'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
+                            <td><?= htmlspecialchars($row['PARTIDOS'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
+                            <td><?= htmlspecialchars($row['TIT_PRO'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
+                            <td><?= htmlspecialchars($row['DESC_PRO'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
+                            <td><?= htmlspecialchars($row['CAT_PRO'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
+                            <td id="estado-<?= $row['ID_PRO'] ?>"><?= htmlspecialchars($row['ESTADO'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
+
+
+                            <td>
+                                <?php if (!empty(trim($row['IMAGEN_URL']))) : ?>
+                                    <img src="<?= 'http://localhost' . trim($row['IMAGEN_URL']) ?>" alt="Imagen de la propuesta" width="50">
+                                <?php else : ?>
+                                    <span>Sin imagen</span>
+                                <?php endif; ?>
+                            </td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                             <td>
                                 <div class="star-container">
                                     <i
@@ -386,13 +514,14 @@ function mostrarDescripcionConFormato($descripcion)
                                     <div class="custom-dropdown">
                                         <a role="button" class="btn btn-primary"
                                             onclick="abrirModalEditar(
-                                    '<?= htmlspecialchars($row['ID_PRO'], ENT_QUOTES, 'UTF-8') ?>',
-                                    '<?= htmlspecialchars($row['TIT_PRO'], ENT_QUOTES, 'UTF-8') ?>',
-                                    '<?= htmlspecialchars($row['DESC_PRO'], ENT_QUOTES, 'UTF-8') ?>',
-                                    '<?= htmlspecialchars($row['CAT_PRO'], ENT_QUOTES, 'UTF-8') ?>',
-                                    '<?= htmlspecialchars($row['ID_PAR'], ENT_QUOTES, 'UTF-8') ?>',
-                                    '<?= htmlspecialchars($row['ESTADO'], ENT_QUOTES, 'UTF-8') ?>'
-                                ); event.preventDefault();">
+        '<?= htmlspecialchars($row['ID_PRO'] ?? '', ENT_QUOTES, 'UTF-8') ?>',
+        '<?= htmlspecialchars($row['TIT_PRO'] ?? '', ENT_QUOTES, 'UTF-8') ?>',
+        '<?= htmlspecialchars($row['DESC_PRO'] ?? '', ENT_QUOTES, 'UTF-8') ?>',
+        '<?= htmlspecialchars($row['CAT_PRO'] ?? '', ENT_QUOTES, 'UTF-8') ?>',
+        '<?= htmlspecialchars($row['ID_PAR'] ?? '', ENT_QUOTES, 'UTF-8') ?>',
+        '<?= htmlspecialchars($row['ESTADO'] ?? '', ENT_QUOTES, 'UTF-8') ?>',
+        '<?= htmlspecialchars($row['IMAGEN_URL'] ?? '', ENT_QUOTES, 'UTF-8') ?>'
+    ); event.preventDefault();">
                                             Editar
                                         </a>
                                         <a role="button" class="text-danger" onclick="eliminarPropuesta(<?= $row['ID_PRO'] ?>); event.preventDefault();">
@@ -409,11 +538,12 @@ function mostrarDescripcionConFormato($descripcion)
                     <?php endwhile; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="7">No hay propuestas registradas.</td>
+                        <td colspan="9">No hay propuestas registradas.</td> <!-- Ajusté colspan a 9 por la nueva columna -->
                     </tr>
                 <?php endif; ?>
             </tbody>
         </table>
+
 
         <div class="pagination-container text-center">
             <nav>
@@ -456,14 +586,15 @@ function mostrarDescripcionConFormato($descripcion)
         <div class="modal-content">
             <span class="close-button" onclick="cerrarModal()">&times;</span>
             <h2>Agregar Nueva Propuesta</h2>
-            <form method="POST" action="gestionarPropuestas.php">
+            <form method="POST" action="gestionarPropuestas.php" enctype="multipart/form-data"> <!-- 🔹 Agregado enctype -->
                 <input type="hidden" name="accion" value="agregar">
 
                 <label for="titulo">Título:</label>
                 <input type="text" name="titulo" id="titulo" class="form-control" required>
 
                 <label for="descripcion">Descripción:</label>
-                <textarea name="descripcion" id="descripcion" class="form-control" required></textarea>
+                <textarea name="descripcion" id="descripcion" class="form-control" maxlength="430" required oninput="contarCaracteres('descripcion', 'contadorDescripcion')"></textarea>
+                <small id="contadorDescripcion">0/430 caracteres</small>
 
                 <label for="categoria">Categoría:</label>
                 <select name="categoria" id="categoria" class="form-select" required>
@@ -504,17 +635,22 @@ function mostrarDescripcionConFormato($descripcion)
                     <?php endif; ?>
                 </select>
 
+                <!-- 🔹 Campo para subir imagen -->
+                <label for="imagen">Imagen:</label>
+                <input type="file" name="imagen" id="imagen" class="form-control" accept="image/*">
+
                 <button type="submit" class="btn btn-danger">Guardar Propuesta</button>
             </form>
         </div>
     </div>
 
 
+
     <div id="modalEditarPropuesta" class="modal">
         <div class="modal-content">
             <span class="close-button" onclick="cerrarModalEditar()">&times;</span>
             <h2>Editar Propuesta</h2>
-            <form id="formEditarPropuesta" method="POST" action="gestionarPropuestas.php">
+            <form id="formEditarPropuesta" method="POST" action="gestionarPropuestas.php" enctype="multipart/form-data">
                 <input type="hidden" name="accion" value="editar">
                 <input type="hidden" name="id" id="idEditarPropuesta">
 
@@ -524,7 +660,9 @@ function mostrarDescripcionConFormato($descripcion)
 
                 <!-- Descripción -->
                 <label for="descripcionEditar">Descripción:</label>
-                <textarea id="descripcionEditar" name="descripcion" class="form-control" required></textarea>
+                <textarea id="descripcionEditar" name="descripcion" class="form-control" maxlength="430" required oninput="contarCaracteres('descripcionEditar', 'contadorDescripcionEditar')"></textarea>
+                <small id="contadorDescripcionEditar">0/430 caracteres</small>
+
 
                 <!-- Categoría -->
                 <label for="categoriaEditar">Categoría:</label>
@@ -575,7 +713,6 @@ function mostrarDescripcionConFormato($descripcion)
                 <!-- Input oculto para enviar el ID del partido seleccionado -->
                 <input type="hidden" name="partido" id="partidoEditarHidden">
 
-
                 <!-- Estado -->
                 <label for="estadoEditar">Estado:</label>
                 <select id="estadoEditar" name="estado" class="form-select" required>
@@ -583,11 +720,22 @@ function mostrarDescripcionConFormato($descripcion)
                     <option value="Oculta" <?= isset($row['ESTADO']) && $row['ESTADO'] === 'Oculta' ? 'selected' : '' ?>>Oculta</option>
                 </select>
 
+                <!-- 🔹 Imagen actual -->
+                <label>Imagen actual:</label>
+                <div>
+                    <img id="previewImagenEditar" src="" width="100" alt="No hay imagen disponible">
+                </div>
+
+                <!-- 🔹 Campo para subir una nueva imagen -->
+                <label for="imagenEditar">Cambiar Imagen:</label>
+                <input type="file" name="imagen" id="imagenEditar" class="form-control" accept="image/*">
+
                 <!-- Botón para actualizar -->
                 <button type="submit" class="btn btn-danger">Actualizar Propuesta</button>
             </form>
         </div>
     </div>
+
 
 
 
@@ -617,39 +765,70 @@ function mostrarDescripcionConFormato($descripcion)
         }
 
         // Función para abrir el modal de editar propuesta
-        function abrirModalEditar(id, titulo, descripcion, categoria, partido, estado) {
-    document.getElementById('idEditarPropuesta').value = id;
-    document.getElementById('tituloEditar').value = titulo;
-    document.getElementById('descripcionEditar').value = descripcion;
-    document.getElementById('categoriaEditar').value = categoria;
+        function abrirModalEditar(id, titulo, descripcion, categoria, partido, estado, imagenUrl) {
+            // Asegurar que los valores no sean null o undefined
+            document.getElementById('idEditarPropuesta').value = id ?? '';
+            document.getElementById('tituloEditar').value = titulo ?? '';
+            document.getElementById('descripcionEditar').value = descripcion ?? '';
+            document.getElementById('categoriaEditar').value = categoria ?? '';
 
-    // Asignar el ID del partido político en el select (deshabilitado) y en el input hidden
-    const partidoSelect = document.getElementById('partidoEditar');
-    const partidoHidden = document.getElementById('partidoEditarHidden');
+            // Asignar el ID del partido político en el select (deshabilitado) y en el input hidden
+            const partidoSelect = document.getElementById('partidoEditar');
+            const partidoHidden = document.getElementById('partidoEditarHidden');
 
-    if (partidoSelect) {
-        partidoSelect.value = partido;
-    } else {
-        console.error("No se encontró el select para partidos.");
-    }
+            if (partidoSelect) {
+                if (partidoSelect.querySelector(`option[value="${partido}"]`)) {
+                    partidoSelect.value = partido;
+                } else {
+                    console.warn(`⚠️ El partido con ID ${partido} no está en la lista de opciones.`);
+                }
+            } else {
+                console.error("❌ No se encontró el select para partidos.");
+            }
 
-    if (partidoHidden) {
-        partidoHidden.value = partido; // Asegura que el ID se envíe en el formulario
-    } else {
-        console.error("No se encontró el input hidden para partidos.");
-    }
+            if (partidoHidden) {
+                partidoHidden.value = partido ?? ''; // Asegurar que el ID se envíe en el formulario
+            } else {
+                console.error("❌ No se encontró el input hidden para partidos.");
+            }
 
-    // Asignar el estado de la propuesta
-    const estadoSelect = document.getElementById('estadoEditar');
-    if (estadoSelect) {
-        estadoSelect.value = estado;
-    } else {
-        console.error("No se encontró el select para estado.");
-    }
+            // Asignar el estado de la propuesta
+            const estadoSelect = document.getElementById('estadoEditar');
+            if (estadoSelect) {
+                if (estadoSelect.querySelector(`option[value="${estado}"]`)) {
+                    estadoSelect.value = estado;
+                } else {
+                    console.warn(`⚠️ El estado "${estado}" no está en la lista de opciones.`);
+                }
+            } else {
+                console.error("❌ No se encontró el select para estado.");
+            }
 
-    document.getElementById("modalEditarPropuesta").style.display = 'flex';
-}
+            // Asignar la imagen al campo de previsualización
+            const previewImagen = document.getElementById('previewImagenEditar');
+            if (previewImagen) {
+                if (imagenUrl && imagenUrl.trim() !== "") {
+                    previewImagen.src = imagenUrl;
+                    previewImagen.style.display = "block"; // Mostrar imagen
+                } else {
+                    previewImagen.src = "";
+                    previewImagen.style.display = "none"; // Ocultar si no hay imagen
+                }
+            } else {
+                console.error("❌ No se encontró el elemento de previsualización de la imagen.");
+            }
 
+            // Mostrar el modal de edición
+            document.getElementById("modalEditarPropuesta").style.display = 'flex';
+        }
+
+
+
+        function contarCaracteres(textareaId, contadorId) {
+            var textarea = document.getElementById(textareaId);
+            var contador = document.getElementById(contadorId);
+            contador.textContent = textarea.value.length + "/430 caracteres";
+        }
 
 
         function mostrarMensajeActualizado() {
@@ -1003,6 +1182,31 @@ function mostrarDescripcionConFormato($descripcion)
                     });
             }
         }
+
+
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const formAgregar = document.querySelector("#modalPropuesta form");
+
+            if (formAgregar) {
+                formAgregar.addEventListener("submit", function(event) {
+                    const inputImagen = document.getElementById("imagen");
+
+                    if (!inputImagen.files || inputImagen.files.length === 0) {
+                        event.preventDefault(); // Detiene el envío del formulario
+
+                        Swal.fire({
+                            title: "Error",
+                            text: "Debe seleccionar una imagen antes de guardar la propuesta.",
+                            icon: "error",
+                            confirmButtonText: "OK"
+                        });
+
+                        return false;
+                    }
+                });
+            }
+        });
     </script>
 
 

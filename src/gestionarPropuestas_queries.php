@@ -2,11 +2,12 @@
 
 // Función para obtener las propuestas con paginación
 function obtenerPropuestasConPartidos($connection, $propuestasPorPagina, $offset) {
-    // Consulta mejorada para obtener las propuestas sin duplicados
+    // Consulta mejorada para obtener las propuestas incluyendo la imagen
     $query = "
     SELECT 
         PROPUESTAS.ID_PRO, PROPUESTAS.TIT_PRO, PROPUESTAS.DESC_PRO, PROPUESTAS.CAT_PRO,
         PROPUESTAS.ESTADO, 
+        PROPUESTAS.IMAGEN_URL,  -- 🔹 Agregado para incluir la imagen
         GROUP_CONCAT(PARTIDOS_POLITICOS.NOM_PAR SEPARATOR ', ') AS PARTIDOS,
         GROUP_CONCAT(PARTIDOS_POLITICOS.ID_PAR SEPARATOR ', ') AS ID_PARTIDOS
     FROM PROPUESTAS
@@ -34,6 +35,7 @@ function obtenerPropuestasConPartidos($connection, $propuestasPorPagina, $offset
 }
 
 
+
 // Función para obtener todos los partidos
 function obtenerPartidos($connection) {
     $query = "SELECT ID_PAR, NOM_PAR FROM PARTIDOS_POLITICOS";
@@ -46,17 +48,32 @@ function obtenerPartidos($connection) {
 
 
 // Función para actualizar una propuesta
-function actualizarPropuesta($connection, $id, $titulo, $descripcion, $categoria, $partido, $estado) {
-    // Actualizar los datos de la propuesta en la tabla PROPUESTAS, incluyendo el estado
-    $query = "UPDATE PROPUESTAS SET TIT_PRO = ?, DESC_PRO = ?, CAT_PRO = ?, ESTADO = ? WHERE ID_PRO = ?";
+function actualizarPropuesta($connection, $id, $titulo, $descripcion, $categoria, $partido, $estado, $imagenUrl = null) {
+    // Iniciar la consulta SQL sin la imagen
+    $query = "UPDATE PROPUESTAS SET TIT_PRO = ?, DESC_PRO = ?, CAT_PRO = ?, ESTADO = ?";
+    
+    // Si hay una nueva imagen, incluirla en la actualización
+    if (!empty($imagenUrl)) {
+        $query .= ", IMAGEN_URL = ?";
+    }
+    
+    $query .= " WHERE ID_PRO = ?";
+    
+    // Preparar la consulta
     $stmt = $connection->prepare($query);
     if (!$stmt) {
         die("Error al preparar la consulta de actualización: " . $connection->error);
     }
-    $stmt->bind_param("ssssi", $titulo, $descripcion, $categoria, $estado, $id);
-    $stmt->execute();
 
-    // Verificar si se actualizó alguna fila en la tabla PROPUESTAS
+    // Vincular parámetros dependiendo de si hay una imagen o no
+    if (!empty($imagenUrl)) {
+        $stmt->bind_param("sssssi", $titulo, $descripcion, $categoria, $estado, $imagenUrl, $id);
+    } else {
+        $stmt->bind_param("ssssi", $titulo, $descripcion, $categoria, $estado, $id);
+    }
+
+    // Ejecutar la consulta
+    $stmt->execute();
     $propuestaActualizada = $stmt->affected_rows > 0;
 
     // Actualizar la colaboración entre la propuesta y el partido político
@@ -67,10 +84,9 @@ function actualizarPropuesta($connection, $id, $titulo, $descripcion, $categoria
     }
     $stmtColaboracion->bind_param("ii", $partido, $id);
     $stmtColaboracion->execute();
-
-    // Verificar si se actualizó alguna fila en la tabla COLABORACIONES
     $colaboracionActualizada = $stmtColaboracion->affected_rows > 0;
 
+    // Cerrar conexiones
     $stmt->close();
     $stmtColaboracion->close();
 
@@ -81,15 +97,16 @@ function actualizarPropuesta($connection, $id, $titulo, $descripcion, $categoria
 
 
 
+
 // Función para agregar propuesta y colaboración
-function agregarPropuestaYColaboracion($connection, $titulo, $descripcion, $categoria, $idPartido, $estado) {
-    // Insertar en la tabla PROPUESTAS
-    $queryPropuesta = "INSERT INTO PROPUESTAS (TIT_PRO, DESC_PRO, CAT_PRO, ESTADO) VALUES (?, ?, ?, ?)";
+function agregarPropuestaYColaboracion($connection, $titulo, $descripcion, $categoria, $idPartido, $estado, $imagenUrl) {
+    // Insertar en la tabla PROPUESTAS incluyendo la URL de la imagen
+    $queryPropuesta = "INSERT INTO PROPUESTAS (TIT_PRO, DESC_PRO, CAT_PRO, ESTADO, IMAGEN_URL) VALUES (?, ?, ?, ?, ?)";
     $stmtPropuesta = $connection->prepare($queryPropuesta);
     if (!$stmtPropuesta) {
         die("Error al preparar consulta propuesta: " . $connection->error);
     }
-    $stmtPropuesta->bind_param("ssss", $titulo, $descripcion, $categoria, $estado);
+    $stmtPropuesta->bind_param("sssss", $titulo, $descripcion, $categoria, $estado, $imagenUrl);
     $stmtPropuesta->execute();
 
     // Verificar si la propuesta fue insertada correctamente
@@ -119,6 +136,7 @@ function agregarPropuestaYColaboracion($connection, $titulo, $descripcion, $cate
 
     return true; // Todo ha ido bien
 }
+
 
 
 

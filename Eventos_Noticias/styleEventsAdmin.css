@@ -1,13 +1,10 @@
 /* Estilo general del cuerpo */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #ffffff;
-    /* Fondo blanco */
-    color: #333;
+    background-color: var(--pagina-bg-color, #f4f4f4); /* Color dinámico */
     margin: 0;
     padding: 0;
 }
-
 .navbar-role {
     margin-bottom: 9px;
     padding-left: 5px;

@@ -56,8 +56,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         guardarConfiguracion(
             "navbar_config.json",
             $defaultNavbarConfig,
-            "El color del Navbar ha sido restablecido a su valor original.",
-            "No se pudieron restablecer los colores del Navbar."
+            "Los colores Generalales han sido restablecido a su valores originales.",
+            "No se pudieron restablecer los colores Generales."
         );
     }
 
@@ -74,8 +74,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         guardarConfiguracion(
             $configFileNavbar,
             $config,
-            "El color del Navbar se ha actualizado correctamente.",
-            "No se pudo actualizar el color del Navbar."
+            "Los colores Generales se han actualizado correctamente.",
+            "No se pudo actualizar los colores Generales."
         );
     }
 

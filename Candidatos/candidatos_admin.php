@@ -1,8 +1,45 @@
 <?php
+include('../config/config.php');
+
 session_start();
 if (!isset($_SESSION['user_role'])) {
     header("Location: ../Login/Login.php");
     exit;
+}
+
+$navbarConfigPath = "../Login/navbar_config.json"; // Ruta al archivo de configuración del Navbar
+
+// Verificar si el archivo existe y cargar el color del Navbar
+if (file_exists($navbarConfigPath)) {
+    $navbarConfig = json_decode(file_get_contents($navbarConfigPath), true);
+    $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff'; // Azul por defecto
+} else {
+    $navbarBgColor = '#00bfff'; // Azul por defecto si no existe el archivo
+}
+
+// Obtener la ruta de la imagen para la sección 'logoNavbar'
+$section_name = 'logoNavbar';
+$stmt = $connection->prepare("SELECT image_path FROM imagenes_Inicio_Logo WHERE section_name = ?");
+$stmt->bind_param("s", $section_name);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $logo_path = $row['image_path'];
+} else {
+    $logo_path = "/Pagina_Web/Pagina_Web/Login/Img/logoMariCruz.png"; // Imagen por defecto
+}
+
+
+
+$configFileCandidatos = "../Login/PaginaCandidatos.json";
+
+if (file_exists($configFileCandidatos)) {
+    $config = json_decode(file_get_contents($configFileCandidatos), true);
+    $paginaCandidatosBgColor = $config['paginaCandidatosBgColor'] ?? "#f4f4f4";
+} else {
+    $paginaCandidatosBgColor = "#f4f4f4";
 }
 
 
@@ -28,7 +65,14 @@ $dashboard_url = $user_role === 'SUPERADMIN' ? '../Login/superadmin_dasboard.php
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
+        :root {
+        --navbar-bg-color: <?php echo $navbarBgColor; ?>;
+        --pagina-bg-color: <?php echo $paginaCandidatosBgColor; ?>;
+        body {
+    background-color: var(--pagina-bg-color);
+}
 
+    }
     </style>
 </head>
 <body>
@@ -39,8 +83,8 @@ $dashboard_url = $user_role === 'SUPERADMIN' ? '../Login/superadmin_dasboard.php
                 <i class="fa-solid fa-user-shield fa-2x"></i>
                 <h6 class="mt-2 navbar-role"><?php echo $user_role === 'SUPERADMIN' ? 'SuperAdmin' : 'Admin'; ?></h6>
             </div>
-            <img src="../Login/Img/logoMariCruz.png" width="200px" margin-right="20px">
-        </div>
+            <img src="<?php echo htmlspecialchars($logo_path); ?>"  width="200px" style="margin-right: 20px;">
+
         <ul class="navbar-menu">
             <li><a href="../Candidatos/candidatos_admin.php"><i class="fa-solid fa-users"></i> <span>Candidatos</span></a></li>
             <li><a href="../Eventos_Noticias/eventos_noticias_admin.php"><i class="fa-solid fa-calendar-alt"></i> <span>Eventos y Noticias</span></a></li>

@@ -105,7 +105,7 @@ if (file_exists($configFileCandidatos)) {
 </main>
 
 <div class="footer-rights">
-        Derechos reservados UTA 2024
+        Derechos reservados Team Sangre © 2024
     </div>
 
 
