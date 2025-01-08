@@ -317,7 +317,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function actualizarRestriccionesFecha() {
         const today = new Date();
         const year = today.getFullYear();
-        const month = String(today.getMonth() + 1).padStart(2, '0'); // Formato 2 dígitos
+        const month = String(today.getMonth() + 1).padStart(2, '0'); // Formato "YYYY-MM"
         const day = String(today.getDate()).padStart(2, '0');
         const todayFormatted = `${year}-${month}-${day}`;
 
@@ -325,10 +325,14 @@ document.addEventListener("DOMContentLoaded", function () {
         fechaInput.value = "";
 
         if (tipoSelect.value === "EVENTO") {
-            fechaInput.min = todayFormatted; // Solo permite la fecha actual o superior
+            fechaInput.min = todayFormatted; // Permite la fecha actual o futura
             fechaInput.max = ""; // Sin límite superior
         } else if (tipoSelect.value === "NOTICIA") {
-            fechaInput.max = todayFormatted; // Solo permite la fecha actual o anterior
+            const yesterday = new Date();
+            yesterday.setDate(today.getDate() - 1); // Un día antes de hoy
+            const yesterdayFormatted = `${yesterday.getFullYear()}-${String(yesterday.getMonth() + 1).padStart(2, '0')}-${String(yesterday.getDate()).padStart(2, '0')}`;
+
+            fechaInput.max = yesterdayFormatted; // Solo permite fechas anteriores a hoy
             fechaInput.min = ""; // Sin límite inferior
         }
     }
@@ -339,4 +343,5 @@ document.addEventListener("DOMContentLoaded", function () {
     // Detectar cambios en el select de tipo
     tipoSelect.addEventListener("change", actualizarRestriccionesFecha);
 });
+
 
