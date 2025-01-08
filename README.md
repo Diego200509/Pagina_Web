@@ -328,16 +328,33 @@ El sistema permite personalizar la apariencia tanto de la vista de usuario como 
 
    ![alt text](img/{BBB1816A-5735-4CA3-BD5A-7026B7577659}.png)
 
+### **Personalización del Sistema - Cambio de Imágenes**
+El sistema permite modificar imágenes clave dentro de la plataforma, tanto en la vista de usuario como en la administración.
 
-   
+1. **Cambio del Logo en el Navbar**  
+   - Se puede actualizar el logo que aparece en la barra de navegación (**navbar**) de la vista de usuario y la vista de administración.
+   - Para ello, se debe seleccionar un archivo de imagen y presionar el botón **Aceptar** para aplicarlo.
+   - Existe un botón **Restablecer** que permite volver a la imagen predeterminada.
+
+2. **Cambio de Imágenes en el Slider del Inicio**  
+   - El sistema permite modificar las imágenes del **carrusel** (slider) que se muestra en la página de inicio de los usuarios.
+   - Cada imagen del slider puede actualizarse individualmente seleccionando un archivo y presionando **Aceptar**.
+   - También existe la opción de **Restablecer** cada imagen a su versión original en caso de ser necesario.
+
+3. **Aplicación de los Cambios**  
+   - Una vez seleccionadas y confirmadas las imágenes, los cambios se reflejan de inmediato en la interfaz al actualizar la pagina.
+
+   ![alt text](img/{AF2528B4-521B-4672-847D-130D4ADD4535}.png)
+
+   ![alt text](img/{17986878-FF6F-4CDE-B3BB-B7CEB37318EE}.png)
+
+   ![alt text](img/{21AB48A9-C478-4C37-A462-BD8BA53A5618}.png)
 
 
 
 
 
 
-
-  
 
 
 
