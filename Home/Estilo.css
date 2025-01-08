@@ -439,7 +439,7 @@ section {
 .propuestas-title-eventos {
     font-size: 3rem;
     margin-bottom: 10px; /* Espaciado entre el título y las tarjetas */
-    color: #ffffff; /* Color rojo */
+    color: var(--navbar-bg-color, #00bfff);  /* Color rojo */
     text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff; /* Sombra para el texto */
     font-weight: bold;
 }
@@ -489,6 +489,12 @@ section {
 .propuesta:hover {
     transform: scale(1.05); /* Aumenta ligeramente al pasar el mouse */
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Sombra más intensa */
+}
+#contenidoEventosNoticias {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 .propuesta-header {
@@ -575,7 +581,7 @@ section {
 .propuestas-title {
     font-size: 3rem;
     margin-bottom: 10px; /* Espaciado entre el título y las tarjetas */
-    color: #ff007f; /* Color rojo */
+    color: var(--navbar-bg-color, #00bfff); /* Color rojo */
     text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff; /* Sombra para el texto */
     font-weight: bold;
 }
@@ -583,7 +589,7 @@ section {
 .propuestas-title-candidatos {
     font-size: 4rem;
     margin-bottom: 100px; /* Espaciado entre el título y las tarjetas */
-    color: #ff007f; /* Color rojo */
+    color: var(--navbar-bg-color, #00bfff);  /* Color rojo */
     text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff; /* Sombra para el texto */
     font-weight: bold;
 }
