@@ -199,7 +199,7 @@ En la sección "Eventos y Noticias", los usuarios pueden mantenerse informados s
      - **Descripción breve**.
      - **Fecha de publicación**.
      - Un botón "Ver más" para acceder a la descripción completa.
-     
+
    ![alt text](img/NoticiasUsuario.png)
 
 2. **Propósito de la Sección**  
@@ -221,6 +221,21 @@ En la sección "Propuestas", los usuarios pueden conocer y explorar las iniciati
      - Un botón "Ver más" para acceder a la información completa de cada propuesta.
      
    ![alt text](img/PropuestasUsuario.png)
+
+### **Sección de Sugerencias**
+En la sección "Sugerencias", los usuarios pueden enviar sus recomendaciones sobre la gestión de la lista electoral.
+
+1. **Formulario de Sugerencias**  
+   - Los usuarios pueden ingresar su nombre, correo electrónico (opcional) y su sugerencia en un campo de texto.
+   - Se incluye un botón de "Enviar Sugerencia" para registrar la opinión.
+
+2. **Confirmación de Envío**  
+   - Una vez enviada la sugerencia, aparece una ventana emergente confirmando el envío exitoso.
+   - Se muestra un mensaje de agradecimiento por la colaboración.
+   
+   ![alt text](img/{F48C2D8F-0E2A-46DE-BE03-631602324C8B}.png)
+   ![alt text](img/{BF5A69D9-0C64-406B-AB42-DFFF560FC609}.png)
+
 
 
 
