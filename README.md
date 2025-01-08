@@ -171,6 +171,40 @@ En la sección "Candidatos", los usuarios pueden ver información detallada sobr
 
    ![alt text](img/CandidatosUsuario.png)
 
+### **Sección de Eventos y Noticias**
+En la sección "Eventos y Noticias", los usuarios pueden mantenerse informados sobre las actividades más relevantes de la comunidad electoral.
+
+#### **Eventos**
+1. **Tarjetas Informativas**  
+   - Se presentan tarjetas con detalles sobre los eventos organizados por la lista electoral.
+   - Cada tarjeta incluye:
+     - **Título del evento**.
+     - **Imagen representativa** del evento.
+     - **Breve descripción** del evento.
+     - **Fecha y ubicación** del evento.
+     - Un botón "Ver más" para acceder a la descripción completa.
+
+2. **Objetivo de la Sección**  
+   - Permite a los usuarios conocer los eventos más recientes y relevantes de la campaña electoral.
+   - Facilita la organización de los asistentes y el seguimiento de actividades importantes.
+
+   ![alt text](img/EventosUsuario.png)
+
+#### **Noticias**
+1. **Tarjetas con Información Relevante**  
+   - Se muestran noticias destacadas sobre la lista electoral y sus iniciativas.
+   - Cada tarjeta contiene:
+     - **Título de la noticia**.
+     - **Imagen destacada**.
+     - **Descripción breve**.
+     - **Fecha de publicación**.
+     - Un botón "Ver más" para acceder a la descripción completa.
+    ![alt text](img/NoticiasUsuario.png)
+
+2. **Propósito de la Sección**  
+   - Brinda a los usuarios acceso a las noticias más importantes sobre la lista electoral.
+   - Mantiene informada a la comunidad sobre propuestas, avances y actividades de la campaña.
+
 
 
 
