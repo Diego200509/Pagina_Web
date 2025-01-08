@@ -59,20 +59,19 @@ body {
     /* Rosa brillante */
 }
 
+
 .footer-rights {
-    position: relative; /* Mantener fijo al final */
-    bottom: 0; /* Asegura que esté siempre abajo */
-    left: 0; /* Alineado al borde izquierdo */
-    width: 100vw; /* Ocupa todo el ancho de la ventana */
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
     background-color: var(--navbar-bg-color, #00bfff);
     color: white;
     text-align: center;
-    padding: 2px 0; /* Espaciado interno uniforme */
-    z-index: 20; /* Por encima de otros elementos */
-    box-sizing: border-box; /* Incluye padding en el ancho total */
-    margin-top: 20px; /* Espaciado entre el footer y el contenido */
-
+    padding: 10px;
+    margin-top: 50px;
 }
+
 /* Contenedor general */
 .candidate-container {
     display: flex;
