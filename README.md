@@ -152,6 +152,28 @@ Dentro de la página de inicio, los usuarios pueden interactuar con la sección 
    ![alt text](img/Eventos.png)
    ![alt text](img/Noticias.png)
 
+### **Sección de Candidatos - Vista del Usuario**
+En la sección "Candidatos", los usuarios pueden ver información detallada sobre cada postulante que forma parte de la lista electoral.
+
+1. **Información Individual del Candidato**  
+   - Se muestra una tarjeta con la información de cada candidato de manera organizada.
+   - Incluye:
+     - **Fotografía** del candidato.
+     - **Nombre completo**, resaltado en negritas.
+     - **Edad** del candidato.
+     - **Cargo** al que aspira.
+     - **Información académica y profesional**, como títulos y especialidades.
+     - **Experiencia relevante**, en este caso, el cargo que ha ocupado anteriormente.
+
+2. **Interfaz de Navegación**  
+   - A los lados de la tarjeta hay flechas de navegación que permiten al usuario desplazarse entre diferentes candidatos.
+   - Esto permite una visualización intuitiva y organizada de la información.
+
+   ![alt text](img/CandidatosUsuario.png)
+
+
+
+
 
 
 
