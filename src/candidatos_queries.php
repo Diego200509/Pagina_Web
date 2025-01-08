@@ -86,7 +86,7 @@ try {
                     $query = "SELECT ID_CAN, NOM_CAN, APE_CAN, 
                                      FECHA_NAC_CAN, 
                                      TIMESTAMPDIFF(YEAR, FECHA_NAC_CAN, CURDATE()) AS EDAD_CAN, 
-                                     CARGO_CAN, EDUCACION_CAN, EXPERIENCIA_CAN, PARTIDO_CAN, 
+                                     CARGO_CAN, EDUCACION_CAN, EXPERIENCIA_CAN, ID_PAR_CAN, 
                                      IMG_CAN, ESTADO_CAN 
                               FROM CANDIDATOS 
                               WHERE ID_CAN = $id";
