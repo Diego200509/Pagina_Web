@@ -380,6 +380,8 @@ Esta sección permite a los administradores gestionar los candidatos que forman 
      - Imagen representativa
    ![alt text](img/{F3AD1984-5C63-4899-B05B-7C4C7A48B087}.png)
 
+   ![alt text](img/{8F56D9F1-B2F9-4476-ADEB-979FFF6D5D06}.png)
+
 
 
 
