@@ -314,6 +314,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const tipoSelect = document.getElementById("tipo");
     const fechaInput = document.getElementById("fecha");
     const imagenInput = document.getElementById("imagen");
+    const ubicacionInput = document.getElementById("ubicacion"); // Agregado
     const formEventos = document.getElementById("form-eventos");
 
     function actualizarRestriccionesFecha() {
@@ -335,6 +336,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
             fechaInput.max = yesterdayFormatted;
             fechaInput.min = "";
+
+            // BORRAR AUTOMÁTICAMENTE LA UBICACIÓN SI CAMBIA A "NOTICIA"
+            ubicacionInput.value = "";
         }
     }
 
@@ -342,10 +346,10 @@ document.addEventListener("DOMContentLoaded", function () {
     actualizarRestriccionesFecha();
 
     formEventos.addEventListener("submit", function (event) {
-        const imagenSeleccionada = imagenInput.files.length > 0; // Verifica si hay una imagen seleccionada
+        const imagenSeleccionada = imagenInput.files.length > 0;
 
         if (!imagenSeleccionada) {
-            event.preventDefault(); // Evita que el formulario se envíe
+            event.preventDefault();
             Swal.fire({
                 title: "Imagen requerida",
                 text: "Por favor, selecciona una imagen antes de guardar.",
@@ -354,6 +358,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
 
 
 
