@@ -23,7 +23,7 @@ _Este proyecto es un sistema de gestión de elecciones desarrollado para un solo
 2. [Pre-requisitos 📋](#pre-requisitos-)
 3. [Construido con 🛠️](#construido-con-)
 4. [Instalación 🔧](#instalación-)
-5. [Ejecutando las Pruebas ⚙️](#ejecutando-las-pruebas)
+5. [Funcionamiento de la pagina ⚙️](#funcionamiento)
 6. [Despliegue 📦](#despliegue-)
 7. [Autores ✒️](#autores-)
 8. [Expresiones de Gratitud 🎁](#expresiones-de-gratitud-)
@@ -85,28 +85,9 @@ _Sigue estos pasos para tener el proyecto funcionando en tu entorno local:_
 - Verificar que la sugerencia se muestre en la sección correspondiente.
 
 
-### Ejecutando las Pruebas ⚙️
+### Funcionamiento de la pagina ⚙️
 
-Para garantizar la calidad del sistema, realiza las siguientes pruebas:
-
-**Pruebas end-to-end 🔩**
-Estas pruebas validan el flujo completo del sistema.
-
-1. **Sugerencias:**
-
-Crear una sugerencia como usuario.
-Revisar la sugerencia como administrador.
-Verificar que aparezca en la lista de sugerencias revisadas.
-
-2. **Votación:**
-
-Emitir un voto.
-Verificar que se actualicen los resultados correctamente.
-
-3. **Resultados:**
-
-Consultar resultados como usuario.
-Ver resultados detallados como administrador.
+![alt text]({C0FA1F3C-525D-4A67-92DC-BC4788CDDA9A}.png)
 
 ## Despliegue 📦
 
