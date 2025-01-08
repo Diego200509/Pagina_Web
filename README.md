@@ -101,7 +101,19 @@ Al ingresar a la página web, los usuarios son recibidos con una interfaz visual
    - Justo debajo del encabezado, se muestra una imagen destacada con los principales miembros de la lista electoral.  
    - En los laterales de la imagen hay flechas de navegación, lo que indica que es un carrusel que puede mostrar más imágenes con información relevante.
 
-![alt text]({C0FA1F3C-525D-4A67-92DC-BC4788CDDA9A}.png)
+![alt text](img/{C0FA1F3C-525D-4A67-92DC-BC4788CDDA9A}.png)
+
+### **Vista Previa de los Candidatos**
+En la sección "Conoce a nuestros Candidatos", los usuarios pueden ver una vista previa de los candidatos que forman parte de la lista electoral. Esta sección destaca lo siguiente:
+
+1. **Presentación Visual de los Candidatos**  
+   - Se muestran tarjetas con la fotografía de cada candidato, su nombre y el cargo al que aspiran.  
+
+2. **Información Relevante**  
+   - Cada candidato tiene su propio recuadro, donde se especifica su rol dentro de la estructura electoral.  
+   - Esta información permite a los usuarios conocer de manera rápida a los postulantes y su perfil.
+
+![alt text](img/image.png)
 
 ## Despliegue 📦
 
