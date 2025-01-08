@@ -277,7 +277,7 @@ Para acceder a la vista de administración, el sistema cuenta con un proceso de 
 
    ![alt text](img/{7E6E6370-27DA-4AD5-B09F-E8A72710F595}.png)
 
-### **Sección de Administración - Vista del Administrador**
+### **Sección de Administración - Vista del Administración**
 La sección de administración está diseñada para que el superadmin tenga el control total sobre la gestión del sistema.
 
 #### **Creación de Administradores**
@@ -299,6 +299,40 @@ La sección de administración está diseñada para que el superadmin tenga el c
    ![alt text](img/{566F0590-6141-4A2B-AACE-2A144DD76088}.png)
 
    ![alt text](img/{FADD8B5F-AB21-465A-9E59-BC565816A5FB}.png)
+
+### **Personalización del Sistema - Cambio de Colores**
+El sistema permite personalizar la apariencia tanto de la vista de usuario como de la vista de administración mediante una herramienta de configuración de colores.
+
+1. **Opciones de Configuración**  
+   - **Colores Generales:** Modifican los colores del navbar, el footer y algunos elementos de las páginas en la vista de usuario. También se aplican a la interfaz de administración.
+   - **Secciones:** Modifican el color de fondo de estas secciones únicamente en la página de inicio de la vista de usuario.
+     - **Sección Candidatos**
+     - **Sección Propuestas**
+     - **Sección Eventos y Noticias**
+   - **Páginas:** Cambian el color de fondo de las páginas completas, tanto en la vista de usuario como en la administración.
+     - **Página Candidatos**
+     - **Página Eventos y Noticias**
+     - **Página Propuestas**
+     - **Página Sugerencias**
+   - **Página de Login:** Permite modificar el degradado de fondo en la pantalla de inicio de sesión.
+
+2. **Aplicación de los Cambios**  
+   - Cada sección cuenta con un selector de color para elegir la tonalidad deseada.
+   - Se incluyen botones de **Aceptar** para guardar los cambios y **Restablecer** para volver a los valores predeterminados.
+   - Una vez que se selecciona un color y se presiona "Aceptar", la configuración se guarda y se aplica automáticamente en la interfaz.
+   - Si el usuario desea revertir los cambios, puede usar el botón "Restablecer" para volver a los colores originales.
+
+   ![alt text](img/{5B3A40AA-26C7-4A80-A896-F13CFAD82B13}.png)
+
+   ![alt text](img/{5B3A40AA-26C7-4A80-A896-F13CFAD82B13}.png)
+
+   ![alt text](img/{BBB1816A-5735-4CA3-BD5A-7026B7577659}.png)
+
+
+   
+
+
+
 
 
 
