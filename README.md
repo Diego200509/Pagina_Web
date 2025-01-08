@@ -277,6 +277,33 @@ Para acceder a la vista de administración, el sistema cuenta con un proceso de 
 
    ![alt text](img/{7E6E6370-27DA-4AD5-B09F-E8A72710F595}.png)
 
+### **Sección de Administración - Vista del Administrador**
+La sección de administración está diseñada para que el superadmin tenga el control total sobre la gestión del sistema.
+
+#### **Creación de Administradores**
+1. **Acceso Exclusivo del Superadmin**  
+   - Solo el superadmin tiene la capacidad de crear nuevos administradores dentro del sistema.
+   - Los administradores creados pueden gestionar diversas funciones, pero no tienen acceso a la creación de otros administradores.
+
+2. **Formulario de Creación de Administrador**  
+   - Se requiere ingresar los siguientes datos:
+     - **Nombre** del administrador.
+     - **Correo electrónico** único para el acceso.
+     - **Contraseña**, la cual debe tener un mínimo de 6 caracteres.
+   - Se incluye un botón "Crear Admin" que registra el nuevo usuario en la base de datos.
+
+3. **Validación de Datos**  
+   - La contraseña ingresada debe cumplir con el requisito de al menos 6 caracteres para garantizar la seguridad.
+   - Se verifica que el correo electrónico no esté duplicado en el sistema.
+
+   ![alt text](img/{566F0590-6141-4A2B-AACE-2A144DD76088}.png)
+
+   ![alt text](img/{FADD8B5F-AB21-465A-9E59-BC565816A5FB}.png)
+
+
+
+
+  
 
 
 
