@@ -324,7 +324,7 @@ El sistema permite personalizar la apariencia tanto de la vista de usuario como 
 
    ![alt text](img/{5B3A40AA-26C7-4A80-A896-F13CFAD82B13}.png)
 
-   ![alt text](img/{5B3A40AA-26C7-4A80-A896-F13CFAD82B13}.png)
+   ![alt text](img/{8AD04B6F-9983-4ED3-AD90-A35459955564}.png)
 
    ![alt text](img/{BBB1816A-5735-4CA3-BD5A-7026B7577659}.png)
 
