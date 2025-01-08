@@ -21,7 +21,7 @@ _Este proyecto es un sistema de gestión de elecciones desarrollado para un solo
 ## Tabla de Contenidos 📑
 1. [Comenzando 🚀](#comenzando-)
 2. [Pre-requisitos 📋](#pre-requisitos-)
-3. [Construido con](#construido-con)
+3. [Construido con 🛠](#construido-con-)
 4. [Instalación 🔧](#instalación-)
 5. [Funcionamiento de la página ⚙️](#funcionamiento-de-la-página-️)
 6. [Despliegue 📦](#despliegue-)
@@ -43,7 +43,7 @@ _Que cosas necesitas para instalar el software y cómo instalarlas_
 - Navegador web para pruebas.
 - Editor de texto o IDE (por ejemplo, Visual Studio Code).
 
-## Construido con
+## Construido con 🛠
 
 _Herramientas utilizadas para desarrollar el proyecto:_
 
