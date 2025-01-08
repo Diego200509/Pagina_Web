@@ -216,6 +216,18 @@ body {
 
 
 
+/* Ajustar el ancho de las columnas de la tabla */
+.table th:nth-child(4),  /* Encabezado de Descripción */
+.table td:nth-child(4) { /* Celdas de Descripción */
+    width: 40%; /* Asegura que la descripción ocupe el 40% de la tabla */
+    max-width: 500px; /* Ajusta un tamaño máximo */
+    min-width: 300px; /* Evita que sea demasiado estrecho */
+    word-wrap: break-word; /* Permite dividir palabras largas */
+    white-space: normal; /* Permite múltiples líneas */
+    text-align: justify; /* Alinea el texto para mayor legibilidad */
+    line-height: 1.5; /* Espaciado entre líneas */
+    padding: 10px; /* Espaciado interno */
+}
 
 
 
