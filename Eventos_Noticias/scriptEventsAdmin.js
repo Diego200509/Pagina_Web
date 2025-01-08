@@ -309,3 +309,56 @@ function generarPaginacion(totalPaginas, paginaActual) {
 
     paginationContainer.innerHTML = paginacionHTML;
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    const tipoSelect = document.getElementById("tipo");
+    const fechaInput = document.getElementById("fecha");
+    const imagenInput = document.getElementById("imagen");
+    const ubicacionInput = document.getElementById("ubicacion"); // Agregado
+    const formEventos = document.getElementById("form-eventos");
+
+    function actualizarRestriccionesFecha() {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+        const todayFormatted = `${year}-${month}-${day}`;
+
+        fechaInput.value = "";
+
+        if (tipoSelect.value === "EVENTO") {
+            fechaInput.min = todayFormatted;
+            fechaInput.max = "";
+        } else if (tipoSelect.value === "NOTICIA") {
+            const yesterday = new Date();
+            yesterday.setDate(today.getDate() - 1);
+            const yesterdayFormatted = `${yesterday.getFullYear()}-${String(yesterday.getMonth() + 1).padStart(2, '0')}-${String(yesterday.getDate()).padStart(2, '0')}`;
+
+            fechaInput.max = yesterdayFormatted;
+            fechaInput.min = "";
+
+            // BORRAR AUTOMÁTICAMENTE LA UBICACIÓN SI CAMBIA A "NOTICIA"
+            ubicacionInput.value = "";
+        }
+    }
+
+    tipoSelect.addEventListener("change", actualizarRestriccionesFecha);
+    actualizarRestriccionesFecha();
+
+    formEventos.addEventListener("submit", function (event) {
+        const imagenSeleccionada = imagenInput.files.length > 0;
+
+        if (!imagenSeleccionada) {
+            event.preventDefault();
+            Swal.fire({
+                title: "Imagen requerida",
+                text: "Por favor, selecciona una imagen antes de guardar.",
+                icon: "warning"
+            });
+        }
+    });
+});
+
+
+
+

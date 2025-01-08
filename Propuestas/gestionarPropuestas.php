@@ -437,7 +437,7 @@ function mostrarDescripcionConFormato($descripcion)
         </div>
 
 
-        <table class="table table-striped">
+        <table class="table table-striped" style="width: 100%;">
             <thead>
                 <tr>
                     <th>ID</th>
