@@ -135,9 +135,7 @@ $imagenesActuales = obtenerImagenesResultados();
 }
 
 .navbar-logo i {
-    font-size: 20px; /* Ajusta según la necesidad */
-    margin-right: 10px; /* Espaciado con el texto */
-    color: white;
+    font-size: 24px;
 
 }
 .navbar-logo img {
