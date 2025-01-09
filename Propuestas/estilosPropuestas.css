@@ -1,197 +1,497 @@
+/* Reset de márgenes y rellenos */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-html,
-body {
+/* Estilo general del body */
+html, body {
     height: 100%;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1;
 }
 
 body {
     display: flex;
     flex-direction: column;
 }
-
-header {
+.navbar {
+    background-color: var(--navbar-bg-color, #00bfff); /* Azul vibrante como color por defecto */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 50px;
-    background-color: #b22222;
+    padding: 10px 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
 }
 
-header .logo {
+
+.navbar-logo {
     display: flex;
     align-items: center;
+    gap: 10px;
+    color: #ffffff; /* Blanco */
 }
 
-header .logo img {
-    width: 50px;
-    margin-right: 10px;
+.navbar-logo i {
+    font-size: 24px;
 }
 
-header .logo h1 {
-    color: #ffffff;
-    font-size: 1.5em;
+.navbar-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
 }
 
-header nav {
+.navbar-menu li {
+    list-style: none;
+}
+
+.navbar-menu li a {
     display: flex;
     align-items: center;
-}
-
-header nav a {
-    color: white;
+    gap: 8px; /* Espacio entre icono y texto */
+    color: #ffffff; /* Blanco */
     text-decoration: none;
-    margin: 0 15px;
-    font-size: 1em;
-    transition: color 0.3s;
-    display: flex;
-    align-items: center;
+    font-size: 16px;
+    font-weight: bold;
 }
 
-header nav a i {
-    margin-right: 8px;
+.navbar-menu li a:hover {
+    color: #ff0050; /* Rosa brillante */
 }
 
-header nav a:hover {
-    color: #f0f0f0;
-}
 
+/* Contenedor de la página */
 .container {
-    flex-grow: 1;
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 30px;
 }
 
+.title-container {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente si es necesario */
+    width: 100%;
+    margin-top: 20px;
+}
+/* Estilo del título con subrayado rosado */
 h2 {
+    font-size: 2.5em;
+    color: #000;
+    font-weight: bold;
+    position: relative;
+    display: block;
     text-align: center;
-    margin-bottom: 20px;
-    font-size: 2.2em;
-    color: #333;
-    letter-spacing: 1px;
+    width: 100%;
+    margin: 20px 0 15px 0; /* Ajuste de margen para mejorar la alineación */
 }
 
+/* Línea decorativa debajo del título */
+h2::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 5px;
+    background-color: var(--navbar-bg-color, #00bfff);
+    margin: 8px auto 0;
+    border-radius: 5px;
+}
+
+
+/* Estilo del filtro */
 .filter-box {
     text-align: center;
     margin-bottom: 40px;
 }
 
 .filter-box select {
-    padding: 10px 15px;
-    font-size: 1em;
-    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 1.1em;
+    border-radius: 10px;
     border: 1px solid #ccc;
     width: 100%;
     max-width: 400px;
     margin-bottom: 20px;
     background-color: #fff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease;
 }
 
-.filter-box select:hover {
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
-}
-
-.proposals-grid {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-
-.proposal-card {
-    background-color: #fff;
+/* Contenedor para las tarjetas */
+.proposals-container {
+    background-color: #ffffff;
     padding: 20px;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: calc(50% - 10px);
-    margin-bottom: 20px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    min-height: 250px;
-    border-left: 6px solid #b22222;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
 }
+
+/* Estilos de la grid de propuestas */
+.proposals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Ajuste dinámico */
+    gap: 30px;
+    justify-content: center; /* Centra cuando hay una sola card */
+    align-items: stretch;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Estilo para cada tarjeta de propuesta */
+.proposal-card {
+    background: #fff;
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    min-height: 350px;
+    max-width: 380px;
+    width: 100%;
+    border-left: 10px solid var(--navbar-bg-color, #00bfff);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+    word-wrap: break-word;
+    text-align: center;
+    position: relative;
+    padding-bottom: 20px;
+}
+
+/* Ajuste de la imagen */
+.proposal-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover; /* Asegura que la imagen no se distorsione */
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    margin-bottom: 15px; /* Separación entre imagen y contenido */
+}
+
+
+
+
+
+
+/* Título de la propuesta */
+.proposal-card h3 {
+    font-size: 1.3em;
+    margin-bottom: 8px;
+    color: var(--navbar-bg-color, #00bfff);
+    font-weight: bold;
+    text-align: center; /* Se mantiene centrado solo el título */
+    border-bottom: 2px solid var(--navbar-bg-color, #00bfff);
+    padding-bottom: 5px;
+    width: 90%;
+    max-width: 300px;
+}
+
+.proposal-card p strong:first-child {
+    color: var(--navbar-bg-color, #00bfff);  /* 🎨 Color rosado solo para "Categoría:" y "Descripción:" */
+}
+
+
+.proposal-card p {
+    font-size: 1em;
+    color: #444;
+    margin: 0; /* Elimina cualquier margen innecesario */
+    padding: 0; /* Elimina cualquier relleno */
+    text-align: left;
+    width: 100%;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+/* Título (strong) dentro de cada párrafo, para los valores de categoría y descripción */
+.proposal-card p strong {
+    font-weight: bold;
+    margin-right: 10px; /* Espacio entre "Categoría:" o "Descripción:" y su texto */
+}
+
+.proposal-card p span {
+    display: inline;  /* Mantiene el texto de la descripción al lado de la etiqueta */
+    white-space: normal;  /* Permite que se rompa el texto cuando sea necesario */
+    word-wrap: break-word; /* Rompe las palabras largas */
+    overflow-wrap: break-word; /* Asegura que el texto largo se ajuste correctamente */
+    margin-left: 5px; /* Pequeña separación entre el texto y la etiqueta */
+}
+
+.proposal-card p, .proposal-description {
+    margin-left: 10px;
+    width: 90%;  /* Para que se ajuste bien a la tarjeta */
+}
+
 
 .proposal-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px); /* Elevación suave */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Sombra más destacada */
+}
+/* Descripción de la propuesta */
+
+/* Ajuste del texto de la descripción para que haga saltos de línea */
+.proposal-description {
+    height: auto; /* Permite que crezca dinámicamente sin espacios en blanco */
+    max-height: 100px; /* Ajusta el límite según lo necesario */
+    overflow: hidden; /* Evita que el texto sobresalga */
+    text-align: justify; /* Justifica el texto para mejorar la apariencia */
+    word-wrap: break-word; /* Permite que las palabras largas se dividan */
+    overflow-wrap: anywhere; /* Asegura que las palabras largas se ajusten correctamente */
+    white-space: normal; /* Permite saltos de línea naturales */
+    hyphens: auto; /* Agrega guiones si una palabra larga no cabe en una línea */
+    display: block; /* Se asegura que el elemento respete el contenedor */
+    line-height: 1.5; /* Espaciado entre líneas para mejorar legibilidad */
 }
 
-.proposal-card h3 {
-    font-size: 1.8em;
-    margin-bottom: 15px;
-    color: #b22222;
+/* Alternativa para navegadores que soportan -webkit-line-clamp */
+@supports (-webkit-line-clamp: 4) {
+    .proposal-description {
+        display: -webkit-box;
+        -webkit-line-clamp: 4; /* Limita el texto a 4 líneas antes de truncar */
+        -webkit-box-orient: vertical;
+        overflow: hidden; /* Asegura que no se muestre contenido extra */
+    }
+}
+
+
+
+
+
+
+
+
+
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%; /* Centrado vertical */
+    left: 50%; /* Centrado horizontal */
+    transform: translate(-50%, -50%); /* Centra el modal perfectamente */
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.5); /* Fondo oscuro semi-transparente */
+    width: 100%; 
+    height: 100%; 
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    overflow: auto; 
+    padding: 20px;
+}
+
+/* Contenido del Modal */
+.modal-content {
+    background: rgba(255, 255, 255, 0.95); /* Efecto Glassmorphism */
+    backdrop-filter: blur(10px); /* Desenfoque de fondo */
+    padding: 25px;
+    border-radius: 15px; 
+    width: 90%;
+    max-width: 700px; /* Aumentamos el tamaño */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border: 2px solid var(--navbar-bg-color, #00bfff); /* Borde en tono rosado */
+}
+
+/* Título */
+.modal-content h3 {
+    font-size: 1.8rem;
+    color: var(--navbar-bg-color, #00bfff); 
     text-align: center;
-    border-bottom: 2px solid #f0f0f0;
-    padding-bottom: 10px;
-}
-
-.proposal-card .proposal-title {
-    font-size: 1.3em;
+    margin: 0;
+    border-bottom: 2px solid var(--navbar-bg-color, #00bfff); 
+    padding-bottom: 12px;
+    text-transform: uppercase;
     font-weight: bold;
-    color: #444;
-    margin-bottom: 8px;
-    text-align: left;
+    letter-spacing: 1px;
 }
 
-.proposal-card .proposal-description {
-    white-space: normal;       /* Asegura que el texto se ajuste al ancho del contenedor */
-    word-wrap: break-word;     /* Rompe palabras largas */
-    overflow-wrap: break-word; /* Rompe palabras si exceden el ancho del contenedor */
-    overflow: hidden;          /* Evita que el contenido se desborde */
-    text-align: justify;       /* Alinea el texto para un aspecto más limpio */
-    max-height: 200px;         /* Establece una altura máxima para evitar que el texto sea demasiado largo */
-    overflow-y: auto;          /* Añade un scroll si el texto excede el espacio disponible */
-    padding: 10px;             /* Añade un espacio interno para que el texto no toque los bordes */
+/* Contenedor principal: Imagen a la izquierda y contenido a la derecha */
+.modal-body {
+    display: flex;
+    flex-direction: column; /* Apila la imagen y el texto verticalmente */
+    align-items: center; /* Centra la imagen y el contenido */
+    justify-content: center; /* Asegura que todo esté alineado */
+    text-align: center; /* Centra el texto */
+    gap: 20px; /* Espaciado entre elementos */
+}
+
+/* Imagen */
+.modal-body img {
+    max-width: 50%; /* Ajusta el tamaño para que se vea bien */
+    height: auto;
+    border-radius: 12px; /* Bordes redondeados */
+    border: 3px solid var(--navbar-bg-color, #00bfff); /* Borde con color rosa */
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    display: block; /* Asegura que se comporte como un bloque */
+    margin: 0 auto; /* Centra la imagen horizontalmente */
+}
+
+.modal-body img:hover {
+    transform: scale(1.05); /* Efecto zoom al pasar el mouse */
+}
+
+/* Información */
+.modal-body .modal-info {
+    max-height: 300px; /* Limita la altura */
+    overflow-y: auto; /* Permite desplazamiento si el contenido es largo */
+    padding-right: 10px; /* Espacio para el scroll */
+    width: 90%; /* Asegura que ocupe el ancho correcto */
+    text-align: justify; /* Justifica el texto */
+}
+
+/* Texto */
+.modal-body .modal-info p {
+    font-size: 1rem; /* Tamaño de fuente */
+    color: #555; /* Color del texto */
+    line-height: 1.6; /* Espaciado entre líneas */
+    margin: 0;
+    text-align: justify; /* Justificar el texto */
+    white-space: normal; /* Permite saltos de línea */
+    word-wrap: break-word; /* Rompe palabras largas automáticamente */
+    overflow-wrap: break-word; /* Evita que palabras largas se desborden */
+    max-width: 100%; /* Asegura que el contenido no se expanda más allá del modal */
+}
+
+.modal-body .modal-info p strong {
+    color: var(--navbar-bg-color, #00bfff) ;
+    font-weight: bold;
+}
+
+/* Botón de Cierre */
+.close {
+    color: white;
+    background: linear-gradient(to right, var(--navbar-bg-color, #00bfff), var(--navbar-bg-color, #00bfff)); /* Gradiente rosa */
+    padding: 7px 12px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 50%;
+    cursor: pointer;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.close:hover {
+    background: linear-gradient(to right, #d1137c, #ff3385);
+    transform: scale(1.1);
 }
 
 
 
+
+
+
+
+
+
+.btn-view-more {
+    display: inline-block; /* Asegura que sea un botón alineado */
+    background-color: var(--navbar-bg-color, #00bfff); /* Fondo rosa vibrante */
+    color: #fff; /* Texto blanco */
+    font-size: 1rem; /* Tamaño de fuente */
+    font-weight: bold; /* Texto en negrita */
+    text-align: center; /* Centra el texto */
+    text-decoration: none; /* Sin subrayado */
+    padding: 8px 15px; /* Espaciado interno */
+    border-radius: 8px; /* Bordes redondeados */
+    border: none; /* Sin borde */
+    cursor: pointer; /* Icono de puntero al pasar sobre el botón */
+    transition: all 0.3s ease; /* Animación suave en hover */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+}
+
+.btn-view-more:hover {
+    background-color: #d1137c; /* Fondo más oscuro al pasar el ratón */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Sombra más intensa */
+    transform: translateY(-2px); /* Efecto de elevación */
+}
+
+.btn-view-more:active {
+    background-color: #c0126f; /* Fondo aún más oscuro al hacer clic */
+    transform: translateY(1px); /* Efecto de presión */
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Reduce la sombra */
+}
+
+
+
+
+
+
+
+/* Estilo de los botones de la categoría */
+.card-category {
+    background-color: var(--navbar-bg-color, #00bfff);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-size: 1em;
+    font-weight: bold;
+    display: inline-block;
+    text-align: center;
+    margin-top: 15px;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.card-category:hover {
+    background-color: #d1137c;
+    transform: scale(1.1);
+}
+
+/* Footer */
 footer {
-    background-color: #b22222;
+    background-color: var(--navbar-bg-color, #00bfff);
     color: white;
     text-align: center;
-    padding: 10px;
+    padding: 15px;
     position: relative;
     bottom: 0;
     width: 100%;
 }
 
-.proposal-item {
-    margin-bottom: 15px;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-    font-size: 1.1em;
-    background-color: #fafafa;
-    border-radius: 8px;
-    padding: 12px 15px;
-}
 
-.proposal-item p {
-    white-space: normal;       /* Asegura que el texto se ajuste al ancho del contenedor */
-    word-wrap: break-word;     /* Rompe palabras largas si es necesario */
-    overflow-wrap: break-word; /* Rompe palabras largas automáticamente */
-    text-align: justify;       /* Alinea el texto para un mejor diseño */
-    overflow: hidden;          /* Evita que el texto sobresalga del contenedor */
-    margin: 5px 0;             /* Añade espacio entre líneas */
-}
+/* Responsive */
+@media (max-width: 768px) {
+    .navbar-menu {
+        display: none;
+    }
 
-.proposal-item:last-child {
-    border-bottom: none;
-}
+    .header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
 
-.proposal-item {
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
+    .proposals-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Ajuste dinámico */
+        gap: 30px;
+        justify-content: center; /* Centra cuando hay una sola card */
+        align-items: stretch; /* Asegura que todas las tarjetas tengan la misma altura */
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
 
-.proposal-item.visible {
-    opacity: 1;
-    transform: translateY(0);
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar-logo {
+        margin-bottom: 15px;
+    }
 }

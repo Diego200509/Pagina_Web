@@ -1,7 +1,8 @@
 <?php
 // Incluir el archivo de consultas
 include('../src/sugerencias_queries.php');
-include('../config/config.php');
+include_once('../src/resultado_queries.php');
+include_once('../config/config.php');
 
 $nombrePartido1 = obtenerNombrePartido(1);
 $nombrePartido2 = obtenerNombrePartido(2);
@@ -17,9 +18,72 @@ if (!$nombrePartido2) {
 $votosPorPartido = obtenerVotosPorPartido();
 
 if (isset($_GET['mensaje'])) {
-    echo "<script>alert('" . htmlspecialchars($_GET['mensaje']) . "');</script>";
 }
 
+
+    
+
+if (isset($_POST['candidato']) && !empty($_POST['candidato'])) {
+    $candidato = (int) $_POST['candidato'];
+    // Registrar el voto en sugerencias_queries.php
+    registrarVoto($candidato); // Llamada a función centralizada
+}
+
+if (isset($_COOKIE['ya_voto'])) {
+    header("Location: resultados.php");
+    exit;
+}
+
+include('../config/config.php');
+
+
+
+$navbarConfigPath = "../Login/navbar_config.json"; // Ruta al archivo de configuración del Navbar
+
+// Verificar si el archivo existe y cargar el color del Navbar
+if (file_exists($navbarConfigPath)) {
+    $navbarConfig = json_decode(file_get_contents($navbarConfigPath), true);
+    $navbarBgColor = $navbarConfig['navbarBgColor'] ?? '#00bfff'; // Azul por defecto
+} else {
+    $navbarBgColor = '#00bfff'; // Azul por defecto si no existe el archivo
+}
+
+// Obtener la ruta de la imagen para la sección 'logoNavbar'
+$section_name = 'logoNavbar';
+$stmt = $connection->prepare("SELECT image_path FROM imagenes_Inicio_Logo WHERE section_name = ?");
+$stmt->bind_param("s", $section_name);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $logo_path = $row['image_path'];
+} else {
+    $logo_path = "/Pagina_Web/Pagina_Web/Login/Img/logoMariCruz.png"; // Imagen por defecto
+}
+
+
+$configFileEventos = "../Login/PaginaEventos.json";
+
+if (file_exists($configFileEventos)) {
+    $config = json_decode(file_get_contents($configFileEventos), true);
+    $paginaBgColor = $config['paginaBgColor'] ?? "#f4f4f4";
+} else {
+    $paginaBgColor = "#f4f4f4";
+}
+
+
+
+// Obtener las imágenes desde la base de datos
+$imagenesActuales = obtenerImagenesResultados();
+if (!$imagenesActuales) {
+    $imagenesActuales = array_fill(0, 6, '/Pagina_Web/Pagina_Web/Sugerencias/Img_Res/default.jpg');
+}
+
+$imagenCandidato1 = isset($imagenesActuales[0]) ? $imagenesActuales[0] : '/Pagina_Web/Pagina_Web/Sugerencias/Img_Res/default.jpg';
+$imagenCandidato2 = isset($imagenesActuales[1]) ? $imagenesActuales[1] : '/Pagina_Web/Pagina_Web/Sugerencias/Img_Res/default.jpg';
+// Imagen de fondo
+$imagenFondo = isset($imagenesActuales[2]) ? $imagenesActuales[2] : '/Pagina_Web/Pagina_Web/Sugerencias/Img_Res/default.jpg';
 
 ?>
 
@@ -32,23 +96,36 @@ if (isset($_GET['mensaje'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        :root {
+            --navbar-bg-color: <?php echo $navbarBgColor; ?>;
+        }
+    </style>
     <title>Votación</title>
     <style>
-        body {
+        html, body {
             font-family: 'Arial', sans-serif;
-            background-image: url('Img/voto.JPG');
+            background-image: url('<?php echo htmlspecialchars($imagenFondo); ?>');
             background-size: cover;
             background-position: center;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            height: 100vh;
+            height: 100%;
+            min-height: 100vh;
+
         }
 
         .container {
+            flex: 1; /* Esto asegura que el contenido principal ocupe todo el espacio disponible */
+
             max-width: 800px;
             background: #ffffff;
             padding: 20px;
@@ -57,6 +134,9 @@ if (isset($_GET['mensaje'])) {
             transition: transform 0.3s;
             animation: slideIn 0.5s ease;
             margin-top: 100px;
+            width: 100%;
+            padding-bottom: 20px; /* Espacio adicional para evitar el solapamiento */
+
             /* Mover el formulario más abajo */
         }
 
@@ -74,7 +154,7 @@ if (isset($_GET['mensaje'])) {
 
         h1 {
             text-align: center;
-            color: #b22222;
+            color:var(--navbar-bg-color, #00bfff);
             /* Cambiado al color del header */
             margin-bottom: 20px;
         }
@@ -103,11 +183,11 @@ if (isset($_GET['mensaje'])) {
         .candidatos {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
+            gap: 31px;
         }
 
         .candidato {
-            border: 2px solid #b22222;
+            border: 2px solid #00bfff;
             /* Cambiado al color del header */
             border-radius: 10px;
             overflow: hidden;
@@ -121,11 +201,11 @@ if (isset($_GET['mensaje'])) {
         }
 
         .candidato img {
-            width: 100%;
-            height: 200px;
+            width: 110%;
+            height: 174px;
             object-fit: contain;
             transition: transform 0.3s;
-            border-bottom: 2px solid #b22222;
+            border-bottom: 2px solid #00bfff;
             /* Cambiado al color del header */
         }
 
@@ -141,7 +221,7 @@ if (isset($_GET['mensaje'])) {
 
         .candidato h2 {
             margin: 10px 0;
-            color: #343a40;
+            color: #ff0050;
         }
 
         .botones {
@@ -152,11 +232,11 @@ if (isset($_GET['mensaje'])) {
 
         button {
             padding: 10px 15px;
-            border: 2px solid #b22222;
+            
             /* Cambiado al color del header */
             border-radius: 5px;
             cursor: pointer;
-            background-color: #b22222;
+            background-color:var(--navbar-bg-color, #00bfff);
             /* Fondo rojo similar al header */
             color: white;
             font-weight: bold;
@@ -166,7 +246,7 @@ if (isset($_GET['mensaje'])) {
         }
 
         button:hover {
-            background-color: #d62828;
+            background-color: #ff0050;
             /* Rojo más oscuro al pasar el mouse */
             transform: translateY(-3px);
         }
@@ -198,7 +278,7 @@ if (isset($_GET['mensaje'])) {
             display: flex;
             align-items: center;
             margin-bottom: 15px;
-            border: 2px solid #b22222;
+            border: 2px solid #ff0050;
             /* Cambiado al color del header */
             border-radius: 10px;
             overflow: hidden;
@@ -213,7 +293,7 @@ if (isset($_GET['mensaje'])) {
             border-radius: 50%;
             margin-right: 10px;
             object-fit: cover;
-            border: 2px solid #b22222;
+            border: 2px solid #ff0050;
             /* Cambiado al color del header */
         }
 
@@ -221,70 +301,93 @@ if (isset($_GET['mensaje'])) {
             flex-grow: 1;
         }
 
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 50px;
-            background-color: #b22222;
-            width: 100%;
-            box-sizing: border-box;
-            margin: 0;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-        }
 
-        header.hidden {
-            transform: translateY(-100%);
-        }
+/* Navbar */
+.navbar {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    background-color: var(--navbar-bg-color, #00bfff);
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    gap: 20px; /* Espacio entre logo y menú */
+}
 
-        header:not(.hidden) {
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-        }
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #ffffff;
+    flex-shrink: 0; /* Mantener el tamaño fijo del logo */
+}
 
-        header .logo {
-            display: flex;
-            align-items: center;
-        }
+.navbar-logo i {
+    font-size: 24px;
+}
 
-        header .logo img {
-            width: 50px;
-            margin-right: 10px;
-        }
+.navbar-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px; /* Espacio entre elementos del menú */
+    flex-grow: 1; /* Ocupa todo el espacio disponible */
+    justify-content: flex-end; /* Alinear los botones a la derecha */
+    padding-right: 20px; /* Asegura espacio entre el último botón y el borde derecho */
+}
 
-        header .logo h1 {
-            color: #ffffff;
-            font-size: 1.5em;
-        }
+.navbar-menu li {
+    list-style: none;
+}
 
-        header nav {
-            display: flex;
-            align-items: center;
-        }
+.navbar-menu li a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+}
 
-        header nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 15px;
-            font-size: 1em;
-            transition: color 0.3s;
-            display: flex;
-            align-items: center;
-        }
+.navbar-menu li a:hover {
+    color: #ff0050;
+}
 
-        header nav a i {
-            margin-right: 8px;
-        }
 
-        header nav a:hover {
-            color: #2f2929;
-        }
+footer {
+    position: fixed; /* Para mantenerlo fijo al final de la página */
+    z-index: 10;
 
+    text-align: center;
+    padding: 100px;
+    background-color:var(--navbar-bg-color, #00bfff);
+    color: white;
+    margin-top: auto;
+    width: 100%;
+
+}
+
+footer.footer-rights {
+    position: relative; /* Mantener fijo al final */
+    bottom: 0; /* Asegura que esté siempre abajo */
+    left: 0; /* Alineado al borde izquierdo */
+    width: 100vw; /* Ocupa todo el ancho de la ventana */
+    background-color: var(--navbar-bg-color, #00bfff);
+    color: white;
+    text-align: center;
+    padding: 2px 0; /* Espaciado interno uniforme */
+    z-index: 20; /* Por encima de otros elementos */
+    box-sizing: border-box; /* Incluye padding en el ancho total */
+    margin-top: 20px; /* Espaciado entre el footer y el contenido */
+
+}
+     
+        
+        
         .modal {
             display: none;
             position: fixed;
@@ -302,9 +405,8 @@ if (isset($_GET['mensaje'])) {
             background-color: #fff;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
             text-align: center;
-            animation: fadeInModal 0.3s ease;
+            animation: fadeIn 0.3s ease;
             max-width: 500px;
             width: 80%;
         }
@@ -339,75 +441,77 @@ if (isset($_GET['mensaje'])) {
 </head>
 
 <body>
-    <header id="main-header">
-        <div class="logo">
-            <img src="Img\logo.png" alt="UTA Logo">
-            <h1>Proceso de Elecciones UTA 2024</h1>
-        </div>
-        <!-- Modal -->
-        <div id="modalAviso" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <p id="modalTexto"></p>
-            </div>
-        </div>
-        <nav>
-            <a href="../Home/inicio.php"><i class="fas fa-home"></i> Inicio</a>
-            <a href="../Candidatos/Candidatos.php"><i class="fas fa-user"></i> Candidatos</a>
-            <a href="../Propuestas/Propuestas.php"><i class="fas fa-bullhorn"></i> Propuestas</a>
-            <a href="../Eventos_Noticias/eventos_noticias.php"><i class="fas fa-calendar-alt"></i> Eventos y
-                Noticias</a>
-            <a href="../Sugerencias/index.php"><i class="fas fa-comment-dots"></i> Sugerencias</a>
-        </nav>
-    </header>
+
+
+<!-- Navbar -->
+<nav class="navbar">
+<div class="navbar-logo">
+<div class="text-center">
+</div>
+<!-- Logo existente -->
+<img src="<?php echo htmlspecialchars($logo_path); ?>"  width="200px" style="margin-right: 20px;">
+
+</div>
+
+
+
+    </div>
+    <ul class="navbar-menu"> 
+    <li><a href="../Home/inicio.php"><i class="fa-solid fa-house"></i> <span>Inicio</span></a></li>
+        <li><a href="../Candidatos/candidatos.php"><i class="fa-solid fa-users"></i> <span>Candidatos</span></a></li>
+        <li><a href="../Eventos_Noticias/eventos_noticias.php"><i class="fa-solid fa-calendar-alt"></i> <span>Eventos y Noticias</span></a></li>
+        <li><a href="../Propuestas/Propuestas.php"><i class="fa-solid fa-lightbulb"></i> <span>Propuestas</span></a></li>
+        <li><a href="../Sugerencias/index.php"><i class="fa-solid fa-comment-dots"></i> <span>Sugerencias</span></a></li>
+        <li><a href="../Sugerencias/votos.php"><i class="fas fa-vote-yea"></i> Votos</a></li>
+    </ul>
+</nav>
+
+
+
 
     <div class="container">
-        <h1>SELECCIONAR CANDIDATO PARA EL VOTO</h1>
+    <h1>Seleccionar candidato para el voto</h1>
 
-        <form action="votos.php" method="POST" onsubmit="return validarFormulario();">
-            <div class="formulario">
-                <input type="text" id="nombre" name="nombre" placeholder="Nombre de usuario" required>
-                <input type="email" id="correo" name="correo" placeholder="Correo electrónico" required>
+        <form action="../src/sugerencias_queries.php" method="POST" onsubmit="return validarFormulario();">
+        <div class="candidatos">
+        <div class="candidato">
+        <img src="<?php echo htmlspecialchars($imagenCandidato1); ?>" alt="Candidato 1">
+        <div>
+                <h2><?php echo htmlspecialchars($nombrePartido1); ?></h2>
+                <label>
+                    <input type="radio" name="candidato" value="1"> Seleccionar
+                </label>
             </div>
-            <div class="candidatos">
-                <div class="candidato">
-                    <img src="Img/BANNERVOTOMARI.jpg" alt="Candidato 1">
-                    <div>
-                        <h2><?php echo htmlspecialchars($nombrePartido1); ?></h2>
-                        <label>
-                            <input type="radio" name="candidato" value="1"> Seleccionar
-                        </label>
-                    </div>
-                </div>
-                <div class="candidato">
-                    <img src="Img/BANNERVOTOSARA.jpg" alt="Candidato 2">
-                    <div>
-                        <h2><?php echo htmlspecialchars($nombrePartido2); ?></h2>
-                        <label>
-                            <input type="radio" name="candidato" value="2"> Seleccionar
-                        </label>
-                    </div>
-                </div>
+        </div>
+        <div class="candidato">
+        <img src="<?php echo htmlspecialchars($imagenCandidato2); ?>" alt="Candidato 2">
+        <div>
+                <h2><?php echo htmlspecialchars($nombrePartido2); ?></h2>
+                <label>
+                    <input type="radio" name="candidato" value="2"> Seleccionar
+                </label>
             </div>
-            <div class="botones">
-                <button type="button" onclick="location.href='index.php'">Regresar</button>
-                <button type="submit">Votar</button>
-            </div>
-        </form>
+        </div>
+    </div>
+    <div class="botones">
+        <button type="submit">Votar</button>
+    </div>
+</form>
+
 
         <div class="votos-section" id="votosSection">
             <h2>Resultados de Votos</h2>
             <div class="voto-candidato">
-                <img src="Img/BANNERVOTOMARI.jpg" alt="Candidato 1">
-                <div>
+            <img src="<?php echo htmlspecialchars($imagenCandidato1); ?>" alt="Candidato 1">
+            <div>
                     <h3><?php echo htmlspecialchars($nombrePartido1); ?></h3>
                     <p>Cantidad de votos:
                         <strong><?php echo isset($votosPorPartido[1]) ? $votosPorPartido[1] : 0; ?></strong></p>
                 </div>
             </div>
             <div class="voto-candidato">
-                <img src="Img/BANNERVOTOSARA.jpg" alt="Candidato 2">
-                <div>
+            <img src="<?php echo htmlspecialchars($imagenCandidato2); ?>" alt="Candidato 2">
+            <div>
                     <h3><?php echo htmlspecialchars($nombrePartido2); ?></h3>
                     <p>Cantidad de votos:
                         <strong><?php echo isset($votosPorPartido[2]) ? $votosPorPartido[2] : 0; ?></strong></p>
@@ -415,7 +519,10 @@ if (isset($_GET['mensaje'])) {
             </div>
         </div>
     </div>
-
+    <footer class="footer-rights">
+    <p>Derechos reservados UTA 2024-2025</p>
+</footer>
+    
     <script>
 
         function mostrarModal(mensaje) {
@@ -440,18 +547,14 @@ if (isset($_GET['mensaje'])) {
             }
         }
         function validarFormulario() {
-            const nombre = document.getElementById('nombre').value;
-            const correo = document.getElementById('correo').value;
-            const candidatoSeleccionado = document.querySelector('input[name="candidato"]:checked');
+    const candidatoSeleccionado = document.querySelector('input[name="candidato"]:checked');
+    if (!candidatoSeleccionado) {
+        alert('Por favor, selecciona un candidato antes de votar.');
+        return false;
+    }
+    return true;
+}
 
-            if (!nombre || !correo || !candidatoSeleccionado) {
-                alert('Por favor, complete todos los campos antes de votar.');
-                return false;
-            } else {
-                alert(`Gracias por votar, ${nombre}!`);
-                return true;
-            }
-        }
 
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -462,6 +565,12 @@ if (isset($_GET['mensaje'])) {
             }
         });
     </script>
+
+
+
+
 </body>
 
+
 </html>
+

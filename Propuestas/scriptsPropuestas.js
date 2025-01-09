@@ -1,10 +1,10 @@
 console.log("Script cargado correctamente");
 
 function filterProposals() {
-    console.log("Evento onchange activado"); // Verificar si el evento se activa
+    console.log("Evento onchange activado");
 
     var selectedFaculty = document.getElementById("faculty").value;
-    console.log("Facultad seleccionada:", selectedFaculty); // Imprimir la facultad seleccionada
+    console.log("Facultad seleccionada:", selectedFaculty);
 
     // Realizar una solicitud AJAX para obtener las propuestas desde el servidor
     fetch('http://localhost/Pagina_Web/Pagina_Web/src/propuestas_queries.php', {
@@ -14,81 +14,102 @@ function filterProposals() {
         },
         body: `category=${encodeURIComponent(selectedFaculty)}`
     })
-    .then(response => response.json())
-    .then(data => {
-        console.log("Datos recibidos del servidor:", data); // Verificar que los nombres de los partidos llegan
-        displayProposals(data);
-    })
-    .catch(error => console.error('Error:', error));
+        .then(response => response.json())
+        .then(data => {
+            console.log("Datos recibidos del servidor:", data);
+            displayProposals(data);
+        })
+        .catch(error => console.error('Error:', error));
 }
 
-function truncateText(text, maxLength) {
+function truncateText(text, maxLength = 150) {
+    text = text.trim(); // Elimina espacios al inicio y final
+
     if (text.length > maxLength) {
-        return text.substring(0, maxLength) + "...";
+        let truncated = text.substring(0, maxLength).trim(); // Trunca y elimina espacios finales
+        return truncated.replace(/\s+$/, "") + "..."; // Evita agregar espacios innecesarios antes de los puntos suspensivos
     }
+
     return text;
 }
 
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Escuchar cambios en el almacenamiento local
+    window.addEventListener("storage", function (event) {
+        if (event.key === "navbarColorUpdated" && (event.newValue === "true" || event.newValue === "reset")) {
+            // Recargar la página cuando se detecte un cambio o restablecimiento
+            window.location.reload();
+        }
+    });
+});
+
+
+
+
 function displayProposals(proposals) {
-    const partido1Nombre = document.getElementById("partido1Nombre");
-    const partido2Nombre = document.getElementById("partido2Nombre");
-    const candidato1Description = document.getElementById("candidato1Description");
-    const candidato2Description = document.getElementById("candidato2Description");
+    const proposalsGrid = document.getElementById("proposalsGrid");
+    proposalsGrid.innerHTML = ''; // Limpiar contenido previo
 
-    // Limpia el contenido anterior
-    partido1Nombre.innerHTML = "";
-    partido2Nombre.innerHTML = "";
-    candidato1Description.innerHTML = "";
-    candidato2Description.innerHTML = "";
+    const maxLength = 150; // Longitud exacta de caracteres para todas las tarjetas
 
-    // Agrupamos las propuestas por partidos
-    const partidos = [...new Set(proposals.map(proposal => proposal.partido))];
+    proposals.forEach((proposal) => {
+        const proposalCard = document.createElement("div");
+        proposalCard.classList.add("proposal-card");
 
-    // Verificamos si hay al menos un partido
-    if (partidos.length > 0) {
-        // Mostrar siempre el nombre del primer partido
-        const partido1 = partidos[0];
-        partido1Nombre.innerText = partido1;
+        const imageUrl = proposal.imagen_url.trim() !== ""
+            ? proposal.imagen_url
+            : "https://via.placeholder.com/300x200?text=Sin+Imagen";
 
-        // Filtra propuestas para el primer partido y muestra
-        const partido1Proposals = proposals.filter(proposal => proposal.partido === partido1);
-        if (partido1Proposals.length > 0) {
-            candidato1Description.innerHTML = partido1Proposals.map((proposal, index) => `
-                <div class="proposal-item visible">
-                    <strong>Propuesta ${index + 1}: ${proposal.titulo}</strong>
-                    <p>${truncateText(proposal.descripcion, 300)}</p>
-                    <p><strong>Categoría:</strong> ${proposal.categoria}</p>
-                </div>
-            `).join('');
-        } else {
-            candidato1Description.innerHTML = `<div class="proposal-item visible"><strong>No hay propuestas disponibles para este partido.</strong></div>`;
-        }
+        const truncatedText = truncateText(proposal.descripcion, maxLength);
+        const isTruncated = proposal.descripcion.length > maxLength; // Verifica si el texto fue truncado
 
-        // Ahora para el segundo partido
-        const partido2 = partidos[1];
-        partido2Nombre.innerText = partido2;
+        proposalCard.innerHTML = `
+        <h3>${proposal.titulo}</h3>
+            <img src="${imageUrl}" class="proposal-image" alt="Imagen de la propuesta">
+            
+            <p><strong>Categoría:</strong> ${proposal.categoria}</p>
+            <p>
+                <strong>Descripción:</strong> 
+                <span class="proposal-description">${truncatedText}</span>
+            </p>
+            ${isTruncated ? `<button class="btn-view-more" onclick='openModal(${JSON.stringify(proposal)})'>Ver más</button>` : ''}
+        `;
 
-        // Filtra propuestas para el segundo partido
-        const partido2Proposals = proposals.filter(proposal => proposal.partido === partido2);
-        if (partido2Proposals.length > 0) {
-            candidato2Description.innerHTML = partido2Proposals.map((proposal, index) => `
-                <div class="proposal-item visible">
-                    <strong>Propuesta ${index + 1}: ${proposal.titulo}</strong>
-                    <p>${truncateText(proposal.descripcion, 300)}</p>
-                    <p><strong>Categoría:</strong> ${proposal.categoria}</p>
-                </div>
-            `).join('');
-        } else {
-            candidato2Description.innerHTML = `<div class="proposal-item visible"><strong>No hay propuestas disponibles para este partido.</strong></div>`;
-        }
-    } else {
-        // Si no hay ningún partido disponible
-        partido1Nombre.innerText = "No hay partidos disponibles";
-        partido2Nombre.innerText = "No hay partidos disponibles";
-        candidato1Description.innerHTML = `<div class="proposal-item visible"><strong>No hay propuestas disponibles para este partido.</strong></div>`;
-        candidato2Description.innerHTML = `<div class="proposal-item visible"><strong>No hay propuestas disponibles para este partido.</strong></div>`;
-    }
+        proposalsGrid.appendChild(proposalCard);
+    });
 }
 
-// Inicializar con la primera opción
+document.addEventListener("DOMContentLoaded", () => {
+    const modal = document.getElementById("proposalModal");
+    if (modal) {
+        modal.style.display = "none"; // Ocultar modal al cargar la página
+    }
+});
+
+function openModal(proposal) {
+    const modal = document.getElementById("proposalModal");
+    document.getElementById("modalTitle").textContent = proposal.titulo;
+    document.getElementById("modalImage").src = proposal.imagen_url || "https://via.placeholder.com/150";
+    document.getElementById("modalCategory").textContent = proposal.categoria;
+    document.getElementById("modalDescription").textContent = proposal.descripcion;
+
+    modal.style.display = "flex"; // Mostrar el modal
+}
+
+function closeModal() {
+    const modal = document.getElementById("proposalModal");
+    modal.style.display = "none"; // Ocultar el modal
+}
+
+
+function closeModal() {
+    const modal = document.getElementById("proposalModal");
+    modal.style.display = "none";
+}
+
+
+
+
+// Inicializa con la primera opción
 filterProposals();

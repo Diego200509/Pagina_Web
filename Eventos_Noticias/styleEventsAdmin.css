@@ -1,65 +1,138 @@
+/* Estilo general del cuerpo */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f8f9fa;
+    background-color: var(--pagina-bg-color, #f4f4f4); /* Color dinámico */
     margin: 0;
     padding: 0;
 }
+.navbar-role {
+    margin-bottom: 9px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+/* Navbar */
+.navbar {
+    background-color: var(--navbar-bg-color, #00bfff);
+    display: flex;
+    align-items: center;
+    padding: 10px 20px; 
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    gap: 20px; /* Espacio entre logo y menú */
+}
 
-.container {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #ffffff;
+    flex-shrink: 0; /* Mantener el tamaño fijo del logo */
+}
+
+.navbar-logo i {
+    font-size: 24px;
+
+}
+.navbar-logo img {
+    width: 170px; /* Reduce el ancho de la imagen */
+    height: auto; /* Mantén la proporción de aspecto */
+    margin-right: 10px; /* Ajusta el espacio entre el logo y el texto si es necesario */
+}
+
+.navbar-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px; /* Espacio entre elementos del menú */
+    flex-grow: 1; /* Ocupa todo el espacio disponible */
+    justify-content: flex-end; /* Alinear los botones a la derecha */
+    padding-right: 20px; /* Asegura espacio entre el último botón y el borde derecho */
+}
+
+.navbar-menu li {
+    list-style: none;
+}
+
+.navbar-menu li a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.navbar-menu li a:hover {
+    color: #ff0050;
+}
+
+/* Botón de regreso */
+.btn-danger {
+    background-color: #ff1493;
+    /* Rosa */
+    border-color: #ff1493;
+    color: #fff;
+    padding: 10px 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-    text-align: center;
-    font-size: 2.5rem;
-    color: #dc3545;
-    margin-bottom: 20px;
+    font-size: 16px;
     font-weight: bold;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    /* Espacio entre ícono y texto */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
 }
 
-h2 {
-    text-align: center;
-    font-size: 2rem;
-    color: #6c757d;
-    margin-top: 30px;
-    margin-bottom: 20px;
-    font-weight: 600;
+.btn-danger:hover {
+    background-color: #e01183;
+    /* Rosa más oscuro */
+    transform: translateY(-2px);
+    /* Movimiento hacia arriba */
 }
 
+/* Tabla */
 .table {
-    margin-top: 20px;
-    border-collapse: separate;
-    border-spacing: 0;
     width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 16px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
 }
 
-.table th {
-    background-color: #f8d7da;
-    color: #721c24;
-    text-align: center;
-    padding: 12px;
-    border: 1px solid #dee2e6;
+.table thead {
+    background-color: #00bfff;
+    /* Azul vibrante */
+    color: white;
     font-weight: bold;
+    text-align: left;
 }
 
+.table th,
 .table td {
-    padding: 10px;
-    text-align: center;
-    border: 1px solid #dee2e6;
-    vertical-align: middle;
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.table tbody tr:nth-child(odd) {
+    background: linear-gradient(135deg, rgba(255, 20, 147, 0.1), white);
+    /* Degradado rosa claro */
 }
 
 .table tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background: linear-gradient(135deg, rgba(0, 191, 255, 0.1), white);
+    /* Degradado azul claro */
 }
 
 .table tbody tr:hover {
-    background-color: #ffe8e8;
+    background-color: rgba(0, 0, 0, 0.05);
+    /* Color de fondo al pasar el mouse */
 }
 
 .table .btn-warning {
@@ -80,130 +153,249 @@ h2 {
     border-radius: 5px;
 }
 
-form {
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #ffffff;
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        /* Apilar elementos verticalmente */
+        align-items: center;
+    }
+
+    .navbar-menu {
+        justify-content: center;
+        width: 100%;
+        /* Asegura que los elementos se centren */
+    }
+
+    .navbar-logo {
+        justify-content: center;
+    }
+}
+
+/* Modal */
+.modal {
+    display: none;
+    /* Ocultar por defecto */
+    position: fixed;
+    /* Fijar en la pantalla */
+    justify-content: center;
+    /* Centrar horizontalmente */
+    align-items: center;
+    /* Centrar verticalmente */
+    z-index: 1000;
+    /* Por encima del contenido */
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* Cubrir toda la pantalla */
+    height: 100%;
+    /* Cubrir toda la pantalla */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Fondo oscuro transparente */
+}
+
+.modal-content {
+    background-color: white;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    text-align: left;
 }
 
-form label {
+/* Botón de cerrar */
+.close-button {
+    color: #000;
+    float: right;
+    font-size: 1.5rem;
     font-weight: bold;
-    color: #495057;
-    display: block;
-    margin-bottom: 5px;
+    cursor: pointer;
 }
 
-form input,
-form select,
-form textarea {
+.close-button:hover {
+    color: #ff1493;
+    /* Color rosa en hover */
+}
+
+/* Estilo del título del modal */
+.modal-content h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
+
+/* Formularios dentro del modal */
+.modal-content label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+
+.modal-content input,
+.modal-content textarea,
+.modal-content select,
+.modal-content button {
     width: 100%;
+    margin-top: 5px;
     padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ced4da;
+    border: 1px solid #ddd;
     border-radius: 5px;
-    background-color: #f8f9fa;
-    font-size: 1rem;
-    color: #495057;
+    font-size: 14px;
 }
 
-form input:focus,
-form select:focus,
-form textarea:focus {
-    outline: none;
-    border-color: #dc3545;
-    box-shadow: 0 0 5px rgba(220, 53, 69, 0.5);
-}
-
-form button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    font-size: 1rem;
-    font-weight: bold;
-    background-color: #dc3545;
-    color: #ffffff;
+.modal-content button {
+    background-color: #ff1493;
+    /* Rosa */
+    color: white;
     border: none;
-    border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-form button:hover {
-    background-color: #c82333;
+.modal-content button:hover {
+    background-color: #e01183;
+    /* Más oscuro al pasar el mouse */
 }
 
-form button+button {
-    margin-top: 10px;
-}
-
-form h1 {
-    text-align: center;
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: #dc3545;
-    font-weight: bold;
-}
-
-form textarea {
-    resize: none;
-    height: 100px;
-}
-
-@media (max-width: 768px) {
-    form {
-        max-width: 90%;
-        padding: 15px;
-    }
-}
-
-.navbar {
-    background-color: #b22222;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
-}
-
-.navbar-logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+#addEventBtn {
+    background: #ff1493;
+    /* Rosa brillante */
     color: white;
-}
-
-.navbar-logo i {
-    font-size: 24px;
-}
-
-.navbar-menu {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    gap: 20px;
-}
-
-.navbar-menu li {
-    list-style: none;
-}
-
-.navbar-menu li a {
-    display: flex;
-    align-items: center;
-    gap: 8px; /* Espacio entre icono y texto */
-    color: white;
-    text-decoration: none;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
     font-size: 16px;
     font-weight: bold;
-}
-.navbar-menu li a i {
-    font-size: 18px; /* Tamaño del icono */
+    cursor: pointer;
+    display: inline-flex;
+    /* Para alinear el ícono */
+    align-items: center;
+    /* Centrar contenido verticalmente */
+    gap: 8px;
+    /* Espacio entre ícono y texto */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    /* Sombra */
+    transition: all 0.3s ease;
 }
 
-.navbar-menu li a:hover {
-    color: black;
+#addEventBtn:hover {
+    background-color: #e01183;
+    /* Rosa más oscuro */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+    /* Sombra más intensa */
+    transform: translateY(-2px);
+    /* Movimiento hacia arriba */
+}
+
+#addEventBtn:active {
+    transform: translateY(0);
+    /* Restablecer posición al hacer clic */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.action-container {
+    position: relative;
+}
+
+.toggle-actions-btn {
+    top: 0;
+    background-color: #ff1493;
+    color: white;
+    border: none;
+    width: 40px;
+    height: 45px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+    margin: 0 auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-actions-btn:hover {
+    background-color: #e01183;
+}
+
+.actions-dropdown {
+    position: relative;
+    margin-top: 10px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    width: 150px;
+    display: none;
+}
+
+.actions-dropdown button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    text-align: left;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.actions-dropdown .edit-btn {
+    background-color: #00bfff;
+    /* Azul */
+    color: white;
+}
+
+.actions-dropdown .delete-btn {
+    background-color: #ff0000;
+    /* Rojo */
+    color: white;
+}
+
+.actions-dropdown .toggle-status-btn {
+    background-color: #ff1493;
+    /* Rosa */
+    color: white;
+}
+
+.actions-dropdown button:hover {
+    background-color: #f0f0f0;
+}
+
+.table tr {
+    transition: height 0.3s ease;
+}
+
+.pagination-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    visibility: visible !important;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #ff1493;
+    border-color: #ff1493;
+    color: #ffffff;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.pagination .page-link {
+    color: #00bfff;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 8px 15px;
+    border: 1px solid #d1d1d1;
+    margin: 0 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination .page-link:hover {
+    color: #ffffff;
+    background-color: #ff1493;
+    border-color: #ff1493;
 }
