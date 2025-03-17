@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'ADMIN') {
 
 // Mensaje de éxito o error
 $message = isset($_SESSION['message']) ? $_SESSION['message'] : '';
-unset($_SESSION['message']); // Limpiar mensaje después de mostrarlo
+unset($_SESSION['message']); // Limpiar mensaje después de mostrarloo
 ?>
 
 <!DOCTYPE html>
